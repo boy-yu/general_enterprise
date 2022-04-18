@@ -97,6 +97,7 @@ flutter:
       - assets/images/bigDanger/
       - assets/images/fire/
       - assets/images/study/
+      - assets/images/doubleRiskProjeck/
   # fonts:
   #   - family: Schyler
   #     fonts:

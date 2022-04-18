@@ -1,18 +1,18 @@
 import 'package:enterprise/common/myCount.dart';
 import 'package:enterprise/common/myUpdateDialog.dart';
 import 'package:enterprise/pages/chat/chatDataBase.dart';
+import 'package:enterprise/pages/hiddenCheckGovern.dart';
+import 'package:enterprise/pages/home.dart';
+import 'package:enterprise/pages/riskHierarchicalControl.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/down.dart';
 import 'package:enterprise/tool/eventBus.dart';
-import 'package:enterprise/tool/funcType.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:enterprise/tool/translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import './home.dart';
-import './adress_book.dart';
 import './person.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'navite.dart' if (dart.library.html) 'diffPlat.dart' as html;
@@ -164,41 +164,26 @@ class _IndexState extends State<Index> {
     });
   }
 
-  // _getFileUrl() {
-  //   myDio.request(
-  //         type: 'get',
-  //         url: Interface.webUrl,
-  //         queryParameters: {"url": mainBaseUrl}).then((value) {
-  //       if (value is Map) {
-  //         print('valuevaluevaluevaluevaluevalue' + value.toString());
-  //         // myprefs.setString('fileUrl', value['fileViewPath']);
-
-  //         if (myprefs.getString('fileUrl') == null || myprefs.getString('fileUrl') == '') {
-  //           fileUrl = value['fileViewPath'];
-  //           myprefs.setString('fileUrl', fileUrl);
-  //         } else {
-  //           fileUrl = myprefs.getString('fileUrl');
-  //         }
-  //         print('fileUrl----------------------------------' + fileUrl);
-  //       }
-  //     });
-  // }
-
   _geneateBottom(width) {
     List name = [
       {
-        "icon": 'assets/images/shouye1@2x.png',
-        "iconDis": "assets/images/shouye2@2x.png",
+        "icon": 'assets/images/doubleRiskProjeck/icon_home.png',
+        "iconDis": "assets/images/doubleRiskProjeck/un_icon_home.png",
         "name": "首页"
       },
       {
-        "icon": 'assets/images/tongxunlu2@2x.png',
-        "iconDis": "assets/images/tongxunl1@2x.png",
-        "name": "通讯录"
+        "icon": 'assets/images/doubleRiskProjeck/icon_risk_control.png',
+        "iconDis": "assets/images/doubleRiskProjeck/un_icon_risk_control.png",
+        "name": "风险分级管控"
       },
       {
-        "icon": 'assets/images/wode2@2x.png',
-        "iconDis": "assets/images/wode1@2x.png",
+        "icon": 'assets/images/doubleRiskProjeck/icon_hidden_check_govern.png',
+        "iconDis": "assets/images/doubleRiskProjeck/un_icon_hidden_check_govern.png",
+        "name": "隐患排查治理"
+      },
+      {
+        "icon": 'assets/images/doubleRiskProjeck/icon_my.png',
+        "iconDis": "assets/images/doubleRiskProjeck/un_icon_my.png",
         "name": "我的"
       },
     ];
@@ -230,7 +215,7 @@ class _IndexState extends State<Index> {
   }
 
   _pages(width) {
-    List<Widget> pages = [IndexIcons(), AdressBook(), Person(width)];
+    List<Widget> pages = [Home(), RiskHierarchicalControl(),  HiddenCheckGovern(), Person(width)];
     return pages[_currentIndex];
   }
 
@@ -241,11 +226,7 @@ class _IndexState extends State<Index> {
     }
   }
 
-  int _currentIndex = 2;
-
-  // List<Page> _list = [
-  //   CupertinoPage(name: '/', key: Key('/'), child: Container()),
-  // ];
+  int _currentIndex = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -257,11 +238,8 @@ class _IndexState extends State<Index> {
                 backgroundColor: Colors.white,
                 selectedItemColor: Color(0xff2C3750),
                 currentIndex: _currentIndex,
+                type: BottomNavigationBarType.shifting,
                 onTap: (index) {
-                  if (PeopleStructure.state && index == 1) {
-                    successToast('通讯录正在加载，请稍后重试');
-                    return;
-                  }
                   setState(() {
                     _currentIndex = index;
                   });

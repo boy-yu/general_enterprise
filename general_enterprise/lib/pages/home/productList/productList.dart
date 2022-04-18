@@ -1,5 +1,4 @@
 import 'package:enterprise/common/myAppbar.dart';
-import 'package:enterprise/pages/home/productList/_checkListOverflow.dart';
 import 'package:enterprise/pages/home/productList/_mainList.dart';
 import 'package:enterprise/pages/home/productList/_myPostList.dart';
 import 'package:enterprise/pages/home/productList/_postList.dart';
@@ -18,13 +17,6 @@ class ProductList extends StatefulWidget {
 
 class _ProductListState extends State<ProductList> {
   List leftBar = [
-    {
-      "name": "清单总览",
-      'title': '企业清单总览',
-      'icon': "assets/images/icon_list_overflow_checked.png",
-      'unIcon': 'assets/images/icon_list_overflow_unchecked.png',
-      "widget": CheckListOverflow()
-    },
     {
       "name": "主体责任",
       'title': '企业主体责任清单',

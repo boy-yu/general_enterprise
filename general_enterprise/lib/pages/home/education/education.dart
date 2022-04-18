@@ -1,7 +1,6 @@
 import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/common/transation.dart';
-import 'package:enterprise/pages/home/education/educationOverview.dart';
 import 'package:enterprise/pages/home/productList/__postListDetails.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/interface.dart';
@@ -57,7 +56,7 @@ class _EducationState extends State<Education> {
   Widget _changeTitle(width, item) {
     Widget _widget;
     if (item['title'] == '总览')
-      _widget = EducationOverview();
+      _widget = Container();
     else if (item['title'] == '学习') _widget = Study();
     return _widget;
   }

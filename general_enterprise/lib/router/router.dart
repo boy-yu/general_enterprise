@@ -3,7 +3,6 @@ import 'package:enterprise/common/blueList.dart';
 import 'package:enterprise/common/myLedger.dart';
 import 'package:enterprise/localtion.dart';
 import 'package:enterprise/pages/chat/chat.dart';
-import 'package:enterprise/pages/faceLogin.dart';
 import 'package:enterprise/pages/home/bigDanger/router.dart';
 import 'package:enterprise/pages/home/checkLisk/router.dart';
 import 'package:enterprise/pages/home/closedManagement/closedManagementRouter.dart';
@@ -18,7 +17,6 @@ import 'package:enterprise/pages/home/hiddenDanger/hiddenDangerRouter.dart';
 // import 'package:enterprise/pages/home/work/__cancelWork.dart';
 // import 'package:enterprise/pages/home/work/_changeGuardian.dart';
 import 'package:enterprise/pages/home/legitimate/legitimateRouter.dart';
-import 'package:enterprise/pages/home/overview/overview.dart';
 import 'package:enterprise/pages/home/productList/router.dart';
 import 'package:enterprise/pages/home/spotCheck/spotCheckRoute.dart';
 import 'package:enterprise/pages/home/twoSingleCard/twoSingleCardRouter.dart';
@@ -102,7 +100,6 @@ class Routers {
   final Map<String, Widget Function(BuildContext context, {dynamic arguments})>
       _routers = {
     '/login': (context, {arguments}) => Login(), // 登陆页面
-    '/faceLogin': (context, {arguments}) => FaceLogin(), // 人脸登陆页面
     '/personalImage': (context, {arguments}) => PersonalImage(
       barcode: arguments['barcode']
     ), 
@@ -138,7 +135,6 @@ class Routers {
     // 'blueTooth': (context, {arguments}) => FlirOne(),
 
     // 总览
-    '/home/overview': (context, {arguments}) => Overview(),
 
     // 台账
     '/home/myLedger' : (context, {arguments}) => MyLedger(

@@ -22,21 +22,6 @@ class Person extends StatefulWidget {
 class _PersonState extends State<Person> with TickerProviderStateMixin {
   AnimationController _animationController;
   Animation<double> _opacity;
-
-  final List bottomData = [
-    // {
-    //   "icon": 'assets/images/product@2x.png',
-    //   'name': "账号安全",
-    //   "active": Icons.keyboard_arrow_right,
-    //   "router": null,
-    // },
-    // {
-    //   "icon": 'assets/images/person_identify@2x.png',
-    //   'name': "实名认证",
-    //   "active": Icons.keyboard_arrow_right,
-    //   "router": null,
-    // },
-  ];
   bool show = true;
   @override
   void initState() {
@@ -61,11 +46,6 @@ class _PersonState extends State<Person> with TickerProviderStateMixin {
     return FadeTransition(
       opacity: _opacity,
       child: Column(children: [
-        // Expanded(
-        // child: SingleChildScrollView(
-        // physics: ClampingScrollPhysics(),
-        // child: Column(
-        //   children: [
         Container(
           decoration: BoxDecoration(color: themeColor),
           child: Padding(
@@ -86,10 +66,6 @@ class _PersonState extends State<Person> with TickerProviderStateMixin {
         ),
         show ? PersonMsg() : Container(),
         PersonList(),
-        //   ],
-        // ),
-        // ),
-        // ),
         ExitLogin(
           widget.width,
           callback: () {
@@ -140,7 +116,6 @@ class _PersonMsgState extends State<PersonMsg> {
   String name = '';
   Counter _counter;
   String signUrl;
-  List<String> data = ['在岗', '不在岗'];
   int choosed = 0;
 
   _getPostState() {
@@ -226,14 +201,6 @@ class _PersonMsgState extends State<PersonMsg> {
                   left: size.width * 34,
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      // Navigator.of(context).pushNamed('/person/avatar',
-                      //     arguments: {
-                      //       'photoUrl': myprefs.getString('photoUrl')
-                      //     }).then((value) {
-                      //   setState(() {});
-                      // });
-                    },
                     child: Container(
                         width: size.width * 120,
                         height: size.width * 120,
@@ -242,9 +209,8 @@ class _PersonMsgState extends State<PersonMsg> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0))),
                         alignment: Alignment.center,
-                        child: Container(
-                          padding: EdgeInsets.all(size.width * 10),
-                          child: ClipRRect(
+                        padding: EdgeInsets.all(size.width * 10),
+                        child: ClipRRect(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(5.0)),
                             child: FadeInImage(
@@ -256,7 +222,7 @@ class _PersonMsgState extends State<PersonMsg> {
                                 image: NetworkImage(
                                     myprefs.getString('photoUrl'))),
                           ),
-                        )),
+                      ),
                   ),
                 )
               : Container(),
@@ -268,46 +234,6 @@ class _PersonMsgState extends State<PersonMsg> {
                   color: Color(0xff333333), fontSize: size.width * 35.8),
             ),
           ),
-          // 切换 在岗 | 不在岗
-          Positioned(
-              right: size.width * 20,
-              child: Container(
-                  width: size.width * 194,
-                  height: size.width * 44,
-                  margin: EdgeInsets.symmetric(vertical: size.width * 10),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          width: size.width * 1, color: Color(0xff3369FE)),
-                      borderRadius: BorderRadius.all(Radius.circular(27.0))),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: data
-                          .asMap()
-                          .keys
-                          .map((index) => InkWell(
-                              onTap: () {
-                                _changePostState(index);
-                              },
-                              child: Container(
-                                height: size.width * 44,
-                                width: size.width * 96,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(27.0)),
-                                    color: choosed == index
-                                        ? Color(0xff295DF7)
-                                        : Colors.white),
-                                alignment: Alignment.center,
-                                child: Text(
-                                  data[index],
-                                  style: TextStyle(
-                                      fontSize: size.width * 26,
-                                      color: choosed == index
-                                          ? Colors.white
-                                          : Color(0xff295DF7)),
-                                ),
-                              )))
-                          .toList())))
         ]));
   }
 }
@@ -333,121 +259,20 @@ class _PersonListState extends State<PersonList> {
       "router": '/person/psd',
     },
     {
-      "icon": 'assets/images/icon_home_my_list_about_us.png',
-      'name': "关于我们",
-      "active": 'assets/images/icon_person_tiaozhuan.png',
-      "router": '/person/about',
-    },
-    {
-      "icon": 'assets/images/icon_home_my_list_service.png',
-      'name': "服务期限",
-      "active": 'assets/images/icon_person_tiaozhuan.png',
-      "router": null,
-    },
-    {
       "icon": 'assets/images/icon_home_my_list_update.png',
       'name': "版本更新",
       "active": 'assets/images/icon_person_tiaozhuan.png',
       "router": '/person/updata',
     },
-    {
-      "icon": 'assets/images/rennianshibieICON@2x.png',
-      'name': "人脸录入",
-      "active": 'assets/images/icon_person_tiaozhuan.png',
-      "router": '/person/customCameraPage',
-    },
-    // {
-    //   "icon": 'assets/images/rennianshibieICON@2x.png',
-    //   'name': "开发用培训日历",
-    //   "active": 'assets/images/icon_person_tiaozhuan.png',
-    //   "router": '/home/education/eduTrainCalendar',
-    // },
-    // {
-    //   "icon": 'assets/images/rennianshibieICON@2x.png',
-    //   'name': "开发用直播",
-    //   "active": 'assets/images/icon_person_tiaozhuan.png',
-    //   "router": '/home/education/eduTrainLive',
-    // },
-    // {
-    //   "icon": 'assets/images/rennianshibieICON@2x.png',
-    //   'name': "开发用直播回放教材测试",
-    //   "active": 'assets/images/icon_person_tiaozhuan.png',
-    //   "router": '/home/education/eduPlayback',
-    // },
-    // {
-    //   "icon": 'assets/images/rennianshibieICON@2x.png',
-    //   'name': "百度定位测试",
-    //   "active": 'assets/images/icon_person_tiaozhuan.png',
-    //   "router": '/home/BMFLocation',
-    // },
   ];
 
   @override
   void initState() {
     super.initState();
-    if (myprefs.getString('account') == '123456') {
-      data.add({
-        "icon": 'assets/images/icon_home_my_list_update.png',
-        'name': "测试页面仅仅123456可以看见",
-        "active": 'assets/images/icon_person_tiaozhuan.png',
-        "router": 'tempLocation',
-      });
-    }
-    // _getFaceData();
     Future.delayed(Duration(seconds: 2), _getVersion);
   }
 
   String imagePath;
-
-  // 人脸录入入口判断 人脸稳定后开启
-  // _getFaceData(){
-  //   myDio.request(
-  //     type: 'get',
-  //     url: Interface.getFaceData
-  //   ).then((value)  {
-  //     if(!value){
-  //       data.add(
-  //         {
-  //           "icon": 'assets/images/rennianshibieICON@2x.png',
-  //           'name': "人脸录入",
-  //           "active": 'assets/images/icon_person_tiaozhuan.png',
-  //           "router": '/person/customCameraPage',
-  //         },
-  //       );
-  //       if (mounted) {
-  //         setState(() {});
-  //       }
-  //     }
-  //   });
-  // }
-
-  // Future requestPermission() async {
-  //   if (await Permission.camera.isGranted) {
-  //     // Do stuff.
-  //     Navigator.push(
-  //       context,
-  //       new MaterialPageRoute(
-  //           builder: (context) => new CustomCameraPage()
-  //       ),
-  //     ).then((v){
-  //       // if(v!=null){
-  //       //   imagePath = v;
-
-  //       //   // print('image2Base64(imagePath)-------------' + image2Base64(imagePath).toString());
-  //       //   // String base64Image = image2Base64(imagePath);
-  //       //   image2Base64(imagePath).then((data){
-  //       //     String imageBase64 = data;
-  //       //     print('image2Base64-------------' + imageBase64.toString());
-  //       //     createFileFromString(imageBase64).then((value){
-  //       //       String image = value;
-  //       //       print('image-------------' + image.toString());
-  //       //     });
-  //       //     // String image = createFileFromString(imageBase64);
-  //       //   });
-  //       // }
-  //     });
-  //   }
-  // }
 
   _getVersion() async {
     // own app version
@@ -571,7 +396,6 @@ class _ExitLoginState extends State<ExitLogin> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: size.width * 20),
       color: Colors.white,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -620,7 +444,7 @@ class _ExitLoginState extends State<ExitLogin> {
           ],
         ),
       ),
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 20),
     );
   }
 }

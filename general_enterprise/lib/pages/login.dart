@@ -308,11 +308,6 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // IconButton(
-              //     icon: Icon(Icons.face),
-              //     onPressed: () {
-              //       Navigator.pushNamed(context, "/waitFaceLogin");
-              //     }),
               Center(
                 child: Text(
                   '欢迎登录',
@@ -379,22 +374,6 @@ class _LoginFormState extends State<LoginForm> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).pushNamed('/faceLogin',
-                          arguments: {'width': size.width}).then((value) {
-                          // 返回值
-                          if(value == '登录成功'){
-                            Navigator.pop(context);
-                          }
-                        });
-                      },
-                      child: Text(
-                        '切换人脸登录',
-                        style: TextStyle(
-                            color: Color(0xff2143AF), fontSize: size.width * 21),
-                      ),
-                    ),
                     Spacer(),
                     Text(
                       '忘记密码？',

@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:enterprise/pages/index.dart';
 import 'package:enterprise/tool/interface.dart';
-import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart'
-    show BMFMapSDK, BMF_COORD_TYPE;
+// import 'package:flutter_baidu_mapapi_base/flutter_baidu_mapapi_base.dart'
+//     show BMFMapSDK, BMF_COORD_TYPE;
 import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,11 +22,11 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  if(Platform.isAndroid){
-    // Android 目前不支持接口设置Apikey,
-    // 请在主工程的Manifest文件里设置，详细配置方法请参考[https://lbs.baidu.com/ 官网][https://lbs.baidu.com/)demo
-    BMFMapSDK.setCoordType(BMF_COORD_TYPE.BD09LL);
-  }
+  // if(Platform.isAndroid){
+  //   // Android 目前不支持接口设置Apikey,
+  //   // 请在主工程的Manifest文件里设置，详细配置方法请参考[https://lbs.baidu.com/ 官网][https://lbs.baidu.com/)demo
+  //   BMFMapSDK.setCoordType(BMF_COORD_TYPE.BD09LL);
+  // }
 }
 
 class MyApp extends StatelessWidget {
@@ -83,11 +83,11 @@ class _MyContextState extends State<MyContext> {
 
       show = true;
       setState(() {});
-      if (Contexts.mobile) {
-        if (Platform.isAndroid) {
-          BMFMapSDK.setCoordType(BMF_COORD_TYPE.BD09LL);
-        }
-      }
+      // if (Contexts.mobile) {
+      //   if (Platform.isAndroid) {
+      //     BMFMapSDK.setCoordType(BMF_COORD_TYPE.BD09LL);
+      //   }
+      // }
     }).catchError((onError) {
       successToast('服务器错误，正在重试');
       _init();
