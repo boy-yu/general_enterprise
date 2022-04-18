@@ -1,0 +1,12 @@
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep class com.tencent.android.tpush.** {*;}
+-keep class com.tencent.tpns.baseapi.** {*;} 
+-keep class com.tencent.tpns.mqttchannel.** {*;}
+-keep class com.tencent.tpns.dataacquisition.** {*;}
+-keep class com.tencent.imsdk.** { *; }
+-keep class com.flir.thermalsdk.** { *; }
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-keep class com.baidu.vi.** {*;}
+-dontwarn com.baidu.**

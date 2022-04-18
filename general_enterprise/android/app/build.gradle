@@ -1,0 +1,151 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    compileSdkVersion 28
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.example.enterprise"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        // 以下腾讯推动所需
+       ndk {
+           //根据需要 自行选择添加的对应cpu类型的.so库。
+           abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86'
+           // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+       }
+        // 腾讯推送ID和KEY
+        manifestPlaceholders = [
+                XG_ACCESS_ID : "1500017971",
+                XG_ACCESS_KEY : "A7VLPYQEM8K3",
+                VIVO_APPID:"105436053",
+                VIVO_APPKEY:"2fee16c44b10568d60a9f9a7c42a307a",
+                AMAP_KEY : "b3a797027711aedbe9a1c97a4b52e251",
+        ]
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            //代码混淆
+            minifyEnabled false  //资源压缩设置
+            useProguard false   //代码压缩设置
+            shrinkResources false
+            //读取代码压缩配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    /**
+     * 导入振动仪aar依赖文件
+     */
+    repositories{
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    sourceSets{
+        main{
+            jniLibs.srcDir 'libs'
+        }
+    }
+
+}
+
+flutter {
+    source '../..'
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core:1.6.0'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // tuikit  Im push
+    api "com.tencent.imsdk:imsdk:5.1.2"
+    /**
+     * 热成像 Flir One
+     */
+    implementation(name: 'androidsdk-release', ext: 'aar')
+    implementation(name: 'thermalsdk-release', ext: 'aar')
+    
+    implementation 'com.tencent.tpns:vivo:1.2.2.0-release'
+    // implementation 'androidx.appcompat:appcompat:1.1.0'
+    // implementation 'com.amap.api:location:latest.integration'
+    //noinspection GradleDependency
+    // implementation 'androidx.multidex:multidex:2.0.0'
+    /**
+     * 振动仪
+     */
+    implementation(name:'blemulti-release', ext:'aar')
+    ///noinspection GradleCompatible
+    implementation 'com.android.support:design:25.3.1'
+    implementation 'com.github.medyo:fancybuttons:1.7'
+    ///noinspection GradleCompatible
+    implementation "com.android.support:gridlayout-v7:25.3.1"
+    implementation 'com.linheimx.library:lchart:1.2.2'
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    implementation 'io.reactivex:rxjava:1.1.7'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'com.afollestad.material-dialogs:core:0.9.4.3'
+    implementation 'com.afollestad.material-dialogs:commons:0.9.4.3'
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    implementation 'us.feras.mdv:markdownview:1.1.0'
+    implementation "com.google.code.gson:gson:2.4"
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.15'
+    // implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
