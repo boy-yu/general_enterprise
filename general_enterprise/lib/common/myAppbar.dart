@@ -59,9 +59,10 @@ class _MyAppbarState extends State<MyAppbar> with TickerProviderStateMixin {
         title: widget.title,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: widget.lineGradColor ?? lineGradBlue,
-            ),
+            color: Color(0xff3074FF)
+            // gradient: LinearGradient(
+            //   colors: widget.lineGradColor ?? lineGradBlue,
+            // ),
           ),
         ),
         actions: widget.actions,

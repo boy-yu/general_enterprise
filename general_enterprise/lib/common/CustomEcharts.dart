@@ -304,7 +304,7 @@ class CustomEchart {
   }
 
   Widget mutipleBar(
-      {height = 250.0,
+      {height = 200.0,
       width = 30.0,
       @required double yAxis,
       @required List<MutipleXAxisSturct> xAxisList,
@@ -419,44 +419,49 @@ class _GanttWidgetState extends State<GanttWidget> {
 
       86400000
    */
-  _getDateList(){
+  _getDateList() {
     dateList.clear();
     int dateLength = 0;
-    if(DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 2){
-      if(DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).year % 100 == 0){
-        if(DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).year % 400 == 0){
+    if (DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 2) {
+      if (DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).year % 100 ==
+          0) {
+        if (DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).year % 400 ==
+            0) {
           dateLength = 29;
-        }else{
+        } else {
           dateLength = 28;
         }
-      }else{
-        if(DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).year % 4 == 0){
+      } else {
+        if (DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).year % 4 ==
+            0) {
           dateLength = 29;
-        }else{
+        } else {
           dateLength = 28;
         }
       }
-    }else if(
-      DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 1 
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 3
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 5
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 7
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 8
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 10
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 12
-    ){
+    } else if (DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month ==
+            1 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 3 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 5 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 7 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 8 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 10 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 12) {
       dateLength = 31;
-    }else if(
-      DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 2 
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 4
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 6
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 9
-      || DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 11
-    ){
+    } else if (DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month ==
+            2 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 4 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 6 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 9 ||
+        DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month == 11) {
       dateLength = 30;
     }
     for (int i = 1; i <= dateLength; i++) {
-      dateList.add(DateTime.fromMillisecondsSinceEpoch(widget.chooseDate).month.toString() + "-" + i.toString());
+      dateList.add(DateTime.fromMillisecondsSinceEpoch(widget.chooseDate)
+              .month
+              .toString() +
+          "-" +
+          i.toString());
     }
   }
 
@@ -465,96 +470,110 @@ class _GanttWidgetState extends State<GanttWidget> {
     return Container(
       color: Colors.white,
       child: SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Row(
-      children: [
-        // 日期
-        Column(
-          children: dateList.asMap().keys.map<Widget>((index) {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: size.width * 6.2, horizontal: size.width * 10),
-              child: Text(dateList[index].toString()),
-            );
-          }).toList(),
+        scrollDirection: Axis.vertical,
+        child: Row(
+          children: [
+            // 日期
+            Column(
+              children: dateList.asMap().keys.map<Widget>((index) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: size.width * 6.2, horizontal: size.width * 10),
+                  child: Text(dateList[index].toString()),
+                );
+              }).toList(),
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: GestureDetector(
+                      onTapUp: (clickCoord) {
+                        // print((clickCoord.localPosition.dx / (size.width * 100)).truncate());
+                        // print(widget.data[(clickCoord.localPosition.dx / (size.width * 100)).truncate()]);
+                        Map totalPlan = widget.data[
+                            (clickCoord.localPosition.dx / (size.width * 100))
+                                .truncate()];
+                        WorkDialog.myDialog(context, () {}, 2,
+                            widget: Container(
+                                height: size.width * 350,
+                                padding: EdgeInsets.all(size.width * 20),
+                                child: SingleChildScrollView(
+                                    child: Column(
+                                  children: [
+                                    Text(totalPlan['totalName'].toString()),
+                                    SizedBox(
+                                      height: size.width * 50,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(totalPlan['researchName']
+                                            .toString()),
+                                        Spacer(),
+                                        Text(
+                                          DateTime.fromMillisecondsSinceEpoch(
+                                                      totalPlan['startTime'])
+                                                  .toString()
+                                                  .substring(0, 11) +
+                                              '~ ' +
+                                              DateTime.fromMillisecondsSinceEpoch(
+                                                      totalPlan['endTime'])
+                                                  .toString()
+                                                  .substring(0, 11),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: size.width * 30),
+                                    Row(
+                                      children: [
+                                        Text(totalPlan['planName'].toString()),
+                                        Spacer(),
+                                        Text(
+                                          DateTime.fromMillisecondsSinceEpoch(
+                                                      totalPlan['startTimeT'])
+                                                  .toString()
+                                                  .substring(0, 11) +
+                                              '~ ' +
+                                              DateTime.fromMillisecondsSinceEpoch(
+                                                      totalPlan['endTimeT'])
+                                                  .toString()
+                                                  .substring(0, 11),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ))));
+                      },
+                      child: CustomPaint(
+                          size: Size(widget.data.length * (size.width * 100),
+                              dateList.length * (size.width * 50)),
+                          painter: GanttChart(
+                              widget.data, dateList, widget.chooseDate)),
+                    )))
+          ],
         ),
-        Expanded(child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: GestureDetector(
-                onTapUp: (clickCoord){
-                  // print((clickCoord.localPosition.dx / (size.width * 100)).truncate());
-                  // print(widget.data[(clickCoord.localPosition.dx / (size.width * 100)).truncate()]);
-                  Map totalPlan = widget.data[(clickCoord.localPosition.dx / (size.width * 100)).truncate()];
-                  WorkDialog.myDialog(context, () {}, 2,
-                    widget: Container(
-                      height: size.width * 350,
-                      padding: EdgeInsets.all(size.width * 20),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Text(
-                              totalPlan['totalName'].toString()
-                            ),
-                            SizedBox(
-                              height: size.width * 50,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  totalPlan['researchName'].toString()
-                                ),
-                                Spacer(),
-                                Text(
-                                  DateTime.fromMillisecondsSinceEpoch(totalPlan['startTime']).toString().substring(0, 11) + '~ ' + DateTime.fromMillisecondsSinceEpoch(totalPlan['endTime']).toString().substring(0, 11),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.width * 30
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  totalPlan['planName'].toString()
-                                ),
-                                Spacer(),
-                                Text(
-                                  DateTime.fromMillisecondsSinceEpoch(totalPlan['startTimeT']).toString().substring(0, 11) + '~ ' + DateTime.fromMillisecondsSinceEpoch(totalPlan['endTimeT']).toString().substring(0, 11),
-                                )
-                              ],
-                            ),
-                          ],
-                        )
-                      )
-                    )
-                  );
-                },
-                  child: CustomPaint(
-                  size: Size(widget.data.length * (size.width * 100), dateList.length * (size.width * 50)),
-                  painter: GanttChart(widget.data, dateList, widget.chooseDate)
-                ),
-              )
-            ))
-        ],
       ),
-    ),
     );
   }
 }
 
-class GanttChart extends CustomPainter{
+class GanttChart extends CustomPainter {
   GanttChart(this.data, this.dateList, this.chooseDate);
   final List data, dateList;
   final int chooseDate;
-  static const double basePadding = 0;//基础边界
- 
-  double startX = 0.0, endX = 0.0;//相对于原点x轴方向最小和最大偏移量（相对于原点的偏移量）
-  double startY = 0.0, endY = 0.0;//相对于原点y轴方向最大和最小偏移量（相对于原点的偏移量）
+  static const double basePadding = 0; //基础边界
+
+  double startX = 0.0, endX = 0.0; //相对于原点x轴方向最小和最大偏移量（相对于原点的偏移量）
+  double startY = 0.0, endY = 0.0; //相对于原点y轴方向最大和最小偏移量（相对于原点的偏移量）
   // ignore: unused_field
-  double _fixedWidth = 0.0;//x轴方向：最大偏移量-最小偏移量（相对于原点的偏移量）
+  double _fixedWidth = 0.0; //x轴方向：最大偏移量-最小偏移量（相对于原点的偏移量）
   // ignore: unused_field
-  double _fixedHeight = 0.0;//y轴方向：最大偏移量-最小偏移量（相对于原点的偏移量）
-  Paint _paint1 = Paint()..color = Colors.red..strokeWidth=3;
-  Paint _paint2 = Paint()..color = Colors.blue..strokeWidth=3;
+  double _fixedHeight = 0.0; //y轴方向：最大偏移量-最小偏移量（相对于原点的偏移量）
+  Paint _paint1 = Paint()
+    ..color = Colors.red
+    ..strokeWidth = 3;
+  Paint _paint2 = Paint()
+    ..color = Colors.blue
+    ..strokeWidth = 3;
   @override
   void paint(Canvas canvas, Size size) {
     _initBorder(size);
@@ -577,50 +596,68 @@ class GanttChart extends CustomPainter{
   }
 
   // 边框
-  void _drawXy(Canvas canvas){
+  void _drawXy(Canvas canvas) {
     var paint = Paint()
       ..isAntiAlias = true
       ..strokeWidth = size.width * 1
       ..strokeCap = StrokeCap.square
       ..color = Colors.black
       ..style = PaintingStyle.stroke;
-      canvas.drawLine(Offset(startX, endY), Offset(endX , endY), paint); 
-      canvas.drawLine(Offset(startX, startY), Offset(startX, endY), paint);
-      canvas.drawLine(Offset(startX, startY), Offset(endX , startY), paint);
-      canvas.drawLine(Offset(endX, endY), Offset(endX, startY), paint);
+    canvas.drawLine(Offset(startX, endY), Offset(endX, endY), paint);
+    canvas.drawLine(Offset(startX, startY), Offset(startX, endY), paint);
+    canvas.drawLine(Offset(startX, startY), Offset(endX, startY), paint);
+    canvas.drawLine(Offset(endX, endY), Offset(endX, startY), paint);
   }
 
   // 刻度
-  void _drawXRuler(Canvas canvas){
+  void _drawXRuler(Canvas canvas) {
     var paint = Paint()
       ..isAntiAlias = true
       ..strokeWidth = size.width * 1
       ..strokeCap = StrokeCap.square
       ..color = Colors.black
       ..style = PaintingStyle.stroke;
+
     ///x y 刻度数量
-    int xRulerCount = dateList.length > 0 ? dateList.length - 1 : dateList.length;
-    int yRulerCount = data.length > 0 ? data.length -1 : data.length;
+    int xRulerCount =
+        dateList.length > 0 ? dateList.length - 1 : dateList.length;
+    int yRulerCount = data.length > 0 ? data.length - 1 : data.length;
+
     ///x、y轴方向每个刻度的间距
     double xRulerW = size.width * 100; //x方向两个点之间的距离(刻度长)
-    double yRulerH= size.width * 50;   //y轴方向亮点之间的距离（刻度高）
-    for (int i = 1; i <=xRulerCount; i++) {
-      canvas.drawLine(Offset(startX, startY-i*yRulerH), Offset(endX, startY-i*yRulerH), paint);
+    double yRulerH = size.width * 50; //y轴方向亮点之间的距离（刻度高）
+    for (int i = 1; i <= xRulerCount; i++) {
+      canvas.drawLine(Offset(startX, startY - i * yRulerH),
+          Offset(endX, startY - i * yRulerH), paint);
     }
-    for (int i = 1; i <=yRulerCount; i++) {
-      canvas.drawLine(Offset(startX + xRulerW * i, startY), Offset(startX + xRulerW * i, endY), paint);
+    for (int i = 1; i <= yRulerCount; i++) {
+      canvas.drawLine(Offset(startX + xRulerW * i, startY),
+          Offset(startX + xRulerW * i, endY), paint);
     }
   }
-  
+
   // 计划色块
-  void _drawRects(Canvas canvas){
+  void _drawRects(Canvas canvas) {
     for (int i = 0; i < data.length; i++) {
-      if(DateTime.fromMillisecondsSinceEpoch(chooseDate).month == DateTime.fromMillisecondsSinceEpoch(data[i]['startTime']).month || DateTime.fromMillisecondsSinceEpoch(chooseDate).month == DateTime.fromMillisecondsSinceEpoch(data[i]['endTime']).month){
+      if (DateTime.fromMillisecondsSinceEpoch(chooseDate).month ==
+              DateTime.fromMillisecondsSinceEpoch(data[i]['startTime']).month ||
+          DateTime.fromMillisecondsSinceEpoch(chooseDate).month ==
+              DateTime.fromMillisecondsSinceEpoch(data[i]['endTime']).month) {
         Rect rect = Rect.fromLTRB(
-          i * (size.width * 100),  // left
-          DateTime.fromMillisecondsSinceEpoch(chooseDate).month > DateTime.fromMillisecondsSinceEpoch(data[i]['startTime']).month ? size.width * 1: (DateTime.fromMillisecondsSinceEpoch(data[i]['startTime']).day - 1) * (size.width * 50),                                 // top
-          (i+1) * (size.width * 100),                              // right
-          DateTime.fromMillisecondsSinceEpoch(chooseDate).month < DateTime.fromMillisecondsSinceEpoch(data[i]['endTime']).month ? dateList.length * (size.width * 50) : DateTime.fromMillisecondsSinceEpoch(data[i]['endTime']).day * (size.width * 50),                                            // bottom
+          i * (size.width * 100), // left
+          DateTime.fromMillisecondsSinceEpoch(chooseDate).month >
+                  DateTime.fromMillisecondsSinceEpoch(data[i]['startTime'])
+                      .month
+              ? size.width * 1
+              : (DateTime.fromMillisecondsSinceEpoch(data[i]['startTime']).day -
+                      1) *
+                  (size.width * 50), // top
+          (i + 1) * (size.width * 100), // right
+          DateTime.fromMillisecondsSinceEpoch(chooseDate).month <
+                  DateTime.fromMillisecondsSinceEpoch(data[i]['endTime']).month
+              ? dateList.length * (size.width * 50)
+              : DateTime.fromMillisecondsSinceEpoch(data[i]['endTime']).day *
+                  (size.width * 50), // bottom
         );
         canvas.drawRect(rect, i % 2 == 0 ? _paint1 : _paint2);
       }
@@ -1453,20 +1490,27 @@ class _EchartMutipleBarState extends State<EchartMutipleBar> {
           Container(
               margin: EdgeInsets.only(bottom: 30),
               constraints: BoxConstraints(minWidth: widget.width),
-              decoration: BoxDecoration(
-                  border: Border(
-                right: BorderSide(
-                  color: underColor,
-                  width: 1,
-                ),
-              )),
+              // decoration: BoxDecoration(
+              //     border: Border(
+              //   right: BorderSide(
+              //     color: underColor,
+              //     width: size.width * 1,
+              //   ),
+              // )),
               height: widget.height,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: widget.yAxisList
                     .map((e) => Container(
-                          child: Text(e.toString()),
-                        ))
+                          child: Text(
+                            e.toString(),
+                            style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: size.width * 24,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      )
                     .toList(),
               )),
           Expanded(
@@ -1576,60 +1620,58 @@ class _MutipleClickBarState extends State<MutipleClickBar>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          showsTitle = !showsTitle;
-          if (mounted) {
-            setState(() {});
-          }
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: widget.xAxisList[widget.index].nums
-                  .asMap()
-                  .keys
-                  .map<Widget>((i) {
-                return Column(
-                  children: [
-                    showsTitle
-                        ? Center(
-                            child: Text(
-                              widget.xAxisList[widget.index].nums[i].toString(),
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 10),
-                            ),
-                          )
-                        : Container(),
-                    Container(
-                      height: _curveList[i].value,
-                      width: widget.yWidth,
-                      color: widget.xAxisList[widget.index].color.length > i
-                          ? widget.xAxisList[widget.index].color[i]
-                          : color[i],
-                    )
-                  ],
-                );
-              }).toList(),
-            ),
-            Container(
-              constraints: BoxConstraints(minWidth: widget.yWidth * 2 + 20.0),
-              decoration: BoxDecoration(
-                  border: Border(top: BorderSide(width: 1, color: underColor))),
-              padding: EdgeInsets.only(left: 10, right: 10),
-              child: Center(
-                child: Text(
-                  widget.xAxisList[widget.index].names.toString(),
-                  style: TextStyle(height: 1.1),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children:
+              widget.xAxisList[widget.index].nums.asMap().keys.map<Widget>((i) {
+            return Column(
+              children: [
+                Center(
+                  child: Text(
+                    widget.xAxisList[widget.index].nums[i]
+                        .truncate()
+                        .toString(),
+                    style: TextStyle(
+                        color: Color(0xff7F8A9C), fontSize: size.width * 20),
+                  ),
+                ),
+                Container(
+                  height: _curveList[i].value,
+                  width: size.width * 28,
+                  margin: EdgeInsets.symmetric(horizontal: size.width * 2),
+                  color: widget.xAxisList[widget.index].color.length > i
+                      ? widget.xAxisList[widget.index].color[i]
+                      : color[i],
+                )
+              ],
+            );
+          }).toList(),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: size.width * 30),
+          constraints: BoxConstraints(minWidth: widget.yWidth * 2 + 20.0),
+          decoration: BoxDecoration(
+              border: Border(top: BorderSide(width: size.width * 2, color: Colors.black))),
+          child: Padding(
+            padding: EdgeInsets.only(top: size.width * 13),
+            child: 
+            Text(
+                widget.xAxisList[widget.index].names.toString().length > 4 ? widget.xAxisList[widget.index].names.toString().substring(0, 5) : widget.xAxisList[widget.index].names.toString(),
+                style: TextStyle(
+                  fontSize: size.width * 20,
+                  color: Color(0xff333333),
+                  fontWeight: FontWeight.w400
                 ),
               ),
-            )
-          ],
-        ));
+          )
+        )
+      ],
+    );
   }
 }
 

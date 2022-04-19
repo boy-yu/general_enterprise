@@ -18,8 +18,7 @@ class _AmendPsdState extends State<AmendPsd> {
     return MyAppbar(
       title: Text('修改密码'),
       child: !showApp
-          ? SingleChildScrollView(
-              child: AmendPsdContext(state, onPress: (map) {
+          ? AmendPsdContext(state, onPress: (map) {
                 myDio
                     .request(type: 'put', url: Interface.putAmendPsd, data: map)
                     .then((value) {
@@ -27,8 +26,7 @@ class _AmendPsdState extends State<AmendPsd> {
                     showApp = true;
                   });
                 });
-              }),
-            )
+              })
           : AmendPsdLogin(),
     );
   }
@@ -62,28 +60,6 @@ class AmendPsdLogin extends StatelessWidget {
           SizedBox(
             height: size.width * 80,
           ),
-          // RaisedButton(
-          //   onPressed: () {},
-          //   child: Container(
-          //     child: Center(
-          //       child: Text(
-          //         '快速登录',
-          //         style:
-          //             TextStyle(color: Colors.white, fontSize: size.width * 38),
-          //       ),
-          //     ),
-          //     width: size.width * 400,
-          //     height: size.width * 100,
-          //     decoration: BoxDecoration(
-          //         gradient: LinearGradient(colors: lineGradBlue),
-          //         borderRadius: BorderRadius.circular(size.width * 50)),
-          //   ),
-          //   color: Colors.transparent,
-          //   padding: EdgeInsets.all(0),
-          //   highlightElevation: size.width * 100,
-          //   shape:
-          //       StadiumBorder(side: BorderSide(width: 0, color: Colors.white)),
-          // ),
         ],
       )),
     );
@@ -130,276 +106,240 @@ class _AmendPsdContextState extends State<AmendPsdContext> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(top: size.width * 20),
-          color: Colors.white,
-          height: size.width * 200,
-          child: Center(
-            child: Text(
-              '请为您的账号修改密码',
-              style: TextStyle(fontSize: size.width * 30, color: placeHolder),
-            ),
+    return Padding(
+      padding: EdgeInsets.all(size.width * 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: size.width * 32,
           ),
-        ),
-        Container(
-          child: Text(
+          Text(
             '旧密码',
-            style: TextStyle(color: placeHolder),
+            style: TextStyle(
+                color: Color(0xff333333),
+                fontSize: size.width * 28,
+                fontWeight: FontWeight.w500),
           ),
-          margin: EdgeInsets.fromLTRB(size.width * 31, size.width * 31,
-              size.width * 31, size.width * 5),
-        ),
-        Container(
-          decoration: BoxDecoration(color: Colors.white),
-          padding: EdgeInsets.symmetric(
-              horizontal: size.width * 24, vertical: size.width * 30),
-          child: Row(
-            children: <Widget>[
-              Text(
-                '请输入旧密码',
-                style: TextStyle(
-                    color: Color.fromRGBO(38, 38, 38, 1),
-                    fontSize: size.width * 30),
-              ),
-//              Spacer(),
-              SizedBox(width: size.width * 200),
-              Expanded(
-                child: TextField(
-                  controller: oldPad,
-                  obscureText: _obOldPadText,
-                  style: TextStyle(),
-                  onChanged: (value) {
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                  decoration: InputDecoration(
-                    //contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    hintText: "请输入旧密码",
-                    border: InputBorder.none,
-                    suffixIcon: Container(
-                      width: size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          oldPad.text.length > 0
-                              ? GestureDetector(
-                                  child: Icon(Icons.clear),
-                                  onTap: () {
-                                    setState(() {
-                                      oldPad.text = '';
-                                    });
-                                  },
-                                )
-                              : Container(),
-                          oldPad.text.length > 0
-                              ? GestureDetector(
-                                  child: Image.asset(
-                                    _obOldPadText
-                                        ? 'assets/images/icon_eye_close.png'
-                                        : 'assets/images/icon_eye_open.png',
-                                    width: size.width * 40,
-                                    height: size.width * 40,
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-                                      _obOldPadText = !_obOldPadText;
-                                    });
-                                  },
-                                )
-                              : Container(),
-                        ],
-                      ),
-                    ),
-                  ),
+          TextField(
+            controller: oldPad,
+            obscureText: _obOldPadText,
+            style: TextStyle(),
+            onChanged: (value) {
+              if (mounted) {
+                setState(() {});
+              }
+            },
+            decoration: InputDecoration(
+              hintText: "请输入旧密码",
+              hintStyle: TextStyle(
+                  color: Color(0xff7F8A9C), fontSize: size.width * 32),
+              border: InputBorder.none,
+              suffixIcon: Container(
+                width: size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    oldPad.text.length > 0
+                        ? GestureDetector(
+                            child: Icon(Icons.clear),
+                            onTap: () {
+                              setState(() {
+                                oldPad.text = '';
+                              });
+                            },
+                          )
+                        : Container(),
+                    oldPad.text.length > 0
+                        ? GestureDetector(
+                            child: Image.asset(
+                              _obOldPadText
+                                  ? 'assets/images/icon_eye_close.png'
+                                  : 'assets/images/icon_eye_open.png',
+                              width: size.width * 40,
+                              height: size.width * 40,
+                            ),
+                            onTap: () {
+                              setState(() {
+                                _obOldPadText = !_obOldPadText;
+                              });
+                            },
+                          )
+                        : Container(),
+                  ],
                 ),
               ),
-              SizedBox(width: size.width * 5),
-            ],
-          ),
-        ),
-        Container(
-          child: Text(
-            '新密码',
-            style: TextStyle(color: placeHolder),
-          ),
-          margin: EdgeInsets.fromLTRB(
-              size.width * 31, size.width * 5, size.width * 31, size.width * 5),
-        ),
-        Container(
-          decoration: BoxDecoration(color: Colors.white),
-          padding: EdgeInsets.symmetric(
-              horizontal: size.width * 24, vertical: size.width * 30),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Text(
-                    '请输入新密码',
-                    style: TextStyle(
-                        color: Color.fromRGBO(38, 38, 38, 1),
-                        fontSize: size.width * 30),
-                  ),
-                  //Spacer(),
-                  SizedBox(width: size.width * 200),
-                  Expanded(
-                    child: TextField(
-                      controller: firstPsd,
-                      obscureText: _obFirstPadText,
-                      style: TextStyle(),
-                      onChanged: (value) {
-                        if (mounted) {
-                          setState(() {});
-                        }
-                      },
-                      decoration: InputDecoration(
-                        //contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                        hintText: "请输入新密码",
-                        border: InputBorder.none,
-                        suffixIcon: Container(
-                          width: size.width,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              firstPsd.text.length > 0
-                                  ? GestureDetector(
-                                      child: Icon(Icons.clear),
-                                      onTap: () {
-                                        setState(() {
-                                          firstPsd.text = '';
-                                        });
-                                      },
-                                    )
-                                  : Container(),
-                              firstPsd.text.length > 0
-                                  ? GestureDetector(
-                                      child: Image.asset(
-                                        _obFirstPadText
-                                            ? 'assets/images/icon_eye_close.png'
-                                            : 'assets/images/icon_eye_open.png',
-                                        width: size.width * 40,
-                                        height: size.width * 40,
-                                      ),
-                                      onTap: () {
-                                        setState(() {
-                                          _obFirstPadText = !_obFirstPadText;
-                                        });
-                                      },
-                                    )
-                                  : Container(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: size.width * 5),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Text(
-                    '请确认新密码',
-                    style: TextStyle(
-                        color: Color.fromRGBO(38, 38, 38, 1),
-                        fontSize: size.width * 30),
-                  ),
-                  //Spacer(),
-                  SizedBox(width: size.width * 200),
-                  Expanded(
-                    child: TextField(
-                      controller: secondPsd,
-                      obscureText: _obSecondPadText,
-                      style: TextStyle(),
-                      onChanged: (value) {
-                        if (mounted) {
-                          setState(() {});
-                        }
-                      },
-                      decoration: InputDecoration(
-                        //contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                        hintText: "请确认新密码",
-                        border: InputBorder.none,
-                        suffixIcon: Container(
-                          width: size.width,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              secondPsd.text.length > 0
-                                  ? GestureDetector(
-                                      child: Icon(Icons.clear),
-                                      onTap: () {
-                                        setState(() {
-                                          secondPsd.text = '';
-                                        });
-                                      },
-                                    )
-                                  : Container(),
-                              secondPsd.text.length > 0
-                                  ? GestureDetector(
-                                      child: Image.asset(
-                                        _obSecondPadText
-                                            ? 'assets/images/icon_eye_close.png'
-                                            : 'assets/images/icon_eye_open.png',
-                                        width: size.width * 40,
-                                        height: size.width * 40,
-                                      ),
-                                      onTap: () {
-                                        setState(() {
-                                          _obSecondPadText = !_obSecondPadText;
-                                        });
-                                      },
-                                    )
-                                  : Container(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: size.width * 5),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Center(
-            child: GestureDetector(
-          onTap: () {
-            if (oldPad.text == '' ||
-                firstPsd.text == '' ||
-                secondPsd.text == '') {
-              Fluttertoast.showToast(msg: '密码不能为空');
-            } else {
-              if (firstPsd.text != secondPsd.text) {
-                Fluttertoast.showToast(msg: '两次密码不一致');
-              } else {
-                widget.onPress({
-                  "oldPassword": oldPad.text,
-                  "newPassword": firstPsd.text,
-                  "confirmPassword": secondPsd.text
-                });
-              }
-            }
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: lineGradBlue),
-                borderRadius: BorderRadius.circular(15)),
-            child: Text(
-              '保存新密码',
-              style: TextStyle(fontSize: size.width * 30, color: Colors.white),
-              textAlign: TextAlign.center,
             ),
-            width: MediaQuery.of(context).size.width * .8,
-            padding: EdgeInsets.symmetric(vertical: size.width * 31),
-            margin: EdgeInsets.only(top: 60),
           ),
-        ))
-      ],
+          Container(
+            color: Color(0xffF2F2F2),
+            height: size.width * 2,
+            width: double.infinity,
+            margin: EdgeInsets.only(bottom: size.width * 32),
+          ),
+          Text(
+            '新密码',
+            style: TextStyle(
+                color: Color(0xff333333),
+                fontSize: size.width * 28,
+                fontWeight: FontWeight.w500),
+          ),
+          TextField(
+            controller: firstPsd,
+            obscureText: _obFirstPadText,
+            style: TextStyle(),
+            onChanged: (value) {
+              if (mounted) {
+                setState(() {});
+              }
+            },
+            decoration: InputDecoration(
+              //contentPadding: EdgeInsets.symmetric(horizontal: 20),
+              hintText: "请输入新密码",
+              hintStyle: TextStyle(
+                  color: Color(0xff7F8A9C), fontSize: size.width * 32),
+              border: InputBorder.none,
+              suffixIcon: Container(
+                width: size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    firstPsd.text.length > 0
+                        ? GestureDetector(
+                            child: Icon(Icons.clear),
+                            onTap: () {
+                              setState(() {
+                                firstPsd.text = '';
+                              });
+                            },
+                          )
+                        : Container(),
+                    firstPsd.text.length > 0
+                        ? GestureDetector(
+                            child: Image.asset(
+                              _obFirstPadText
+                                  ? 'assets/images/icon_eye_close.png'
+                                  : 'assets/images/icon_eye_open.png',
+                              width: size.width * 40,
+                              height: size.width * 40,
+                            ),
+                            onTap: () {
+                              setState(() {
+                                _obFirstPadText = !_obFirstPadText;
+                              });
+                            },
+                          )
+                        : Container(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Container(
+            color: Color(0xffF2F2F2),
+            height: size.width * 2,
+            width: double.infinity,
+            margin: EdgeInsets.only(bottom: size.width * 32),
+          ),
+          Text(
+            '确认新密码',
+            style: TextStyle(
+                color: Color(0xff333333),
+                fontSize: size.width * 28,
+                fontWeight: FontWeight.w500),
+          ),
+          TextField(
+            controller: secondPsd,
+            obscureText: _obSecondPadText,
+            style: TextStyle(),
+            onChanged: (value) {
+              if (mounted) {
+                setState(() {});
+              }
+            },
+            decoration: InputDecoration(
+              hintText: "请再次输入新密码",
+              hintStyle: TextStyle(
+                  color: Color(0xff7F8A9C), fontSize: size.width * 32),
+              border: InputBorder.none,
+              suffixIcon: Container(
+                width: size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    secondPsd.text.length > 0
+                        ? GestureDetector(
+                            child: Icon(Icons.clear),
+                            onTap: () {
+                              setState(() {
+                                secondPsd.text = '';
+                              });
+                            },
+                          )
+                        : Container(),
+                    secondPsd.text.length > 0
+                        ? GestureDetector(
+                            child: Image.asset(
+                              _obSecondPadText
+                                  ? 'assets/images/icon_eye_close.png'
+                                  : 'assets/images/icon_eye_open.png',
+                              width: size.width * 40,
+                              height: size.width * 40,
+                            ),
+                            onTap: () {
+                              setState(() {
+                                _obSecondPadText = !_obSecondPadText;
+                              });
+                            },
+                          )
+                        : Container(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Container(
+            color: Color(0xffF2F2F2),
+            height: size.width * 2,
+            width: double.infinity,
+            margin: EdgeInsets.only(bottom: size.width * 32),
+          ),
+          Spacer(),
+          GestureDetector(
+            onTap: () {
+              if (oldPad.text == '' ||
+                  firstPsd.text == '' ||
+                  secondPsd.text == '') {
+                Fluttertoast.showToast(msg: '密码不能为空');
+              } else {
+                if (firstPsd.text != secondPsd.text) {
+                  Fluttertoast.showToast(msg: '两次密码不一致');
+                } else {
+                  widget.onPress({
+                    "oldPassword": oldPad.text,
+                    "newPassword": firstPsd.text,
+                    "confirmPassword": secondPsd.text
+                  });
+                }
+              }
+            },
+            child: Container(
+              margin: EdgeInsets.only(bottom: size.width * 30),
+              decoration: BoxDecoration(
+                  color: Color(0xff3074FF),
+                  borderRadius: BorderRadius.circular(size.width * 8)),
+              alignment: Alignment.center,
+              child: Text(
+                '保  存',
+                style:
+                    TextStyle(fontSize: size.width * 32, color: Colors.white),
+              ),
+              width: size.width * 686,
+              height: size.width * 80,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

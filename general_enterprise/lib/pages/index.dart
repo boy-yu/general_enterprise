@@ -3,9 +3,9 @@ import 'package:enterprise/common/myUpdateDialog.dart';
 import 'package:enterprise/pages/chat/chatDataBase.dart';
 import 'package:enterprise/pages/hiddenCheckGovern.dart';
 import 'package:enterprise/pages/home.dart';
+import 'package:enterprise/pages/mine.dart';
 import 'package:enterprise/pages/riskHierarchicalControl.dart';
 import 'package:enterprise/service/context.dart';
-import 'package:enterprise/tool/down.dart';
 import 'package:enterprise/tool/eventBus.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:enterprise/tool/translate.dart';
@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import './person.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'navite.dart' if (dart.library.html) 'diffPlat.dart' as html;
 
@@ -193,20 +192,20 @@ class _IndexState extends State<Index> {
       bottomRoute.add(BottomNavigationBarItem(
         activeIcon: Image.asset(
           item['icon'],
-          width: width * 44,
-          height: width * 44,
+          width: width * 40,
+          height: width * 40,
         ),
         icon: Image.asset(
           item['iconDis'],
-          width: width * 44,
-          height: width * 44,
+          width: width * 40,
+          height: width * 40,
         ),
         // ignore: deprecated_member_use
         title: Text(
           item['name'],
           style: TextStyle(
-            fontSize: width * 24,
-            fontWeight: FontWeight.w700,
+            fontSize: width * 20,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ));
@@ -215,7 +214,7 @@ class _IndexState extends State<Index> {
   }
 
   _pages(width) {
-    List<Widget> pages = [Home(), RiskHierarchicalControl(),  HiddenCheckGovern(), Person(width)];
+    List<Widget> pages = [Home(), RiskHierarchicalControl(),  HiddenCheckGovern(), Mine()];
     return pages[_currentIndex];
   }
 

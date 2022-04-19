@@ -49,7 +49,8 @@ class _MyMessageState extends State<MyMessage> {
       return false;
     }
     // 身份证号码正则
-    RegExp postalCode = new RegExp(r'^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|[Xx])$');
+    RegExp postalCode = new RegExp(
+        r'^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|[Xx])$');
     // 验证格式格式正确，但仍需计算准确性
     if (!postalCode.hasMatch(cardId)) {
       Fluttertoast.showToast(msg: '请输入正确格式身份证号');
@@ -119,431 +120,370 @@ class _MyMessageState extends State<MyMessage> {
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
-      title: Text('编辑资料'),
-      child: ListView(
-        children: [
-          Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: size.width * 85,
-                ),
-                Center(
-                    child: Stack(
+      title: Text(
+        '编辑资料',
+        style: TextStyle(fontSize: size.width * 32),
+      ),
+      child: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      child: FadeInImage(
-                          fit: BoxFit.cover,
-                          width: size.width * 200,
-                          height: size.width * 200,
-                          placeholder: AssetImage(
-                              'assets/images/image_recent_control.jpg'),
-                          image: NetworkImage(myprefs.getString('photoUrl'))),
+                    SizedBox(
+                      height: size.width * 40,
                     ),
-                    Positioned(
-                        right: 0,
-                        bottom: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/person/avatar',
-                                arguments: {
+                    Center(
+                        child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 68)),
+                          child: FadeInImage(
+                              fit: BoxFit.cover,
+                              width: size.width * 160,
+                              height: size.width * 160,
+                              placeholder: AssetImage(
+                                  'assets/images/image_recent_control.jpg'),
+                              image:
+                                  NetworkImage(myprefs.getString('photoUrl'))),
+                        ),
+                        Positioned(
+                            right: 0,
+                            bottom: 0,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed('/person/avatar', arguments: {
                                   'photoUrl': myprefs.getString('photoUrl')
                                 }).then((value) {
+                                  setState(() {});
+                                });
+                              },
+                              child: Image.asset(
+                                'assets/images/doubleRiskProjeck/icon_my_ava_update.png',
+                                height: size.width * 56,
+                                width: size.width * 56,
+                              ),
+                            ))
+                      ],
+                    )),
+                    SizedBox(
+                      height: size.width * 24,
+                    ),
+                    Center(
+                      child: Text(
+                        '更改头像',
+                        style: TextStyle(
+                            color: Color(0xff000000),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.width * 60,
+                    ),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '手机号',
+                            style: TextStyle(
+                                color: Color(0xff333333),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          TextField(
+                            keyboardType: TextInputType.phone,
+                            textInputAction: TextInputAction.next,
+                            controller: _controller1,
+                            onChanged: (value) {
+                              cellPhoneNum = value;
                               setState(() {});
-                            });
-                          },
-                          child: Container(
-                            height: size.width * 57,
-                            width: size.width * 57,
-                            decoration: BoxDecoration(
-                                color: Color(0xffFF7A0B),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50.0))),
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              'assets/images/icon_my_mes_potot.png',
-                              height: size.width * 27,
-                              width: size.width * 33,
-                            ),
+                            },
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                    fontSize: size.width * 32,
+                                    color: Color(0xff333333)),
+                                hintText: cellPhoneNum == ''
+                                    ? myprefs.getString('telephone') == ''
+                                        ? '请输入手机号码'
+                                        : myprefs.getString('telephone')
+                                    : cellPhoneNum),
+                            maxLines: 1,
+                            minLines: 1,
                           ),
-                        ))
-                  ],
-                )),
-                SizedBox(
-                  height: size.width * 34,
-                ),
-                Center(
-                  child: Text(
-                    '更改头像',
-                    style: TextStyle(
-                        color: Color(0xff333333),
-                        fontSize: size.width * 32,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  height: size.width * 30,
-                ),
-                // 手机号码
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: size.width * 260,
-                        ),
-                        child: Text(
-                          '手机号',
-                          style: TextStyle(
-                              color: Color(0xff333333),
-                              fontSize: size.width * 32,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                          child: Container(
-                        child: TextField(
-                          keyboardType: TextInputType.phone,
-                          textInputAction: TextInputAction.next,
-                          controller: _controller1,
-                          textAlign: TextAlign.right,
-                          onChanged: (value) {
-                            cellPhoneNum = value;
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.all(5),
-                              hintStyle: TextStyle(
-                                  fontSize: size.width * 30,
-                                  color: Color(0xff666666)),
-                              hintText: cellPhoneNum == ''
-                                  ? myprefs.getString('telephone') == ''
-                                      ? '请输入手机号码'
-                                      : myprefs.getString('telephone')
-                                  : cellPhoneNum),
-                          maxLines: 1,
-                          minLines: 1,
-                        ),
-                      )),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Color(0xff7D7D7D).withOpacity(0.25),
-                  height: size.width * 1,
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(vertical: size.width * 0),
-                ),
-                // 身份证号
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: size.width * 260,
-                        ),
-                        child: Text(
-                          '身份证号',
-                          style: TextStyle(
-                              color: Color(0xff333333),
-                              fontSize: size.width * 32,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                          child: Container(
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
-                          controller: _controller2,
-                          textAlign: TextAlign.right,
-                          onChanged: (value) {
-                            idNum = value;
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.all(5),
-                              hintStyle: TextStyle(
-                                  fontSize: size.width * 30,
-                                  color: Color(0xff666666)),
-                              hintText: idNum == ''
-                                  ? myprefs.getString('identityNum') == ''
-                                      ? '请输入身份证号'
-                                      : myprefs.getString('identityNum')
-                                  : idNum),
-                          maxLines: 1,
-                          minLines: 1,
-                        ),
-                      )),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Color(0xff7D7D7D).withOpacity(0.25),
-                  height: size.width * 1,
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(vertical: size.width * 0),
-                ),
-                // 人员类别
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: size.width * 260,
-                        ),
-                        child: Text(
-                          '人员类别',
-                          style: TextStyle(
-                              color: Color(0xff333333),
-                              fontSize: size.width * 32,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                          child: Container(
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          textInputAction: TextInputAction.next,
-                          controller: _controller3,
-                          textAlign: TextAlign.right,
-                          onChanged: (value) {
-                            perCategory = value;
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.all(5),
-                              hintStyle: TextStyle(
-                                  fontSize: size.width * 30,
-                                  color: Color(0xff666666)),
-                              hintText: perCategory == ''
-                                  ? myprefs.getString('type') == ''
-                                      ? '例如：安全管理人员'
-                                      : myprefs.getString('type')
-                                  : perCategory),
-                          maxLines: 1,
-                          minLines: 1,
-                        ),
-                      )),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Color(0xff7D7D7D).withOpacity(0.25),
-                  height: size.width * 1,
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(vertical: size.width * 0),
-                ),
-                // 学历
-                Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 30, vertical: size.width * 30),
-                    child: GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            isDismissible: true,
-                            isScrollControlled: false,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(15),
-                                    topRight: Radius.circular(15))),
-                            builder: (BuildContext context) {
-                              return ListView.builder(
-                                itemCount: dropList.length,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      education = dropList[index].toString();
-                                      setState(() {});
-                                      Navigator.pop(context);
-                                    },
-                                    child: ListTile(
-                                      title: Text(dropList[index].toString()),
-                                    ),
-                                  );
-                                },
-                              );
-                            });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
                           Container(
-                            constraints: BoxConstraints(
-                              maxWidth: size.width * 260,
-                            ),
-                            child: Text(
-                              '学历',
-                              style: TextStyle(
-                                  color: Color(0xff333333),
-                                  fontSize: size.width * 32,
-                                  fontWeight: FontWeight.bold),
+                            color: Color(0xffF2F2F2),
+                            height: size.width * 2,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(bottom: size.width * 32),
+                          ),
+                          Text(
+                            '身份证号',
+                            style: TextStyle(
+                                color: Color(0xff333333),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          TextField(
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            controller: _controller2,
+                            onChanged: (value) {
+                              idNum = value;
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                    fontSize: size.width * 32,
+                                    color: Color(0xff333333)),
+                                hintText: idNum == ''
+                                    ? myprefs.getString('identityNum') == ''
+                                        ? '请输入身份证号'
+                                        : myprefs.getString('identityNum')
+                                    : idNum),
+                            maxLines: 1,
+                            minLines: 1,
+                          ),
+                          Container(
+                            color: Color(0xffF2F2F2),
+                            height: size.width * 2,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(bottom: size.width * 32),
+                          ),
+                          Text(
+                            '人员类别',
+                            style: TextStyle(
+                                color: Color(0xff333333),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          TextField(
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
+                            controller: _controller3,
+                            onChanged: (value) {
+                              perCategory = value;
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                    fontSize: size.width * 32,
+                                    color: Color(0xff333333)),
+                                hintText: perCategory == ''
+                                    ? myprefs.getString('type') == ''
+                                        ? '例如：安全管理人员'
+                                        : myprefs.getString('type')
+                                    : perCategory),
+                            maxLines: 1,
+                            minLines: 1,
+                          ),
+                          Container(
+                            color: Color(0xffF2F2F2),
+                            height: size.width * 2,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(bottom: size.width * 32),
+                          ),
+                          Text(
+                            '学历',
+                            style: TextStyle(
+                                color: Color(0xff333333),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  isDismissible: true,
+                                  isScrollControlled: false,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15))),
+                                  builder: (BuildContext context) {
+                                    return ListView.builder(
+                                      itemCount: dropList.length,
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            education =
+                                                dropList[index].toString();
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                          },
+                                          child: ListTile(
+                                            title: Text(
+                                                dropList[index].toString()),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: size.width * 20),
+                              child: Row(
+                                children: [
+                                  education == ''
+                                      ? Text(
+                                          myprefs.getString('education') == ''
+                                              ? '请选择'
+                                              : myprefs.getString('education'),
+                                          style: TextStyle(
+                                              fontSize: size.width * 32,
+                                              color: Color(0xff333333)),
+                                        )
+                                      : Text(
+                                          education,
+                                          style: TextStyle(
+                                              fontSize: size.width * 32,
+                                              color: Color(0xff333333)),
+                                        ),
+                                  Spacer(),
+                                  Icon(
+                                    Icons.keyboard_arrow_right,
+                                    color: Color(0xff999999),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                          Spacer(),
-                          education == ''
-                              ? Text(
-                                  myprefs.getString('education') == ''
-                                      ? '请选择'
-                                      : myprefs.getString('education'),
-                                  style: TextStyle(
-                                      fontSize: size.width * 30,
-                                      color: Color(0xff666666)),
-                                )
-                              : Text(
-                                  education,
-                                  style: TextStyle(
-                                      fontSize: size.width * 30,
-                                      color: Color(0xff666666)),
-                                ),
-                          Icon(
-                            Icons.keyboard_arrow_right,
-                            color: Color(0xff999999),
-                          )
+                          Container(
+                            color: Color(0xffF2F2F2),
+                            height: size.width * 2,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(bottom: size.width * 32),
+                          ),
+                          Text(
+                            '专业',
+                            style: TextStyle(
+                                color: Color(0xff333333),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          TextField(
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
+                            controller: _controller4,
+                            onChanged: (value) {
+                              major = value;
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                    fontSize: size.width * 32,
+                                    color: Color(0xff333333)),
+                                hintText: major == ''
+                                    ? myprefs.getString('specialty') == ''
+                                        ? '请输入专业名称'
+                                        : myprefs.getString('specialty')
+                                    : major),
+                            maxLines: 1,
+                            minLines: 1,
+                          ),
+                          Container(
+                            color: Color(0xffF2F2F2),
+                            height: size.width * 2,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(bottom: size.width * 32),
+                          ),
                         ],
                       ),
-                    )),
-                Container(
-                  color: Color(0xff7D7D7D).withOpacity(0.25),
-                  height: size.width * 1,
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(vertical: size.width * 0),
+                    ),
+                  ],
                 ),
-                // 专业
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: size.width * 260,
-                        ),
-                        child: Text(
-                          '专业',
-                          style: TextStyle(
-                              color: Color(0xff333333),
-                              fontSize: size.width * 32,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                          child: Container(
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          textInputAction: TextInputAction.next,
-                          controller: _controller4,
-                          textAlign: TextAlign.right,
-                          onChanged: (value) {
-                            major = value;
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.all(5),
-                              hintStyle: TextStyle(
-                                  fontSize: size.width * 30,
-                                  color: Color(0xff666666)),
-                              hintText: major == ''
-                                  ? myprefs.getString('specialty') == ''
-                                      ? '请输入专业名称'
-                                      : myprefs.getString('specialty')
-                                  : major),
-                          maxLines: 1,
-                          minLines: 1,
-                        ),
-                      )),
-                    ],
+              ),
+              GestureDetector(
+                onTap: () {
+                  Map submitData = {
+                    'telephone': myprefs.getString('telephone'),
+                    'identityNum': myprefs.getString('identityNum'),
+                    'type': myprefs.getString('type'),
+                    'education': myprefs.getString('education'),
+                    'specialty': myprefs.getString('specialty'),
+                  };
+                  if (cellPhoneNum != '') {
+                    if (!isChinaPhoneLegal(cellPhoneNum)) {
+                      Fluttertoast.showToast(msg: '请输入正确手机号码');
+                      return;
+                    } else {
+                      submitData['telephone'] = cellPhoneNum;
+                    }
+                  }
+                  if (idNum != '') {
+                    if (!isCardId(idNum)) {
+                      return;
+                    } else {
+                      submitData['identityNum'] = idNum;
+                    }
+                  }
+                  if (perCategory != '') {
+                    submitData['type'] = perCategory;
+                  }
+                  if (major != '') {
+                    submitData['specialty'] = major;
+                  }
+                  if (education != '') {
+                    submitData['education'] = education;
+                  }
+                  myDio
+                      .request(
+                          type: 'put',
+                          url: Interface.amendAvatar,
+                          data: submitData)
+                      .then((value) {
+                    if (cellPhoneNum != '') {
+                      myprefs.setString('telephone', cellPhoneNum);
+                    }
+                    if (idNum != '') {
+                      myprefs.setString('identityNum', idNum);
+                    }
+                    if (perCategory != '') {
+                      myprefs.setString('type', perCategory);
+                    }
+                    if (education != '') {
+                      myprefs.setString('education', education);
+                    }
+                    if (major != '') {
+                      myprefs.setString('specialty', major);
+                    }
+                    successToast('修改成功');
+                    if (mounted) {
+                      setState(() {});
+                    }
+                  });
+                },
+                child: Container(
+                  height: size.width * 80,
+                  width: size.width * 686,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(bottom: size.width * 50),
+                  decoration: BoxDecoration(
+                      color: Color(0xff3074FF),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 8))),
+                  child: Text(
+                    "保  存",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: size.width * 32,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        GestureDetector(
-          onTap: () {
-            Map submitData = {
-              'telephone': myprefs.getString('telephone'),
-              'identityNum': myprefs.getString('identityNum'),
-              'type': myprefs.getString('type'),
-              'education': myprefs.getString('education'),
-              'specialty': myprefs.getString('specialty'),
-            };
-            if (cellPhoneNum != '') {
-              if (!isChinaPhoneLegal(cellPhoneNum)) {
-                Fluttertoast.showToast(msg: '请输入正确手机号码');
-                return;
-              } else {
-                submitData['telephone'] = cellPhoneNum;
-              }
-            }
-            if (idNum != '') {
-              if (!isCardId(idNum)) {
-                return;
-              } else {
-                submitData['identityNum'] = idNum;
-              }
-            }
-            if (perCategory != '') {
-              submitData['type'] = perCategory;
-            }
-            if (major != '') {
-              submitData['specialty'] = major;
-            }
-            if (education != '') {
-              submitData['education'] = education;
-            }
-            myDio
-                .request(
-                    type: 'put', url: Interface.amendAvatar, data: submitData)
-                .then((value) {
-              if (cellPhoneNum != '') {
-                myprefs.setString('telephone', cellPhoneNum);
-              }
-              if (idNum != '') {
-                myprefs.setString('identityNum', idNum);
-              }
-              if (perCategory != '') {
-                myprefs.setString('type', perCategory);
-              }
-              if (education != '') {
-                myprefs.setString('education', education);
-              }
-              if (major != '') {
-                myprefs.setString('specialty', major);
-              }
-              successToast('修改成功');
-              if (mounted) {
-                setState(() {});
-              }
-            });
-          },
-          child: Container(
-            color: Colors.transparent,
-            height: size.width * 128,
-            width: size.width * 128,
-            alignment: Alignment.center,
-            child: Text(
-              '保存',
-              style: TextStyle(fontSize: size.width * 26),
-            ),
-          ),
-        )
-      ],
+              )
+            ],
+          )),
     );
   }
 }

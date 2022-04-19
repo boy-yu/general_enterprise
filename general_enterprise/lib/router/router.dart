@@ -23,7 +23,6 @@ import 'package:enterprise/pages/home/twoSingleCard/twoSingleCardRouter.dart';
 import 'package:enterprise/pages/home/work/workRouter.dart';
 import 'package:enterprise/pages/index.dart';
 import 'package:enterprise/pages/person/avatar.dart';
-import 'package:enterprise/pages/person/customCameraPage.dart';
 import 'package:enterprise/pages/person/myMessage.dart';
 import 'package:enterprise/pages/person/sign.dart';
 import 'package:enterprise/pages/waitWork/_cancelWorkApply.dart';
@@ -34,7 +33,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../pages/login.dart';
 import '../pages/person/updata.dart';
-import '../pages/person/about.dart';
 import '../pages/person/amend_psd.dart';
 import '../common/sign.dart';
 import '../pages/home/risk/riskRoute.dart';
@@ -118,13 +116,11 @@ class Routers {
         CancelWorkApply(arguments: arguments), //取消作业
     '/index': (context, {arguments}) => Index(), // 主页
     '/person/updata': (context, {arguments}) => Updata(), //更新页面
-    '/person/about': (context, {arguments}) => About(), // 关于
     '/person/psd': (context, {arguments}) => AmendPsd(), //密码
     '/person/sign': (context, {arguments}) => PersonSign(), //签名
     '/person/avatar': (context, {arguments}) =>
         PersonAvatar(arguments: arguments), //头像上传
     '/person/myMessage': (context, {arguments}) => MyMessage(), // 个人信息
-    '/person/customCameraPage': (context, {arguments}) => CustomCameraPage(), // 人脸录入
 
     '/sign': (context, {arguments}) => Sign(arguments: arguments), //签名组件
 
