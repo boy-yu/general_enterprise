@@ -25,6 +25,7 @@ import 'package:enterprise/pages/index.dart';
 import 'package:enterprise/pages/person/avatar.dart';
 import 'package:enterprise/pages/person/myMessage.dart';
 import 'package:enterprise/pages/person/sign.dart';
+import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/riskIdentifyTaskRouter.dart';
 import 'package:enterprise/pages/waitWork/_cancelWorkApply.dart';
 import 'package:enterprise/pages/waitWork/waitRouter.dart';
 import 'package:enterprise/pages/webRtc/_callView.dart';
@@ -83,6 +84,11 @@ class Routers {
       _routers.addAll(element);
     });
     closedManagementRouter.forEach((element) {
+      _routers.addAll(element);
+    });
+
+    // 风险分级管控 风险辨识任务
+    riskIdentifyTaskRouter.forEach((element) {
       _routers.addAll(element);
     });
   }

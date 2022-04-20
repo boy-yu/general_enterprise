@@ -3,7 +3,6 @@ import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../common/myCustomColor.dart';
 
 class AmendPsd extends StatefulWidget {
   @override
