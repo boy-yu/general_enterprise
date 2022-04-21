@@ -87,7 +87,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                       fontWeight: FontWeight.w500),
                 ),
                 TextField(
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.text,
                   textInputAction: TextInputAction.next,
                   controller: _controllerEvent,
                   onChanged: (value) {
@@ -118,7 +118,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                       fontWeight: FontWeight.w500),
                 ),
                 TextField(
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.text,
                   textInputAction: TextInputAction.next,
                   controller: _controllerDescribe,
                   onChanged: (value) {

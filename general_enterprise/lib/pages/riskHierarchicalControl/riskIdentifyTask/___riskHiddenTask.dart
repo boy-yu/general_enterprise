@@ -4,15 +4,15 @@ import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
 import 'package:flutter/material.dart';
 
-class RiskIdentifyTaskMeasure extends StatefulWidget {
-  RiskIdentifyTaskMeasure({this.leftBarList, this.index});
+class RiskHiddenTask extends StatefulWidget {
+  RiskHiddenTask({this.leftBarList, this.index});
   final List leftBarList;
   final int index;
   @override
-  State<RiskIdentifyTaskMeasure> createState() => _RiskIdentifyTaskMeasureState();
+  State<RiskHiddenTask> createState() => _RiskHiddenTaskState();
 }
 
-class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
+class _RiskHiddenTaskState extends State<RiskHiddenTask> {
   ThrowFunc _throwFunc = new ThrowFunc();
 
   int leftBarIndex = 0;
@@ -25,54 +25,43 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
 
   List data = [
     {
-      "riskMeasure": "这是措施1",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "checkTask": "这是XXXXXXXXX隐患内容1",
+      "pollingPeriod": "7天/次",
+      "controlMeans": "台账",
     },
     {
-      "riskMeasure": "这是XXXXXXXXX措施2",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "checkTask": "这是XXXXXXXXX隐患内容2",
+      "pollingPeriod": "7天/次",
+      "controlMeans": "台账",
     },
     {
-      "riskMeasure": "这是XXXXXXXXX措施3",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "checkTask": "这是XXXXXXXXX隐患内容3",
+      "pollingPeriod": "7天/次",
+      "controlMeans": "台账",
     },
     {
-      "riskMeasure": "这是XXXXXXXXX措施4",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "checkTask": "这是XXXXXXXXX隐患内容4",
+      "pollingPeriod": "7天/次",
+      "controlMeans": "台账",
     },
     {
-      "riskMeasure": "这是XXXXXXXXX措施5",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "checkTask": "这是XXXXXXXXX隐患内容5",
+      "pollingPeriod": "7天/次",
+      "controlMeans": "台账",
     },
     {
-      "riskMeasure": "这是XXXXXXXXX措施6",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "checkTask": "这是XXXXXXXXX隐患内容6",
+      "pollingPeriod": "7天/次",
+      "controlMeans": "台账",
     },
   ];
+
 
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
       title: Text(
-        "风险管控措施",
+        "隐患排查内容",
         style: TextStyle(fontSize: size.width * 32),
       ),
       child: Row(children: [
@@ -113,7 +102,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                         ),
                         Container(
                           width: size.width * 200,
-                          child: Text(widget.leftBarList[index]['riskIncident'],
+                          child: Text(widget.leftBarList[index]['riskMeasure'].toString(),
                               style: TextStyle(
                                   color: index == leftBarIndex
                                       ? Color(0xff333333)
@@ -137,14 +126,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
           child: MyRefres(
             child: (index, list) => GestureDetector(
               onTap: () {
-                Navigator.pushNamed(
-                    context, 
-                    '/riskIdentifyTask/riskHiddenTask',
-                    arguments: {
-                      'index': index,
-                      'data': list
-                    }
-                  );
+                
               },
               child: Container(
                 margin: EdgeInsets.only(
@@ -175,7 +157,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                              Color(0xff5FD5EC).withOpacity(0.12),
+                              Color(0xffF56271).withOpacity(0.12),
                               Colors.transparent,
                             ],
                           ),
@@ -185,7 +167,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                           horizontal: size.width * 20,
                           vertical: size.width * 16),
                       child: Text(
-                        list[index]['riskMeasure'],
+                        list[index]['checkTask'],
                         style: TextStyle(
                             color: Color(0xff333333),
                             fontSize: size.width * 28,
@@ -208,11 +190,11 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                       fontWeight: FontWeight.w400),
                                   children: <InlineSpan>[
                                     TextSpan(
-                                        text: '管控方式：',
+                                        text: '巡检周期：',
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['controlMode'],
+                                        text: list[index]['pollingPeriod'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -227,49 +209,11 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                       fontWeight: FontWeight.w400),
                                   children: <InlineSpan>[
                                     TextSpan(
-                                        text: '管控措施分类1：',
+                                        text: '管控手段：',
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['controlClassify1'],
-                                        style: TextStyle(
-                                            color: Color(0xff7F8A9C))),
-                                  ]),
-                            ),
-                            SizedBox(
-                              height: size.width * 16,
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: size.width * 24,
-                                      fontWeight: FontWeight.w400),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                        text: '管控措施分类2：',
-                                        style: TextStyle(
-                                            color: Color(0xff333333))),
-                                    TextSpan(
-                                        text: list[index]['controlClassify2'],
-                                        style: TextStyle(
-                                            color: Color(0xff7F8A9C))),
-                                  ]),
-                            ),
-                            SizedBox(
-                              height: size.width * 16,
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: size.width * 24,
-                                      fontWeight: FontWeight.w400),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                        text: '管控措施分类3：',
-                                        style: TextStyle(
-                                            color: Color(0xff333333))),
-                                    TextSpan(
-                                        text: list[index]['controlClassify3'],
+                                        text: list[index]['controlMeans'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -300,7 +244,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
           onTap: (){
             Navigator.pushNamed(
               context, 
-              '/riskIdentifyTask/addControlMeasure'
+              '/riskIdentifyTask/addHiddenTask'
             ).then((value) => {
               _throwFunc.run()
             });

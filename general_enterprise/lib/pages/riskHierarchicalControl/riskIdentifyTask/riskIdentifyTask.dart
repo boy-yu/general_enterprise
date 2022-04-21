@@ -23,14 +23,14 @@ class _RiskIdentifyTaskState extends State<RiskIdentifyTask> {
 
   List data = [
     {
-      "riskUnit": "风险单元对象1风险单元对象1风险单元对象1风险单元对象1风险单元对象1",
+      "riskUnit": "风险单元1风险单元1风险单元1风险单元1风险单元1",
       "type": "其他伤害其他伤害其他伤害其他伤害其他伤害"
     },
-    {"riskUnit": "风险单元对象2", "type": "其他伤害"},
-    {"riskUnit": "风险单元对象3", "type": "其他伤害"},
-    {"riskUnit": "风险单元对象4", "type": "其他伤害"},
-    {"riskUnit": "风险单元对象5", "type": "其他伤害"},
-    {"riskUnit": "风险单元对象6", "type": "其他伤害"},
+    {"riskUnit": "风险单元2", "type": "其他伤害"},
+    {"riskUnit": "风险单元3", "type": "其他伤害"},
+    {"riskUnit": "风险单元4", "type": "其他伤害"},
+    {"riskUnit": "风险单元5", "type": "其他伤害"},
+    {"riskUnit": "风险单元6", "type": "其他伤害"},
   ];
 
   @override

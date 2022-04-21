@@ -1,3 +1,5 @@
+import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/___addHiddenTask.dart';
+import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/___riskHiddenTask.dart';
 import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/__addControlMeasure.dart';
 import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/__riskIdentifyTaskMeasure.dart';
 import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/_addRiskEvent.dart';
@@ -28,5 +30,15 @@ List<Map<String, Widget Function(BuildContext context, {dynamic arguments})>>
         AddControlMeasure()
   },
   
+  {
+    '/riskIdentifyTask/riskHiddenTask': (context, {arguments}) =>
+        RiskHiddenTask(
+            index: arguments['index'], leftBarList: arguments['data']
+        )
+  },
+  {
+    '/riskIdentifyTask/addHiddenTask': (context, {arguments}) =>
+        AddHiddenTask()
+  },
   
 ];

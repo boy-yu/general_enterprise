@@ -22,10 +22,12 @@ import 'package:enterprise/pages/home/spotCheck/spotCheckRoute.dart';
 import 'package:enterprise/pages/home/twoSingleCard/twoSingleCardRouter.dart';
 import 'package:enterprise/pages/home/work/workRouter.dart';
 import 'package:enterprise/pages/index.dart';
+import 'package:enterprise/pages/person/adress_book.dart';
 import 'package:enterprise/pages/person/avatar.dart';
 import 'package:enterprise/pages/person/myMessage.dart';
 import 'package:enterprise/pages/person/sign.dart';
 import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/riskIdentifyTaskRouter.dart';
+import 'package:enterprise/pages/riskHierarchicalControl/safetyRiskList/safetyRiskListRouter.dart';
 import 'package:enterprise/pages/waitWork/_cancelWorkApply.dart';
 import 'package:enterprise/pages/waitWork/waitRouter.dart';
 import 'package:enterprise/pages/webRtc/_callView.dart';
@@ -91,6 +93,10 @@ class Routers {
     riskIdentifyTaskRouter.forEach((element) {
       _routers.addAll(element);
     });
+    // 风险分级管控 安全风险清单
+    safetyRiskListRouter.forEach((element) {
+      _routers.addAll(element);
+    });
   }
 
   List<OwnPage> list = [
@@ -107,7 +113,8 @@ class Routers {
     '/personalImage': (context, {arguments}) => PersonalImage(
       barcode: arguments['barcode']
     ), 
-
+    '/person/adressBook': (context, {arguments}) => AdressBook(), 
+    
     '/webview': (context, {arguments}) =>
         MyWebView(arguments: arguments), // 内嵌浏览器
     '/webviews': (context, {arguments}) =>

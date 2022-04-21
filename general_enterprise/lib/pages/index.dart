@@ -7,6 +7,7 @@ import 'package:enterprise/pages/mine.dart';
 import 'package:enterprise/pages/riskHierarchicalControl.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/eventBus.dart';
+import 'package:enterprise/tool/funcType.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:enterprise/tool/translate.dart';
 import 'package:flutter/material.dart';
@@ -239,6 +240,10 @@ class _IndexState extends State<Index> {
                 currentIndex: _currentIndex,
                 type: BottomNavigationBarType.shifting,
                 onTap: (index) {
+                  if (PeopleStructure.state && index == 2) {
+                    successToast('通讯录正在加载，请稍后重试');
+                    return;
+                  }
                   setState(() {
                     _currentIndex = index;
                   });

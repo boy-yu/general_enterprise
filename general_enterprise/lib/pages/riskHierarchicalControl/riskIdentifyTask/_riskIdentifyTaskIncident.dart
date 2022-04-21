@@ -26,38 +26,38 @@ class _RiskIdentifyTaskIncidentState extends State<RiskIdentifyTaskIncident> {
 
   List data = [
     {
-      "riskIncident": "风险单元对象1风险单元对象1风险单元对象1风险单元对象1风险单元对象1",
+      "riskIncident": "这是安全风险事件1这是安全风险事件1这是安全风险事件1这是安全风险事件1这是安全风险事件1",
       "riskDescribe":
           "这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述",
       "initialRiskLevel": "3",
       "currentRiskLevel": "2"
     },
     {
-      "riskIncident": "风险单元对象2",
+      "riskIncident": "这是安全风险事件2",
       "riskDescribe": "这是风险描述这是风险描述",
       "initialRiskLevel": "3",
       "currentRiskLevel": "2"
     },
     {
-      "riskIncident": "风险单元对象3",
+      "riskIncident": "这是安全风险事件3",
       "riskDescribe": "这是风险描述这是风险描述",
       "initialRiskLevel": "3",
       "currentRiskLevel": "2"
     },
     {
-      "riskIncident": "风险单元对象4",
+      "riskIncident": "这是安全风险事件4",
       "riskDescribe": "这是风险描述这是风险描述",
       "initialRiskLevel": "3",
       "currentRiskLevel": "2"
     },
     {
-      "riskIncident": "风险单元对象5",
+      "riskIncident": "这是安全风险事件5",
       "riskDescribe": "这是风险描述这是风险描述",
       "initialRiskLevel": "3",
       "currentRiskLevel": "2"
     },
     {
-      "riskIncident": "风险单元对象6",
+      "riskIncident": "这是安全风险事件6",
       "riskDescribe": "这是风险描述这是风险描述",
       "initialRiskLevel": "3",
       "currentRiskLevel": "2"
