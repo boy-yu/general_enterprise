@@ -53,7 +53,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
       'time': '2022-05-12 13:12',
       'liablePerson': '整改责任人',
       'controlMeasures': '整改措施整改措施整改措施整改措施整改措施整改措施整改措施',
-      'liableUrl': 
+      'liableUrl': 'assets/images/doubleRiskProjeck/bg_home_my.png'
     },
   ];
 
