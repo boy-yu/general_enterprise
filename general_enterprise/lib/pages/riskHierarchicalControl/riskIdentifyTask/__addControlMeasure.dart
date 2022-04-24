@@ -11,12 +11,14 @@ class AddControlMeasure extends StatefulWidget {
 class _AddControlMeasureState extends State<AddControlMeasure> {
   TextEditingController _controllerMeasures = TextEditingController();
   TextEditingController _controllerClassify3 = TextEditingController();
+  TextEditingController _controllerTroubleshootContent = TextEditingController();
 
   Map submitData = {
     'controlMeasures': '',
     'controlClassify1': '',
     'controlClassify2': '',
     'controlClassify3': '',
+    'troubleshootContent': ''
   };
 
   List classify1Choice = ["工程技术", "维护保养", "操作行为", "应急措施"];
@@ -280,6 +282,38 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                     width: double.infinity,
                     margin: EdgeInsets.only(bottom: size.width * 32),
                   ),
+                  Text(
+                    '隐患排查内容',
+                    style: TextStyle(
+                        color: Color(0xff333333),
+                        fontSize: size.width * 28,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    controller: _controllerTroubleshootContent,
+                    onChanged: (value) {
+                      submitData['troubleshootContent'] = value;
+                      setState(() {});
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(
+                            fontSize: size.width * 28,
+                            color: Color(0xff7F8A9C)),
+                        hintText: submitData['troubleshootContent'] == ''
+                            ? '请输入隐患排查内容'
+                            : submitData['troubleshootContent']),
+                    maxLines: 1,
+                    minLines: 1,
+                  ),
+                  Container(
+                    color: Color(0xffECECEC),
+                    height: size.width * 2,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(bottom: size.width * 32),
+                  ),
                 ],
               )),
               GestureDetector(
@@ -291,6 +325,8 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                     Fluttertoast.showToast(msg: "请选择管控措施分类1");
                   }else if(submitData['controlClassify2'] == ''){
                     Fluttertoast.showToast(msg: "请选择管控措施分类2");
+                  }else if(submitData['troubleshootContent'] == ''){
+                    Fluttertoast.showToast(msg: "请填写隐患排查内容");
                   }else{
                     Navigator.of(context).pop();
                   }

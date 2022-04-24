@@ -126,10 +126,7 @@ class _RiskIdentifyTaskState extends State<RiskIdentifyTask> {
                           blurRadius: 1.0)
                     ]),
                 alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
+                child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -141,7 +138,9 @@ class _RiskIdentifyTaskState extends State<RiskIdentifyTask> {
                           ],
                         ),
                         borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(size.width * 16))
+                        topRight: Radius.circular(size.width * 16),
+                        bottomLeft: Radius.circular(size.width * 16),
+                        bottomRight: Radius.circular(size.width * 16)),
                       ),
                       padding: EdgeInsets.symmetric(horizontal: size.width * 20, vertical: size.width * 16),
                       child: Text(
@@ -152,18 +151,6 @@ class _RiskIdentifyTaskState extends State<RiskIdentifyTask> {
                             fontWeight: FontWeight.w500),
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(right: size.width * 20, left: size.width * 20, top: size.width * 16, bottom: size.width * 28),
-                      child: Text(
-                        list[index]['type'],
-                        style: TextStyle(
-                            color: Color(0xff7F8A9C),
-                            fontSize: size.width * 28,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    )
-                  ],
-                ),
               ),
             ),
             // page: true,

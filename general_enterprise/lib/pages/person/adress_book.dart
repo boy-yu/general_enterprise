@@ -278,7 +278,7 @@ class _AdressBookState extends State<AdressBook> with TickerProviderStateMixin {
         padding: EdgeInsets.only(
             left: size.width * 131,
             right: size.width * 131,
-            top: size.width * 60,
+            top: size.width * 100,
             bottom: size.width * 20),
         decoration: BoxDecoration(color: themeColor),
       ),

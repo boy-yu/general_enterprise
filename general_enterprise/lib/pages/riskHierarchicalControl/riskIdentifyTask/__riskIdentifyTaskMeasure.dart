@@ -29,42 +29,48 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
       "controlMode": "隐患排查",
       "controlClassify1": "维护保养",
       "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "controlClassify3": "XXXXXXXXXXXX",
+      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
     },
     {
       "riskMeasure": "这是XXXXXXXXX措施2",
       "controlMode": "隐患排查",
       "controlClassify1": "维护保养",
       "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "controlClassify3": "XXXXXXXXXXXX",
+      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
     },
     {
       "riskMeasure": "这是XXXXXXXXX措施3",
       "controlMode": "隐患排查",
       "controlClassify1": "维护保养",
       "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "controlClassify3": "XXXXXXXXXXXX",
+      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
     },
     {
       "riskMeasure": "这是XXXXXXXXX措施4",
       "controlMode": "隐患排查",
       "controlClassify1": "维护保养",
       "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "controlClassify3": "XXXXXXXXXXXX",
+      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
     },
     {
       "riskMeasure": "这是XXXXXXXXX措施5",
       "controlMode": "隐患排查",
       "controlClassify1": "维护保养",
       "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "controlClassify3": "XXXXXXXXXXXX",
+      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
     },
     {
       "riskMeasure": "这是XXXXXXXXX措施6",
       "controlMode": "隐患排查",
       "controlClassify1": "维护保养",
       "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX"
+      "controlClassify3": "XXXXXXXXXXXX",
+      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
     },
   ];
 
@@ -276,6 +282,22 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                             ),
                             SizedBox(
                               height: size.width * 16,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                  style: TextStyle(
+                                      fontSize: size.width * 24,
+                                      fontWeight: FontWeight.w400),
+                                  children: <InlineSpan>[
+                                    TextSpan(
+                                        text: '隐患排查内容：',
+                                        style: TextStyle(
+                                            color: Color(0xff333333))),
+                                    TextSpan(
+                                        text: list[index]['troubleshootContent'],
+                                        style: TextStyle(
+                                            color: Color(0xff7F8A9C))),
+                                  ]),
                             ),
                           ],
                         ))

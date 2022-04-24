@@ -123,58 +123,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
                         context, '/safetyRiskList/safetyRiskListContent',
                         arguments: {'riskMeasureDesc': list[index]['riskMeasureDesc']});
                   },
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: size.width * 32, left: size.width * 64),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 20,
-                                  vertical: size.width * 10),
-                              decoration: BoxDecoration(
-                                  color: Color(0xffFF9900).withOpacity(0.1),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(size.width * 20),
-                                      topRight:
-                                          Radius.circular(size.width * 20))),
-                              child: Text(
-                                '逾期 ${list[index]['overdueNum']}',
-                                style: TextStyle(
-                                    color: Color(0xffFF9900),
-                                    fontSize: size.width * 24,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            SizedBox(
-                              width: size.width * 16,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 20,
-                                  vertical: size.width * 10),
-                              decoration: BoxDecoration(
-                                  color: Color(0xff3074FF).withOpacity(0.1),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(size.width * 20),
-                                      topRight:
-                                          Radius.circular(size.width * 20))),
-                              child: Text(
-                                '已完成 ${list[index]['completedNum']}',
-                                style: TextStyle(
-                                    color: Color(0xff3074FF),
-                                    fontSize: size.width * 24,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: size.width * 32),
+                  child: Container(
+                          margin: EdgeInsets.only(left: size.width * 32, right: size.width * 32, top: size.width * 32),
                           padding: EdgeInsets.all(size.width * 32),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -234,9 +184,7 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
                                 ],
                               ),
                             ],
-                          )),
-                    ],
-                  )),
+                          )),),
               // page: true,
               // url: Interface.getHistoricalSubscribe,
               // listParam: "records",

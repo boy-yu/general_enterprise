@@ -43,7 +43,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                     horizontal: size.width * 30, vertical: size.width * 20),
                 children: [
                   Text(
-                    '隐患内容',
+                    '隐患排查内容',
                     style: TextStyle(
                         color: Color(0xff333333),
                         fontSize: size.width * 28,

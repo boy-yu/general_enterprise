@@ -92,37 +92,8 @@ class _SafetyRiskListContentState extends State<SafetyRiskListContent> {
                         context, '/safetyRiskList/safetyRiskListMeasure',
                         arguments: {'riskEventName': list[index]['riskEventName']});
                   },
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: size.width * 32, left: size.width * 64),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 20,
-                                  vertical: size.width * 10),
-                              decoration: BoxDecoration(
-                                  color: list[index]['isControlled'] == 1 ? Color(0xff3074FF).withOpacity(0.1) : Color(0xffF56271).withOpacity(0.1),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(size.width * 20),
-                                      topRight:
-                                          Radius.circular(size.width * 20))),
-                              child: Text(
-                                list[index]['isControlled'] == 1 ? '受控' : '不受控',
-                                style: TextStyle(
-                                    color: list[index]['isControlled'] == 1 ? Color(0xff3074FF) : Color(0xffF56271),
-                                    fontSize: size.width * 24,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: size.width * 32),
+                  child: Container(
+                          margin: EdgeInsets.only(left: size.width * 32, right: size.width * 32, top: size.width * 32),
                           padding: EdgeInsets.all(size.width * 32),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -160,9 +131,7 @@ class _SafetyRiskListContentState extends State<SafetyRiskListContent> {
                                     fontWeight: FontWeight.w400),
                               ),
                             ],
-                          )),
-                    ],
-                  )),
+                          )),),
               // page: true,
               // url: Interface.getHistoricalSubscribe,
               // listParam: "records",

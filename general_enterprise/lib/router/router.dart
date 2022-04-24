@@ -3,6 +3,7 @@ import 'package:enterprise/common/blueList.dart';
 import 'package:enterprise/common/myLedger.dart';
 import 'package:enterprise/localtion.dart';
 import 'package:enterprise/pages/chat/chat.dart';
+import 'package:enterprise/pages/hiddenCheckGovern/hiddenCheckGovernRouter.dart';
 import 'package:enterprise/pages/home/bigDanger/router.dart';
 import 'package:enterprise/pages/home/checkLisk/router.dart';
 import 'package:enterprise/pages/home/closedManagement/closedManagementRouter.dart';
@@ -95,6 +96,10 @@ class Routers {
     });
     // 风险分级管控 安全风险清单
     safetyRiskListRouter.forEach((element) {
+      _routers.addAll(element);
+    });
+    // 隐患排查治理
+    hiddenCheckGovernRouter.forEach((element) {
       _routers.addAll(element);
     });
   }

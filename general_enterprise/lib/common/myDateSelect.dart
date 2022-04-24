@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:provider/provider.dart';
 import 'myCount.dart';
-import 'myCustomColor.dart';
 
 typedef Callback = void Function(String msg);
 
@@ -23,7 +22,7 @@ class MyDateSelect extends StatefulWidget {
       this.callback,
       this.width,
       this.height,
-      this.isShowIcon, this.dateTime
+      this.icon, this.dateTime, this.hintText
   });
   final title,
       purview,
@@ -38,8 +37,9 @@ class MyDateSelect extends StatefulWidget {
       tableIndex,
       width,
       height,
-      isShowIcon,
-      dateTime;
+      icon,
+      dateTime,
+      hintText;
   final Callback callback; // return msg
   @override
   _MyDateSelectState createState() => _MyDateSelectState();
@@ -107,16 +107,16 @@ class _MyDateSelectState extends State<MyDateSelect> {
   Widget build(BuildContext context) {
     Counter _context = Provider.of<Counter>(context);
     return Container(
-      width: widget.width == null ? size.width * 292 : widget.width,
-      height: widget.height == null ? size.width * 84 : widget.height,
-      margin: EdgeInsets.only(right: 5.0, top: 10.0, left: 5.0),
-      padding: EdgeInsets.only(right: 5.0),
+      width: widget.width == null ? size.width * 328 : widget.width,
+      height: widget.height == null ? size.width * 60 : widget.height,
+      margin: EdgeInsets.symmetric(vertical: size.width * 12),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 16, vertical: size.width * 12),
       decoration: BoxDecoration(
         border: Border.all(
-          width: 1,
-          color: Color(0xffD2D2D2),
+          width: size.width * 2,
+          color: Color(0xffF2F2F2),
         ),
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(size.width * 8),
       ),
       child: GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -127,28 +127,26 @@ class _MyDateSelectState extends State<MyDateSelect> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 30, vertical: size.width * 20),
-                child: Text(
+              Text(
                   msg == ''
                       ? widget.placeholder == null
-                          ? '请选择时间'
+                          ? widget.hintText == null ? '请选择时间' : widget.hintText
                           : widget.placeholder.toString()
                       : msg,
                   style: TextStyle(
+                    fontSize: size.width * 24,
+                    fontWeight: FontWeight.w400,
                       color: msg == ''
                           ? widget.placeholder == null
-                              ? placeHolder
+                              ? Color(0xff7F8A9C)
                               : Colors.black
                           : Colors.black),
                 ),
-              ),
-              widget.isShowIcon == null ? Image.asset(
+              widget.icon == null ? Image.asset(
                 "assets/images/icon_risk_date.png",
                 width: size.width * 49,
                 height: size.width * 43,
-              ) : Container(),
+              ) : widget.icon,
             ],
           )),
     );
