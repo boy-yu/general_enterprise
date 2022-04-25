@@ -22,7 +22,7 @@ class MyDateSelect extends StatefulWidget {
       this.callback,
       this.width,
       this.height,
-      this.icon, this.dateTime, this.hintText
+      this.icon, this.dateTime, this.hintText, this.borderColor
   });
   final title,
       purview,
@@ -39,7 +39,8 @@ class MyDateSelect extends StatefulWidget {
       height,
       icon,
       dateTime,
-      hintText;
+      hintText,
+      borderColor;
   final Callback callback; // return msg
   @override
   _MyDateSelectState createState() => _MyDateSelectState();
@@ -114,7 +115,7 @@ class _MyDateSelectState extends State<MyDateSelect> {
       decoration: BoxDecoration(
         border: Border.all(
           width: size.width * 2,
-          color: Color(0xffF2F2F2),
+          color: widget.borderColor == null ? Color(0xffF2F2F2) : widget.borderColor,
         ),
         borderRadius: BorderRadius.circular(size.width * 8),
       ),
@@ -142,11 +143,13 @@ class _MyDateSelectState extends State<MyDateSelect> {
                               : Colors.black
                           : Colors.black),
                 ),
-              widget.icon == null ? Image.asset(
+                widget.icon == 1 ? Container() :
+                  widget.icon == null ? Image.asset(
                 "assets/images/icon_risk_date.png",
                 width: size.width * 49,
                 height: size.width * 43,
-              ) : widget.icon,
+              ) 
+              : widget.icon,
             ],
           )),
     );

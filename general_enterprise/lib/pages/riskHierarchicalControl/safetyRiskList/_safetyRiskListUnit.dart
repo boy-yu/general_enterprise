@@ -91,7 +91,9 @@ class _SafetyRiskListUnitState extends State<SafetyRiskListUnit> {
           "风险分析单元",
           style: TextStyle(fontSize: size.width * 32),
         ),
-        child: Column(
+        child: Container(
+          color: Color(0xffF8FAFF),
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -130,16 +132,6 @@ class _SafetyRiskListUnitState extends State<SafetyRiskListUnit> {
                                     color: Color(0xff333333),
                                     fontSize: size.width * 32,
                                     fontWeight: FontWeight.w500),
-                              ),
-                              SizedBox(
-                                height: size.width * 20,
-                              ),
-                              Text(
-                                '安全标志：${list[index]['safetySign']}',
-                                style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 28,
-                                    fontWeight: FontWeight.w400),
                               ),
                               SizedBox(
                                 height: size.width * 20,
@@ -270,6 +262,7 @@ class _SafetyRiskListUnitState extends State<SafetyRiskListUnit> {
               data: data,
             ))
           ],
+        ),
         )
       );
   }

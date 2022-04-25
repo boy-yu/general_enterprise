@@ -1,5 +1,5 @@
 import 'package:drag_container/drag/custom_recognizer.dart';
-import 'package:drag_container/drag_container.dart';
+import 'package:drag_container/drag/drag_controller.dart';
 import 'package:flutter/material.dart';
 
 ///lib/code15/drag/drag_container.dart

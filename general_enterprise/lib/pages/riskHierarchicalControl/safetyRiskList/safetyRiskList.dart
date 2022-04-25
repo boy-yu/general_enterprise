@@ -90,7 +90,9 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
 
   @override
   Widget build(BuildContext context) {
-    return MyRefres(
+    return Container(
+      color: Color(0xffF8FAFF),
+      child: MyRefres(
       child: (index, list) => GestureDetector(
         onTap: () {
           Navigator.pushNamed(
@@ -248,6 +250,7 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
       // },
       // method: 'get'
       data: data,
+    ),
     );
   }
 }

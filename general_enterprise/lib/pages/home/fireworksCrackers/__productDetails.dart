@@ -3,7 +3,7 @@ import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
-import 'package:enterprise/common/myDragContainer.dart';
+import 'package:enterprise/myView/myDragContainer.dart';
 import 'package:drag_container/drag/drag_controller.dart';
 
 class ProductDetails extends StatefulWidget {

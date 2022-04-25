@@ -19,7 +19,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
       'classify3': '分类3',
       'dataSrc': '隐患排查',
       'overdueNum': 5,
-      'completedNum': 2
+      'completedNum': 2,
+      'positive': 2   // 1已落实 2未落实
     },
     {
       'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
@@ -28,7 +29,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
       'classify3': '分类3',
       'dataSrc': '隐患排查',
       'overdueNum': 5,
-      'completedNum': 2
+      'completedNum': 2,
+      'positive': 1   // 1已落实 2未落实
     },
     {
       'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
@@ -37,7 +39,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
       'classify3': '分类3',
       'dataSrc': '隐患排查',
       'overdueNum': 5,
-      'completedNum': 2
+      'completedNum': 2,
+      'positive': 2   // 1已落实 2未落实
     },
     {
       'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
@@ -46,7 +49,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
       'classify3': '分类3',
       'dataSrc': '隐患排查',
       'overdueNum': 5,
-      'completedNum': 2
+      'completedNum': 2,
+      'positive': 2   // 1已落实 2未落实
     },
     {
       'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
@@ -55,7 +59,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
       'classify3': '分类3',
       'dataSrc': '隐患排查',
       'overdueNum': 5,
-      'completedNum': 2
+      'completedNum': 2,
+      'positive': 1   // 1已落实 2未落实
     },
     {
       'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
@@ -64,7 +69,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
       'classify3': '分类3',
       'dataSrc': '隐患排查',
       'overdueNum': 5,
-      'completedNum': 2
+      'completedNum': 2,
+      'positive': 1   // 1已落实 2未落实
     },
     {
       'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
@@ -73,7 +79,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
       'classify3': '分类3',
       'dataSrc': '隐患排查',
       'overdueNum': 5,
-      'completedNum': 2
+      'completedNum': 2,
+      'positive': 1   // 1已落实 2未落实
     },
     {
       'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
@@ -82,7 +89,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
       'classify3': '分类3',
       'dataSrc': '隐患排查',
       'overdueNum': 5,
-      'completedNum': 2
+      'completedNum': 2,
+      'positive': 1   // 1已落实 2未落实
     },
     {
       'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
@@ -91,7 +99,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
       'classify3': '分类3',
       'dataSrc': '隐患排查',
       'overdueNum': 5,
-      'completedNum': 2
+      'completedNum': 2,
+      'positive': 1   // 1已落实 2未落实
     },
   ];
   @override
@@ -101,7 +110,9 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
         "管控措施",
         style: TextStyle(fontSize: size.width * 32),
       ),
-      child: Column(
+      child: Container(
+        color: Color(0xffF8FAFF),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -166,14 +177,14 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
                                   Spacer(),
                                   Container(
                                     height: size.width * 56,
-                                    width: size.width * 112,
+                                    width: size.width * 140,
                                     decoration: BoxDecoration(
-                                      color: Color(0xff3074FF),
+                                      color: list[index]['positive'] == 1 ? Color(0xff5FD5EC) : Color(0xffF56271),
                                       borderRadius: BorderRadius.all(Radius.circular(size.width * 36))
                                     ),
                                     alignment: Alignment.center,
                                     child: Text(
-                                      "详情",
+                                      list[index]['positive'] == 1 ? "已落实" : "未落实",
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: size.width * 28,
@@ -195,7 +206,8 @@ class _SafetyRiskListMeasureState extends State<SafetyRiskListMeasure> {
               data: data,
             ))
           ],
-        )
+        ),
+      )
     );
   }
 }

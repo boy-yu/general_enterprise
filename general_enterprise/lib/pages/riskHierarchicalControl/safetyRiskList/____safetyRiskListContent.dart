@@ -16,49 +16,49 @@ class _SafetyRiskListContentState extends State<SafetyRiskListContent> {
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容1111111111',
       'checkCycle': '10/天',
       'checkMeans': '拍照',
-      'isControlled': 1
+      'implement': 2 // 1已执行 2未执行
     },
     {
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容',
       'checkCycle': '10/天',
       'checkMeans': '拍照',
-      'isControlled': 1
+      'implement': 2 // 1已执行 2未执行
     },
     {
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容22222222',
       'checkCycle': '10/天',
       'checkMeans': '现场确认',
-      'isControlled': 2
+      'implement': 1 // 1已执行 2未执行
     },
     {
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容1111111111',
       'checkCycle': '10/天',
       'checkMeans': '拍照',
-      'isControlled': 2
+      'implement': 1 // 1已执行 2未执行
     },
     {
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容',
       'checkCycle': '10/天',
       'checkMeans': '现场确认',
-      'isControlled': 2
+      'implement': 2 // 1已执行 2未执行
     },
     {
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容1111111111',
       'checkCycle': '10/天',
       'checkMeans': '现场确认',
-      'isControlled': 1
+      'implement': 1 // 1已执行 2未执行
     },
     {
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容1111111111',
       'checkCycle': '10/天',
       'checkMeans': '现场确认',
-      'isControlled': 1
+      'implement': 2 // 1已执行 2未执行
     },
     {
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容1111111111',
       'checkCycle': '10/天',
       'checkMeans': '现场确认',
-      'isControlled': 1
+      'implement': 1 // 1已执行 2未执行
     },
   ];
 
@@ -70,7 +70,9 @@ class _SafetyRiskListContentState extends State<SafetyRiskListContent> {
         "隐患排查内容",
         style: TextStyle(fontSize: size.width * 32),
       ),
-      child: Column(
+      child: Container(
+        color: Color(0xffF8FAFF),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -123,12 +125,34 @@ class _SafetyRiskListContentState extends State<SafetyRiskListContent> {
                               SizedBox(
                                 height: size.width * 20,
                               ),
-                              Text(
-                                '管控手段：${list[index]['checkMeans']}',
-                                style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 28,
-                                    fontWeight: FontWeight.w400),
+                              Row(
+                                children: [
+                                  Text(
+                                    '管控手段：${list[index]['checkMeans']}',
+                                    style: TextStyle(
+                                        color: Color(0xff7F8A9C),
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    height: size.width * 56,
+                                    width: size.width * 140,
+                                    decoration: BoxDecoration(
+                                      color: list[index]['implement'] == 1 ? Color(0xff5FD5EC) : Color(0xffF56271),
+                                      borderRadius: BorderRadius.all(Radius.circular(size.width * 36))
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      list[index]['implement'] == 1 ? "已执行" : "未执行",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w500
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ],
                           )),),
@@ -142,7 +166,8 @@ class _SafetyRiskListContentState extends State<SafetyRiskListContent> {
               data: data,
             ))
           ],
-        )
+        ),
+      )
     );
   }
 }

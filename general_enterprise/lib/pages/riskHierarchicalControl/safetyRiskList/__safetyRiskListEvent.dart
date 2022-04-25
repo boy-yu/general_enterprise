@@ -79,7 +79,9 @@ class _SafetyRiskListEventState extends State<SafetyRiskListEvent> {
         "风险事件",
         style: TextStyle(fontSize: size.width * 32),
       ),
-      child: Column(
+      child: Container(
+        color: Color(0xffF8FAFF),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -163,7 +165,8 @@ class _SafetyRiskListEventState extends State<SafetyRiskListEvent> {
               data: data,
             ))
           ],
-        )
+        ),
+      )
     );
   }
 }

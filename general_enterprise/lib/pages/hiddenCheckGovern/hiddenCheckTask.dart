@@ -154,7 +154,7 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
 
   List data = [
     {
-      'status': 1,
+      'dangerState': '-1',
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
       'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
       'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
@@ -164,7 +164,7 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
       'effectiveTime': '2022-1-4 15:20:63',
     },
     {
-      'status': 2,
+      'dangerState': '0',
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
       'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
       'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
@@ -174,7 +174,7 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
       'effectiveTime': '2022-1-4 15:20:63',
     },
     {
-      'status': 3,
+      'dangerState': '1',
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
       'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
       'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
@@ -184,7 +184,7 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
       'effectiveTime': '2022-1-4 15:20:63',
     },
     {
-      'status': 4,
+      'dangerState': '9',
       'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
       'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
       'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
@@ -195,9 +195,10 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
     },
   ];
 
-  Widget _getButton(int status){
-    switch (status) {
-      case 1:
+  Widget _getButton(String dangerState){
+    // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
+    switch (dangerState) {
+      case '-1':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -216,7 +217,7 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
           ),
         );
         break;
-      case 2:
+      case '0':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -235,7 +236,7 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
           ),
         );
         break;
-      case 3:
+      case '1':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -254,7 +255,7 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
           ),
         );
         break;
-      case 4:
+      case '9':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -339,7 +340,13 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
                             child: MyRefres(
                           child: (index, list) => GestureDetector(
                               onTap: () {
-                                
+                                Navigator.pushNamed(
+                                              context, '/hiddenCheckGovern/taskHandle',
+                                              arguments: {
+                                                "dangerState": list[index]['dangerState'],
+                                              }).then((value) {
+                                            _throwFunc.run();
+                                          });
                               },
                               child: Container(
                                 margin: EdgeInsets.only(top: size.width * 32),
@@ -546,7 +553,7 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
                                                 ],
                                               ),
                                               Spacer(),
-                                              _getButton(list[index]['status']),
+                                              _getButton(list[index]['dangerState']),
                                               
                                             ],
                                           )

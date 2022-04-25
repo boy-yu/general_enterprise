@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:enterprise/common/MychooseTime.dart';
 import 'package:enterprise/common/myCount.dart';
-import 'package:enterprise/common/myDragContainer.dart';
+import 'package:enterprise/myView/myDragContainer.dart';
 import 'package:drag_container/drag/drag_controller.dart';
 import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/common/myCustomColor.dart';

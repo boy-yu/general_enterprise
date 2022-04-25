@@ -12,7 +12,7 @@ import 'package:enterprise/pages/home/work/work_dilog/_dilog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
-import 'package:enterprise/common/myDragContainer.dart';
+import 'package:enterprise/myView/myDragContainer.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

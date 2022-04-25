@@ -1,7 +1,7 @@
 import 'package:drag_container/drag_container.dart';
 import 'package:enterprise/common/MyWebView.dart';
 import 'package:enterprise/common/myCustomColor.dart';
-import 'package:enterprise/common/myDragContainer.dart';
+import 'package:enterprise/myView/myDragContainer.dart';
 import 'package:enterprise/pages/home/work/Component/gasDetectList.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';

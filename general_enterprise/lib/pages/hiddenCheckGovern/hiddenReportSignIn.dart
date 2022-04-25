@@ -104,7 +104,9 @@ class _HiddenReportSignInState extends State<HiddenReportSignIn> {
           style: TextStyle(fontSize: size.width * 32),
         ),
         elevation: 0,
-        child: Column(
+        child: Container(
+          color: Color(0xffF8FAFF),
+          child: Column(
               children: [
                 Row(
                   children: [
@@ -272,6 +274,7 @@ class _HiddenReportSignInState extends State<HiddenReportSignIn> {
                 )
               ],
             ),
+        ),
       );
   }
 }
