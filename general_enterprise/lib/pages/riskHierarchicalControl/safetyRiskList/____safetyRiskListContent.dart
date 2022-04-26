@@ -88,13 +88,7 @@ class _SafetyRiskListContentState extends State<SafetyRiskListContent> {
             ),
             Expanded(
                 child: MyRefres(
-              child: (index, list) => GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, '/safetyRiskList/safetyRiskListMeasure',
-                        arguments: {'riskEventName': list[index]['riskEventName']});
-                  },
-                  child: Container(
+              child: (index, list) => Container(
                           margin: EdgeInsets.only(left: size.width * 32, right: size.width * 32, top: size.width * 32),
                           padding: EdgeInsets.all(size.width * 32),
                           decoration: BoxDecoration(
@@ -155,7 +149,7 @@ class _SafetyRiskListContentState extends State<SafetyRiskListContent> {
                                 ],
                               ),
                             ],
-                          )),),
+                          )),
               // page: true,
               // url: Interface.getHistoricalSubscribe,
               // listParam: "records",

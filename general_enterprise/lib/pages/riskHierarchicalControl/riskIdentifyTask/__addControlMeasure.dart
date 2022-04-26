@@ -31,13 +31,13 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
         classify2Choice = ["工艺控制", "关键设备/部件", "安全附件", "安全仪表", "其他"];
         break;
       case "维护保养":
-        classify2Choice = ["动设备", "静设备"];
+        classify2Choice = ["动设备", "静设备", "其他"];
         break;
       case "操作行为":
-        classify2Choice = ["人员资质", "操作记录", "交接班"];
+        classify2Choice = ["人员资质", "操作记录", "交接班", "其他"];
         break;
       case "应急措施":
-        classify2Choice = ["应急设施", "个体防护", "消防设施", "应急预案"];
+        classify2Choice = ["应急设施", "个体防护", "消防设施", "应急预案", "其他"];
         break;
       default:
        classify2Choice = [];
