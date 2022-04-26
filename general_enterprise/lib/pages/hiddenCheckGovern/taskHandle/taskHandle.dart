@@ -2,6 +2,8 @@ import 'package:drag_container/drag/drag_controller.dart';
 import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/myView/myDragContainer.dart';
 import 'package:enterprise/pages/hiddenCheckGovern/taskHandle/_affirmHidden.dart';
+import 'package:enterprise/pages/hiddenCheckGovern/taskHandle/_reformAccept.dart';
+import 'package:enterprise/pages/hiddenCheckGovern/taskHandle/_reformFinish.dart';
 import 'package:enterprise/pages/hiddenCheckGovern/taskHandle/_troubleshoot.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';
@@ -157,10 +159,10 @@ class _BuildDragWidgetState extends State<BuildDragWidget> {
         return AffirmHidden();
         break;
       case '1':
-        return Container();
+        return ReformFinish();
         break;
       case '9':
-        return Container();
+        return ReformAccept();
         break;
       default:
         return Container();
