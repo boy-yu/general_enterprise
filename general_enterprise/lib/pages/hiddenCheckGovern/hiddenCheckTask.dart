@@ -362,11 +362,11 @@ class _HiddenCheckTaskState extends State<HiddenCheckTask> {
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                          offset: Offset(1, 2),
+                                          // offset: Offset(1, 2),
                                           color: Color(0xff7F8A9C)
-                                              .withOpacity(0.5),
+                                              .withOpacity(0.1),
                                           blurRadius: size.width * 8,
-                                          spreadRadius: size.width * 1)
+                                          spreadRadius: size.width * 2)
                                     ]),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

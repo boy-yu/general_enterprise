@@ -252,7 +252,7 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
           child: Container(
             decoration: BoxDecoration(
               color: Color(0xff1E62EB),
-              borderRadius: BorderRadius.all(Radius.circular(size.width * 32))
+              borderRadius: BorderRadius.all(Radius.circular(size.width * 40))
             ),
             padding: EdgeInsets.symmetric(horizontal: size.width * 20),
             margin: EdgeInsets.only(top: size.width * 30, bottom: size.width * 10, right: size.width * 30),

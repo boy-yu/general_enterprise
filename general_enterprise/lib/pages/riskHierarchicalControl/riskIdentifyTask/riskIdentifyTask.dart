@@ -120,11 +120,11 @@ class _RiskIdentifyTaskState extends State<RiskIdentifyTask> {
                         bottomRight: Radius.circular(size.width * 16)),
                     boxShadow: [
                       BoxShadow(
-                          offset: Offset(1.0, 2.0),
                           color: Color(0xff7F8A9C).withOpacity(0.05),
-                          spreadRadius: 1.0,
-                          blurRadius: 1.0)
-                    ]),
+                          spreadRadius: size.width * 2,
+                          blurRadius: size.width * 8)
+                    ]
+                    ),
                 alignment: Alignment.centerLeft,
                 child: Container(
                       width: double.infinity,

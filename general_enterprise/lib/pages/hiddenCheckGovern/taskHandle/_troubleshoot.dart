@@ -205,9 +205,9 @@ class _TroubleshootState extends State<Troubleshoot> {
                             alignment: Alignment.center,
                             margin: EdgeInsets.only(bottom: size.width * 100),
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: lineGradBlue),
+                              color: Color(0xff3074FF),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(25.0)),
+                                  BorderRadius.all(Radius.circular(size.width * 8)),
                             ),
                             child: Text(
                               '确定',

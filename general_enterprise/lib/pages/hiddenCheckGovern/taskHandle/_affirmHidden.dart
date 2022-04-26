@@ -1075,8 +1075,8 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                 margin: EdgeInsets.only(
                     bottom: size.width * 100, top: size.width * 50),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: lineGradBlue),
-                  borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                  color: Color(0xff3074FF),
+                  borderRadius: BorderRadius.all(Radius.circular(size.width * 8)),
                 ),
                 child: Text(
                   '确认',

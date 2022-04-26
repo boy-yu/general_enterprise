@@ -641,7 +641,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                   fontWeight: FontWeight.w400),
                               children: <InlineSpan>[
                                 TextSpan(
-                                    text: '整改描述：',
+                                    text: '整改意见：',
                                     style: TextStyle(color: Color(0xff333333))),
                                 TextSpan(
                                     text: map['liableOpinion'],
