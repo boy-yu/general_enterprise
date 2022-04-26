@@ -66,6 +66,14 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
       'dangerManageDeadline': '2022-05-12 13:12',
       'checkAcceptPerson': '整改确认人员'
     },
+    // {
+    //   'dangerState': '0', // 隐患状态（隐患排查：-1；隐患确认：0；隐患整改：1；整改完成审批：9）
+    //   'time': '2022-05-12 13:12',
+    //   'dangerLevel': '3', // 隐患等级（一般隐患：0；重大隐患：1）
+    //   'registrant': '确认人员名字',
+    //   'registOpinion': '驳回意见驳回意见驳回意见驳回意见驳回意见驳回意见驳回意见驳回意见驳回意见驳回意见驳回意见驳回意见',
+    //   'registUrl': 'assets/images/doubleRiskProjeck/bg_home_my.png'
+    // },
     {
       'dangerState': '1', // 隐患状态（隐患排查：-1；隐患确认：0；隐患整改：1；整改完成审批：9）
       'time': '2022-05-12 13:12',
@@ -81,7 +89,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
     }
   ];
 
-  String _getDangerSrc(String dangerSrc){
+  String _getDangerSrc(String dangerSrc) {
     // 隐患来源：日常排查：1；综合性排查：2；专业性排查：3；季节性排查：4；重点时段及节假日前排查:5；事故类比排查:6；复产复工前排查：7；外聘专家诊断式排查：8；管控措施失效：9；其他：10
     switch (dangerSrc) {
       case '1':
@@ -119,7 +127,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
     }
   }
 
-  String _getHazardDangerType(String hazardDangerType){
+  String _getHazardDangerType(String hazardDangerType) {
     //隐患类型（安全：1，工艺：2，电气：3，仪表：4，消防：5，总图：6，设备：7，其他：8）
     switch (hazardDangerType) {
       case '1':
@@ -241,7 +249,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                       fontWeight: FontWeight.w400),
                                   children: <InlineSpan>[
                                     TextSpan(
-                                        text: 'Gps：',
+                                        text: 'GPS：',
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
@@ -297,283 +305,426 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
         );
         break;
       case "0":
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  '隐患确认  ${map['time']}',
-                  style: TextStyle(
-                      color: Color(0xff7F8A9C),
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: size.width * 20,
-            ),
-            Container(
-              width: size.width * 638,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(size.width * 20),
-                    bottomLeft: Radius.circular(size.width * 20),
-                    bottomRight: Radius.circular(size.width * 20)),
-              ),
-              child: Column(
+        if (map['dangerLevel'] == '0' || map['dangerLevel'] == '1') {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 32, vertical: size.width * 16),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Color(0xff2276FC).withOpacity(0.12),
-                          Colors.transparent,
-                        ],
-                      ),
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(size.width * 20)),
-                    ),
-                    child: Text(
-                      '隐患等级：${map['dangerLevel'] == '0' ? '一般隐患' : map['dangerLevel'] == '1' ? '重大隐患' : '无隐患'}',
-                      style: TextStyle(
-                          color: Color(0xff333333),
-                          fontSize: size.width * 28,
-                          fontWeight: FontWeight.w500),
-                    ),
+                  Text(
+                    '隐患确认  ${map['time']}',
+                    style: TextStyle(
+                        color: Color(0xff7F8A9C),
+                        fontSize: size.width * 28,
+                        fontWeight: FontWeight.w400),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(size.width * 32,
-                        size.width * 16, size.width * 32, size.width * 32),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: size.width * 285,
-                              child: RichText(
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        fontSize: size.width * 24,
-                                        fontWeight: FontWeight.w400),
-                                    children: <InlineSpan>[
-                                      TextSpan(
-                                          text: '确认人：',
-                                          style: TextStyle(
-                                              color: Color(0xff333333))),
-                                      TextSpan(
-                                          text: map['registrant'],
-                                          style: TextStyle(
-                                              color: Color(0xff7F8A9C))),
-                                    ]),
-                              ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: size.width * 24,
-                                      fontWeight: FontWeight.w400),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                        text: '隐患名称：',
-                                        style: TextStyle(
-                                            color: Color(0xff333333))),
-                                    TextSpan(
-                                        text: map['dangerName'],
-                                        style: TextStyle(
-                                            color: Color(0xff7F8A9C))),
-                                  ]),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: size.width * 16,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: size.width * 285,
-                              child: RichText(
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        fontSize: size.width * 24,
-                                        fontWeight: FontWeight.w400),
-                                    children: <InlineSpan>[
-                                      TextSpan(
-                                          text: '隐患来源：',
-                                          style: TextStyle(
-                                              color: Color(0xff333333))),
-                                      TextSpan(
-                                          text: _getDangerSrc(map['dangerSrc']),
-                                          style: TextStyle(
-                                              color: Color(0xff7F8A9C))),
-                                    ]),
-                              ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: size.width * 24,
-                                      fontWeight: FontWeight.w400),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                        text: '隐患类型：',
-                                        style: TextStyle(
-                                            color: Color(0xff333333))),
-                                    TextSpan(
-                                        text: _getHazardDangerType(map['hazardDangerType']),
-                                        style: TextStyle(
-                                            color: Color(0xff7F8A9C))),
-                                  ]),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: size.width * 16,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                              style: TextStyle(
-                                  fontSize: size.width * 24,
-                                  fontWeight: FontWeight.w400),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                    text: '隐患描述：',
-                                    style: TextStyle(color: Color(0xff333333))),
-                                TextSpan(
-                                    text: map['dangerDesc'],
-                                    style: TextStyle(color: Color(0xff7F8A9C))),
-                              ]),
-                        ),
-                        SizedBox(
-                          height: size.width * 16,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                              style: TextStyle(
-                                  fontSize: size.width * 24,
-                                  fontWeight: FontWeight.w400),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                    text: '原因分析：',
-                                    style: TextStyle(color: Color(0xff333333))),
-                                TextSpan(
-                                    text: map['dangerReason'] == '' ? '无' : map['dangerReason'],
-                                    style: TextStyle(color: Color(0xff7F8A9C))),
-                              ]),
-                        ),
-                        SizedBox(
-                          height: size.width * 16,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                              style: TextStyle(
-                                  fontSize: size.width * 24,
-                                  fontWeight: FontWeight.w400),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                    text: '控制措施：',
-                                    style: TextStyle(color: Color(0xff333333))),
-                                TextSpan(
-                                    text: map['controlMeasures'] == '' ? '无' : map['controlMeasures'],
-                                    style: TextStyle(color: Color(0xff7F8A9C))),
-                              ]),
-                        ),
-                        SizedBox(
-                          height: size.width * 16,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: size.width * 285,
-                              child: RichText(
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        fontSize: size.width * 24,
-                                        fontWeight: FontWeight.w400),
-                                    children: <InlineSpan>[
-                                      TextSpan(
-                                          text: '资金：',
-                                          style: TextStyle(
-                                              color: Color(0xff333333))),
-                                      TextSpan(
-                                          text: '${map['cost']} 万元',
-                                          style: TextStyle(
-                                              color: Color(0xff7F8A9C))),
-                                    ]),
-                              ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: size.width * 24,
-                                      fontWeight: FontWeight.w400),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                        text: '整改责任人：',
-                                        style: TextStyle(
-                                            color: Color(0xff333333))),
-                                    TextSpan(
-                                        text: map['liablePerson'],
-                                        style: TextStyle(
-                                            color: Color(0xff7F8A9C))),
-                                  ]),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: size.width * 16,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                              style: TextStyle(
-                                  fontSize: size.width * 24,
-                                  fontWeight: FontWeight.w400),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                    text: '隐患治理期限：',
-                                    style: TextStyle(color: Color(0xff333333))),
-                                TextSpan(
-                                    text: map['dangerManageDeadline'],
-                                    style: TextStyle(color: Color(0xff7F8A9C))),
-                              ]),
-                        ),
-                        SizedBox(
-                          height: size.width * 16,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                              style: TextStyle(
-                                  fontSize: size.width * 24,
-                                  fontWeight: FontWeight.w400),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                    text: '验收人姓名：',
-                                    style: TextStyle(color: Color(0xff333333))),
-                                TextSpan(
-                                    text: map['checkAcceptPerson'],
-                                    style: TextStyle(color: Color(0xff7F8A9C))),
-                              ]),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
-            ),
-            SizedBox(
-              height: size.width * 40,
-            ),
-          ],
-        );
+              SizedBox(
+                height: size.width * 20,
+              ),
+              Container(
+                width: size.width * 638,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(size.width * 20),
+                      bottomLeft: Radius.circular(size.width * 20),
+                      bottomRight: Radius.circular(size.width * 20)),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 32,
+                          vertical: size.width * 16),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xff2276FC).withOpacity(0.12),
+                            Colors.transparent,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(size.width * 20)),
+                      ),
+                      child: Text(
+                        '隐患等级：${map['dangerLevel'] == '0' ? '一般隐患' : '重大隐患'}',
+                        style: TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(size.width * 32,
+                          size.width * 16, size.width * 32, size.width * 32),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: size.width * 285,
+                                child: RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '确认人：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text: map['registrant'],
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: size.width * 24,
+                                        fontWeight: FontWeight.w400),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: '隐患名称：',
+                                          style: TextStyle(
+                                              color: Color(0xff333333))),
+                                      TextSpan(
+                                          text: map['dangerName'],
+                                          style: TextStyle(
+                                              color: Color(0xff7F8A9C))),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: size.width * 16,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: size.width * 285,
+                                child: RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '隐患来源：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text:
+                                                _getDangerSrc(map['dangerSrc']),
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: size.width * 24,
+                                        fontWeight: FontWeight.w400),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: '隐患类型：',
+                                          style: TextStyle(
+                                              color: Color(0xff333333))),
+                                      TextSpan(
+                                          text: _getHazardDangerType(
+                                              map['hazardDangerType']),
+                                          style: TextStyle(
+                                              color: Color(0xff7F8A9C))),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: size.width * 16,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w400),
+                                children: <InlineSpan>[
+                                  TextSpan(
+                                      text: '隐患描述：',
+                                      style:
+                                          TextStyle(color: Color(0xff333333))),
+                                  TextSpan(
+                                      text: map['dangerDesc'],
+                                      style:
+                                          TextStyle(color: Color(0xff7F8A9C))),
+                                ]),
+                          ),
+                          SizedBox(
+                            height: size.width * 16,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w400),
+                                children: <InlineSpan>[
+                                  TextSpan(
+                                      text: '原因分析：',
+                                      style:
+                                          TextStyle(color: Color(0xff333333))),
+                                  TextSpan(
+                                      text: map['dangerReason'] == ''
+                                          ? '无'
+                                          : map['dangerReason'],
+                                      style:
+                                          TextStyle(color: Color(0xff7F8A9C))),
+                                ]),
+                          ),
+                          SizedBox(
+                            height: size.width * 16,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w400),
+                                children: <InlineSpan>[
+                                  TextSpan(
+                                      text: '控制措施：',
+                                      style:
+                                          TextStyle(color: Color(0xff333333))),
+                                  TextSpan(
+                                      text: map['controlMeasures'] == ''
+                                          ? '无'
+                                          : map['controlMeasures'],
+                                      style:
+                                          TextStyle(color: Color(0xff7F8A9C))),
+                                ]),
+                          ),
+                          SizedBox(
+                            height: size.width * 16,
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: size.width * 285,
+                                child: RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '资金：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text: '${map['cost']} 万元',
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: size.width * 24,
+                                        fontWeight: FontWeight.w400),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: '整改责任人：',
+                                          style: TextStyle(
+                                              color: Color(0xff333333))),
+                                      TextSpan(
+                                          text: map['liablePerson'],
+                                          style: TextStyle(
+                                              color: Color(0xff7F8A9C))),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: size.width * 16,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w400),
+                                children: <InlineSpan>[
+                                  TextSpan(
+                                      text: '隐患治理期限：',
+                                      style:
+                                          TextStyle(color: Color(0xff333333))),
+                                  TextSpan(
+                                      text: map['dangerManageDeadline'],
+                                      style:
+                                          TextStyle(color: Color(0xff7F8A9C))),
+                                ]),
+                          ),
+                          SizedBox(
+                            height: size.width * 16,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w400),
+                                children: <InlineSpan>[
+                                  TextSpan(
+                                      text: '验收人姓名：',
+                                      style:
+                                          TextStyle(color: Color(0xff333333))),
+                                  TextSpan(
+                                      text: map['checkAcceptPerson'],
+                                      style:
+                                          TextStyle(color: Color(0xff7F8A9C))),
+                                ]),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: size.width * 40,
+              ),
+            ],
+          );
+        } else {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    '隐患确认  ${map['time']}',
+                    style: TextStyle(
+                        color: Color(0xff7F8A9C),
+                        fontSize: size.width * 28,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.width * 20,
+              ),
+              Container(
+                width: size.width * 638,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(size.width * 20),
+                      bottomLeft: Radius.circular(size.width * 20),
+                      bottomRight: Radius.circular(size.width * 20)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 32,
+                          vertical: size.width * 16),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xff2276FC).withOpacity(0.12),
+                            Colors.transparent,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(size.width * 20)),
+                      ),
+                      child: Text(
+                        '隐患等级：无隐患',
+                        style: TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(size.width * 32,
+                          size.width * 16, size.width * 32, size.width * 32),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w400),
+                                children: <InlineSpan>[
+                                  TextSpan(
+                                      text: '确认人：',
+                                      style:
+                                          TextStyle(color: Color(0xff333333))),
+                                  TextSpan(
+                                      text: map['registrant'],
+                                      style:
+                                          TextStyle(color: Color(0xff7F8A9C))),
+                                ]),
+                          ),
+                          SizedBox(
+                            height: size.width * 16,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w400),
+                                children: <InlineSpan>[
+                                  TextSpan(
+                                      text: '驳回意见：',
+                                      style:
+                                          TextStyle(color: Color(0xff333333))),
+                                  TextSpan(
+                                      text: map['registOpinion'] == ''
+                                          ? '无'
+                                          : map['registOpinion'],
+                                      style:
+                                          TextStyle(color: Color(0xff7F8A9C))),
+                                ]),
+                          ),
+                          SizedBox(
+                            height: size.width * 16,
+                          ),
+                          Container(
+                            height: size.width * 320,
+                            width: size.width * 574,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(size.width * 20)),
+                              image: DecorationImage(
+                                  image: AssetImage(map['registUrl']),
+                                  fit: BoxFit.fill),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: size.width * 40,
+              ),
+            ],
+          );
+        }
         break;
       case "1":
         return Column(
@@ -732,19 +883,19 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                     padding: EdgeInsets.fromLTRB(size.width * 32,
                         size.width * 16, size.width * 32, size.width * 32),
                     child: RichText(
-                          text: TextSpan(
-                              style: TextStyle(
-                                  fontSize: size.width * 24,
-                                  fontWeight: FontWeight.w400),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                    text: '验收情况：',
-                                    style: TextStyle(color: Color(0xff333333))),
-                                TextSpan(
-                                    text: map['checkAcceptComment'],
-                                    style: TextStyle(color: Color(0xff7F8A9C))),
-                              ]),
-                        ),
+                      text: TextSpan(
+                          style: TextStyle(
+                              fontSize: size.width * 24,
+                              fontWeight: FontWeight.w400),
+                          children: <InlineSpan>[
+                            TextSpan(
+                                text: '验收情况：',
+                                style: TextStyle(color: Color(0xff333333))),
+                            TextSpan(
+                                text: map['checkAcceptComment'],
+                                style: TextStyle(color: Color(0xff7F8A9C))),
+                          ]),
+                    ),
                   )
                 ],
               ),
