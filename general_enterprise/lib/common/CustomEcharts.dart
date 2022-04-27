@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/echart_exmple/pie.dart';
-import 'package:enterprise/pages/home/work/work_dilog/_dilog.dart';
+import 'package:enterprise/myDialog/myDialog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';
 
@@ -493,7 +493,7 @@ class _GanttWidgetState extends State<GanttWidget> {
                         Map totalPlan = widget.data[
                             (clickCoord.localPosition.dx / (size.width * 100))
                                 .truncate()];
-                        WorkDialog.myDialog(context, () {}, 2,
+                        MyDialog.myDialog(context, () {}, 2,
                             widget: Container(
                                 height: size.width * 350,
                                 padding: EdgeInsets.all(size.width * 20),

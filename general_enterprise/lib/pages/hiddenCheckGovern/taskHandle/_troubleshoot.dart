@@ -1,7 +1,6 @@
 import 'package:enterprise/common/myCount.dart';
-import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/common/myImageCarma.dart';
-import 'package:enterprise/pages/home/risk/_riskButton.dart';
+import 'package:enterprise/myView/myRiskButtons.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

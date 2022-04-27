@@ -1,9 +1,8 @@
 import 'package:enterprise/common/myCount.dart';
-import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/common/myDateSelect.dart';
 import 'package:enterprise/common/myImageCarma.dart';
 import 'package:enterprise/common/mySearchPeople.dart';
-import 'package:enterprise/pages/home/risk/_riskButton.dart';
+import 'package:enterprise/myView/myRiskButtons.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
 import 'package:flutter/material.dart';

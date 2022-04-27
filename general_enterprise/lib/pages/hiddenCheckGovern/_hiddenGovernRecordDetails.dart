@@ -57,7 +57,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
       'dangerName': '隐患名称',
       'dangerSrc':
           '5', // 隐患来源：日常排查：1；综合性排查：2；专业性排查：3；季节性排查：4；重点时段及节假日前排查:5；事故类比排查:6；复产复工前排查：7；外聘专家诊断式排查：8；管控措施失效：9；其他：10
-      'hazardDangerType': '1', //隐患类型（安全：1，工艺：2，电气：3，仪表：4，消防：5，总图：6，设备：7，其他：8）
+      'hazardDangerType': '1', //隐患类型（安全：1，工艺：2，电气：3，仪表：4，消防：5，总图：6，设备：7，其他 ：8）
       'dangerDesc': '隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述',
       'dangerReason': '原因分析原因分析原因分析原因分析原因分析原因分析',
       'controlMeasures': '整改措施整改措施整改措施整改措施整改措施整改措施',

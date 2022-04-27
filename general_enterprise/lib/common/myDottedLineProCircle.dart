@@ -1,4 +1,3 @@
-import 'package:enterprise/pages/waitWork/_cancelWorkApply.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +80,7 @@ class MyPainterCircles extends CustomPainter {
       ..strokeWidth = 1.0;
     for (double i = 1.0; i <= 100; ++i) {
       value < i ? progressPaint.color = Color(0xff3368FA) : progressPaint.color = Color(0xff206FFF).withOpacity(0.2);
-      canvas.drawArc(arcRect, PI / 50 * i + .1, PI / 50 - .1, false, progressPaint);
+      canvas.drawArc(arcRect, 3.1415926 / 50 * i + .1, 3.1415926 / 50 - .1, false, progressPaint);
     }
   }
   //在实际场景中正确利用此回调可以避免重绘开销，本示例我们简单的返回true

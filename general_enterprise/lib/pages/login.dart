@@ -210,7 +210,7 @@ class _LoginFormState extends State<LoginForm> {
         await myprefs.setString('education', value['education'] ?? ''); //  学历
         await myprefs.setString('specialty', value['specialty'] ?? ''); //  专业
 
-        _getAppFunctionMenu();
+        // _getAppFunctionMenu();
         
         if (value['photoUrl'] == '') {
           await myprefs.setString('photoUrl',
@@ -253,16 +253,16 @@ class _LoginFormState extends State<LoginForm> {
     });
   }
 
-  _getAppFunctionMenu() {
-    myDio.request(
-          type: 'get',
-          url: Interface.getAppFunctionMenu,
-    ).then((value)  {
-      if(value is List){
-        myprefs.setStringList('appFunctionMenu', value.cast<String>());
-      }
-    });
-  }
+  // _getAppFunctionMenu() {
+  //   myDio.request(
+  //         type: 'get',
+  //         url: Interface.getAppFunctionMenu,
+  //   ).then((value)  {
+  //     if(value is List){
+  //       myprefs.setStringList('appFunctionMenu', value.cast<String>());
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:app_uninstaller/app_uninstaller.dart' as appUnin;
 import 'package:enterprise/common/myAppbar.dart';
-import 'package:enterprise/pages/home/work/work_dilog/_dilog.dart';
+import 'package:enterprise/myDialog/myDialog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/down.dart';
 import 'package:enterprise/tool/interface.dart';
@@ -168,7 +168,7 @@ class _UpdataState extends State<Updata> with TickerProviderStateMixin {
                                                     : Colors.grey)),
                                     onPressed: () {
                                       showInstall
-                                          ? WorkDialog.myDialog(
+                                          ? MyDialog.myDialog(
                                               context, () {}, 2,
                                               widget: Column(
                                                 crossAxisAlignment:
