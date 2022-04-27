@@ -63,12 +63,12 @@ class _MyContextState extends State<MyContext> {
     await Contexts.init(context);
     myDio.request(
       type: 'get', 
-      url: Interface.getAllConfigUrl
+      url: Interface.getAkyCompAppApiConfig
     ).then((value) async {
       if (value is Map) {
         Interface.mainBaseUrl = value["mainApiUrl"];
-        Interface.eduBaseUrl = value["etApiUrl"];
-        Interface.closeBaseUrl = value["accessControlUrl"];
+        // Interface.eduBaseUrl = value["etApiUrl"];
+        // Interface.closeBaseUrl = value["accessControlUrl"];
       }
 
       Mysize().init();

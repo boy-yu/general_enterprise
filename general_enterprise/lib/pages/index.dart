@@ -137,8 +137,7 @@ class _IndexState extends State<Index> {
     print(Interface.webUrl);
     myDio.request(
         type: 'get',
-        url: Interface.webUrl,
-        queryParameters: {"url": Interface.mainBaseUrl}).then((value) async {
+        url: Interface.webUrl).then((value) async {
       // print(mainBaseUrl);
       // print(value);
       if (value is Map) {

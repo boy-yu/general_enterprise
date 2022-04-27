@@ -315,9 +315,8 @@ class _AmendPsdContextState extends State<AmendPsdContext> {
                   Fluttertoast.showToast(msg: '两次密码不一致');
                 } else {
                   widget.onPress({
-                    "oldPassword": oldPad.text,
-                    "newPassword": firstPsd.text,
-                    "confirmPassword": secondPsd.text
+                    "passwordConfirm": firstPsd.text,
+                    "passwordNew": secondPsd.text
                   });
                 }
               }

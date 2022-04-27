@@ -8,12 +8,12 @@ import '../service.dart';
 
 class Interface {
   static String mainBaseUrl = '';
-  static String eduBaseUrl = '';
+  // static String eduBaseUrl = '';
 
   // 封闭化管理地址
-  static String closeBaseUrl = '';
+  // static String closeBaseUrl = '';
 
-  static String getAllConfigUrl = baseAliUrl + "/gyCompAppApiConfig";
+  static String getAkyCompAppApiConfig = baseAliUrl + "/akyCompAppApiConfig";
 
   static String online(String url) {
     String base64 = base64Encode(utf8.encode(url));
@@ -30,11 +30,11 @@ class Interface {
   // 首页 person 我的页面修改签名使用 sign签名页面使用
   static String amendSign = baseUrl + '/updateSign';
   // 获取服务器当前配置 包括文件路径前缀 票路径前缀 webview路径前缀等 facelogin login index
-  static String webUrl = baseUrl + '/coWebConfig';
+  static String webUrl = baseAliUrl + '/akyCompAppApiConfig';
   // 获取版本信息及最新版本下载更新地址 index login person update down
   static String cheakUpdate = baseAliUrl + '/appVersionConfig';
   // 登陆接口 login
-  static String loginUrl = baseUrl + '/login';
+  static String loginUrl = baseUrl + '/oauth/token';
   /*
    * 图片上传服务器并获取服务器地址图片接口 所有拍照上传地方都有用
    *  myImageCarme和newMyImageCarme拍照组件
@@ -48,7 +48,7 @@ class Interface {
    */
   static String uploadUrl = baseUrl + '/upload';
   // amendPsd 首页我的修改密码
-  static String putAmendPsd = baseUrl + '/updatePassword';
+  static String putAmendPsd = baseUrl + '/tUser/updatePassword';
   // 风险一级项下拉 hiddenSpecificItem inspecion risklist worklist controlIndex
   static String getCheckOneListAll = baseUrl + '/api/v4/riskControl/oneListAll';
   // 风险二级项下拉 hiddenSpecificItem inspecion risklist worklist

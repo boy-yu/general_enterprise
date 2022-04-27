@@ -9,11 +9,11 @@ import '../service/context.dart';
 // import '../common/myProgressDialog.dart';
 enum Methods { gets, post }
 
-class MyDio {
+class LoginDio {
   Dio dios = Dio();
   List<String> _urls = [];
   List<String> methods = ['get', 'post', 'delete'];
-  MyDio() {
+  LoginDio() {
     dios.options.connectTimeout = 20000;
   }
 
@@ -25,8 +25,7 @@ class MyDio {
     String key,
     bool mounted = true,
   }) async {
-    // dios.options.headers = {"Authorization": myprefs.getString('token')};
-    dios.options.headers = {"Authorization": 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzeXN0ZW1Vc2VyIjp7ImlkIjoiMjVkZGE5MTAtMGY5OC00NTgxLTlmNzgtMzhiZDk4NWVlOWQxIiwidXNlcm5hbWUiOiIxMjMiLCJuaWNrbmFtZSI6IuS4jeiDveWIoCIsIm90aGVyVWlkIjoiM0Y0NzM5OEQtQjk2RS00NTdELUEzM0EtQTE0NzA4MUQwQUIzIiwicGFzc3dvcmQiOiIkMmEkMTAkNVFhQVdVeHMvQUhUZW1YNC80cWZSdW82UWUucHBUa2hLbXJGOXVLZVRSVFJBcUhPM1R2djYiLCJlbWFpbCI6IiIsIm1vYmlsZSI6IjE3ODk4NzQ4OTg0Iiwic3RhdHVzIjoxLCJsYXN0TG9naW5UaW1lIjpudWxsLCJzZXgiOiIwIiwiYXZhdGFyIjoiIiwiaXNTeXN0ZW0iOjEsInNpZ24iOiIiLCJkZXNjcmlwdGlvbiI6IiIsImNvbXBhbnlDb2RlIjoiIiwidHlwZSI6MSwiZGVsZXRlZCI6bnVsbCwicm9sZUlkIjpudWxsLCJyb2xlTmFtZSI6bnVsbH0sImV4cCI6MTY1MTEwODg3MSwidXNlcl9uYW1lIjoiMTIzIiwianRpIjoiZDlhNTc2NzQtMWYxYi00ZGE5LWIxM2UtZTA0OTNkNjgyMjc5IiwiY2xpZW50X2lkIjoic3dhZ2dlciIsInNjb3BlIjpbImFsbCJdfQ.XF6IfolSDF8AosXfRVxlDOEYKQqB37kAb2z80JUy1LY'};
+    dios.options.headers = {"Authorization": 'Basic c3dhZ2dlcjoxMjM0NTY='};
     Response res;
     dynamic hasValue = data ?? queryParameters;
 

@@ -185,10 +185,12 @@ class _LoginFormState extends State<LoginForm> {
       return;
     }
 
-    myDio.request(type: 'post', url: Interface.loginUrl, data: {
+    loginDio.request(type: 'post', url: Interface.loginUrl, data: {
+      "grant_type": 'password',
       "username": _username.text,
       "password": _password.text
     }).then((value) async {
+      print(value);
       if (value is Map) {
         String token = value['token'];
         await myprefs.setString('token', token ?? '');

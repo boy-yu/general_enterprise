@@ -4,6 +4,7 @@ import 'package:enterprise/common/cacheData.dart';
 import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/tool/dio.dart';
 import 'package:enterprise/tool/funcType.dart';
+import 'package:enterprise/tool/loginDio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,7 @@ SharedPreferences myprefs;
 String webUrl = '';
 String fileUrl = '';
 MyDio myDio;
+LoginDio loginDio;
 bool isLogin = false;
 // CacheData cacheData = CacheData();
 // MethodChannel platform = const MethodChannel('getLocal');
@@ -76,6 +78,7 @@ class Contexts {
       db = await openDatabase('my_db.db');
     }
     myDio = MyDio();
+    loginDio = LoginDio();
   }
 }
 
