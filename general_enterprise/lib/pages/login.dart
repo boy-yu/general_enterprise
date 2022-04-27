@@ -4,9 +4,7 @@ import 'package:enterprise/common/myUpdateDialog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/down.dart';
 import 'package:enterprise/tool/funcType.dart';
-import 'package:enterprise/tool/translate.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../tool/interface.dart';
 
@@ -158,7 +156,7 @@ class LoginForm extends StatefulWidget {
   _LoginFormState createState() => _LoginFormState();
 }
 
-MethodChannel _channel = MethodChannel('messagePushChannel');
+// MethodChannel _channel = MethodChannel('messagePushChannel');
 
 class _LoginFormState extends State<LoginForm> {
   TextEditingController _username = TextEditingController();
@@ -224,15 +222,13 @@ class _LoginFormState extends State<LoginForm> {
             type: 'put',
             url: Interface.putAmendChatStatus,
             data: {"onlineStatus": "1"});
-        if (Contexts.mobile) {
-          _channel.invokeMethod('login', myprefs.getString('account'));
-          Future.delayed(Duration(seconds: 5), () {
-            initPlatformState(_username.text, true);
-          });
-        }
+        // if (Contexts.mobile) {
+        //   _channel.invokeMethod('login', myprefs.getString('account'));
+        //   Future.delayed(Duration(seconds: 5), () {
+        //     initPlatformState(_username.text, true);
+        //   });
+        // }
         _getUrl();
-        mytranslate = Translate();
-        mytranslate.init();
 
         if (value['sign'] == '' || value['sign'] == null && Contexts.mobile) {
           Fluttertoast.showToast(msg: '检测到您的账号暂时未进行签字，请先设置签名');

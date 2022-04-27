@@ -1,6 +1,3 @@
-import 'package:enterprise/common/MyWebView.dart';
-import 'package:enterprise/common/myLedger.dart';
-import 'package:enterprise/pages/chat/chat.dart';
 import 'package:enterprise/pages/hiddenCheckGovern/hiddenCheckGovernRouter.dart';
 import 'package:enterprise/pages/index.dart';
 import 'package:enterprise/pages/person/adress_book.dart';
@@ -9,8 +6,6 @@ import 'package:enterprise/pages/person/myMessage.dart';
 import 'package:enterprise/pages/person/sign.dart';
 import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/riskIdentifyTaskRouter.dart';
 import 'package:enterprise/pages/riskHierarchicalControl/safetyRiskList/safetyRiskListRouter.dart';
-import 'package:enterprise/pages/webRtc/_callView.dart';
-import 'package:enterprise/pages/webRtc/__webRtc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../pages/login.dart';
@@ -46,20 +41,7 @@ class Routers {
   final Map<String, Widget Function(BuildContext context, {dynamic arguments})>
       _routers = {
     '/login': (context, {arguments}) => Login(), // 登陆页面
-
     '/person/adressBook': (context, {arguments}) => AdressBook(), 
-    
-    '/webview': (context, {arguments}) =>
-        MyWebView(arguments: arguments), // 内嵌浏览器
-    '/webviews': (context, {arguments}) =>
-        FlutterWebView(arguments: arguments), // flutter 端
-    '/chat': (context, {arguments}) => MyChat(data: arguments['data']), // 聊天
-    '/callview': (context, {arguments}) => Callview(
-        data: arguments['data'],
-        state: arguments['state'],
-        self: arguments['self']), // 视频呼出/接收
-    '/webrtc': (context, {arguments}) => MyWebRtc(), // 视频聊天
-
     '/index': (context, {arguments}) => Index(), // 主页
     '/person/updata': (context, {arguments}) => Updata(), //更新页面
     '/person/psd': (context, {arguments}) => AmendPsd(), //密码
@@ -67,22 +49,7 @@ class Routers {
     '/person/avatar': (context, {arguments}) =>
         PersonAvatar(arguments: arguments), //头像上传
     '/person/myMessage': (context, {arguments}) => MyMessage(), // 个人信息
-
     '/sign': (context, {arguments}) => Sign(arguments: arguments), //签名组件
-
-    // 总览
-
-    // 台账
-    '/home/myLedger' : (context, {arguments}) => MyLedger(
-        oneId: arguments['oneId'],
-        twoId: arguments['twoId'],
-        threeId: arguments['threeId'],
-        fourId: arguments['fourId'],
-        coDepartmentId: arguments['coDepartmentId'],
-        hiddenType: arguments['hiddenType'],
-        controlType: arguments['controlType'],
-        // status: arguments['status'],
-    ),
   };
 
   Route onGenerateRoute(RouteSettings settings) {
@@ -105,8 +72,6 @@ class Routers {
     }
     return route;
   }
-
- 
 
   Route sonGenerateRoute(RouteSettings settings) {
     final String name = settings.name;

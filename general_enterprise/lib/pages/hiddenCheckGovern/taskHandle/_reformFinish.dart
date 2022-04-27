@@ -1,5 +1,4 @@
 import 'package:enterprise/common/myCount.dart';
-import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/myDialog/hiddenDialog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';

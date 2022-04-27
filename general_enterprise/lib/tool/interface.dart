@@ -4,7 +4,6 @@ import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:tpns_flutter_plugin/tpns_flutter_plugin.dart';
 import '../service.dart';
 
 class Interface {
@@ -217,8 +216,8 @@ class Interface {
   static String getAlldeparment = baseUrl +
       '/api/v4/coInfo/departmentAndPositionListAll'; // funcType 首页通讯录部门职位集合
   // get: 获取字段列表 post: 批量添加 put: 修改字段  (Translate使用)
-  static String getTranslate = baseUrl + '/fieldTranslation';
-  static String postTranslate = baseUrl + '/fieldTranslation';
+  // static String getTranslate = baseUrl + '/fieldTranslation';
+  // static String postTranslate = baseUrl + '/fieldTranslation';
   // 首页 person 我的页面修改签名使用 sign签名页面使用
   static String amendSign = baseUrl + '/updateSign';
   // 获取服务器当前配置 包括文件路径前缀 票路径前缀 webview路径前缀等 facelogin login index
@@ -1122,15 +1121,15 @@ class Interface {
       if (myprefs.getString('token') != null) {
         if (onError is Map && onError['code'] == 401 && !isLogin) {
           myprefs.clear();
-          XgFlutterPlugin().cleanAccounts();
-          XgFlutterPlugin().stopXg();
+          // XgFlutterPlugin().cleanAccounts();
+          // XgFlutterPlugin().stopXg();
           isLogin = true;
           String _accout = myprefs.getString('account');
           String _company = myprefs.getString('enterpriseName');
-          XgFlutterPlugin().unbindWithIdentifier(
-              identify: _accout, bindType: XGBindType.account);
-          XgFlutterPlugin().cleanAccounts();
-          XgFlutterPlugin().stopXg();
+          // XgFlutterPlugin().unbindWithIdentifier(
+          //     identify: _accout, bindType: XGBindType.account);
+          // XgFlutterPlugin().cleanAccounts();
+          // XgFlutterPlugin().stopXg();
           MethodChannel _channel = MethodChannel("messagePushChannel");
           _channel.invokeMethod("logout").then((value) => print(value));
           myDio.request(

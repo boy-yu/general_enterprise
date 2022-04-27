@@ -1,6 +1,4 @@
-import 'package:enterprise/common/myCount.dart';
 import 'package:enterprise/common/myUpdateDialog.dart';
-import 'package:enterprise/pages/chat/chatDataBase.dart';
 import 'package:enterprise/pages/hiddenCheckGovern.dart';
 import 'package:enterprise/pages/home.dart';
 import 'package:enterprise/pages/mine.dart';
@@ -9,11 +7,9 @@ import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/eventBus.dart';
 import 'package:enterprise/tool/funcType.dart';
 import 'package:enterprise/tool/interface.dart';
-import 'package:enterprise/tool/translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import 'navite.dart' if (dart.library.html) 'diffPlat.dart' as html;
 
@@ -96,7 +92,7 @@ class _IndexState extends State<Index> {
         myprefs.getString('token') == '') {
       Future.delayed(Duration(milliseconds: 300), () {
         Navigator.pushNamed(myContext, '/login').then((value) {
-          if (Contexts.mobile) _initMessageChannel();
+          // if (Contexts.mobile) _initMessageChannel();
           if (mounted) {
             setState(() {});
           }
@@ -105,37 +101,37 @@ class _IndexState extends State<Index> {
       return false;
     } else {
       // _getFileUrl();
-      mytranslate = Translate();
-      mytranslate.init();
+      // mytranslate = Translate();
+      // mytranslate.init();
       if (myprefs.getString('sign') == '' ||
           myprefs.getString('sign') == null) {
         Navigator.pushNamed(context, '/person/sign');
       }
       if (Contexts.mobile) {
-        _initMessageChannel();
+        // _initMessageChannel();
         _getVersion();
-        initPlatformState(myprefs.getString('account'), mounted);
+        // initPlatformState(myprefs.getString('account'), mounted);
       }
     }
     return true;
   }
 
   // init and login message and communication
-  _initMessageChannel() {
-    _channel.invokeMethod('login', myprefs.getString('account'));
-    glomessageChannel.setMessageHandler((message) => _detail(message));
-  }
+  // _initMessageChannel() {
+  //   _channel.invokeMethod('login', myprefs.getString('account'));
+  //   glomessageChannel.setMessageHandler((message) => _detail(message));
+  // }
 
-  _detail(message) {
-    context
-        .read<Counter>()
-        .assginNotity(Notify('聊天', {message['userID']: message['message']}));
-    ChatData().assginData(AssChat(
-        userID: message['userID'],
-        message: message['message'],
-        groups: message['userID'] + '+' + myprefs.getString('account')));
-    EventBusUtils.getInstance().fire(ChatEvent(message));
-  }
+  // _detail(message) {
+  //   context
+  //       .read<Counter>()
+  //       .assginNotity(Notify('聊天', {message['userID']: message['message']}));
+  //   ChatData().assginData(AssChat(
+  //       userID: message['userID'],
+  //       message: message['message'],
+  //       groups: message['userID'] + '+' + myprefs.getString('account')));
+  //   EventBusUtils.getInstance().fire(ChatEvent(message));
+  // }
 
   _getUrl() {
     print(Interface.webUrl);

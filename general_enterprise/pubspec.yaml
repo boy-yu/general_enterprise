@@ -55,7 +55,7 @@ dependencies:
   fijkplayer: ^0.8.7
 
   # flutter_full_pdf_viewer: ^1.0.1
-  flutter_blue: ^0.7.2
+  # flutter_blue: ^0.7.2
   # 条形码扫描
   # barcode_scan: ^3.0.1
   # 条形码显示
