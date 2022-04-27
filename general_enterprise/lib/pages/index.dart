@@ -50,15 +50,15 @@ class _IndexState extends State<Index> {
       _stopChannel.setMethodCallHandler((call) async {
         if (myprefs.getString('token') != null) {
           if (call.method == 'stop') {
-            myDio.request(
-                type: 'put',
-                url: Interface.putAmendChatStatus,
-                data: {"onlineStatus": "0"}).then((value) {});
+            // myDio.request(
+            //     type: 'put',
+            //     url: Interface.putAmendChatStatus,
+            //     data: {"onlineStatus": "0"}).then((value) {});
           } else if (call.method == 'reStart') {
-            myDio.request(
-                type: 'put',
-                url: Interface.putAmendChatStatus,
-                data: {"onlineStatus": "1"}).then((value) {});
+            // myDio.request(
+            //     type: 'put',
+            //     url: Interface.putAmendChatStatus,
+            //     data: {"onlineStatus": "1"}).then((value) {});
           }
         }
       });

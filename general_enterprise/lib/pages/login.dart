@@ -218,10 +218,10 @@ class _LoginFormState extends State<LoginForm> {
         }
         isLogin = false;
         Navigator.pop(context);
-        myDio.request(
-            type: 'put',
-            url: Interface.putAmendChatStatus,
-            data: {"onlineStatus": "1"});
+        // myDio.request(
+        //     type: 'put',
+        //     url: Interface.putAmendChatStatus,
+        //     data: {"onlineStatus": "1"});
         // if (Contexts.mobile) {
         //   _channel.invokeMethod('login', myprefs.getString('account'));
         //   Future.delayed(Duration(seconds: 5), () {

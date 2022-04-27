@@ -226,10 +226,10 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
                           // XgFlutterPlugin().stopXg();
                           MethodChannel _channel = MethodChannel("messagePushChannel");
                           _channel.invokeMethod("logout").then((value) => print(value));
-                          myDio.request(
-                              type: 'put',
-                              url: Interface.putAmendChatStatus,
-                              data: {"onlineStatus": "0"}).then((value) {});
+                          // myDio.request(
+                          //     type: 'put',
+                          //     url: Interface.putAmendChatStatus,
+                          //     data: {"onlineStatus": "0"}).then((value) {});
 
                           await prefs.clear();
                           context.read<Counter>().emptyNotity();

@@ -1,6 +1,4 @@
-import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';
-import '../tool/interface.dart';
 
 class Notify {
   Notify(this.name, this.value);
@@ -338,29 +336,29 @@ class Counter with ChangeNotifier {
     }
 
     // exception
-    if (value['title'] == '作业区域' && value['id'] != null) {
-      myDio
-          .request(
-        type: 'get',
-        url: Interface.territorialUrl + value['id'].toString(),
-      )
-          .then((res) {
-        if (res != null) {
-          print(res);
-          changeSubmitDates(
-              purview, {"title": '属地单位', "value": res['name'], "id": res['id']},
-              callBack: callBack);
-        } else {
-          if (callBack != null) {
-            callBack('请在PC端进行配置');
-          }
-        }
-      }).catchError((onError) {
-        if (callBack != null) {
-          callBack(onError);
-        }
-      });
-    }
+    // if (value['title'] == '作业区域' && value['id'] != null) {
+    //   myDio
+    //       .request(
+    //     type: 'get',
+    //     url: Interface.territorialUrl + value['id'].toString(),
+    //   )
+    //       .then((res) {
+    //     if (res != null) {
+    //       print(res);
+    //       changeSubmitDates(
+    //           purview, {"title": '属地单位', "value": res['name'], "id": res['id']},
+    //           callBack: callBack);
+    //     } else {
+    //       if (callBack != null) {
+    //         callBack('请在PC端进行配置');
+    //       }
+    //     }
+    //   }).catchError((onError) {
+    //     if (callBack != null) {
+    //       callBack(onError);
+    //     }
+    //   });
+    // }
     if (value['title'] == '属地单位') {
       if (callBack != null) {
         callBack();
