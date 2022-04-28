@@ -70,7 +70,7 @@ class _PersonAvatarState extends State<PersonAvatar> {
     });
     if (res.data['code'] == 200) {
       prefs = await SharedPreferences.getInstance();
-      _photoUrl = res.data['message'];
+      _photoUrl = res.data['data']['url'];
       myDio.request(
           type: 'put',
           url: Interface.amendAvatar,

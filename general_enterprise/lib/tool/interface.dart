@@ -24,15 +24,15 @@ class Interface {
   static String baseUrl = mainBaseUrl;
   // baseUrl Sql 数据app全局使用
   static String getAllPeople =
-      baseUrl + '/api/v4/coInfo/userListAll'; // funcType 首页通讯录人员集合
+      baseUrl + '/tUser/userListAll'; // funcType 首页通讯录人员集合
   static String getAlldeparment = baseUrl +
-      '/api/v4/coInfo/departmentAndPositionListAll'; // funcType 首页通讯录部门职位集合
+      '/tUser/departmentAndPositionListAll'; // funcType 首页通讯录部门职位集合
   // 首页 person 我的页面修改签名使用 sign签名页面使用
-  static String amendSign = baseUrl + '/updateSign';
+  static String amendSign = baseUrl + '/tUser/updateSign';
   // 获取服务器当前配置 包括文件路径前缀 票路径前缀 webview路径前缀等 facelogin login index
   static String webUrl = baseAliUrl + '/akyCompAppApiConfig';
   // 获取版本信息及最新版本下载更新地址 index login person update down
-  static String cheakUpdate = baseAliUrl + '/appVersionConfig';
+  static String cheakUpdate = baseAliUrl + '/appVersionConfig/aky';
   // 登陆接口 login
   static String loginUrl = baseUrl + '/oauth/token';
   /*

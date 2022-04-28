@@ -25,7 +25,8 @@ class LoginDio {
     String key,
     bool mounted = true,
   }) async {
-    dios.options.headers = {"Authorization": 'Basic c3dhZ2dlcjoxMjM0NTY='};
+    dios.options.headers = {"Authorization":"Basic c3dhZ2dlcjoxMjM0NTY="};
+    dios.options.headers['content-type'] = 'application/x-www-form-urlencoded';
     Response res;
     dynamic hasValue = data ?? queryParameters;
 

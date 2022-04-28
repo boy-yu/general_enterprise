@@ -52,7 +52,7 @@ class PeopleStructure {
       _list.add(PeopleStructure(
           id: element['id'],
           name: element['name'],
-          position: element['positionIds'] ?? '暂无职位',
+          // position: element['positionIds'] ?? '暂无职位',
           department: element['departmentIds'],
           telephone: element['telephone'],
           nums: element['num'] ?? null,
@@ -79,7 +79,7 @@ class PeopleStructure {
         if (delete) {
           await db.execute(
               '''CREATE TABLE People (id INTEGER PRIMARY KEY, name TEXT, 
-          positionIds TEXT, departmentIds TEXT, 
+          departmentIds TEXT, 
           telephone TEXT, photoUrl TEXT, account TEXT)''');
           final res = await myDio.request(
             type: 'get',
@@ -90,11 +90,11 @@ class PeopleStructure {
             temp.forEach((element) {
               db.insert('People', {
                 "id": element['id'],
-                "name": element['name'],
-                "positionIds": jsonEncode(element['positionIds']),
+                "name": element['nickname'],
+                // "positionIds": jsonEncode(element['positionIds']),
                 "departmentIds": jsonEncode(element['departmentIds']),
-                "telephone": element['telephone'],
-                "photoUrl": element['photoUrl'],
+                "telephone": element['mobile'],
+                "photoUrl": element['avatar'],
                 "account": element['account']
               });
             });
@@ -127,7 +127,7 @@ class PeopleStructure {
 
     List data = jsonDecode(
         jsonEncode(await db.query('People', where: "id not in ($ids)")));
-    List positionList = await queryPosition();
+    // List positionList = await queryPosition();
     List departmentList = await queryDepartment();
 
     if (departmentId is int) {
@@ -138,17 +138,17 @@ class PeopleStructure {
             -1) {
           data.removeAt(i);
         } else {
-          jsonDecode(data[i]['positionIds']).forEach((ele) {
-            String _str = '';
-            positionList.forEach((_element) {
-              if (_element['id'] == ele) {
-                _str += _element['name'] + ',';
-              }
-            });
-            if (_str.isNotEmpty) {
-              data[i]['positionIds'] = _str.substring(0, _str.length - 1);
-            }
-          });
+          // jsonDecode(data[i]['positionIds']).forEach((ele) {
+          //   String _str = '';
+          //   positionList.forEach((_element) {
+          //     if (_element['id'] == ele) {
+          //       _str += _element['name'] + ',';
+          //     }
+          //   });
+          //   if (_str.isNotEmpty) {
+          //     data[i]['positionIds'] = _str.substring(0, _str.length - 1);
+          //   }
+          // });
 
           jsonDecode(data[i]['departmentIds']).forEach((ele) {
             String _str = '';
@@ -165,17 +165,17 @@ class PeopleStructure {
       }
     } else {
       for (var i = 0; i < data.length; i++) {
-        jsonDecode(data[i]['positionIds']).forEach((ele) {
-          String _str = '';
-          positionList.forEach((_element) {
-            if (_element['id'] == ele) {
-              _str += _element['name'] + ',';
-            }
-          });
-          if (_str.isNotEmpty) {
-            data[i]['positionIds'] = _str.substring(0, _str.length - 1);
-          }
-        });
+        // jsonDecode(data[i]['positionIds']).forEach((ele) {
+        //   String _str = '';
+        //   positionList.forEach((_element) {
+        //     if (_element['id'] == ele) {
+        //       _str += _element['name'] + ',';
+        //     }
+        //   });
+        //   if (_str.isNotEmpty) {
+        //     data[i]['positionIds'] = _str.substring(0, _str.length - 1);
+        //   }
+        // });
         jsonDecode(data[i]['departmentIds']).forEach((ele) {
           String _str = '';
           departmentList.forEach((_element) {
@@ -203,10 +203,10 @@ class PeopleStructure {
     List _list = jsonDecode(
         jsonEncode(await db.query('People', where: "account = '$account'")));
 
-    for (var i = 0; i < _list.length; i++) {
-      _list[i]['positionIds'] =
-          await queryPosition(ids: jsonDecode(_list[i]['positionIds']));
-    }
+    // for (var i = 0; i < _list.length; i++) {
+    //   _list[i]['positionIds'] =
+    //       await queryPosition(ids: jsonDecode(_list[i]['positionIds']));
+    // }
     _list = changeStucture(_list);
     if (_list.isNotEmpty)
       return _list[0];
@@ -239,8 +239,8 @@ class PeopleStructure {
           'SELECT * FROM People WHERE name LIKE "$input%" AND id not in  ($ids )')));
     }
     for (var i = 0; i < data.length; i++) {
-      data[i]['positionIds'] =
-          await queryPosition(ids: jsonDecode(data[i]['positionIds']));
+      // data[i]['positionIds'] =
+      //     await queryPosition(ids: jsonDecode(data[i]['positionIds']));
       data[i]['departmentIds'] =
           await queryDepartment(ids: jsonDecode(data[i]['departmentIds']));
     }
@@ -291,21 +291,22 @@ class PeopleStructure {
         url: Interface.getAlldeparment,
       );
       if (res is Map) {
-        List _position = res['positions'];
-        _position.forEach((element) {
-          db.insert('Position', {
-            "id": element['id'],
-            "name": element['name'],
-            "parentId": element['parentId']
-          });
-        });
+        // List _position = res['positions'];
+        // _position.forEach((element) {
+        //   db.insert('Position', {
+        //     "id": element['id'],
+        //     "name": element['name'],
+        //     "parentId": element['parentId']
+        //   });
+        // });
         List _deparment = res['departments'];
+        print(_deparment);
         _deparment.forEach((element) {
           db.insert('Department', {
-            "id": element['id'],
+            // "id": element['id'],
             "name": element['name'],
-            "parentId": element['parentId'],
-            "uId": element['uId'],
+            // "parentId": element['parentId'],
+            "uId": element['id'],
             "path": element['path']
           });
         });

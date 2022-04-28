@@ -130,7 +130,7 @@ class _SignState extends State<Sign> {
                               if (index != null) {
                                 _counter.changeSmallTicket(
                                   index,
-                                  res.data['message'],
+                                  res.data['data']['url'],
                                   type: widget.arguments['type'] != null
                                       ? widget.arguments['type'] +
                                           '|' +
@@ -148,7 +148,7 @@ class _SignState extends State<Sign> {
                                   "title": title,
                                   "data":
                                       DateTime.now().toString().split(' ')[0],
-                                  "value": res.data['message']
+                                  "value": res.data['data']['url']
                                 });
                               }
 

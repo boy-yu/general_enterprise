@@ -192,19 +192,19 @@ class _LoginFormState extends State<LoginForm> {
     }).then((value) async {
       print(value);
       if (value is Map) {
-        String token = value['token'];
+        String token = value['token_type'] + ' ' + value['access_token'];
         await myprefs.setString('token', token ?? '');
-        await myprefs.setString('username', value['userName'] ?? '');
+        await myprefs.setString('username', value['systemUser']['nickname'] ?? '');
         await myprefs.setString('department', value['department'] ?? '');
         await myprefs.setString('account', _username.text);
-        await myprefs.setString('sign', value['sign'] ?? '');
+        await myprefs.setString('sign', value['systemUser']['sign'] ?? '');
         await myprefs.setString(
             'enterpriseName', value['enterpriseName'] ?? '');
         await myprefs.setInt('userId', value['userId'] ?? -1);
         // 安全教育培训
         await myprefs.setInt('isEducationInitiate', value['isEducationInitiate'] ?? -1);
         // 个人信息新加字段
-        await myprefs.setString('telephone', value['telephone'] ?? ''); // 手机号
+        await myprefs.setString('telephone', value['systemUser']['mobile'] ?? ''); // 手机号
         await myprefs.setString('identityNum', value['identityNum'] ?? ''); //  身份证号
         await myprefs.setString('type', value['type'] ?? ''); //  人员类别
         await myprefs.setString('education', value['education'] ?? ''); //  学历
@@ -212,11 +212,11 @@ class _LoginFormState extends State<LoginForm> {
 
         // _getAppFunctionMenu();
         
-        if (value['photoUrl'] == '') {
+        if (value['systemUser']['avatar'] == '') {
           await myprefs.setString('photoUrl',
               'https://shuangkong.oss-cn-qingdao.aliyuncs.com/temp/1605250244862/u%3D1763186968%2C2658905759%26fm%3D26%26gp%3D0.jpg');
         } else {
-          await myprefs.setString('photoUrl', value['photoUrl'] ?? '');
+          await myprefs.setString('photoUrl', value['systemUser']['avatar'] ?? '');
         }
         isLogin = false;
         Navigator.pop(context);
@@ -232,7 +232,7 @@ class _LoginFormState extends State<LoginForm> {
         // }
         _getUrl();
 
-        if (value['sign'] == '' || value['sign'] == null && Contexts.mobile) {
+        if (value['systemUser']['sign'] == '' || value['systemUser']['sign'] == null && Contexts.mobile) {
           Fluttertoast.showToast(msg: '检测到您的账号暂时未进行签字，请先设置签名');
           Navigator.pushNamed(context, '/person/sign');
         }
