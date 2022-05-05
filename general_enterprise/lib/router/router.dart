@@ -1,6 +1,5 @@
 import 'package:enterprise/pages/hiddenCheckGovern/hiddenCheckGovernRouter.dart';
 import 'package:enterprise/pages/index.dart';
-import 'package:enterprise/pages/person/adress_book.dart';
 import 'package:enterprise/pages/person/avatar.dart';
 import 'package:enterprise/pages/person/myMessage.dart';
 import 'package:enterprise/pages/person/sign.dart';
@@ -41,7 +40,6 @@ class Routers {
   final Map<String, Widget Function(BuildContext context, {dynamic arguments})>
       _routers = {
     '/login': (context, {arguments}) => Login(), // 登陆页面
-    '/person/adressBook': (context, {arguments}) => AdressBook(), 
     '/index': (context, {arguments}) => Index(), // 主页
     '/person/updata': (context, {arguments}) => Updata(), //更新页面
     '/person/psd': (context, {arguments}) => AmendPsd(), //密码

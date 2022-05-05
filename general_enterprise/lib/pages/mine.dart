@@ -23,12 +23,6 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
 
   List data = [
     {
-      "icon": 'assets/images/doubleRiskProjeck/icon_my_address_book.png',
-      'name': "通讯录",
-      "active": 'assets/images/doubleRiskProjeck/icon_my_right_arrows.png',
-      "router": '/person/adressBook',
-    },
-    {
       "icon": 'assets/images/doubleRiskProjeck/icon_my_msg.png',
       'name': "个人信息",
       "active": 'assets/images/doubleRiskProjeck/icon_my_right_arrows.png',

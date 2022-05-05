@@ -237,14 +237,14 @@ class _LoginFormState extends State<LoginForm> {
           Navigator.pushNamed(context, '/person/sign');
         }
 
-        if (Contexts.mobile) {
-          Future.delayed(Duration(seconds: 1), () {
-            if (myprefs.getString("SavedenterpriseName") !=
-                myprefs.getString('enterpriseName')) {
-              PeopleStructure.getNetpeople(delete: true);
-            }
-          });
-        }
+        // if (Contexts.mobile) {
+        //   Future.delayed(Duration(seconds: 1), () {
+        //     if (myprefs.getString("SavedenterpriseName") !=
+        //         myprefs.getString('enterpriseName')) {
+        //       PeopleStructure.getNetpeople(delete: true);
+        //     }
+        //   });
+        // }
       }
     }).catchError((onError) {
       print(onError);

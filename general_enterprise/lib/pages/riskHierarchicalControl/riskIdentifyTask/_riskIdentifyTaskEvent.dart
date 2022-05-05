@@ -2,88 +2,70 @@ import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/common/refreshList.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 
-class RiskIdentifyTaskIncident extends StatefulWidget {
-  RiskIdentifyTaskIncident({this.leftBarList, this.index});
+class RiskIdentifyTaskEvent extends StatefulWidget {
+  RiskIdentifyTaskEvent({this.leftBarList, this.index});
   final List leftBarList;
   final int index;
   @override
-  State<RiskIdentifyTaskIncident> createState() =>
-      _RiskIdentifyTaskIncidentState();
+  State<RiskIdentifyTaskEvent> createState() => _RiskIdentifyTaskEventState();
 }
 
-class _RiskIdentifyTaskIncidentState extends State<RiskIdentifyTaskIncident> {
+class _RiskIdentifyTaskEventState extends State<RiskIdentifyTaskEvent> {
   ThrowFunc _throwFunc = new ThrowFunc();
 
   int leftBarIndex = 0;
+
+  Map _queryParameters;
 
   @override
   void initState() {
     super.initState();
     leftBarIndex = widget.index;
+    _queryParameters = {'riskUnitId': widget.leftBarList[leftBarIndex]['id']};
   }
 
-  List data = [
-    {
-      "riskIncident": "这是安全风险事件1这是安全风险事件1这是安全风险事件1这是安全风险事件1这是安全风险事件1",
-      "riskDescribe":
-          "这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述这是风险描述",
-      "initialRiskLevel": "3",
-      "currentRiskLevel": "2"
-    },
-    {
-      "riskIncident": "这是安全风险事件2",
-      "riskDescribe": "这是风险描述这是风险描述",
-      "initialRiskLevel": "3",
-      "currentRiskLevel": "2"
-    },
-    {
-      "riskIncident": "这是安全风险事件3",
-      "riskDescribe": "这是风险描述这是风险描述",
-      "initialRiskLevel": "3",
-      "currentRiskLevel": "2"
-    },
-    {
-      "riskIncident": "这是安全风险事件4",
-      "riskDescribe": "这是风险描述这是风险描述",
-      "initialRiskLevel": "3",
-      "currentRiskLevel": "2"
-    },
-    {
-      "riskIncident": "这是安全风险事件5",
-      "riskDescribe": "这是风险描述这是风险描述",
-      "initialRiskLevel": "3",
-      "currentRiskLevel": "2"
-    },
-    {
-      "riskIncident": "这是安全风险事件6",
-      "riskDescribe": "这是风险描述这是风险描述",
-      "initialRiskLevel": "3",
-      "currentRiskLevel": "2"
-    },
-  ];
+  Color _getColor(String riskLevel) {
+    switch (riskLevel) {
+      case "重大风险":
+        return Color(0xffF56271);
+        break;
+      case "较大风险":
+        return Color(0xffFF9900);
+        break;
+      case "一般风险":
+        return Color(0xffFFCA0E);
+        break;
+      case "低风险":
+        return Color(0xff2276FC);
+        break;
+      default:
+        return Color(0xff333333);
+    }
+  }
 
   TextSpan _getTextSpan(String riskLevel) {
     switch (riskLevel) {
       case "1":
         return TextSpan(
-            text: "重大风险", style: TextStyle(color: Color(0xffF56271)));
+            text: '重大风险', style: TextStyle(color: Color(0xffF56271)));
         break;
       case "2":
         return TextSpan(
-            text: "较大风险", style: TextStyle(color: Color(0xffFF9900)));
+            text: '较大风险', style: TextStyle(color: Color(0xffFF9900)));
         break;
       case "3":
         return TextSpan(
-            text: "一般风险", style: TextStyle(color: Color(0xffFFCA0E)));
+            text: '一般风险', style: TextStyle(color: Color(0xffFFCA0E)));
         break;
       case "4":
         return TextSpan(
-            text: "低风险", style: TextStyle(color: Color(0xff2276FC)));
+            text: '低风险', style: TextStyle(color: Color(0xff2276FC)));
         break;
       default:
-        return TextSpan(text: "无", style: TextStyle(color: Color(0xff333333)));
+        return TextSpan();
     }
   }
 
@@ -105,6 +87,10 @@ class _RiskIdentifyTaskIncidentState extends State<RiskIdentifyTaskIncident> {
                 return GestureDetector(
                   onTap: () {
                     leftBarIndex = index;
+                    _queryParameters = {
+                      'riskUnitId': widget.leftBarList[leftBarIndex]['id']
+                    };
+                    _throwFunc.run(argument: _queryParameters);
                     setState(() {});
                   },
                   child: Container(
@@ -132,7 +118,7 @@ class _RiskIdentifyTaskIncidentState extends State<RiskIdentifyTaskIncident> {
                         ),
                         Container(
                           width: size.width * 200,
-                          child: Text(widget.leftBarList[index]['riskUnit'],
+                          child: Text(widget.leftBarList[index]['riskUnitName'],
                               style: TextStyle(
                                   color: index == leftBarIndex
                                       ? Color(0xff333333)
@@ -157,13 +143,8 @@ class _RiskIdentifyTaskIncidentState extends State<RiskIdentifyTaskIncident> {
             child: (index, list) => GestureDetector(
               onTap: () {
                 Navigator.pushNamed(
-                    context, 
-                    '/riskIdentifyTask/riskIdentifyTaskMeasure',
-                    arguments: {
-                      'index': index,
-                      'data': list
-                    }
-                  );
+                    context, '/riskIdentifyTask/riskIdentifyTaskMeasure',
+                    arguments: {'index': index, 'data': list});
               },
               child: Container(
                 margin: EdgeInsets.only(
@@ -204,7 +185,7 @@ class _RiskIdentifyTaskIncidentState extends State<RiskIdentifyTaskIncident> {
                           horizontal: size.width * 20,
                           vertical: size.width * 16),
                       child: Text(
-                        list[index]['riskIncident'],
+                        list[index]['riskEventName'],
                         style: TextStyle(
                             color: Color(0xff333333),
                             fontSize: size.width * 28,
@@ -231,7 +212,7 @@ class _RiskIdentifyTaskIncidentState extends State<RiskIdentifyTaskIncident> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['riskDescribe'],
+                                        text: list[index]['riskDescription'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -267,7 +248,7 @@ class _RiskIdentifyTaskIncidentState extends State<RiskIdentifyTaskIncident> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     _getTextSpan(
-                                        list[index]['currentRiskLevel'])
+                                        list[index]['riskLevel'])
                                   ]),
                             ),
                           ],
@@ -277,42 +258,39 @@ class _RiskIdentifyTaskIncidentState extends State<RiskIdentifyTaskIncident> {
               ),
             ),
             // page: true,
-            // url: Interface.getHistoricalSubscribe,
+            url: Interface.getRiskTemplateThreeWarehouseAll,
             // listParam: "records",
-            // queryParameters: {
-            //   'type': 2,
-            // },
-            // method: 'get'
+            queryParameters: _queryParameters,
+            method: 'get',
             throwFunc: _throwFunc,
-            data: data,
           ),
         ))
       ]),
       actions: [
         GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(
-              context, 
-              '/riskIdentifyTask/addRiskEvent'
-            ).then((value) => {
-              _throwFunc.run()
-            });
+          onTap: () {
+            Navigator.pushNamed(context, '/riskIdentifyTask/addRiskEvent',
+                arguments: {
+                  'riskUnitId': widget.leftBarList[leftBarIndex]['id']
+                }).then((value) => {_throwFunc.run()});
           },
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0xff1E62EB),
-              borderRadius: BorderRadius.all(Radius.circular(size.width * 40))
-            ),
+                color: Color(0xff1E62EB),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 40))),
             padding: EdgeInsets.symmetric(horizontal: size.width * 20),
-            margin: EdgeInsets.only(top: size.width * 30, bottom: size.width * 10, right: size.width * 30),
+            margin: EdgeInsets.only(
+                top: size.width * 30,
+                bottom: size.width * 10,
+                right: size.width * 30),
             alignment: Alignment.center,
             child: Text(
               "+ 新增",
               style: TextStyle(
-                color: Colors.white,
-                fontSize: size.width * 28,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.white,
+                  fontSize: size.width * 28,
+                  fontWeight: FontWeight.w500),
             ),
           ),
         )

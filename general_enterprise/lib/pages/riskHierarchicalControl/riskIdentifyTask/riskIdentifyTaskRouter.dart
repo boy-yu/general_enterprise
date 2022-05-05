@@ -3,20 +3,20 @@ import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/___ris
 import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/__addControlMeasure.dart';
 import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/__riskIdentifyTaskMeasure.dart';
 import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/_addRiskEvent.dart';
-import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/_riskIdentifyTaskIncident.dart';
+import 'package:enterprise/pages/riskHierarchicalControl/riskIdentifyTask/_riskIdentifyTaskEvent.dart';
 import 'package:flutter/material.dart';
 
 List<Map<String, Widget Function(BuildContext context, {dynamic arguments})>>
     riskIdentifyTaskRouter = [
   {
     '/riskIdentifyTask/riskIdentifyTaskIncident': (context, {arguments}) =>
-        RiskIdentifyTaskIncident(
+        RiskIdentifyTaskEvent(
             index: arguments['index'], leftBarList: arguments['data']
         )
   },
   {
     '/riskIdentifyTask/addRiskEvent': (context, {arguments}) =>
-        AddRiskEvent()
+        AddRiskEvent(riskUnitId: arguments['riskUnitId'])
   },
 
   {
@@ -27,7 +27,7 @@ List<Map<String, Widget Function(BuildContext context, {dynamic arguments})>>
   },
   {
     '/riskIdentifyTask/addControlMeasure': (context, {arguments}) =>
-        AddControlMeasure()
+        AddControlMeasure(riskEventId: arguments['riskEventId'])
   },
   
   {
@@ -38,7 +38,7 @@ List<Map<String, Widget Function(BuildContext context, {dynamic arguments})>>
   },
   {
     '/riskIdentifyTask/addHiddenTask': (context, {arguments}) =>
-        AddHiddenTask()
+        AddHiddenTask(riskMeasureId: arguments['riskMeasureId'])
   },
   
 ];

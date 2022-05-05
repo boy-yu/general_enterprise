@@ -1,10 +1,9 @@
 import 'package:enterprise/common/myCount.dart';
 import 'package:enterprise/common/myDateSelect.dart';
 import 'package:enterprise/common/myImageCarma.dart';
-import 'package:enterprise/common/mySearchPeople.dart';
+import 'package:enterprise/myView/myChoosePeople.dart';
 import 'package:enterprise/myView/myRiskButtons.dart';
 import 'package:enterprise/service/context.dart';
-import 'package:enterprise/tool/funcType.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -43,9 +42,9 @@ class _AffirmHiddenState extends State<AffirmHidden> {
     'dangerReason': '',
     'controlMeasures': '',
     'cost': '',
-    'liablePerson': [],
+    'liablePerson': '',
     'dangerManageDeadline': '',
-    'checkAcceptPerson': []
+    'checkAcceptPerson': ''
   };
 
   List levelList = [
@@ -145,51 +144,41 @@ class _AffirmHiddenState extends State<AffirmHidden> {
     }
   }
 
-  List liablePersonMsg = [];
+  Map liablePersonMsg = {};
 
-  void _changeLiablePersonMsg(List<PeopleStructure> data, Counter _context) {
-    liablePersonMsg = [];
-    for (var i = 0; i < data.length; i++) {
-      fiveMeasuresData['liablePerson'].add(data[i].id);
-      liablePersonMsg.add(data[i].name);
-    }
-    if (mounted) {
-      setState(() {});
-    }
-    Navigator.pop(context);
-  }
+  // void _changeLiablePersonMsg(List<PeopleStructure> data, Counter _context) {
+  //   liablePersonMsg = [];
+  //   for (var i = 0; i < data.length; i++) {
+  //     fiveMeasuresData['liablePerson'].add(data[i].id);
+  //     liablePersonMsg.add(data[i].name);
+  //   }
+  //   if (mounted) {
+  //     setState(() {});
+  //   }
+  //   Navigator.pop(context);
+  // }
 
-  String _getLiablePerName() {
-    String perName = '';
-    for (int i = 0; i < liablePersonMsg.length; i++) {
-      perName += liablePersonMsg[i] + '、';
-    }
-    return perName;
-  }
+  // String _getLiablePerName() {
+  //   String perName = '';
+  //   for (int i = 0; i < liablePersonMsg.length; i++) {
+  //     perName += liablePersonMsg[i] + '、';
+  //   }
+  //   return perName;
+  // }
 
-  List acceptPersonMsg = [];
+  Map acceptPersonMsg = {};
 
-  void _changeAcceptPersonMsg(List<PeopleStructure> data, Counter _context) {
-    acceptPersonMsg = [];
-    for (var i = 0; i < data.length; i++) {
-      fiveMeasuresData['checkAcceptPerson'].add(data[i].id);
-      acceptPersonMsg.add(data[i].name);
-    }
-    if (mounted) {
-      setState(() {});
-    }
-    Navigator.pop(context);
-  }
-
-  String _getAcceptPersonName() {
-    String perName = '';
-    for (int i = 0; i < acceptPersonMsg.length; i++) {
-      perName += acceptPersonMsg[i] + '、';
-    }
-    return perName;
-  }
-
-  
+  // void _changeAcceptPersonMsg(List<PeopleStructure> data, Counter _context) {
+  //   acceptPersonMsg = [];
+  //   for (var i = 0; i < data.length; i++) {
+  //     fiveMeasuresData['checkAcceptPerson'].add(data[i].id);
+  //     acceptPersonMsg.add(data[i].name);
+  //   }
+  //   if (mounted) {
+  //     setState(() {});
+  //   }
+  //   Navigator.pop(context);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -897,8 +886,15 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                             showDialog(
                                 context: context,
                                 builder: (context) => ChoosePeople(
-                                      changeMsg: _changeLiablePersonMsg,
-                                      way: false,
+                                      changeMsg: (value){
+                                        print(value);
+                                        liablePersonMsg = value;
+                                        fiveMeasuresData['liablePerson'] = liablePersonMsg['id'];
+                                        setState(() {
+                                          
+                                        });
+                                      },
+                                      title: '选择整改责任人'
                                     ));
                           },
                           child: Container(
@@ -927,7 +923,7 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                                         ))
                                       : Expanded(
                                           child: Text(
-                                            _getLiablePerName(),
+                                            liablePersonMsg['nickname'],
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C),
                                                 fontSize: size.width * 28,
@@ -953,8 +949,14 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                             showDialog(
                                 context: context,
                                 builder: (context) => ChoosePeople(
-                                      changeMsg: _changeAcceptPersonMsg,
-                                      way: false,
+                                      changeMsg: (value){
+                                        acceptPersonMsg = value;
+                                        fiveMeasuresData['acceptPerson'] = liablePersonMsg['id'];
+                                        setState(() {
+                                          
+                                        });
+                                      },
+                                      title: '选择验收人'
                                     ));
                           },
                           child: Container(
@@ -983,7 +985,7 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                                         ))
                                       : Expanded(
                                           child: Text(
-                                            _getAcceptPersonName(),
+                                            acceptPersonMsg['nickname'],
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C),
                                                 fontSize: size.width * 28,

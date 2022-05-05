@@ -2,6 +2,7 @@ import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/common/refreshList.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 
 class RiskIdentifyTaskMeasure extends StatefulWidget {
@@ -14,6 +15,7 @@ class RiskIdentifyTaskMeasure extends StatefulWidget {
 
 class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
   ThrowFunc _throwFunc = new ThrowFunc();
+  Map _queryParameters;
 
   int leftBarIndex = 0;
 
@@ -21,58 +23,10 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
   void initState() {
     super.initState();
     leftBarIndex = widget.index;
+    _queryParameters = {
+      'riskEventId': widget.leftBarList[leftBarIndex]['id']
+    };
   }
-
-  List data = [
-    {
-      "riskMeasure": "这是措施1",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX",
-      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
-    },
-    {
-      "riskMeasure": "这是XXXXXXXXX措施2",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX",
-      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
-    },
-    {
-      "riskMeasure": "这是XXXXXXXXX措施3",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX",
-      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
-    },
-    {
-      "riskMeasure": "这是XXXXXXXXX措施4",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX",
-      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
-    },
-    {
-      "riskMeasure": "这是XXXXXXXXX措施5",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX",
-      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
-    },
-    {
-      "riskMeasure": "这是XXXXXXXXX措施6",
-      "controlMode": "隐患排查",
-      "controlClassify1": "维护保养",
-      "controlClassify2": "XXXXXX",
-      "controlClassify3": "XXXXXXXXXXXX",
-      "troubleshootContent": '隐患排查内容隐患排查内容隐患排查内容隐患排查内容'
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +46,10 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                 return GestureDetector(
                   onTap: () {
                     leftBarIndex = index;
+                    _queryParameters = {
+                      'riskEventId': widget.leftBarList[leftBarIndex]['id']
+                    };
+                    _throwFunc.run(argument: _queryParameters);
                     setState(() {});
                   },
                   child: Container(
@@ -119,7 +77,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                         ),
                         Container(
                           width: size.width * 200,
-                          child: Text(widget.leftBarList[index]['riskIncident'],
+                          child: Text(widget.leftBarList[index]['riskEventName'],
                               style: TextStyle(
                                   color: index == leftBarIndex
                                       ? Color(0xff333333)
@@ -191,7 +149,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                           horizontal: size.width * 20,
                           vertical: size.width * 16),
                       child: Text(
-                        list[index]['riskMeasure'],
+                        list[index]['riskMeasureDesc'],
                         style: TextStyle(
                             color: Color(0xff333333),
                             fontSize: size.width * 28,
@@ -218,7 +176,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['controlMode'],
+                                        text: list[index]['dataSrc'] == "2" ? '隐患排查' : '自动化监控',
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -237,7 +195,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['controlClassify1'],
+                                        text: list[index]['classify1'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -256,7 +214,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['controlClassify2'],
+                                        text: list[index]['classify2'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -275,7 +233,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['controlClassify3'],
+                                        text: list[index]['classify3'] == '' ? '无' : list[index]['classify3'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -305,15 +263,10 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                 ),
               ),
             ),
-            // page: true,
-            // url: Interface.getHistoricalSubscribe,
-            // listParam: "records",
-            // queryParameters: {
-            //   'type': 2,
-            // },
-            // method: 'get'
+            url: Interface.getRiskTemplateFourWarehouseAll,
+            queryParameters: _queryParameters,
+            method: 'get',
             throwFunc: _throwFunc,
-            data: data,
           ),
         ))
       ]),
@@ -322,7 +275,10 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
           onTap: (){
             Navigator.pushNamed(
               context, 
-              '/riskIdentifyTask/addControlMeasure'
+              '/riskIdentifyTask/addControlMeasure',
+              arguments: {
+                'riskEventId': widget.leftBarList[leftBarIndex]['id']
+              }
             ).then((value) => {
               _throwFunc.run()
             });

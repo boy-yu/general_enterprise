@@ -59,6 +59,30 @@ class Interface {
   // 修改头像 avatar myMessage
   static String amendAvatar = baseUrl + '/updateUrl';
 
+
+  // 风险分析单元列表(风险辨识任务)
+  static String getRiskTemplateTwoListAllTask = baseUrl + '/riskTemplateTwo/riskTemplateTwoListAllTask';
+  // 风险事件列表
+  static String getRiskTemplateThreeWarehouseAll = baseUrl + '/riskTemplateThree/RiskTemplateThreeWarehouseAll';
+  // 新增风险事件
+  static String postRiskTemplateThreeWarehouseAll = baseUrl + '/riskTemplateThree/addRiskTemplateThreeWarehouse';
+  // 风险管控措施列表
+  static String getRiskTemplateFourWarehouseAll = baseUrl + '/riskTemplateFour/RiskTemplateFourWarehouseAll';
+  // 新增风险管控措施
+  static String postRiskTemplateFourWarehouse = baseUrl + '/riskTemplateFour/addRiskTemplateFourWarehouse';
+  // 风险管控任务列表
+  static String getRiskTemplateFiveWarehouseAll = baseUrl + '/riskTemplateFive/RiskTemplateFiveWarehouseAll';
+
+  // 查看该企业已分配部门的树状结构
+  static String getDepartmentTree = baseUrl + '/coDepartment/getDepartmentTree';
+  // 根据部门查看该部门下所以人员信息
+  static String getCoUserByDepartment = baseUrl + '/coDepartment/getCoUserByDepartment';
+  
+  
+  
+  
+  
+
   error(onError, BuildContext context) async {
     if (onError.toString().indexOf('DioError') > -1 ||
         onError.toString() == 'null') {

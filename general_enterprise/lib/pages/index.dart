@@ -235,10 +235,10 @@ class _IndexState extends State<Index> {
                 currentIndex: _currentIndex,
                 type: BottomNavigationBarType.shifting,
                 onTap: (index) {
-                  if (PeopleStructure.state && index == 2) {
-                    successToast('通讯录正在加载，请稍后重试');
-                    return;
-                  }
+                  // if (PeopleStructure.state && index == 2) {
+                  //   successToast('通讯录正在加载，请稍后重试');
+                  //   return;
+                  // }
                   setState(() {
                     _currentIndex = index;
                   });

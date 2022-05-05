@@ -14,16 +14,15 @@ typedef SetstateFunc = void Function(VoidCallback fn);
 Database db;
 
 class PeopleStructure {
-  final int id;
+  final String id;
   bool choose;
   String sort;
-  final String name, department, position, telephone, photoUrl, account;
+  final String name, department, telephone, photoUrl, account;
   final int nums;
   final List children;
   PeopleStructure({
     String photoUrl,
     this.children,
-    this.position,
     this.department,
     this.sort,
     @required this.id,
@@ -53,7 +52,7 @@ class PeopleStructure {
           id: element['id'],
           name: element['name'],
           // position: element['positionIds'] ?? '暂无职位',
-          department: element['departmentIds'],
+          department: element['departmentId'],
           telephone: element['telephone'],
           nums: element['num'] ?? null,
           photoUrl: element['photoUrl'],
@@ -92,7 +91,7 @@ class PeopleStructure {
                 "id": element['id'],
                 "name": element['nickname'],
                 // "positionIds": jsonEncode(element['positionIds']),
-                "departmentIds": jsonEncode(element['departmentIds']),
+                "departmentIds": jsonEncode(element['departmentId']),
                 "telephone": element['mobile'],
                 "photoUrl": element['avatar'],
                 "account": element['account']
@@ -109,7 +108,7 @@ class PeopleStructure {
     return Future.value(true);
   }
 
-  static getSqlpeopel({int departmentId, List filter}) async {
+  static getSqlpeopel({String departmentId, List filter}) async {
     List list = await db.rawQuery(
         'SELECT * FROM sqlite_master WHERE type="table" AND name="People"');
     if (list.isEmpty) await getNetpeople(delete: true);
@@ -132,7 +131,7 @@ class PeopleStructure {
 
     if (departmentId is int) {
       for (var i = data.length - 1; i > -1; i--) {
-        if (data[i]['departmentIds']
+        if (data[i]['departmentId']
                 .toString()
                 .indexOf(departmentId.toString()) ==
             -1) {
@@ -150,7 +149,7 @@ class PeopleStructure {
           //   }
           // });
 
-          jsonDecode(data[i]['departmentIds']).forEach((ele) {
+          jsonDecode(data[i]['departmentId']).forEach((ele) {
             String _str = '';
             departmentList.forEach((_element) {
               if (_element['id'] == ele) {
@@ -158,7 +157,7 @@ class PeopleStructure {
               }
             });
             if (_str.isNotEmpty) {
-              data[i]['departmentIds'] = _str.substring(0, _str.length - 1);
+              data[i]['departmentId'] = _str.substring(0, _str.length - 1);
             }
           });
         }
@@ -176,7 +175,7 @@ class PeopleStructure {
         //     data[i]['positionIds'] = _str.substring(0, _str.length - 1);
         //   }
         // });
-        jsonDecode(data[i]['departmentIds']).forEach((ele) {
+        jsonDecode(data[i]['departmentId']).forEach((ele) {
           String _str = '';
           departmentList.forEach((_element) {
             if (_element['id'] == ele) {
@@ -184,7 +183,7 @@ class PeopleStructure {
             }
           });
           if (_str.isNotEmpty) {
-            data[i]['departmentIds'] = _str.substring(0, _str.length - 1);
+            data[i]['departmentId'] = _str.substring(0, _str.length - 1);
           }
         });
       }
@@ -241,8 +240,8 @@ class PeopleStructure {
     for (var i = 0; i < data.length; i++) {
       // data[i]['positionIds'] =
       //     await queryPosition(ids: jsonDecode(data[i]['positionIds']));
-      data[i]['departmentIds'] =
-          await queryDepartment(ids: jsonDecode(data[i]['departmentIds']));
+      data[i]['departmentId'] =
+          await queryDepartment(ids: jsonDecode(data[i]['departmentId']));
     }
 
     return Future.value(changeStucture(data));
@@ -256,7 +255,7 @@ class PeopleStructure {
         jsonDecode(jsonEncode(await db.rawQuery("SELECT * FROM People")));
     List _list = [];
     data.forEach((element) {
-      List _department = jsonDecode(element['departmentIds']);
+      List _department = jsonDecode(element['departmentId']);
       if (_department.indexOf(department) > -1) {
         _list.add(element);
       }
@@ -269,20 +268,20 @@ class PeopleStructure {
   static Future getOrganization({bool delete = false}) async {
     List list = await db.rawQuery(
         'SELECT * FROM sqlite_master WHERE type="table" AND name="Department"');
-    List positionList = await db.rawQuery(
-        'SELECT * FROM sqlite_master WHERE type="table" AND name="Position"');
+    // List positionList = await db.rawQuery(
+    //     'SELECT * FROM sqlite_master WHERE type="table" AND name="Position"');
 
     if (delete) {
       if (list.isNotEmpty) {
         await db.execute('DROP table Department');
       }
-      if (positionList.isNotEmpty) {
-        await db.execute('DROP table Position');
-      }
+      // if (positionList.isNotEmpty) {
+      //   await db.execute('DROP table Position');
+      // }
       await db.execute(
           'CREATE TABLE Department (id INTEGER PRIMARY KEY, name TEXT, parentId INTEGER , uId TEXT, path TEXT)');
-      await db.execute(
-          'CREATE TABLE Position (id INTEGER PRIMARY KEY, name TEXT, parentId INTEGER)');
+      // await db.execute(
+      //     'CREATE TABLE Position (id INTEGER PRIMARY KEY, name TEXT, parentId INTEGER)');
     }
 
     if (delete) {
@@ -303,7 +302,7 @@ class PeopleStructure {
         print(_deparment);
         _deparment.forEach((element) {
           db.insert('Department', {
-            // "id": element['id'],
+            "id": element['id'],
             "name": element['name'],
             // "parentId": element['parentId'],
             "uId": element['id'],
@@ -314,33 +313,33 @@ class PeopleStructure {
     }
   }
 
-  static Future<dynamic> queryPosition({List ids}) async {
-    List positionList = await db.rawQuery(
-        'SELECT * FROM sqlite_master WHERE type="table" AND name="Position"');
+  // static Future<dynamic> queryPosition({List ids}) async {
+  //   List positionList = await db.rawQuery(
+  //       'SELECT * FROM sqlite_master WHERE type="table" AND name="Position"');
 
-    if (positionList.isEmpty) await getOrganization(delete: true);
+  //   if (positionList.isEmpty) await getOrganization(delete: true);
 
-    if (ids is List) {
-      String _list = '';
-      for (var i = 0; i < ids.length; i++) {
-        List data =
-            await db.rawQuery('SELECT name FROM Position WHERE id = ${ids[i]}');
-        _list += data[0]['name'].toString() + ',';
-      }
-      if (_list.isNotEmpty) {
-        _list = _list.substring(0, _list.length - 1);
-      }
-      return Future.value(_list);
-    } else {
-      return await db.query('Position');
-    }
-  }
+  //   if (ids is List) {
+  //     String _list = '';
+  //     for (var i = 0; i < ids.length; i++) {
+  //       List data =
+  //           await db.rawQuery('SELECT name FROM Position WHERE id = ${ids[i]}');
+  //       _list += data[0]['name'].toString() + ',';
+  //     }
+  //     if (_list.isNotEmpty) {
+  //       _list = _list.substring(0, _list.length - 1);
+  //     }
+  //     return Future.value(_list);
+  //   } else {
+  //     return await db.query('Position');
+  //   }
+  // }
 
   static Future<dynamic> queryDepartment(
-      {List ids, int department = -1, List filterId}) async {
-    List positionList = await db.rawQuery(
-        'SELECT * FROM sqlite_master WHERE type="table" AND name="Department"');
-    if (positionList.isEmpty) await getOrganization(delete: true);
+      {List ids, String department = '', List filterId}) async {
+    // List positionList = await db.rawQuery(
+    //     'SELECT * FROM sqlite_master WHERE type="table" AND name="Department"');
+    // if (positionList.isEmpty) await getOrganization(delete: true);
     dynamic _list;
     List _data = await db.query('Department');
     if (_data.isEmpty) {
@@ -356,13 +355,13 @@ class PeopleStructure {
       if (_list.isNotEmpty) {
         _list = _list.substring(0, _list.length - 1);
       }
-    } else if (ids == null && department != -1) {
+    } else if (ids == null && department != '') {
       _list = [];
       _list = jsonDecode(jsonEncode(await db.rawQuery(
           'SELECT name,id ,(SELECT COUNT(1) FROM Department as children WHERE children.parentId = Department.id )as num  FROM   Department WHERE parentId = $department')));
       List _people = [];
       if (_list is List) {
-        if (department != 0) {
+        if (department != '') {
           _people =
               await getSqlpeopel(departmentId: department, filter: filterId);
         }
@@ -377,9 +376,9 @@ class PeopleStructure {
   }
 
   static Future<List> queryOnlyDepartment(int department) async {
-    List positionList = await db.rawQuery(
-        'SELECT * FROM sqlite_master WHERE type="table" AND name="Department"');
-    if (positionList.isEmpty) await getOrganization(delete: true);
+    // List positionList = await db.rawQuery(
+    //     'SELECT * FROM sqlite_master WHERE type="table" AND name="Department"');
+    // if (positionList.isEmpty) await getOrganization(delete: true);
     List _list = [];
     // _list = jsonDecode(jsonEncode(await db.rawQuery(
     //     'SELECT name,id ,(SELECT COUNT(1) FROM Department as children WHERE children.parentId = Department.id )as num  FROM   Department WHERE parentId = $department')));

@@ -1,9 +1,12 @@
 import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddRiskEvent extends StatefulWidget {
+  AddRiskEvent({this.riskUnitId});
+  final String riskUnitId;
   @override
   State<AddRiskEvent> createState() => _AddRiskEventState();
 }
@@ -14,29 +17,50 @@ class _AddRiskEventState extends State<AddRiskEvent> {
   
 
   Map submitData = {
-    'riskEvent': '',
-    'riskDescription': '',
-    'initialConsequence': '',
-    'currentConsequence': '',
-    'initialChance': '',
-    'currentChance': '',
-    'initialRiskDegree': '',
-    'currentRiskDegree': '',
-    'initialRiskLevel': '',
-    'currentRiskLevel': '',
-  };
+	"companyCode": "",
+	"companyId": "",
+	"createBy": "",
+	"createDate": "",
+	"currentRiskLevel": "",
+	"deleted": "",
+	"hazardCode": "",
+	"id": "",
+	"initialRiskConsequences": 0,
+	"initialRiskDegree": 0,
+	"initialRiskLevel": "",
+	"initialRiskPossibility": 0,
+	"riskConsequences": 0,
+	"riskDegree": 0,
+	"riskDescription": "",
+	"riskEventName": "",
+	"riskLevel": "",
+	"riskObjectId": "",
+	"riskPossibility": 0,
+	"riskUnitId": "",
+	"selected": "",
+	"status": "",
+	"updateBy": "",
+	"updateDate": ""
+};
 
-  List levelChoice = ['1', '2', '3', '4', '5'];
+  List levelChoice = [1, 2, 3, 4, 5];
 
   String _getInitialRiskLevel(int riskLevel){
-    submitData['initialRiskLevel'] = riskLevel.toString();
     if(25 >= riskLevel && riskLevel >= 20){
+      submitData['initialRiskLevel'] = '1';
+      submitData['currentRiskLevel'] = '1';
       return '重大风险';
     }else if(20 > riskLevel && riskLevel >= 15){
+      submitData['initialRiskLevel'] = '2';
+      submitData['currentRiskLevel'] = '2';
       return '较大风险';
     }else if(15 > riskLevel && riskLevel >= 9){
+      submitData['initialRiskLevel'] = '3';
+      submitData['currentRiskLevel'] = '3';
       return '较大风险';
     }else if(8 >= riskLevel){
+      submitData['initialRiskLevel'] = '4';
+      submitData['currentRiskLevel'] = '4';
       return '低风险';
     }else{
       return '系统自动判断';
@@ -44,14 +68,17 @@ class _AddRiskEventState extends State<AddRiskEvent> {
   }
 
   String _getCurrentRiskLevel(int riskLevel){
-    submitData['currentRiskLevel'] = riskLevel.toString();
     if(25 >= riskLevel && riskLevel >= 20){
+      submitData['riskLevel'] = '1';
       return '重大风险';
     }else if(20 > riskLevel && riskLevel >= 15){
+      submitData['riskLevel'] = '2';
       return '较大风险';
     }else if(15 > riskLevel && riskLevel >= 9){
+      submitData['riskLevel'] = '3';
       return '较大风险';
     }else if(8 >= riskLevel){
+      submitData['riskLevel'] = '4';
       return '低风险';
     }else{
       return '系统自动判断';
@@ -91,16 +118,16 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                     textInputAction: TextInputAction.next,
                     controller: _controllerEvent,
                     onChanged: (value) {
-                      submitData['riskEvent'] = value;
+                      submitData['riskEventName'] = value;
                       setState(() {});
                     },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintStyle: TextStyle(
                             fontSize: size.width * 28, color: Color(0xff7F8A9C)),
-                        hintText: submitData['riskEvent'] == ''
+                        hintText: submitData['riskEventName'] == ''
                             ? '请输入风险事件'
-                            : submitData['riskEvent']),
+                            : submitData['riskEventName']),
                     maxLines: 1,
                     minLines: 1,
                   ),
@@ -173,9 +200,9 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: () {
-                                              submitData['initialConsequence'] = levelChoice[index].toString();
-                                              if(submitData['initialChance'] != ''){
-                                                submitData['initialRiskDegree'] = (int.parse(submitData['initialConsequence']) * int.parse(submitData['initialChance'])).toString();
+                                              submitData['initialRiskConsequences'] = levelChoice[index];
+                                              if(submitData['initialRiskPossibility'] != ''){
+                                                submitData['initialRiskDegree'] = submitData['initialRiskConsequences'] * submitData['initialRiskPossibility'];
                                               }
                                               setState(() {});
                                               Navigator.pop(context);
@@ -200,7 +227,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               child: Row(
                                 children: [
                                   Text(
-                                    submitData['initialConsequence'] == '' ? "请选择" : submitData['initialConsequence'].toString(),
+                                    submitData['initialRiskConsequences'] == '' ? "请选择" : submitData['initialRiskConsequences'].toString(),
                                     style: TextStyle(
                                       color: Color(0xff7F8A9C),
                                       fontSize: size.width * 28,
@@ -247,9 +274,9 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: () {
-                                              submitData['currentConsequence'] = levelChoice[index].toString();
-                                              if(submitData['currentChance'] != ''){
-                                                submitData['currentRiskDegree'] = (int.parse(submitData['currentChance']) * int.parse(submitData['currentConsequence'])).toString();
+                                              submitData['riskConsequences'] = levelChoice[index];
+                                              if(submitData['riskPossibility'] != ''){
+                                                submitData['riskDegree'] = submitData['riskPossibility'] * submitData['riskConsequences'];
                                               }
                                               setState(() {});
                                               Navigator.pop(context);
@@ -274,7 +301,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               child: Row(
                                 children: [
                                   Text(
-                                    submitData['currentConsequence'] == '' ? "请选择" : submitData['currentConsequence'].toString(),
+                                    submitData['riskConsequences'] == '' ? "请选择" : submitData['riskConsequences'].toString(),
                                     style: TextStyle(
                                       color: Color(0xff7F8A9C),
                                       fontSize: size.width * 28,
@@ -329,9 +356,9 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: () {
-                                              submitData['initialChance'] = levelChoice[index].toString();
-                                              if(submitData['initialConsequence'] != ''){
-                                                submitData['initialRiskDegree'] = (int.parse(submitData['initialConsequence']) * int.parse(submitData['initialChance'])).toString();
+                                              submitData['initialRiskPossibility'] = levelChoice[index];
+                                              if(submitData['initialRiskConsequences'] != ''){
+                                                submitData['initialRiskDegree'] = submitData['initialRiskConsequences'] * submitData['initialRiskPossibility'];
                                               }
                                               setState(() {});
                                               Navigator.pop(context);
@@ -356,7 +383,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               child: Row(
                                 children: [
                                   Text(
-                                    submitData['initialChance'] == '' ? "请选择" : submitData['initialChance'].toString(),
+                                    submitData['initialRiskPossibility'] == '' ? "请选择" : submitData['initialRiskPossibility'].toString(),
                                     style: TextStyle(
                                       color: Color(0xff7F8A9C),
                                       fontSize: size.width * 28,
@@ -403,9 +430,9 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: () {
-                                              submitData['currentChance'] = levelChoice[index].toString();
-                                              if(submitData['currentConsequence'] != ''){
-                                                submitData['currentRiskDegree'] = (int.parse(submitData['currentChance']) * int.parse(submitData['currentConsequence'])).toString();
+                                              submitData['riskPossibility'] = levelChoice[index];
+                                              if(submitData['riskConsequences'] != ''){
+                                                submitData['riskDegree'] = submitData['riskPossibility'] * submitData['riskConsequences'];
                                               }
                                               setState(() {});
                                               Navigator.pop(context);
@@ -430,7 +457,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               child: Row(
                                 children: [
                                   Text(
-                                    submitData['currentChance'] == '' ? "请选择" : submitData['currentChance'].toString(),
+                                    submitData['riskPossibility'] == '' ? "请选择" : submitData['riskPossibility'].toString(),
                                     style: TextStyle(
                                       color: Color(0xff7F8A9C),
                                       fontSize: size.width * 28,
@@ -479,7 +506,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               padding: EdgeInsets.symmetric(horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['initialRiskDegree'] != '' ? submitData['initialRiskDegree'] : "系统自动判断",
+                                submitData['initialRiskDegree'] != '' ? submitData['initialRiskDegree'].toString() : "系统自动判断",
                                 style: TextStyle(
                                   color: Color(0xff7F8A9C),
                                   fontSize: size.width * 28,
@@ -512,7 +539,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               padding: EdgeInsets.symmetric(horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['currentRiskDegree'] != '' ? submitData['currentRiskDegree'] : "系统自动判断",
+                                submitData['riskDegree'] != '' ? submitData['riskDegree'].toString() : "系统自动判断",
                                 style: TextStyle(
                                   color: Color(0xff7F8A9C),
                                   fontSize: size.width * 28,
@@ -553,7 +580,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               padding: EdgeInsets.symmetric(horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['initialRiskDegree'] != ''? _getInitialRiskLevel(int.parse(submitData['initialRiskDegree'])) : '系统自动判断',
+                                submitData['initialRiskDegree'] != 0 ? _getInitialRiskLevel(submitData['initialRiskDegree']) : '系统自动判断',
                                 style: TextStyle(
                                   color: Color(0xff7F8A9C),
                                   fontSize: size.width * 28,
@@ -586,7 +613,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               padding: EdgeInsets.symmetric(horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['currentRiskDegree'] != ''? _getCurrentRiskLevel(int.parse(submitData['currentRiskDegree'])) : '系统自动判断',
+                                submitData['riskDegree'] != ''? _getCurrentRiskLevel(submitData['riskDegree']) : '系统自动判断',
                                 style: TextStyle(
                                   color: Color(0xff7F8A9C),
                                   fontSize: size.width * 28,
@@ -602,20 +629,27 @@ class _AddRiskEventState extends State<AddRiskEvent> {
               )),
               GestureDetector(
                 onTap: () {
-                  if(submitData['riskEvent'] == ''){
+                  if(submitData['riskEventName'] == ''){
                     Fluttertoast.showToast(msg: "请填写风险事件");
                   }else if(submitData['riskDescription'] == ''){
                     Fluttertoast.showToast(msg: "请填写风险描述");
-                  }else if(submitData['initialConsequence'] == ''){
+                  }else if(submitData['initialRiskConsequences'] == 0){
                     Fluttertoast.showToast(msg: "请选择初始后果");
-                  }else if(submitData['currentConsequence'] == ''){
+                  }else if(submitData['riskConsequences'] == 0){
                     Fluttertoast.showToast(msg: "请选择剩余后果");
-                  }else if(submitData['initialChance'] == ''){
+                  }else if(submitData['initialRiskPossibility'] == 0){
                     Fluttertoast.showToast(msg: "请选择初始可能性");
-                  }else if(submitData['currentChance'] == ''){
+                  }else if(submitData['riskPossibility'] == 0){
                     Fluttertoast.showToast(msg: "请选择剩余可能性");
                   }else{
-                    Navigator.of(context).pop();
+                    submitData['riskUnitId'] = widget.riskUnitId;
+                    myDio.request(
+                          type: 'post',
+                          url: Interface.postRiskTemplateThreeWarehouseAll,
+                          data: submitData).then((value) {
+                        successToast('新增风险事件成功');
+                        Navigator.pop(context);
+                      });
                   }
                 },
                 child: Container(

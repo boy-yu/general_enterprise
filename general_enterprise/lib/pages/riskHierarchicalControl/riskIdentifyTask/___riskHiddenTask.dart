@@ -2,6 +2,7 @@ import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/common/refreshList.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 
 class RiskHiddenTask extends StatefulWidget {
@@ -14,6 +15,7 @@ class RiskHiddenTask extends StatefulWidget {
 
 class _RiskHiddenTaskState extends State<RiskHiddenTask> {
   ThrowFunc _throwFunc = new ThrowFunc();
+  Map _queryParameters;
 
   int leftBarIndex = 0;
 
@@ -21,41 +23,10 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
   void initState() {
     super.initState();
     leftBarIndex = widget.index;
+    _queryParameters = {
+      'riskMeasureId': widget.leftBarList[leftBarIndex]['id']
+    };
   }
-
-  List data = [
-    {
-      "checkTask": "这是XXXXXXXXX隐患内容1",
-      "pollingPeriod": "7天/次",
-      "controlMeans": "台账",
-    },
-    {
-      "checkTask": "这是XXXXXXXXX隐患内容2",
-      "pollingPeriod": "7天/次",
-      "controlMeans": "台账",
-    },
-    {
-      "checkTask": "这是XXXXXXXXX隐患内容3",
-      "pollingPeriod": "7天/次",
-      "controlMeans": "台账",
-    },
-    {
-      "checkTask": "这是XXXXXXXXX隐患内容4",
-      "pollingPeriod": "7天/次",
-      "controlMeans": "台账",
-    },
-    {
-      "checkTask": "这是XXXXXXXXX隐患内容5",
-      "pollingPeriod": "7天/次",
-      "controlMeans": "台账",
-    },
-    {
-      "checkTask": "这是XXXXXXXXX隐患内容6",
-      "pollingPeriod": "7天/次",
-      "controlMeans": "台账",
-    },
-  ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +46,10 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
                 return GestureDetector(
                   onTap: () {
                     leftBarIndex = index;
+                    _queryParameters = {
+                      'riskMeasureId': widget.leftBarList[leftBarIndex]['id']
+                    };
+                    _throwFunc.run(argument: _queryParameters);
                     setState(() {});
                   },
                   child: Container(
@@ -102,7 +77,9 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
                         ),
                         Container(
                           width: size.width * 200,
-                          child: Text(widget.leftBarList[index]['riskMeasure'].toString(),
+                          child: Text(
+                              widget.leftBarList[index]['riskMeasureDesc']
+                                  .toString(),
                               style: TextStyle(
                                   color: index == leftBarIndex
                                       ? Color(0xff333333)
@@ -125,9 +102,7 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
           color: Color(0xffF8FAFF),
           child: MyRefres(
             child: (index, list) => GestureDetector(
-              onTap: () {
-                
-              },
+              onTap: () {},
               child: Container(
                 margin: EdgeInsets.only(
                     left: size.width * 16,
@@ -227,43 +202,38 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
                 ),
               ),
             ),
-            // page: true,
-            // url: Interface.getHistoricalSubscribe,
-            // listParam: "records",
-            // queryParameters: {
-            //   'type': 2,
-            // },
-            // method: 'get'
+            url: Interface.getRiskTemplateFiveWarehouseAll,
+            queryParameters: _queryParameters,
+            method: 'get',
             throwFunc: _throwFunc,
-            data: data,
           ),
         ))
       ]),
       actions: [
         GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(
-              context, 
-              '/riskIdentifyTask/addHiddenTask'
-            ).then((value) => {
-              _throwFunc.run()
-            });
+          onTap: () {
+            Navigator.pushNamed(context, '/riskIdentifyTask/addHiddenTask', arguments: {
+              'riskMeasureId': widget.leftBarList[leftBarIndex]['id']
+            })
+                .then((value) => {_throwFunc.run()});
           },
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0xff1E62EB),
-              borderRadius: BorderRadius.all(Radius.circular(size.width * 40))
-            ),
+                color: Color(0xff1E62EB),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 40))),
             padding: EdgeInsets.symmetric(horizontal: size.width * 20),
-            margin: EdgeInsets.only(top: size.width * 30, bottom: size.width * 10, right: size.width * 30),
+            margin: EdgeInsets.only(
+                top: size.width * 30,
+                bottom: size.width * 10,
+                right: size.width * 30),
             alignment: Alignment.center,
             child: Text(
               "+ 新增",
               style: TextStyle(
-                color: Colors.white,
-                fontSize: size.width * 28,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.white,
+                  fontSize: size.width * 28,
+                  fontWeight: FontWeight.w500),
             ),
           ),
         )

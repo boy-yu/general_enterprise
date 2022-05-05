@@ -1,9 +1,12 @@
 import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddControlMeasure extends StatefulWidget {
+  AddControlMeasure({this.riskEventId});
+  final String riskEventId;
   @override
   State<AddControlMeasure> createState() => _AddControlMeasureState();
 }
@@ -14,10 +17,10 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
   TextEditingController _controllerTroubleshootContent = TextEditingController();
 
   Map submitData = {
-    'controlMeasures': '',
-    'controlClassify1': '',
-    'controlClassify2': '',
-    'controlClassify3': '',
+    'riskMeasureDesc': '',
+    'classify1': '',
+    'classify2': '',
+    'classify3': '',
     'troubleshootContent': ''
   };
 
@@ -78,7 +81,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                     textInputAction: TextInputAction.next,
                     controller: _controllerMeasures,
                     onChanged: (value) {
-                      submitData['controlMeasures'] = value;
+                      submitData['riskMeasureDesc'] = value;
                       setState(() {});
                     },
                     decoration: InputDecoration(
@@ -86,9 +89,9 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                         hintStyle: TextStyle(
                             fontSize: size.width * 28,
                             color: Color(0xff7F8A9C)),
-                        hintText: submitData['controlMeasures'] == ''
+                        hintText: submitData['riskMeasureDesc'] == ''
                             ? '请输入管控措施'
-                            : submitData['controlMeasures']),
+                            : submitData['riskMeasureDesc']),
                     maxLines: 1,
                     minLines: 1,
                   ),
@@ -124,9 +127,9 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    submitData['controlClassify1'] = classify1Choice[index].toString();
-                                    submitData['controlClassify2'] = '';
-                                    _getClassify2Choice(submitData['controlClassify1']);
+                                    submitData['classify1'] = classify1Choice[index].toString();
+                                    submitData['classify2'] = '';
+                                    _getClassify2Choice(submitData['classify1']);
                                     setState(() {});
                                     Navigator.pop(context);
                                   },
@@ -152,9 +155,9 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                       child: Row(
                         children: [
                           Text(
-                            submitData['controlClassify1'] == ''
+                            submitData['classify1'] == ''
                                 ? "请选择管控措施分类1"
-                                : submitData['controlClassify1'].toString(),
+                                : submitData['classify1'].toString(),
                             style: TextStyle(
                                 color: Color(0xff7F8A9C),
                                 fontSize: size.width * 28,
@@ -199,8 +202,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    submitData['controlClassify2'] =
-                                        classify2Choice[index].toString();
+                                    submitData['classify2'] = classify2Choice[index].toString();
                                     setState(() {});
                                     Navigator.pop(context);
                                   },
@@ -230,9 +232,9 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                       child: Row(
                         children: [
                           Text(
-                            submitData['controlClassify2'] == ''
+                            submitData['classify2'] == ''
                                 ? "请选择管控措施分类2"
-                                : submitData['controlClassify2'].toString(),
+                                : submitData['classify2'].toString(),
                             style: TextStyle(
                                 color: Color(0xff7F8A9C),
                                 fontSize: size.width * 28,
@@ -262,7 +264,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                     textInputAction: TextInputAction.next,
                     controller: _controllerClassify3,
                     onChanged: (value) {
-                      submitData['controlClassify3'] = value;
+                      submitData['classify3'] = value;
                       setState(() {});
                     },
                     decoration: InputDecoration(
@@ -270,9 +272,9 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                         hintStyle: TextStyle(
                             fontSize: size.width * 28,
                             color: Color(0xff7F8A9C)),
-                        hintText: submitData['controlClassify3'] == ''
+                        hintText: submitData['classify3'] == ''
                             ? '请输入管控措施分类3'
-                            : submitData['controlClassify3']),
+                            : submitData['classify3']),
                     maxLines: 1,
                     minLines: 1,
                   ),
@@ -318,17 +320,25 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
               )),
               GestureDetector(
                 onTap: () {
-                  print(submitData);
-                  if(submitData['controlMeasures'] == ''){
+                  if(submitData['riskMeasureDesc'] == ''){
                     Fluttertoast.showToast(msg: "请填写管控措施");
-                  }else if(submitData['controlClassify1'] == ''){
+                  }else if(submitData['classify1'] == ''){
                     Fluttertoast.showToast(msg: "请选择管控措施分类1");
-                  }else if(submitData['controlClassify2'] == ''){
+                  }else if(submitData['classify2'] == ''){
                     Fluttertoast.showToast(msg: "请选择管控措施分类2");
                   }else if(submitData['troubleshootContent'] == ''){
                     Fluttertoast.showToast(msg: "请填写隐患排查内容");
                   }else{
-                    Navigator.of(context).pop();
+                    submitData['riskEventId'] = widget.riskEventId;
+                    submitData['dataSrc'] = '2';
+                    print(submitData);
+                    myDio.request(
+                          type: 'post',
+                          url: Interface.postRiskTemplateFourWarehouse,
+                          data: submitData).then((value) {
+                        successToast('新增风险管控措施成功');
+                        Navigator.pop(context);
+                      });
                   }
                 },
                 child: Container(

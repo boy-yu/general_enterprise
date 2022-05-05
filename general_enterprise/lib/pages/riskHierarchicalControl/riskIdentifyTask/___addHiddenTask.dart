@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddHiddenTask extends StatefulWidget {
+  AddHiddenTask({this.riskMeasureId});
+  final String riskMeasureId;
   @override
   State<AddHiddenTask> createState() => _AddHiddenTaskState();
 }
