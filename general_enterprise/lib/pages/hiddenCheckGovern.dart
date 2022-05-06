@@ -16,12 +16,17 @@ class _HiddenCheckGovernState extends State<HiddenCheckGovern> {
       'router': '/hiddenCheckGovern/hiddenCheckTask'
     },
     {
+      'name': '隐患治理任务',
+      'image': 'assets/images/doubleRiskProjeck/image_hidden_menu_govern_task.png',
+      'router': '/hiddenCheckGovern/hiddenGovernTask'
+    },
+    {
       'name': '隐患排查记录',
       'image': 'assets/images/doubleRiskProjeck/image_hidden_menu_check_record.png',
       'router': '/hiddenCheckGovern/hiddenCheckRecord'
     },
     {
-      'name': '隐患治理记录',
+      'name': '隐患治理台账',
       'image': 'assets/images/doubleRiskProjeck/image_hidden_menu_govern_record.png',
       'router': '/hiddenCheckGovern/hiddenGovernRecord'
     },

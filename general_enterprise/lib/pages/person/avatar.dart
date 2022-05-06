@@ -6,7 +6,6 @@ import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonAvatar extends StatefulWidget {
   PersonAvatar({this.arguments});
@@ -18,7 +17,6 @@ class PersonAvatar extends StatefulWidget {
 class _PersonAvatarState extends State<PersonAvatar> {
   File _image;
   final picker = ImagePicker();
-  SharedPreferences prefs;
   String _photoUrl;
 
   Future getCameraImage() async {
@@ -52,8 +50,7 @@ class _PersonAvatarState extends State<PersonAvatar> {
   }
 
   _initMsg() async {
-    prefs = await SharedPreferences.getInstance();
-    _photoUrl = prefs.getString('photoUrl');
+    _photoUrl = myprefs.getString('photoUrl');
     if (mounted) {
       setState(() {});
     }
@@ -69,17 +66,19 @@ class _PersonAvatarState extends State<PersonAvatar> {
       return res;
     });
     if (res.data['code'] == 200) {
-      prefs = await SharedPreferences.getInstance();
       _photoUrl = res.data['data']['url'];
-      myDio.request(
-          type: 'put',
-          url: Interface.amendAvatar,
-          data: {"photoUrl": _photoUrl}).then((value) {
-        prefs.setString('photoUrl', _photoUrl);
+      myDio.request(type: 'put', url: Interface.putUpdateUser, data: {
+        "avatar": _photoUrl,
+        "description": myprefs.getString('description'),
+        "email": myprefs.getString('email'),
+        "mobile": myprefs.getString('mobile'),
+        "nickname": myprefs.getString('nickname'),
+        "sex": myprefs.getString('sex'),
+        "sign": myprefs.getString('sign'),
+      }).then((value) async {
+        await myprefs.setString('avatar', _photoUrl);
         successToast('修改成功');
-        if (mounted) {
-          setState(() {});
-        }
+        setState(() {});
       });
     } else {
       Interface().error({'message': "上传失败"}, context);
@@ -91,6 +90,7 @@ class _PersonAvatarState extends State<PersonAvatar> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+    print(_photoUrl);
     return Scaffold(
       appBar: AppBar(
         title: Text('头像'),
@@ -141,26 +141,27 @@ class _PersonAvatarState extends State<PersonAvatar> {
         ],
       ),
       body: Container(
-        height: height,
-        width: width,
-        color: Colors.black,
-        alignment: Alignment.center,
-        child: _photoUrl != null
-            ? Container(
-                height: width,
-                width: width,
-                child: Image.network(
-                  _photoUrl,
-                  fit: BoxFit.cover,
-                ),
-              )
-            : Container(
-                child: Text(
-                  '头像获取中。。。',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-      ),
+          height: height,
+          width: width,
+          color: Colors.black,
+          alignment: Alignment.center,
+          child: _photoUrl != '' && _photoUrl != null
+              ? Container(
+                  height: width,
+                  width: width,
+                  child: Image.network(
+                    _photoUrl,
+                    fit: BoxFit.cover,
+                  ),
+                )
+              : Container(
+                  height: width,
+                  width: width,
+                  child: Image.asset(
+                    'assets/images/doubleRiskProjeck/image_avatar_default.png',
+                    fit: BoxFit.cover,
+                  ),
+                )),
     );
   }
 }

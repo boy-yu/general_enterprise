@@ -99,9 +99,9 @@ class _MyImageCarmaState extends State<MyImageCarma> {
       return res;
     });
     if (res.data['code'] == 200) {
-      submitImage.add(res.data['message']);
+      submitImage.add(res.data['data']['url']);
       if (widget.index != null) {
-        _counter.changeSmallTicket(widget.index, res.data['message'],
+        _counter.changeSmallTicket(widget.index, res.data['data']['url'],
             type: 'images|' + images.length.toString());
       } else {
         _counter.changeSubmitDates(

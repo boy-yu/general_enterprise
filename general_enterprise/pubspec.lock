@@ -237,6 +237,13 @@ packages:
       relative: true
     source: path
     version: "1.0.26+2"
+  flutter_datetime_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_datetime_picker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.5.1"
   flutter_live:
     dependency: "direct main"
     description:

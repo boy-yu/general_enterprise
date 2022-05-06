@@ -56,8 +56,11 @@ class Interface {
   // 风险三级项下拉 hiddenSpecificItem inspecion
   static String getCHeckThreeListAll =
       baseUrl + '/api/v4/riskControl/threeListAll';
-  // 修改头像 avatar myMessage
-  static String amendAvatar = baseUrl + '/updateUrl';
+
+
+  // 修改个人信息 (头像 描述 电子邮箱 手机号码 昵称 性别 签名)
+  static String putUpdateUser = baseUrl + '/tUser/updateUser';
+  
 
 
   // 风险分析单元列表(风险辨识任务)
@@ -72,6 +75,8 @@ class Interface {
   static String postRiskTemplateFourWarehouse = baseUrl + '/riskTemplateFour/addRiskTemplateFourWarehouse';
   // 风险管控任务列表
   static String getRiskTemplateFiveWarehouseAll = baseUrl + '/riskTemplateFive/RiskTemplateFiveWarehouseAll';
+  // 新增风险管控任务
+  static String postAddRiskTemplateFiveWarehouse = baseUrl + '/riskTemplateFive/addRiskTemplateFiveWarehouse';
 
   // 查看该企业已分配部门的树状结构
   static String getDepartmentTree = baseUrl + '/coDepartment/getDepartmentTree';

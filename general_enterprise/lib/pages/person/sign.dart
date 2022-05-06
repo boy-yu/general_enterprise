@@ -15,7 +15,6 @@ class PersonSign extends StatefulWidget {
 }
 
 class _PersonSignState extends State<PersonSign> {
-  SharedPreferences prefs;
   String signUrl = '';
   Counter _counter = Provider.of(myContext);
   @override
@@ -28,8 +27,7 @@ class _PersonSignState extends State<PersonSign> {
   }
 
   _init() async {
-    prefs = await SharedPreferences.getInstance();
-    signUrl = prefs.getString('sign');
+    signUrl = myprefs.getString('sign');
     if (mounted) {
       setState(() {});
     }
@@ -68,10 +66,18 @@ class _PersonSignState extends State<PersonSign> {
                     if (next) {
                       myDio.request(
                           type: 'put',
-                          url: Interface.amendSign,
-                          data: {"sign": signUrl}).then((value) {
-                        // print({"sign": signUrl});
-                        prefs.setString('sign', signUrl);
+                          url: Interface.putUpdateUser,
+                          data: {
+                            "avatar": myprefs.getString('avatar'),
+                            "description": myprefs.getString('description'),
+                            "email": myprefs.getString('email'),
+                            "mobile": myprefs.getString('mobile'),
+                            "nickname": myprefs.getString('nickname'),
+                            "sex": myprefs.getString('sex'),
+                            "sign": signUrl,
+                          }
+                      ).then((value) async {
+                        await myprefs.setString('sign', signUrl);
                         successToast('修改成功');
                         Navigator.pop(context);
                       });
@@ -86,8 +92,8 @@ class _PersonSignState extends State<PersonSign> {
           ),
         ),
         onWillPop: () async {
-          if (prefs.getString('sign') == '' ||
-              prefs.getString('sign') == null) {
+          if (myprefs.getString('sign') == '' ||
+              myprefs.getString('sign') == null) {
             Fluttertoast.showToast(msg: '为了正常使用app,请先进行签字');
             return false;
           } else {

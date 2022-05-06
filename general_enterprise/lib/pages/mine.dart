@@ -17,7 +17,6 @@ class Mine extends StatefulWidget {
 
 class _MineState extends State<Mine> with TickerProviderStateMixin{
   Counter _counter;
-  String signUrl;
 
   bool isVersion = false;
 
@@ -53,7 +52,6 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
     ).animate(_animationController);
     _animationController.forward();
     Future.delayed(Duration(seconds: 2), _getVersion);
-    _initPrefs();
   }
 
   @override
@@ -77,15 +75,11 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
     });
   }
 
-  SharedPreferences prefs;
-
-  _initPrefs() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
   bool show = true;
   AnimationController _animationController;
   Animation<double> _opacity;
+
+  String signUrl = '';
 
   @override
   Widget build(BuildContext context) {
@@ -118,11 +112,11 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
                         borderRadius:
                             BorderRadius.all(Radius.circular(size.width * 48)),
                         image: DecorationImage(
-                          image: myprefs.getString('photoUrl') == '' ||
-                                  myprefs.getString('photoUrl') == null
+                          image: myprefs.getString('avatar') == '' ||
+                                  myprefs.getString('avatar') == null
                               ? AssetImage(
-                                  'assets/images/image_recent_control.jpg')
-                              : NetworkImage(myprefs.getString('photoUrl')),
+                                  'assets/images/doubleRiskProjeck/image_avatar_default.png')
+                              : NetworkImage(myprefs.getString('avatar')),
                           fit: BoxFit.fill, // 完全填充
                         ),
                       ),
@@ -131,7 +125,7 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
                       width: size.width * 24,
                     ),
                     Text(
-                      myprefs.getString('username') ?? '',
+                      myprefs.getString('nickname') ?? '',
                       style: TextStyle(
                           color: Colors.white, fontSize: size.width * 30),
                     ),
@@ -212,8 +206,6 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
                       ),
                       GestureDetector(
                         onTap: () async {
-                          String _accout = prefs.getString('account');
-                          String _company = prefs.getString('enterpriseName');
                           // XgFlutterPlugin().unbindWithIdentifier(
                           //     identify: _accout, bindType: XGBindType.account);
                           // XgFlutterPlugin().cleanAccounts();
@@ -225,10 +217,7 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
                           //     url: Interface.putAmendChatStatus,
                           //     data: {"onlineStatus": "0"}).then((value) {});
 
-                          await prefs.clear();
                           context.read<Counter>().emptyNotity();
-                          await prefs.setString('account', _accout);
-                          await prefs.setString('SavedenterpriseName', _company);
                           ChatData().dropTable();
                           setState(() {
                             show = false;
@@ -299,8 +288,17 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
                     if (next) {
                       myDio.request(
                           type: 'put',
-                          url: Interface.amendSign,
-                          data: {"sign": signUrl}).then((value) async {
+                          url: Interface.putUpdateUser,
+                          data: {
+                            "avatar": myprefs.getString('avatar'),
+                            "description": myprefs.getString('description'),
+                            "email": myprefs.getString('email'),
+                            "mobile": myprefs.getString('mobile'),
+                            "nickname": myprefs.getString('nickname'),
+                            "sex": myprefs.getString('sex'),
+                            "sign": signUrl,
+                          }
+                      ).then((value) async {
                         await myprefs.setString('sign', signUrl);
                         successToast('修改成功');
                         setState(() {});

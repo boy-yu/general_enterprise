@@ -1,5 +1,6 @@
 import 'package:enterprise/common/myUpdateDialog.dart';
 import 'package:enterprise/pages/hiddenCheckGovern.dart';
+import 'package:enterprise/pages/hiddenReported.dart';
 import 'package:enterprise/pages/home.dart';
 import 'package:enterprise/pages/mine.dart';
 import 'package:enterprise/pages/riskHierarchicalControl.dart';
@@ -172,6 +173,10 @@ class _IndexState extends State<Index> {
         "name": "风险分级管控"
       },
       {
+        "icon": 'assets/images/doubleRiskProjeck/menu_home_hidden_reported.png',
+        "name": "上报隐患"
+      },
+      {
         "icon": 'assets/images/doubleRiskProjeck/icon_hidden_check_govern.png',
         "iconDis": "assets/images/doubleRiskProjeck/un_icon_hidden_check_govern.png",
         "name": "隐患排查治理"
@@ -185,32 +190,50 @@ class _IndexState extends State<Index> {
 
     List<BottomNavigationBarItem> bottomRoute = [];
     for (var item in name) {
-      bottomRoute.add(BottomNavigationBarItem(
-        activeIcon: Image.asset(
-          item['icon'],
-          width: width * 40,
-          height: width * 40,
-        ),
-        icon: Image.asset(
-          item['iconDis'],
-          width: width * 40,
-          height: width * 40,
-        ),
-        // ignore: deprecated_member_use
-        title: Text(
-          item['name'],
-          style: TextStyle(
-            fontSize: width * 20,
-            fontWeight: FontWeight.w500,
+      if (item['name'] == '上报隐患') {
+        bottomRoute.add(BottomNavigationBarItem(
+          icon: Image.asset(
+            item['icon'],
+            width: width * 96,
+            height: width * 96,
           ),
-        ),
-      ));
+          // ignore: deprecated_member_use
+          title: Text(
+            '',
+            style: TextStyle(
+              fontSize: width * 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ));
+      }else{
+        bottomRoute.add(BottomNavigationBarItem(
+          activeIcon: Image.asset(
+            item['icon'],
+            width: width * 40,
+            height: width * 40,
+          ),
+          icon: Image.asset(
+            item['iconDis'],
+            width: width * 40,
+            height: width * 40,
+          ),
+          // ignore: deprecated_member_use
+          title: Text(
+            item['name'],
+            style: TextStyle(
+              fontSize: width * 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ));
+      }
     }
     return bottomRoute;
   }
 
   _pages(width) {
-    List<Widget> pages = [Home(), RiskHierarchicalControl(),  HiddenCheckGovern(), Mine()];
+    List<Widget> pages = [Home(), RiskHierarchicalControl(), HiddenReported(), HiddenCheckGovern(), Mine()];
     return pages[_currentIndex];
   }
 

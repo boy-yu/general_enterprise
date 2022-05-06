@@ -3,7 +3,6 @@ import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/common/myUpdateDialog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/down.dart';
-import 'package:enterprise/tool/funcType.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../tool/interface.dart';
@@ -150,13 +149,10 @@ class _LoginState extends State<Login> {
   }
 }
 
-// ignore: must_be_immutable
 class LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
 }
-
-// MethodChannel _channel = MethodChannel('messagePushChannel');
 
 class _LoginFormState extends State<LoginForm> {
   TextEditingController _username = TextEditingController();
@@ -194,73 +190,35 @@ class _LoginFormState extends State<LoginForm> {
       if (value is Map) {
         String token = value['token_type'] + ' ' + value['access_token'];
         await myprefs.setString('token', token ?? '');
-        await myprefs.setString('username', value['systemUser']['nickname'] ?? '');
-        await myprefs.setString('department', value['department'] ?? '');
-        await myprefs.setString('account', _username.text);
-        await myprefs.setString('sign', value['systemUser']['sign'] ?? '');
-        await myprefs.setString(
-            'enterpriseName', value['enterpriseName'] ?? '');
-        await myprefs.setInt('userId', value['userId'] ?? -1);
-        // 安全教育培训
-        await myprefs.setInt('isEducationInitiate', value['isEducationInitiate'] ?? -1);
-        // 个人信息新加字段
-        await myprefs.setString('telephone', value['systemUser']['mobile'] ?? ''); // 手机号
-        await myprefs.setString('identityNum', value['identityNum'] ?? ''); //  身份证号
-        await myprefs.setString('type', value['type'] ?? ''); //  人员类别
-        await myprefs.setString('education', value['education'] ?? ''); //  学历
-        await myprefs.setString('specialty', value['specialty'] ?? ''); //  专业
-
-        // _getAppFunctionMenu();
-        
-        if (value['systemUser']['avatar'] == '') {
-          await myprefs.setString('photoUrl',
-              'https://shuangkong.oss-cn-qingdao.aliyuncs.com/temp/1605250244862/u%3D1763186968%2C2658905759%26fm%3D26%26gp%3D0.jpg');
-        } else {
-          await myprefs.setString('photoUrl', value['systemUser']['avatar'] ?? '');
-        }
+        // 用户名
+        await myprefs.setString('username', value['systemUser']['username'] ?? '');
+        // 头像
+        await myprefs.setString('avatar', value['systemUser']['avatar'] ?? '');
+        // 描述
+        await myprefs.setString('description', value['systemUser']['description'] ?? '');
+        // 电子邮箱
+        await myprefs.setString('email', value['systemUser']['email'] ?? '');
+        // 手机号
+        await myprefs.setString('mobile', value['systemUser']['mobile'] ?? '');
+        // 昵称
+        await myprefs.setString('nickname', value['systemUser']['nickname'] ?? '');
+        // 性别
+        await myprefs.setString('sex', value['systemUser']['sex'] ?? -1);
         isLogin = false;
         Navigator.pop(context);
-        // myDio.request(
-        //     type: 'put',
-        //     url: Interface.putAmendChatStatus,
-        //     data: {"onlineStatus": "1"});
-        // if (Contexts.mobile) {
-        //   _channel.invokeMethod('login', myprefs.getString('account'));
-        //   Future.delayed(Duration(seconds: 5), () {
-        //     initPlatformState(_username.text, true);
-        //   });
-        // }
         _getUrl();
-
         if (value['systemUser']['sign'] == '' || value['systemUser']['sign'] == null && Contexts.mobile) {
           Fluttertoast.showToast(msg: '检测到您的账号暂时未进行签字，请先设置签名');
           Navigator.pushNamed(context, '/person/sign');
+        }else{
+          // 签名
+          await myprefs.setString('sign', value['systemUser']['sign'] ?? '');
         }
-
-        // if (Contexts.mobile) {
-        //   Future.delayed(Duration(seconds: 1), () {
-        //     if (myprefs.getString("SavedenterpriseName") !=
-        //         myprefs.getString('enterpriseName')) {
-        //       PeopleStructure.getNetpeople(delete: true);
-        //     }
-        //   });
-        // }
       }
     }).catchError((onError) {
       print(onError);
     });
   }
-
-  // _getAppFunctionMenu() {
-  //   myDio.request(
-  //         type: 'get',
-  //         url: Interface.getAppFunctionMenu,
-  //   ).then((value)  {
-  //     if(value is List){
-  //       myprefs.setStringList('appFunctionMenu', value.cast<String>());
-  //     }
-  //   });
-  // }
 
   @override
   void initState() {
@@ -278,7 +236,7 @@ class _LoginFormState extends State<LoginForm> {
                 bottom: size.height * 75,
                 left: size.height * 56,
                 top: size.height * 230),
-            child: Text('清单制管理信息化平台',
+            child: Text('双重预防机制平台',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: size.width * 40,
@@ -347,7 +305,6 @@ class _LoginFormState extends State<LoginForm> {
               Container(
                   decoration: BoxDecoration(
                     color: Color(0xff4481FE),
-                    // gradient: LinearGradient(colors: lineGradBlue),
                     borderRadius: BorderRadius.all(Radius.circular(43)),
                   ),
                   height: size.height * 85,
@@ -421,11 +378,6 @@ class _InputKeyState extends State<InputKey> {
         hintText: widget.hintText,
         hintStyle:
             TextStyle(fontSize: size.width * 26, color: Color(0xff999999)),
-        // contentPadding: EdgeInsets.only(
-        //     top: size.width * 0,
-        //     bottom: size.width * 25,
-        //     left: size.width * 0,
-        //     right: size.width * 0),
         labelStyle:
             TextStyle(fontSize: size.width * 26, color: Color(0xff999999)),
         suffixIcon: widget.textEditingController.text.length > 0
