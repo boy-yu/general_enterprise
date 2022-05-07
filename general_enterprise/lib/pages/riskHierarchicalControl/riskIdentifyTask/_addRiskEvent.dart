@@ -57,7 +57,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
     }else if(15 > riskLevel && riskLevel >= 9){
       submitData['initialRiskLevel'] = '3';
       submitData['currentRiskLevel'] = '3';
-      return '较大风险';
+      return '一般风险';
     }else if(8 >= riskLevel){
       submitData['initialRiskLevel'] = '4';
       submitData['currentRiskLevel'] = '4';
@@ -76,7 +76,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
       return '较大风险';
     }else if(15 > riskLevel && riskLevel >= 9){
       submitData['riskLevel'] = '3';
-      return '较大风险';
+      return '一般风险';
     }else if(8 >= riskLevel){
       submitData['riskLevel'] = '4';
       return '低风险';

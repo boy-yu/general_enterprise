@@ -30,11 +30,11 @@ class _HiddenCheckGovernState extends State<HiddenCheckGovern> {
       'image': 'assets/images/doubleRiskProjeck/image_hidden_menu_govern_record.png',
       'router': '/hiddenCheckGovern/hiddenGovernRecord'
     },
-    {
-      'name': '报表签收',
-      'image': 'assets/images/doubleRiskProjeck/image_hidden_menu_report.png',
-      'router': '/hiddenCheckGovern/hiddenReportSignIn'
-    },
+    // {
+    //   'name': '报表签收',
+    //   'image': 'assets/images/doubleRiskProjeck/image_hidden_menu_report.png',
+    //   'router': '/hiddenCheckGovern/hiddenReportSignIn'
+    // },
   ];
 
   @override

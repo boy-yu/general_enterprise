@@ -14,17 +14,6 @@ class SafetyRiskList extends StatefulWidget {
 }
 
 class _SafetyRiskListState extends State<SafetyRiskList> {
-  List data = [
-    {
-      "riskObjectName": "郭庆宇",
-      "riskMeasureDesc": "法大师傅大师傅",
-      "riskEventName": "郭庆宇2",
-      "riskUnitName": "郭庆宇1",
-      "id": "123456",
-      "isControl": 0
-    },
-  ];
-
   List dropTempData = [
     {
       'title': '风险分析对象',
@@ -148,7 +137,7 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
         }
       });
     }
-    
+
     dropTempData.forEach((element) {
       if (element['id'] != null) {
         queryParameters[element['limit'].toString()] = element['id'];
@@ -177,29 +166,218 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
             ),
             Expanded(
               child: MyRefres(
-                child: (index, list) => Container(
-                  margin: EdgeInsets.only(
-                      left: size.width * 32,
-                      right: size.width * 32,
-                      top: size.width * 32),
-                  padding: EdgeInsets.all(size.width * 32),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(size.width * 20)),
+                  child: (index, list) => Container(
+                      margin: EdgeInsets.only(
+                          left: size.width * 32,
+                          right: size.width * 32,
+                          top: size.width * 32),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(size.width * 20),
+                              bottomLeft: Radius.circular(size.width * 20),
+                              bottomRight: Radius.circular(size.width * 20)
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xff7F8A9C).withOpacity(0.05),
+                            blurRadius: size.width * 8,
+                            spreadRadius: size.width * 2
+                          )
+                        ]
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.width * 32,
+                                vertical: size.width * 14),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(size.width * 16)),
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Color(0xff2276FC).withOpacity(0.12),
+                                  Colors.transparent,
+                                ],
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '风险分析对象：${list[index]['riskObjectName']}',
+                                  style: TextStyle(
+                                      color: Color(0xff333333),
+                                      fontSize: size.width * 28,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Spacer(),
+                                Container(
+                                  height: size.width * 46,
+                                  width: size.width * 104,
+                                  decoration: BoxDecoration(
+                                      color: list[index]['isControl'] == 0
+                                          ? Color(0xffF56271)
+                                          : Color(0xff5FD5EC),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(size.width * 8))),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    list[index]['isControl'] == 0
+                                        ? '未管控'
+                                        : '已管控',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 24,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.width * 32,
+                                vertical: size.width * 16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '风险分析单元：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text: list[index]['riskUnitName'],
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
+                                SizedBox(
+                                  height: size.width * 16,
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '风险事件：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text: list[index]['riskEventName'],
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
+                                SizedBox(
+                                  height: size.width * 16,
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '管控措施：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text: list[index]['riskMeasureDesc'],
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
+                                SizedBox(
+                                  height: size.width * 16,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: size.width * 2,
+                            width: double.infinity,
+                            color: Color(0xffECECEC),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: size.width * 24, bottom: size.width * 32),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.pushNamed(context, '/safetyRiskList/details', arguments: {
+                                      'id': list[index]['id']
+                                    });
+                                  },
+                                  child: Container(
+                                    height: size.width * 64,
+                                    width: size.width * 200,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff3074FF).withOpacity(0.1),
+                                      borderRadius: BorderRadius.all(Radius.circular(size.width * 32)),
+                                      border: Border.all(width: size.width * 2, color: Color(0xff3074FF)),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '详情',
+                                      style: TextStyle(
+                                        color: Color(0xff3074FF),
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w400
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.pushNamed(context, '/safetyRiskList/controlSituation', arguments: {
+                                      'id': list[index]['id']
+                                    });
+                                  },
+                                  child: Container(
+                                    height: size.width * 64,
+                                    width: size.width * 200,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff3074FF),
+                                      borderRadius: BorderRadius.all(Radius.circular(size.width * 32)),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '管控情况',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w400
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                  page: true,
+                  url: Interface.getRiskTemplateFourList,
+                  listParam: "records",
+                  queryParameters: queryParameters,
+                  throwFunc: _throwFunc,
+                  method: 'get'
+                  // data: data,
                   ),
-                  child: Text(
-                    'riskMeasureDesc' + list[index]['riskMeasureDesc'].toString()
-                  ),
-                ),
-                page: true,
-                url: Interface.getRiskTemplateFourList,
-                listParam: "records",
-                queryParameters: queryParameters,
-                throwFunc: _throwFunc,
-                method: 'get'
-                // data: data,
-              ),
             )
           ],
         ));
@@ -215,12 +393,6 @@ class TierChoose extends StatefulWidget {
 }
 
 class _TierChooseState extends State<TierChoose> {
-  @override
-  void initState() {
-    super.initState();
-    print(widget.list);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(

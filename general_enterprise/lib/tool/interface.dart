@@ -64,6 +64,11 @@ class Interface {
 
   // 安全风险清单 风险管控措施列表
   static String getRiskTemplateFourList = baseUrl + '/riskTemplate/riskTemplateFourList';
+  // 根据id查看落实情况
+  static String getRiskTemplateFourImplementationById = baseUrl + '/riskTemplate/getRiskTemplateFourImplementationById';
+  // 根据id查看风险管控措施详情
+  static String getRiskTemplateFourById = baseUrl + '/riskTemplate/getRiskTemplateFourById';
+  
   
 
 
