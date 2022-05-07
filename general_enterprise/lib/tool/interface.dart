@@ -49,13 +49,22 @@ class Interface {
   static String uploadUrl = baseUrl + '/upload';
   // amendPsd 首页我的修改密码
   static String putAmendPsd = baseUrl + '/tUser/updatePassword';
+
+
   // 风险一级项下拉 hiddenSpecificItem inspecion risklist worklist controlIndex
-  static String getCheckOneListAll = baseUrl + '/api/v4/riskControl/oneListAll';
+  static String getRiskObjectByDepartmentId = baseUrl + '/riskTemplate/getRiskObjectByDepartmentId';
+  static String getCheckOneListAll = '';
   // 风险二级项下拉 hiddenSpecificItem inspecion risklist worklist
+  static String getRiskUnitByDepartmentId = baseUrl + '/riskTemplate/getRiskUnitByDepartmentId';
   static String getCheckTwoListAll = baseUrl + '/api/v4/riskControl/twoListAll';
   // 风险三级项下拉 hiddenSpecificItem inspecion
+  static String getRiskEventByDepartmentId = baseUrl + '/riskTemplate/getRiskEventByDepartmentId';
   static String getCHeckThreeListAll =
       baseUrl + '/api/v4/riskControl/threeListAll';
+
+  // 安全风险清单 风险管控措施列表
+  static String getRiskTemplateFourList = baseUrl + '/riskTemplate/riskTemplateFourList';
+  
 
 
   // 修改个人信息 (头像 描述 电子邮箱 手机号码 昵称 性别 签名)
