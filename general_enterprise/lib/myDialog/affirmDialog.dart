@@ -1,8 +1,6 @@
 import 'package:enterprise/common/myCount.dart';
-import 'package:enterprise/common/myImageCarma.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class AffirmDialog {
   static Future myAffirmDialog(

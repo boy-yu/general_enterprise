@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:enterprise/common/myAppbar.dart';
+import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/common/myDateSelect.dart';
 import 'package:enterprise/common/refreshList.dart';
 import 'package:enterprise/pages/hiddenCheckGovern/hiddenCheckTask.dart';
@@ -8,6 +9,7 @@ import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HiddenGovernRecord extends StatefulWidget {
   @override
@@ -94,7 +96,6 @@ class CheckHiddenRecord extends StatefulWidget {
 class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
   String startDate;
   String endDate;
-  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -231,71 +232,17 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
     if (index == 0) {
       queryParameters["riskUnitId"] = null;
     }
-    print(queryParameters);
-
     _throwFunc.run(argument: queryParameters);
     if (mounted) {
       setState(() {});
     }
   }
 
-  List dangerStateList = ['全部', '待确认', '整改中', '待验收', '已验收'];
+  List dangerStateList = ['全部', '待确认', '已驳回', '整改中', '待验收', '已验收'];
   String dangerStateStr = '';
-  String keyStr = '';
 
-  List dangerLevelList = ['全部', '无隐患', '一般隐患', '重大隐患'];
+  List dangerLevelList = ['全部', '一般隐患', '重大隐患'];
   String dangerLevelStr = '';
-
-  List data = [
-    {
-      'dangerState': '1', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '', // 隐患等级（一般隐患：0；重大隐患：1）
-      'riskMeasureDesc': '管控措施描述管控措施描述管控措施描述管控措施描述管控措施描述',
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'checkUser': '上报人员名字',
-      'checkEndDate': '2022-03-25 12:36:22'
-    },
-    {
-      'dangerState': '-1', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '0', // 隐患等级（一般隐患：0；重大隐患：1）
-      'riskMeasureDesc': '管控措施描述管控措施描述管控措施描述管控措施描述管控措施描述',
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'checkUser': '上报人员名字',
-      'checkEndDate': '2022-03-25 12:36:22'
-    },
-    {
-      'dangerState': '0', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '', // 隐患等级（一般隐患：0；重大隐患：1）
-      'riskMeasureDesc': '管控措施描述管控措施描述管控措施描述管控措施描述管控措施描述',
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'checkUser': '上报人员名字',
-      'checkEndDate': '2022-03-25 12:36:22'
-    },
-    {
-      'dangerState': '1', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '0', // 隐患等级（一般隐患：0；重大隐患：1）
-      'riskMeasureDesc': '管控措施描述管控措施描述管控措施描述管控措施描述管控措施描述',
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'checkUser': '上报人员名字',
-      'checkEndDate': '2022-03-25 12:36:22'
-    },
-    {
-      'dangerState': '9', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '1', // 隐患等级（一般隐患：0；重大隐患：1）
-      'riskMeasureDesc': '管控措施描述管控措施描述管控措施描述管控措施描述管控措施描述',
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'checkUser': '上报人员名字',
-      'checkEndDate': '2022-03-25 12:36:22'
-    },
-    {
-      'dangerState': '1', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '0', // 隐患等级（一般隐患：0；重大隐患：1）
-      'riskMeasureDesc': '管控措施描述管控措施描述管控措施描述管控措施描述管控措施描述',
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'checkUser': '上报人员名字',
-      'checkEndDate': '2022-03-25 12:36:22'
-    },
-  ];
 
   Widget _getDangerState(String dangerState) {
     // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
@@ -364,6 +311,22 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                   fontWeight: FontWeight.w500),
             ));
         break;
+      case '10':
+        return Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 16, vertical: size.width * 6),
+            decoration: BoxDecoration(
+                color: Color(0xff7F8A9C),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 8))),
+            child: Text(
+              '已驳回',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: size.width * 24,
+                  fontWeight: FontWeight.w500),
+            ));
+        break;
       default:
         return Container();
     }
@@ -405,20 +368,7 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
             ));
         break;
       default:
-        return Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: size.width * 16, vertical: size.width * 6),
-            decoration: BoxDecoration(
-                color: Color(0xff2276FC),
-                borderRadius:
-                    BorderRadius.all(Radius.circular(size.width * 8))),
-            child: Text(
-              '无隐患',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: size.width * 24,
-                  fontWeight: FontWeight.w500),
-            ));
+        return Container();
     }
   }
 
@@ -463,6 +413,22 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                                       onTap: () {
                                         dangerStateStr =
                                             dangerStateList[index].toString();
+                                        // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
+                                        if (dangerStateStr == '全部') {
+                                          queryParameters['dangerState'] = '';
+                                        } else if (dangerStateStr == '待确认') {
+                                          queryParameters['dangerState'] = '-1';
+                                        } else if (dangerStateStr == '整改中') {
+                                          queryParameters['dangerState'] = '0';
+                                        } else if (dangerStateStr == '待验收') {
+                                          queryParameters['dangerState'] = '1';
+                                        } else if (dangerStateStr == '已验收') {
+                                          queryParameters['dangerState'] = '9';
+                                        } else if (dangerStateStr == '已驳回') {
+                                          queryParameters['dangerState'] = '10';
+                                        }
+                                        _throwFunc.run(
+                                            argument: queryParameters);
                                         setState(() {});
                                         Navigator.pop(context);
                                       },
@@ -528,6 +494,16 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                                       onTap: () {
                                         dangerLevelStr =
                                             dangerLevelList[index].toString();
+                                        // 隐患等级（一般隐患：0；重大隐患：1）
+                                        if (dangerLevelStr == '全部') {
+                                          queryParameters['dangerLevel'] = '';
+                                        } else if (dangerLevelStr == '一般隐患') {
+                                          queryParameters['dangerLevel'] = '0';
+                                        } else if (dangerLevelStr == '重大隐患') {
+                                          queryParameters['dangerLevel'] = '1';
+                                        }
+                                        _throwFunc.run(
+                                            argument: queryParameters);
                                         setState(() {});
                                         Navigator.pop(context);
                                       },
@@ -587,6 +563,7 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                         hintText: '开始时间',
                         callback: (value) {
                           startDate = value;
+                          queryParameters['startDate'] = startDate;
                         },
                         icon: Image.asset(
                           'assets/images/doubleRiskProjeck/icon_calendar.png',
@@ -600,8 +577,13 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                         hintText: '结束时间',
                         callback: (value) {
                           endDate = value;
-                          // _getData();
-                          // _throwFunc.run(argument: queryParameters);
+                          if (queryParameters['startDate'] == null) {
+                            Fluttertoast.showToast(msg: '请先选择开始时间');
+                          } else {
+                            queryParameters['endDate'] = endDate;
+                          }
+                          print(queryParameters);
+                          _throwFunc.run(argument: queryParameters);
                           setState(() {});
                         },
                         icon: Image.asset(
@@ -612,61 +594,6 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                       ),
                     ],
                   ),
-                  // 关键字搜索
-                  Container(
-                      margin: EdgeInsets.only(
-                          right: size.width * 32,
-                          left: size.width * 32,
-                          bottom: size.width * 16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(size.width * 8),
-
-                        ///圆角
-                        border: Border.all(
-                            color: Color(0xffF2F2F2), width: size.width * 2),
-                      ),
-                      constraints: BoxConstraints(
-                        maxHeight: size.width * 60,
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: size.width * 20),
-                            child: Icon(
-                              Icons.search,
-                              color: Color(0xff7F8A9C),
-                              size: size.width * 40,
-                            ),
-                          ),
-                          Expanded(
-                            child: TextField(
-                              keyboardType: TextInputType.text,
-                              textInputAction: TextInputAction.next,
-                              controller: _controller,
-                              onChanged: (value) {
-                                keyStr = value;
-                                setState(() {});
-                              },
-                              style: TextStyle(
-                                  fontSize: size.width * 24,
-                                  color: Color(0xff7F8A9C)),
-                              decoration: InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.only(bottom: size.width * 30),
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                      fontSize: size.width * 24,
-                                      color: Color(0xff7F8A9C)),
-                                  hintText: keyStr == '' ? '输入关键字搜索' : keyStr),
-                              maxLines: 1,
-                              minLines: 1,
-                            ),
-                          )
-                        ],
-                      ))
                 ],
               ),
             ),
@@ -675,7 +602,10 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
               child: (index, list) => GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(
-                      context, '/hiddenCheckGovern/hiddenGovernRecordDetails');
+                      context, '/hiddenCheckGovern/hiddenGovernRecordDetails', arguments: {
+                        'id': list[index]['id'],
+                        'type': '排查'
+                      });
                 },
                 child: Container(
                   margin: EdgeInsets.only(
@@ -748,7 +678,7 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['riskMeasureDesc'],
+                                        text: list[index]['riskMeasureDesc'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -767,7 +697,7 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]
+                                        text: list[index]
                                             ['troubleshootContent'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
@@ -787,7 +717,7 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['checkUser'],
+                                        text: list[index]['checkUser'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -806,7 +736,11 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['checkEndDate'],
+                                        text:
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                                    list[index]['checkTime'])
+                                                .toString()
+                                                .substring(0, 19),
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -821,14 +755,12 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                   ),
                 ),
               ),
-              // page: true,
-              // url: Interface.getHistoricalSubscribe,
-              // listParam: "records",
-              // queryParameters: {
-              //   'type': 2,
-              // },
-              // method: 'get'
-              data: data,
+              page: true,
+              url: Interface.getCheckHiddenDangereBookList,
+              listParam: "records",
+              queryParameters: queryParameters,
+              method: 'get',
+              throwFunc: _throwFunc,
             ))
           ],
         ));
@@ -843,7 +775,6 @@ class ReportedHiddenRecord extends StatefulWidget {
 class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
   String startDate;
   String endDate;
-  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -863,7 +794,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
       'data': [],
       'value': '',
       "saveTitle": '风险分析对象',
-      'dataUrl': Interface.getRiskObjectByDepartmentId,
+      'dataUrl': Interface.getCheckRiskObjectList,
       'limit': 'riskObjectId'
     }
   ];
@@ -886,7 +817,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
       'data': [],
       'value': '',
       "saveTitle": '风险分析对象',
-      'dataUrl': Interface.getRiskObjectByDepartmentId,
+      'dataUrl': Interface.getCheckRiskObjectList,
       'limit': 'riskObjectId'
     },
   ];
@@ -901,7 +832,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
         )
             .then((value) {
           dropTempData[i]['data'] = value;
-          dropTempData[i]['data'].insert(0, {"name": "查看全部"});
+          dropTempData[i]['data'].insert(0, {"riskObjectName": "查看全部"});
           if (mounted) {
             setState(() {});
           }
@@ -938,63 +869,11 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
     }
   }
 
-  List dangerStateList = ['全部', '待确认', '整改中', '待验收', '已验收'];
+  List dangerStateList = ['全部', '待确认', '已驳回', '整改中', '待验收', '已验收'];
   String dangerStateStr = '';
-  String keyStr = '';
 
-  List dangerLevelList = ['全部', '无隐患', '一般隐患', '重大隐患'];
+  List dangerLevelList = ['全部', '一般隐患', '重大隐患'];
   String dangerLevelStr = '';
-
-  List data = [
-    {
-      'dangerState': '1', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '', // 隐患等级（一般隐患：0；重大隐患：1）
-      'place': '地点地点地点地点地点地点地点地点地点',
-      'reportedPer': '上报人',
-      'checkEndDate': '2022-03-25 12:36:22',
-      'image': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-    {
-      'dangerState': '-1', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '0', // 隐患等级（一般隐患：0；重大隐患：1）
-      'place': '地点地点地点地点地点地点地点地点地点',
-      'reportedPer': '上报人',
-      'checkEndDate': '2022-03-25 12:36:22',
-      'image': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-    {
-      'dangerState': '0', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '', // 隐患等级（一般隐患：0；重大隐患：1）
-      'place': '地点地点地点地点地点地点地点地点地点',
-      'reportedPer': '上报人',
-      'checkEndDate': '2022-03-25 12:36:22',
-      'image': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-    {
-      'dangerState': '1', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '0', // 隐患等级（一般隐患：0；重大隐患：1）
-      'place': '地点地点地点地点地点地点地点地点地点',
-      'reportedPer': '上报人',
-      'checkEndDate': '2022-03-25 12:36:22',
-      'image': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-    {
-      'dangerState': '9', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '1', // 隐患等级（一般隐患：0；重大隐患：1）
-      'place': '地点地点地点地点地点地点地点地点地点',
-      'reportedPer': '上报人',
-      'checkEndDate': '2022-03-25 12:36:22',
-      'image': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-    {
-      'dangerState': '1', // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-      'dangerLevel': '0', // 隐患等级（一般隐患：0；重大隐患：1）
-      'place': '地点地点地点地点地点地点地点地点地点',
-      'reportedPer': '上报人',
-      'checkEndDate': '2022-03-25 12:36:22',
-      'image': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-  ];
 
   Widget _getDangerState(String dangerState) {
     // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
@@ -1063,6 +942,22 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                   fontWeight: FontWeight.w500),
             ));
         break;
+      case '10':
+        return Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * 16, vertical: size.width * 6),
+            decoration: BoxDecoration(
+                color: Color(0xff7F8A9C),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 8))),
+            child: Text(
+              '已驳回',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: size.width * 24,
+                  fontWeight: FontWeight.w500),
+            ));
+        break;
       default:
         return Container();
     }
@@ -1104,20 +999,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
             ));
         break;
       default:
-        return Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: size.width * 16, vertical: size.width * 6),
-            decoration: BoxDecoration(
-                color: Color(0xff2276FC),
-                borderRadius:
-                    BorderRadius.all(Radius.circular(size.width * 8))),
-            child: Text(
-              '无隐患',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: size.width * 24,
-                  fontWeight: FontWeight.w500),
-            ));
+        return Container();
     }
   }
 
@@ -1127,7 +1009,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
         color: Color(0xffF8FAFF),
         child: Column(
           children: [
-            TitleChoose(
+            GovernObjectNameTitleChoose(
               list: dropTempData,
               getDataList: _dropList,
             ),
@@ -1162,6 +1044,22 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                                       onTap: () {
                                         dangerStateStr =
                                             dangerStateList[index].toString();
+                                        // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
+                                        if (dangerStateStr == '全部') {
+                                          queryParameters['dangerState'] = '';
+                                        } else if (dangerStateStr == '待确认') {
+                                          queryParameters['dangerState'] = '-1';
+                                        } else if (dangerStateStr == '整改中') {
+                                          queryParameters['dangerState'] = '0';
+                                        } else if (dangerStateStr == '待验收') {
+                                          queryParameters['dangerState'] = '1';
+                                        } else if (dangerStateStr == '已验收') {
+                                          queryParameters['dangerState'] = '9';
+                                        } else if (dangerStateStr == '已驳回') {
+                                          queryParameters['dangerState'] = '10';
+                                        }
+                                        _throwFunc.run(
+                                            argument: queryParameters);
                                         setState(() {});
                                         Navigator.pop(context);
                                       },
@@ -1227,6 +1125,16 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                                       onTap: () {
                                         dangerLevelStr =
                                             dangerLevelList[index].toString();
+                                        // 隐患等级（一般隐患：0；重大隐患：1）
+                                        if (dangerLevelStr == '全部') {
+                                          queryParameters['dangerLevel'] = '';
+                                        } else if (dangerLevelStr == '一般隐患') {
+                                          queryParameters['dangerLevel'] = '0';
+                                        } else if (dangerLevelStr == '重大隐患') {
+                                          queryParameters['dangerLevel'] = '1';
+                                        }
+                                        _throwFunc.run(
+                                            argument: queryParameters);
                                         setState(() {});
                                         Navigator.pop(context);
                                       },
@@ -1286,6 +1194,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                         hintText: '开始时间',
                         callback: (value) {
                           startDate = value;
+                          queryParameters['startDate'] = startDate;
                         },
                         icon: Image.asset(
                           'assets/images/doubleRiskProjeck/icon_calendar.png',
@@ -1299,8 +1208,13 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                         hintText: '结束时间',
                         callback: (value) {
                           endDate = value;
-                          // _getData();
-                          // _throwFunc.run(argument: queryParameters);
+                          if (queryParameters['startDate'] == null) {
+                            Fluttertoast.showToast(msg: '请先选择开始时间');
+                          } else {
+                            queryParameters['endDate'] = endDate;
+                          }
+                          print(queryParameters);
+                          _throwFunc.run(argument: queryParameters);
                           setState(() {});
                         },
                         icon: Image.asset(
@@ -1311,226 +1225,327 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                       ),
                     ],
                   ),
-                  // 关键字搜索
-                  Container(
-                      margin: EdgeInsets.only(
-                          right: size.width * 32,
-                          left: size.width * 32,
-                          bottom: size.width * 16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(size.width * 8),
-
-                        ///圆角
-                        border: Border.all(
-                            color: Color(0xffF2F2F2), width: size.width * 2),
-                      ),
-                      constraints: BoxConstraints(
-                        maxHeight: size.width * 60,
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: size.width * 20),
-                            child: Icon(
-                              Icons.search,
-                              color: Color(0xff7F8A9C),
-                              size: size.width * 40,
-                            ),
-                          ),
-                          Expanded(
-                            child: TextField(
-                              keyboardType: TextInputType.text,
-                              textInputAction: TextInputAction.next,
-                              controller: _controller,
-                              onChanged: (value) {
-                                keyStr = value;
-                                setState(() {});
-                              },
-                              style: TextStyle(
-                                  fontSize: size.width * 24,
-                                  color: Color(0xff7F8A9C)),
-                              decoration: InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.only(bottom: size.width * 30),
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                      fontSize: size.width * 24,
-                                      color: Color(0xff7F8A9C)),
-                                  hintText: keyStr == '' ? '输入关键字搜索' : keyStr),
-                              maxLines: 1,
-                              minLines: 1,
-                            ),
-                          )
-                        ],
-                      ))
                 ],
               ),
             ),
             Expanded(
                 child: MyRefres(
-              child: (index, list) => GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                      context, '/hiddenCheckGovern/hiddenGovernRecordDetails');
-                },
-                child: Container(
-                  margin: EdgeInsets.only(
-                      top: size.width * 32,
-                      right: size.width * 32,
-                      left: size.width * 32),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(size.width * 20),
-                        bottomLeft: Radius.circular(size.width * 20),
-                        bottomRight: Radius.circular(size.width * 20)),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.width * 20,
-                            vertical: size.width * 16),
-                        child: Row(
-                          children: [
-                            _getDangerState(list[index]['dangerState']),
-                            SizedBox(
-                              width: size.width * 16,
+                    child: (index, list) => GestureDetector(
+                          onTap: () {
+                            // Navigator.pushNamed(context,
+                            //     '/hiddenCheckGovern/hiddenGovernRecordDetails');
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                top: size.width * 32,
+                                right: size.width * 32,
+                                left: size.width * 32),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(size.width * 20),
+                                  bottomLeft: Radius.circular(size.width * 20),
+                                  bottomRight:
+                                      Radius.circular(size.width * 20)),
                             ),
-                            _getDangerLevel(list[index]['dangerLevel']),
-                            Spacer(),
-                            Text(
-                              '详情 >',
-                              style: TextStyle(
-                                  color: Color(0xff3074FF),
-                                  fontSize: size.width * 24,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 24,
-                              vertical: size.width * 16),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                Color(0xff2276FC).withOpacity(0.12),
-                                Colors.transparent,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: size.width * 20,
+                                      vertical: size.width * 16),
+                                  child: Row(
+                                    children: [
+                                      _getDangerState(
+                                          list[index]['dangerState']),
+                                      SizedBox(
+                                        width: size.width * 16,
+                                      ),
+                                      _getDangerLevel(
+                                          list[index]['dangerLevel']),
+                                      Spacer(),
+                                      Text(
+                                        '详情 >',
+                                        style: TextStyle(
+                                            color: Color(0xff3074FF),
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: size.width * 24,
+                                        vertical: size.width * 16),
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Color(0xff2276FC).withOpacity(0.12),
+                                          Colors.transparent,
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft:
+                                              Radius.circular(size.width * 20),
+                                          bottomRight:
+                                              Radius.circular(size.width * 20)),
+                                    ),
+                                    constraints: BoxConstraints(
+                                      minWidth: size.width * 686,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: size.width * 420,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              RichText(
+                                                text: TextSpan(
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            size.width * 24,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                    children: <InlineSpan>[
+                                                      TextSpan(
+                                                          text: '地点：',
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xff333333))),
+                                                      TextSpan(
+                                                          text: list[index]
+                                                              ['address'],
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xff7F8A9C))),
+                                                    ]),
+                                              ),
+                                              SizedBox(
+                                                height: size.width * 16,
+                                              ),
+                                              RichText(
+                                                text: TextSpan(
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            size.width * 24,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                    children: <InlineSpan>[
+                                                      TextSpan(
+                                                          text: '上报人：',
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xff333333))),
+                                                      TextSpan(
+                                                          text: list[index]
+                                                              ['checkUser'],
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xff7F8A9C))),
+                                                    ]),
+                                              ),
+                                              SizedBox(
+                                                height: size.width * 16,
+                                              ),
+                                              RichText(
+                                                text: TextSpan(
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            size.width * 24,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                    children: <InlineSpan>[
+                                                      TextSpan(
+                                                          text: '排查时间：',
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xff333333))),
+                                                      TextSpan(
+                                                          text: DateTime
+                                                                  .fromMillisecondsSinceEpoch(
+                                                                      list[index]
+                                                                          [
+                                                                          'checkTime'])
+                                                              .toString()
+                                                              .substring(0, 19),
+                                                          style: TextStyle(
+                                                              color: Color(
+                                                                  0xff7F8A9C))),
+                                                    ]),
+                                              ),
+                                              SizedBox(
+                                                height: size.width * 16,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        list[index]['checkUrl'] != ''
+                                            ? Container(
+                                                height: size.width * 128,
+                                                width: size.width * 200,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              size.width * 8)),
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          list[index]
+                                                              ['checkUrl']),
+                                                      fit: BoxFit.fill),
+                                                ),
+                                              )
+                                            : Container()
+                                      ],
+                                    ))
                               ],
                             ),
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(size.width * 20),
-                                bottomRight: Radius.circular(size.width * 20)),
                           ),
-                          constraints: BoxConstraints(
-                            minWidth: size.width * 686,
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: size.width * 420,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                          style: TextStyle(
-                                              fontSize: size.width * 24,
-                                              fontWeight: FontWeight.w400),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                                text: '地点：',
-                                                style: TextStyle(
-                                                    color: Color(0xff333333))),
-                                            TextSpan(
-                                                text: data[index]['place'],
-                                                style: TextStyle(
-                                                    color: Color(0xff7F8A9C))),
-                                          ]),
-                                    ),
-                                    SizedBox(
-                                      height: size.width * 16,
-                                    ),
-                                    RichText(
-                                      text: TextSpan(
-                                          style: TextStyle(
-                                              fontSize: size.width * 24,
-                                              fontWeight: FontWeight.w400),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                                text: '上报人：',
-                                                style: TextStyle(
-                                                    color: Color(0xff333333))),
-                                            TextSpan(
-                                                text: data[index]
-                                                    ['reportedPer'],
-                                                style: TextStyle(
-                                                    color: Color(0xff7F8A9C))),
-                                          ]),
-                                    ),
-                                    SizedBox(
-                                      height: size.width * 16,
-                                    ),
-                                    RichText(
-                                      text: TextSpan(
-                                          style: TextStyle(
-                                              fontSize: size.width * 24,
-                                              fontWeight: FontWeight.w400),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                                text: '排查时间：',
-                                                style: TextStyle(
-                                                    color: Color(0xff333333))),
-                                            TextSpan(
-                                                text: data[index]
-                                                    ['checkEndDate'],
-                                                style: TextStyle(
-                                                    color: Color(0xff7F8A9C))),
-                                          ]),
-                                    ),
-                                    SizedBox(
-                                      height: size.width * 16,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Spacer(),
-                              Container(
-                                height: size.width * 128,
-                                width: size.width * 200,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size.width * 8)),
-                                  image: DecorationImage(
-                                      image: AssetImage(data[index]['image']),
-                                      fit: BoxFit.fill),
-                                ),
-                              )
-                            ],
-                          ))
-                    ],
-                  ),
-                ),
-              ),
-              // page: true,
-              // url: Interface.getHistoricalSubscribe,
-              // listParam: "records",
-              // queryParameters: {
-              //   'type': 2,
-              // },
-              // method: 'get'
-              data: data,
-            ))
+                        ),
+                    page: true,
+                    url: Interface.getReportHiddenDangereBookList,
+                    listParam: "records",
+                    queryParameters: queryParameters,
+                    throwFunc: _throwFunc,
+                    method: 'get'))
           ],
         ));
+  }
+}
+
+class GovernObjectNameTitleChoose extends StatefulWidget {
+  GovernObjectNameTitleChoose({this.list, this.getDataList});
+  final List list;
+  final ReturnIntStringCallback getDataList;
+  @override
+  _GovernObjectNameTitleChooseState createState() =>
+      _GovernObjectNameTitleChooseState();
+}
+
+class _GovernObjectNameTitleChooseState
+    extends State<GovernObjectNameTitleChoose> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Row(
+          children: widget.list.asMap().keys.map((i) {
+        return Expanded(
+            child: GestureDetector(
+          onTap: () {
+            Color _juegeColor(Map _ele) {
+              if (widget.list[i]['id'] == null) {
+                widget.list[i]['id'] = -1;
+              }
+              Color _color = Colors.white;
+              if (widget.list[i]['value'] == '' &&
+                  _ele['riskObjectName'] == '查看全部') {
+                _color = themeColor;
+              } else {
+                if (widget.list[i]['id'] == _ele['id']) {
+                  _color = themeColor;
+                } else {
+                  _color = Colors.white;
+                }
+              }
+
+              return _color;
+            }
+
+            if (widget.list[i]['data'].isEmpty) {
+              Fluttertoast.showToast(msg: '没有数据');
+              return;
+            }
+            showModalBottomSheet(
+                context: context,
+                builder: (_) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: widget.list[i]['data'].map<Widget>((_ele) {
+                        Color _conColors = _juegeColor(_ele);
+                        return GestureDetector(
+                          onTap: () {
+                            widget.list[i]['value'] = _ele['riskObjectName'];
+                            if (_ele['riskObjectName'] == '查看全部') {
+                              widget.list[i]['title'] =
+                                  widget.list[i]['saveTitle'];
+                              widget.list[i]['id'] = _ele['id'];
+                            } else {
+                              widget.list[i]['title'] = _ele['riskObjectName'];
+                              widget.list[i]['id'] = _ele['id'];
+                            }
+
+                            widget.getDataList(index: i);
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            padding:
+                                EdgeInsets.symmetric(vertical: size.width * 20),
+                            decoration: BoxDecoration(
+                                color: _conColors,
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1, color: underColor))),
+                            child: Center(
+                              child: Text(
+                                _ele['riskObjectName'].toString(),
+                                style: TextStyle(
+                                    fontSize: size.width * 30,
+                                    color: _conColors.toString() ==
+                                            'Color(0xff2674fd)'
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                });
+          },
+          child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    right:
+                        BorderSide(width: 1, color: underColor.withOpacity(.2)),
+                  )),
+              padding: EdgeInsets.all(size.width * 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      widget.list[i]['title'].toString(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: size.width * 28,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff333333)),
+                    ),
+                  ),
+                  Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Color(0xff7F8A9C),
+                  )
+                ],
+              )),
+        ));
+      }).toList()),
+    );
   }
 }

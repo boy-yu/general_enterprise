@@ -1,234 +1,223 @@
 import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 
 class HiddenCheckRecordDetails extends StatefulWidget {
+  HiddenCheckRecordDetails({this.id});
+  final String id;
   @override
-  State<HiddenCheckRecordDetails> createState() => _HiddenCheckRecordDetailsState();
+  State<HiddenCheckRecordDetails> createState() =>
+      _HiddenCheckRecordDetailsState();
 }
 
 class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
-  Map titleData = {
-    'riskObjectName': '风险分析对象名称风险分析对象名称',
-    'riskUnitName': '风险分析单元名称风险分析单元名称风险分析单元名称',
-    'riskEventName': '风险事件名称风险事件名称风险事件名称',
-    'riskDescription': '风险描述风险描述风险描述风险描述风险描述风险描述风险描述',
-    'initialRiskLevel': '3',      // 初始风险等级：1_重大2_较大3_一般4_低
-    'currentRiskLevel': '2',
-    'riskMeasureDesc': '管控措施描述管控措施描述管控措施描述管控措施描述管控措施描述',
-    'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-    'checkMeans': '0',     // 排查手段0_现场确认；1_拍照；2_热成像；3_震动
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  _getData() {
+    myDio.request(
+        type: 'get',
+        url: Interface.getcheckRecordById,
+        queryParameters: {'id': widget.id}).then((value) {
+      data = value;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  Map data = {
+    "id": "",
+    "checkTime": 1651726922976,
+    "hazardCode": "",
+    "riskObjectId": "",
+    "riskUnitId": "",
+    "riskEventId": "",
+    "riskMeasureId": "",
+    "checkTaskId": "",
+    "companyId": "",
+    "companyCode": "",
+    "checkUserId": "",
+    "checkUser": "",
+    "checkSign": "",
+    "checkOpinion": "",
+    "checkData": "",
+    "checkDepartment": "",
+    "checkDepartmentId": "",
+    "checkUrl": "",
+    "checkStatus": "",
+    "checkMeans": "",
+    "checkStartDate": null,
+    "checkEndDate": 1651743229000,
+    "createDate": null,
+    "createBy": "",
+    "createByMobile": "",
+    "updateDate": null,
+    "updateBy": "",
+    "updateByMobile": "",
+    "riskMeasureDesc": "",
+    "troubleshootContent": "",
+    "checkCycle": -1,
+    "checkCycleUnit": "",
+    "departmentId": "",
+    "userId": "",
+    "riskObjectName": "",
+    "riskUnitName": "",
+    "riskEventName": ""
   };
 
-  String _getLevel(String level){
-    switch (level) {
+  String _getCheckStatus(String checkStatus) {
+    // 0正常 1存在隐患 2未排查 3其他
+    switch (checkStatus) {
+      case '0':
+        return '正常';
+        break;
       case '1':
-        return '重大风险';
+        return '存在隐患';
         break;
       case '2':
-        return '较大风险';
+        return '未排查';
         break;
       case '3':
-        return '一般风险';
-        break;
-      case '4':
-        return '低风险';
+        return '其他';
         break;
       default:
         return '';
     }
   }
 
-  List data = [
-    {
-      'time': '2022-05-12 13:12',
-      'checkData': '上报人员数据上报人员数据上报人员数据上报人员数据上报人员数据',
-      'checkResult': '正常',
-      'checkUser': '上报人员名字',
-      'checkDepartment': '上报人工位',
-      'gps': '在管控范围内',
-      'checkOpinion': '上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见',
-      'checkUrl': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-    {
-      'time': '2022-05-12 13:12',
-      'checkData': '上报人员数据上报人员数据上报人员数据上报人员数据上报人员数据',
-      'checkResult': '正常',
-      'checkUser': '上报人员名字',
-      'checkDepartment': '上报人工位',
-      'gps': '在管控范围内',
-      'checkOpinion': '上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见',
-      'checkUrl': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-    {
-      'time': '2022-05-12 13:12',
-      'checkData': '上报人员数据上报人员数据上报人员数据上报人员数据上报人员数据',
-      'checkResult': '正常',
-      'checkUser': '上报人员名字',
-      'checkDepartment': '上报人工位',
-      'gps': '在管控范围内',
-      'checkOpinion': '上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见',
-      'checkUrl': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-    {
-      'time': '2022-05-12 13:12',
-      'checkData': '上报人员数据上报人员数据上报人员数据上报人员数据上报人员数据',
-      'checkResult': '正常',
-      'checkUser': '上报人员名字',
-      'checkDepartment': '上报人工位',
-      'gps': '在管控范围内',
-      'checkOpinion': '上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见',
-      'checkUrl': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-    {
-      'time': '2022-05-12 13:12',
-      'checkData': '上报人员数据上报人员数据上报人员数据上报人员数据上报人员数据',
-      'checkResult': '正常',
-      'checkUser': '上报人员名字',
-      'checkDepartment': '上报人工位',
-      'gps': '在管控范围内',
-      'checkOpinion': '上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见上报人意见',
-      'checkUrl': 'assets/images/doubleRiskProjeck/bg_home_my.png'
-    },
-  ];
+  String _getCheckMeans(String checkMeans){
+    // 0_现场确认；1_拍照；2_热成像；3_震动
+    switch (checkMeans) {
+      case '0':
+        return '现场确认';
+        break;
+      case '0':
+        return '拍照';
+        break;
+      case '0':
+        return '热成像';
+        break;
+      case '0':
+        return '震动';
+        break;
+      default:
+        return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
-      title: Text('隐患排查记录详情', style: TextStyle(fontSize: size.width * 32)),
-      child: Container(
-        color: Color(0xffF8FAFF),
-        child: ListView(
-          children: [
-            Container(
-              padding: EdgeInsets.fromLTRB(size.width * 32, size.width * 32, size.width * 32, size.width * 20),
-              margin: EdgeInsets.fromLTRB(size.width * 32, size.width * 32, size.width * 32, size.width * 0),
-              decoration: BoxDecoration(
-                color: Color(0xff2276FC),
-                borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(size.width * 20),
-                          bottomLeft: Radius.circular(size.width * 20),
-                          bottomRight: Radius.circular(size.width * 20)),
+        title: Text('隐患排查记录详情', style: TextStyle(fontSize: size.width * 32)),
+        child: Container(
+          color: Color(0xffF8FAFF),
+          child: ListView(
+            children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(size.width * 32, size.width * 32,
+                    size.width * 32, size.width * 20),
+                margin: EdgeInsets.fromLTRB(size.width * 32, size.width * 32,
+                    size.width * 32, size.width * 0),
+                decoration: BoxDecoration(
+                  color: Color(0xff2276FC),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(size.width * 20),
+                      bottomLeft: Radius.circular(size.width * 20),
+                      bottomRight: Radius.circular(size.width * 20)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '风险分析对象：${data['riskObjectName']}',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: size.width * 28,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: size.width * 16,
+                    ),
+                    Text(
+                      '风险分析单元：${data['riskUnitName']}',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: size.width * 28,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: size.width * 16,
+                    ),
+                    Text(
+                      '风险事件：${data['riskEventName']}',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: size.width * 28,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: size.width * 16,
+                    ),
+                    Text(
+                      '管控措施：${data['riskMeasureDesc']}',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: size.width * 28,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: size.width * 16,
+                    ),
+                    Text(
+                      '隐患排查任务：${data['troubleshootContent']}',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: size.width * 28,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: size.width * 16,
+                    ),
+                    Text(
+                      '管控手段：${_getCheckMeans(data['checkMeans'])}',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: size.width * 28,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: size.width * 16,
+                    ),
+                    Text(
+                      '巡检周期：${data['checkCycle']}/${data['checkCycleUnit']}',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: size.width * 28,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '风险分析对象：${titleData['riskObjectName']}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
-                  Text(
-                    '风险分析单元：${titleData['riskUnitName']}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
-                  Text(
-                    '风险事件：${titleData['riskEventName']}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
-                  Text(
-                    '风险描述：${titleData['riskDescription']}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
-                  Text(
-                    '初始风险等级：${_getLevel(titleData['initialRiskLevel']) }',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
-                  Text(
-                    '剩余风险等级：${_getLevel(titleData['currentRiskLevel'])}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
-                  Text(
-                    '管控措施：${titleData['riskMeasureDesc']}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
-                  Text(
-                    '隐患排查内容：${titleData['troubleshootContent']}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
-                  Text(
-                    '管控手段：${titleData['checkMeans'] == 0 ? '现场确认' : '拍照'}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w400
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ListView.builder(
-              padding: EdgeInsets.fromLTRB(size.width * 32, size.width * 40, size.width * 32, size.width * 20),
-              shrinkWrap: true, 								//解决无限高度问题
-		          physics: new NeverScrollableScrollPhysics(),
-              itemCount: data.length,
-              itemBuilder: (context, index){
-                return Row(
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 32, vertical: size.width * 46),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       height: size.width * 28,
                       width: size.width * 28,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(size.width * 50)),
-                        border: Border.all(width: size.width * 6, color: Color(0xff5FD5EC)) 
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 50)),
+                          border: Border.all(
+                              width: size.width * 6, color: Color(0xff5FD5EC))),
                     ),
                     SizedBox(
                       width: size.width * 20,
@@ -237,12 +226,13 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          data[index]['time'],
+                          DateTime.fromMillisecondsSinceEpoch(data['checkTime'])
+                              .toString()
+                              .substring(0, 19),
                           style: TextStyle(
-                            color: Color(0xff7F8A9C),
-                            fontSize: size.width * 28,
-                            fontWeight: FontWeight.w400
-                          ),
+                              color: Color(0xff7F8A9C),
+                              fontSize: size.width * 28,
+                              fontWeight: FontWeight.w400),
                         ),
                         SizedBox(
                           height: size.width * 20,
@@ -251,17 +241,25 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                           width: size.width * 638,
                           decoration: BoxDecoration(
                             color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color(0xff7F8A9C).withOpacity(0.05),
+                                  spreadRadius: size.width * 2,
+                                  blurRadius: size.width * 8)
+                            ],
                             borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(size.width * 20),
-                                      bottomLeft: Radius.circular(size.width * 20),
-                                      bottomRight: Radius.circular(size.width * 20)),
+                                topRight: Radius.circular(size.width * 20),
+                                bottomLeft: Radius.circular(size.width * 20),
+                                bottomRight: Radius.circular(size.width * 20)),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 width: double.infinity,
-                                padding: EdgeInsets.symmetric(horizontal: size.width * 32, vertical: size.width * 16),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 32,
+                                    vertical: size.width * 16),
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     begin: Alignment.centerLeft,
@@ -272,19 +270,23 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                     ],
                                   ),
                                   borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(size.width * 20)),
+                                      topRight:
+                                          Radius.circular(size.width * 20)),
                                 ),
                                 child: Text(
                                   '排查情况',
                                   style: TextStyle(
-                                    color: Color(0xff333333),
-                                    fontSize: size.width * 28,
-                                    fontWeight: FontWeight.w500
-                                  ),
+                                      color: Color(0xff333333),
+                                      fontSize: size.width * 28,
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.fromLTRB(size.width * 32, size.width * 16, size.width * 32, size.width * 32),
+                                padding: EdgeInsets.fromLTRB(
+                                    size.width * 32,
+                                    size.width * 16,
+                                    size.width * 32,
+                                    size.width * 32),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -296,16 +298,20 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                             text: TextSpan(
                                                 style: TextStyle(
                                                     fontSize: size.width * 24,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                                 children: <InlineSpan>[
                                                   TextSpan(
                                                       text: '排查结果：',
                                                       style: TextStyle(
-                                                          color: Color(0xff333333))),
+                                                          color: Color(
+                                                              0xff333333))),
                                                   TextSpan(
-                                                      text: '正常',
+                                                      text: _getCheckStatus(
+                                                          data['checkStatus']),
                                                       style: TextStyle(
-                                                          color: Color(0xff7F8A9C))),
+                                                          color: Color(
+                                                              0xff7F8A9C))),
                                                 ]),
                                           ),
                                         ),
@@ -318,18 +324,20 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                                 TextSpan(
                                                     text: '排查人：',
                                                     style: TextStyle(
-                                                        color: Color(0xff333333))),
+                                                        color:
+                                                            Color(0xff333333))),
                                                 TextSpan(
-                                                    text: data[index]['checkUser'],
+                                                    text: data['checkUser'],
                                                     style: TextStyle(
-                                                        color: Color(0xff7F8A9C))),
+                                                        color:
+                                                            Color(0xff7F8A9C))),
                                               ]),
                                         ),
                                       ],
                                     ),
                                     SizedBox(
-                                          height: size.width * 16,
-                                        ),
+                                      height: size.width * 16,
+                                    ),
                                     Row(
                                       children: [
                                         Container(
@@ -338,16 +346,20 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                             text: TextSpan(
                                                 style: TextStyle(
                                                     fontSize: size.width * 24,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                                 children: <InlineSpan>[
                                                   TextSpan(
                                                       text: '所在部门：',
                                                       style: TextStyle(
-                                                          color: Color(0xff333333))),
+                                                          color: Color(
+                                                              0xff333333))),
                                                   TextSpan(
-                                                      text: data[index]['checkDepartment'],
+                                                      text: data[
+                                                          'checkDepartment'],
                                                       style: TextStyle(
-                                                          color: Color(0xff7F8A9C))),
+                                                          color: Color(
+                                                              0xff7F8A9C))),
                                                 ]),
                                           ),
                                         ),
@@ -360,49 +372,72 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                                 TextSpan(
                                                     text: 'GPS：',
                                                     style: TextStyle(
-                                                        color: Color(0xff333333))),
+                                                        color:
+                                                            Color(0xff333333))),
                                                 TextSpan(
                                                     text: '在管控范围内',
                                                     style: TextStyle(
-                                                        color: Color(0xff7F8A9C))),
+                                                        color:
+                                                            Color(0xff7F8A9C))),
                                               ]),
                                         ),
                                       ],
                                     ),
                                     SizedBox(
-                                          height: size.width * 16,
-                                        ),
+                                      height: size.width * 16,
+                                    ),
                                     RichText(
-                                          text: TextSpan(
-                                              style: TextStyle(
-                                                  fontSize: size.width * 24,
-                                                  fontWeight: FontWeight.w400),
-                                              children: <InlineSpan>[
-                                                TextSpan(
-                                                    text: '排查人意见：',
-                                                    style: TextStyle(
-                                                        color: Color(0xff333333))),
-                                                TextSpan(
-                                                    text: data[index]['checkOpinion'],
-                                                    style: TextStyle(
-                                                        color: Color(0xff7F8A9C))),
-                                              ]),
+                                      text: TextSpan(
+                                          style: TextStyle(
+                                              fontSize: size.width * 24,
+                                              fontWeight: FontWeight.w400),
+                                          children: <InlineSpan>[
+                                            TextSpan(
+                                                text: '排查人意见：',
+                                                style: TextStyle(
+                                                    color: Color(0xff333333))),
+                                            TextSpan(
+                                                text: data['checkOpinion'],
+                                                style: TextStyle(
+                                                    color: Color(0xff7F8A9C))),
+                                          ]),
                                     ),
                                     SizedBox(
-                                          height: size.width * 16,
-                                        ),
-                                    Container(
-                                      height: size.width * 320,
-                                      width: size.width * 574,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(Radius.circular(size.width * 20)),
-                                        image: DecorationImage(
-                                          image: AssetImage(data[index]['checkUrl']),  
-                                          fit: BoxFit.fill
-                                        ),
-                                      ),
-                                    )
+                                      height: size.width * 16,
+                                    ),
+                                    data['checkUrl'] != ''
+                                        ? Container(
+                                            height: size.width * 320,
+                                            width: size.width * 574,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      size.width * 20)),
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      data['checkUrl']),
+                                                  fit: BoxFit.fill),
+                                            ),
+                                          )
+                                        : Container(
+                                            height: size.width * 320,
+                                            width: size.width * 574,
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      size.width * 20)),
+                                            ),
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              '暂无图片',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: size.width * 32
+                                              ),
+                                            ),
+                                          )
                                   ],
                                 ),
                               )
@@ -415,12 +450,10 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                       ],
                     )
                   ],
-                );
-              }
-            )
-          ],
-        ),
-      )
-    );
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

@@ -8,6 +8,7 @@ import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HiddenCheckRecord extends StatefulWidget {
   @override
@@ -163,59 +164,9 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
   List stateList = ['全部', '逾期', '已完成'];
   String stateStr = '';
 
-  List checkMeansList = ['全部', '拍照', '现场确认'];
+  // 0_现场确认；1_拍照；2_热成像；3_震动
+  List checkMeansList = ['全部', '拍照', '现场确认', '热成像', '震动'];
   String checkMeansStr = '';
-
-  List data = [
-    {
-      'state': 1,
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
-      'troubleshootContent': '隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容',
-      'checkUser': '张三',
-      'checkTime': '2022-03-25 12:36:22',
-      'checkMeans': '拍照'
-    },
-    {
-      'state': 1,
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
-      'troubleshootContent': '隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容',
-      'checkUser': '张三',
-      'checkTime': '2022-03-25 12:36:22',
-      'checkMeans': '现场确认'
-    },
-    {
-      'state': 2,
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
-      'troubleshootContent': '隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容',
-      'checkUser': '张三',
-      'checkTime': '2022-03-25 12:36:22',
-      'checkMeans': '拍照'
-    },
-    {
-      'state': 2,
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
-      'troubleshootContent': '隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容',
-      'checkUser': '张三',
-      'checkTime': '2022-03-25 12:36:22',
-      'checkMeans': '现场确认'
-    },
-    {
-      'state': 1,
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
-      'troubleshootContent': '隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容',
-      'checkUser': '张三',
-      'checkTime': '2022-03-25 12:36:22',
-      'checkMeans': '现场确认'
-    },
-    {
-      'state': 2,
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施',
-      'troubleshootContent': '隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容隐患内容',
-      'checkUser': '张三',
-      'checkTime': '2022-03-25 12:36:22',
-      'checkMeans': '拍照'
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -266,8 +217,15 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
-                                            stateStr =
-                                                stateList[index].toString();
+                                            stateStr = stateList[index].toString();
+                                            if(stateStr == '全部'){
+                                              queryParameters['checkStatus'] = '';
+                                            }else if(stateStr == '逾期'){
+                                              queryParameters['checkStatus'] = '2';
+                                            }else if(stateStr == '已完成'){
+                                              queryParameters['checkStatus'] = '0';
+                                            }
+                                            _throwFunc.run(argument: queryParameters);
                                             setState(() {});
                                             Navigator.pop(context);
                                           },
@@ -330,9 +288,20 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
-                                            checkMeansStr =
-                                                checkMeansList[index]
-                                                    .toString();
+                                            checkMeansStr = checkMeansList[index].toString();
+                                            // 0_现场确认；1_拍照；2_热成像；3_震动
+                                            if(checkMeansStr == '全部'){
+                                              queryParameters['checkMeans'] = '';
+                                            }else if(checkMeansStr == '现场确认'){
+                                              queryParameters['checkMeans'] = '0';
+                                            }else if(checkMeansStr == '拍照'){
+                                              queryParameters['checkMeans'] = '1';
+                                            }else if(checkMeansStr == '热成像'){
+                                              queryParameters['checkMeans'] = '2';
+                                            }else if(checkMeansStr == '震动'){
+                                              queryParameters['checkMeans'] = '3';
+                                            }
+                                            _throwFunc.run(argument: queryParameters);
                                             setState(() {});
                                             Navigator.pop(context);
                                           },
@@ -393,6 +362,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                             hintText: '开始时间',
                             callback: (value) {
                               startDate = value;
+                              queryParameters['startDate'] = startDate;
                             },
                             icon: Image.asset(
                               'assets/images/doubleRiskProjeck/icon_calendar.png',
@@ -406,8 +376,13 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                             hintText: '结束时间',
                             callback: (value) {
                               endDate = value;
-                              // _getData();
-                              // _throwFunc.run(argument: queryParameters);
+                              if(queryParameters['startDate'] == null){
+                                Fluttertoast.showToast(msg: '请先选择开始时间');
+                              }else{
+                                queryParameters['startDate'] = DateTime.parse(queryParameters['startDate']).millisecondsSinceEpoch;
+                                queryParameters['endDate'] = DateTime.parse(endDate).millisecondsSinceEpoch;
+                              }
+                              _throwFunc.run(argument: queryParameters);
                               setState(() {});
                             },
                             icon: Image.asset(
@@ -425,8 +400,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                     child: MyRefres(
                   child: (index, list) => GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context,
-                          '/hiddenCheckGovern/hiddenCheckRecordDetails');
+                      Navigator.pushNamed(context, '/hiddenCheckGovern/hiddenCheckRecordDetails', arguments: {'id': list[index]['id']});
                     },
                     child: Container(
                       margin: EdgeInsets.only(
@@ -454,13 +428,13 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                         horizontal: size.width * 16,
                                         vertical: size.width * 6),
                                     decoration: BoxDecoration(
-                                        color: data[index]['state'] == 1
+                                        color: list[index]['checkStatus'] == '2'
                                             ? Color(0xffF56271)
                                             : Color(0xff5FD5EC),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(size.width * 8))),
                                     child: Text(
-                                      data[index]['state'] == 1 ? '逾期' : '已完成',
+                                      list[index]['checkStatus'] == '2' ? '逾期' : '已完成',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: size.width * 24,
@@ -513,7 +487,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                             style: TextStyle(
                                                 color: Color(0xff333333))),
                                         TextSpan(
-                                            text: data[index]
+                                            text: list[index]
                                                 ['riskMeasureDesc'],
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C))),
@@ -533,7 +507,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                             style: TextStyle(
                                                 color: Color(0xff333333))),
                                         TextSpan(
-                                            text: data[index]
+                                            text: list[index]
                                                 ['troubleshootContent'],
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C))),
@@ -553,7 +527,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                             style: TextStyle(
                                                 color: Color(0xff333333))),
                                         TextSpan(
-                                            text: data[index]['checkUser'],
+                                            text: list[index]['checkUser'],
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C))),
                                       ]),
@@ -572,7 +546,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                             style: TextStyle(
                                                 color: Color(0xff333333))),
                                         TextSpan(
-                                            text: data[index]['checkTime'],
+                                            text: DateTime.fromMillisecondsSinceEpoch(list[index]['checkTime']).toString().substring(0, 19),
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C))),
                                       ]),
@@ -591,7 +565,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                             style: TextStyle(
                                                 color: Color(0xff333333))),
                                         TextSpan(
-                                            text: data[index]['checkMeans'],
+                                            text: list[index]['checkMeans'],
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C))),
                                       ]),
@@ -606,14 +580,13 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                       ),
                     ),
                   ),
-                  // page: true,
-                  // url: Interface.getHistoricalSubscribe,
-                  // listParam: "records",
-                  // queryParameters: {
-                  //   'type': 2,
-                  // },
-                  // method: 'get'
-                  data: data,
+                  page: true,
+                  url: Interface.getCheckRecordList,
+                  listParam: "records",
+                  queryParameters: queryParameters,
+                  method: 'get',
+                  throwFunc: _throwFunc,
+                  // data: data,
                 ))
               ],
             ),

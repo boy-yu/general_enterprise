@@ -6,22 +6,19 @@ import 'package:enterprise/pages/hiddenCheckGovern/taskHandle/_reformAccept.dart
 import 'package:enterprise/pages/hiddenCheckGovern/taskHandle/_reformFinish.dart';
 import 'package:enterprise/pages/hiddenCheckGovern/taskHandle/_troubleshoot.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 
 class TaskHandle extends StatefulWidget {
-  TaskHandle({this.dangerState});
+  TaskHandle({this.dangerState, this.id});
   final String dangerState;
+  final String id;
   @override
   State<TaskHandle> createState() => _TaskHandleState();
 }
 
 class _TaskHandleState extends State<TaskHandle> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  String _getTitle(String dangerState){
+  String _getTitle(String dangerState) {
     // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
     switch (dangerState) {
       case '-1':
@@ -45,13 +42,14 @@ class _TaskHandleState extends State<TaskHandle> {
   Widget build(BuildContext context) {
     return MyAppbar(
       elevation: 0,
-      title: Text(_getTitle(widget.dangerState), style: TextStyle(fontSize: size.width * 32),),
+      title: Text(
+        _getTitle(widget.dangerState),
+        style: TextStyle(fontSize: size.width * 32),
+      ),
       child: Stack(
         children: [
-          ScrollTop(),
-          BuildDragWidget(
-            dangerState: widget.dangerState
-          ),
+          ScrollTop(id: widget.id),
+          BuildDragWidget(dangerState: widget.dangerState, id: widget.id),
         ],
       ),
     );
@@ -59,37 +57,57 @@ class _TaskHandleState extends State<TaskHandle> {
 }
 
 class ScrollTop extends StatefulWidget {
+  ScrollTop({this.id});
+  final String id;
   @override
   State<ScrollTop> createState() => _ScrollTopState();
 }
 
 class _ScrollTopState extends State<ScrollTop> {
+  @override
+  void initState() {
+    super.initState();
+    _getDropData();
+  }
+
+  _getDropData() {
+    myDio.request(
+        type: 'get',
+        url: Interface.getRiskControlDataById,
+        queryParameters: {'id': widget.id}).then((value) {
+      if (value is Map) {
+        value.forEach((key, value) {
+          dropData.forEach((element) {
+            if (element['bindKey'] == key) {
+              element['value'] = value ?? '';
+            }
+          });
+        });
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
   List<Map> dropData = [
-    {"name": "风险分析对象", "value": '', "bindKey": 'riskPoint'},
-    // {"name": "固有危险等级", "value": '', "bindKey": 'inherentHazardLevel'},
-    {"name": "责任部门", "value": '', "bindKey": 'responsibleDepartment'},
-    {"name": "责任人", "value": '', "bindKey": 'personLiable'},
-    {"name": "风险分析单元", "value": '', "bindKey": 'riskUnit'},
-    {"name": "风险事件", "value": '', "bindKey": 'riskItem'},
-    // {"name": "风险名称", "value": '', "bindKey": 'riskName'},
-    {"name": "风险等级", "value": '1', "bindKey": 'riskLevel'},
-    // {"name": "风险类别", "value": '', "bindKey": 'riskType'},
+    {"name": "风险分析对象", "value": '', "bindKey": 'riskObjectName'},
+    {"name": "责任部门", "value": '', "bindKey": 'hazardDep'},
+    {"name": "责任人", "value": '', "bindKey": 'hazardLiablePerson'},
+    {"name": "风险分析单元", "value": '', "bindKey": 'riskUnitName'},
+    {"name": "风险事件", "value": '', "bindKey": 'riskEventName'},
+    {"name": "当前风险等级", "value": '', "bindKey": 'currentRiskLevel'},
     {"name": "风险描述", "value": '', "bindKey": 'riskDescription'},
-    {"name": "初始风险后果", "value": '', "bindKey": 'riskConsequences'},
-    // {"name": "初始风险可能性", "value": '', "bindKey": 'initialRiskPossibility'},
+    {"name": "初始风险后果", "value": '', "bindKey": 'initialRiskConsequences'},
     {"name": "初始风险度", "value": '', "bindKey": 'initialRiskDegree'},
-    {"name": "初始风险等级", "value": '3', "bindKey": 'initialRiskLevel'},
-    // {"name": "分类", "value": '', "bindKey": 'classification'},
-    // {"name": "隐患类型", "value": '', "bindKey": 'hiddenDangereType'},
-    // {"name": "管控部位", "value": '', "bindKey": 'responsibleDepartment'},
-    {"name": "管控措施", "value": '', "bindKey": 'controlMeasures'},
-    // {"name": "检查方式", "value": '', "bindKey": 'checkWay'},
-    // {"name": "对应标准", "value": '', "bindKey": 'title'},
+    {"name": "初始风险等级", "value": '', "bindKey": 'initialRiskLevel'},
+    {"name": "管控措施", "value": '', "bindKey": 'riskMeasureDesc'},
+    {"name": "隐患排查任务", "value": '', "bindKey": 'troubleshootContent'},
   ];
 
   String _getText(String name, String value) {
     // 风险等级：1_重大2_较大3_一般4_低
-    if (name == '风险等级' || name == '初始风险等级') {
+    if (name == '当前风险等级' || name == '初始风险等级') {
       switch (value) {
         case '1':
           return '重大风险';
@@ -123,24 +141,24 @@ class _ScrollTopState extends State<ScrollTop> {
           itemCount: dropData.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 32, vertical: size.width * 10),
-              child: Text(
-                '${dropData[index]['name']}：${_getText(dropData[index]['name'].toString(), dropData[index]['value'].toString())}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: size.width * 28,
-                  fontWeight: FontWeight.w500
-                ),
-              )
-            );
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 32, vertical: size.width * 10),
+                child: Text(
+                  '${dropData[index]['name']}：${_getText(dropData[index]['name'].toString(), dropData[index]['value'].toString())}',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size.width * 28,
+                      fontWeight: FontWeight.w500),
+                ));
           },
         ));
   }
 }
 
 class BuildDragWidget extends StatefulWidget {
-  BuildDragWidget({this.dangerState});
+  BuildDragWidget({this.dangerState, this.id});
   final String dangerState;
+  final String id;
   @override
   State<BuildDragWidget> createState() => _BuildDragWidgetState();
 }
@@ -149,11 +167,11 @@ class _BuildDragWidgetState extends State<BuildDragWidget> {
   ScrollController scrollController = ScrollController();
   DragController dragController = DragController();
 
-  Widget _judgeWidget(){
+  Widget _judgeWidget() {
     // 隐患状态（排查：-1；确认隐患：0；整改完毕：1；整改审批：9）
     switch (widget.dangerState) {
       case '-1':
-        return Troubleshoot();
+        return Troubleshoot(id: widget.id);
         break;
       case '0':
         return AffirmHidden();
@@ -168,7 +186,7 @@ class _BuildDragWidgetState extends State<BuildDragWidget> {
         return Container();
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     //层叠布局中的底部对齐
@@ -177,9 +195,7 @@ class _BuildDragWidgetState extends State<BuildDragWidget> {
       child: DragContainer(
         //抽屉的子Widget
         dragWidget: Column(
-          children: [
-            Expanded(child: _judgeWidget())
-          ],
+          children: [Expanded(child: _judgeWidget())],
         ),
         //抽屉关闭时的高度 默认0.4
         // initChildRate: 0.1,

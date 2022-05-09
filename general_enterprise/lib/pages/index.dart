@@ -6,7 +6,6 @@ import 'package:enterprise/pages/mine.dart';
 import 'package:enterprise/pages/riskHierarchicalControl.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/eventBus.dart';
-import 'package:enterprise/tool/funcType.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

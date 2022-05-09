@@ -148,7 +148,8 @@ class _DepartmentTaskState extends State<DepartmentTask> {
     queryParameters = {
       "riskObjectId": null,
       "riskUnitId": null,
-      "riskEventId": null
+      "riskEventId": null,
+      "type": 1
     };
     _getDropList();
   }
@@ -241,48 +242,25 @@ class _DepartmentTaskState extends State<DepartmentTask> {
     }
   }
 
-  List data = [
-    {
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'startTime': '2022-1-4 15:20:63',
-      'endTime': '2022-1-4 15:20:63',
-    },
-    {
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'startTime': '2022-1-4 15:20:63',
-      'endTime': '2022-1-4 15:20:63',
-    },
-    {
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'startTime': '2022-1-4 15:20:63',
-      'endTime': '2022-1-4 15:20:63',
-    },
-    {
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'startTime': '2022-1-4 15:20:63',
-      'endTime': '2022-1-4 15:20:63',
-    },
-  ];
+  String _getCheckMeans(String checkMeans) {
+    // 0_现场确认；1_拍照；2_热成像；3_震动
+    switch (checkMeans) {
+      case '0':
+        return '现场确认';
+        break;
+      case '0':
+        return '拍照';
+        break;
+      case '0':
+        return '热成像';
+        break;
+      case '0':
+        return '震动';
+        break;
+      default:
+        return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -302,6 +280,7 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                   Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
                       arguments: {
                         "dangerState": '-1',
+                        'id': list[index]['id']
                       }).then((value) {
                     _throwFunc.run();
                   });
@@ -365,7 +344,7 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['riskObjectName'],
+                                        text: list[index]['riskObjectName'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -384,7 +363,7 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['riskUnitName'],
+                                        text: list[index]['riskUnitName'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -403,7 +382,7 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['riskEventName'],
+                                        text: list[index]['riskEventName'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -422,7 +401,7 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['riskMeasureDesc'],
+                                        text: list[index]['riskMeasureDesc'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -444,11 +423,7 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                                 style: TextStyle(
                                                     color: Color(0xff333333))),
                                             TextSpan(
-                                                text: data[index]
-                                                            ['checkMeans'] ==
-                                                        0
-                                                    ? "现场确认"
-                                                    : "拍照",
+                                                text: _getCheckMeans(list[index]['checkMeans']),
                                                 style: TextStyle(
                                                     color: Color(0xff7F8A9C))),
                                           ]),
@@ -507,7 +482,7 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                   width: size.width * 8,
                                 ),
                                 Text(
-                                  list[index]['startTime'],
+                                  DateTime.fromMillisecondsSinceEpoch(list[index]['checkStartDate']).toString().substring(0, 19),
                                   style: TextStyle(
                                     color: Color(0xff7F8A9C),
                                     fontSize: size.width * 24,
@@ -539,7 +514,7 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                   width: size.width * 8,
                                 ),
                                 Text(
-                                  list[index]['endTime'],
+                                  DateTime.fromMillisecondsSinceEpoch(list[index]['checkEndDate']).toString().substring(0, 19),
                                   style: TextStyle(
                                     color: Color(0xff7F8A9C),
                                     fontSize: size.width * 24,
@@ -554,14 +529,12 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                     ],
                   ),
                 )),
-            // page: true,
-            // url: Interface.getHistoricalSubscribe,
-            // listParam: "records",
-            // queryParameters: {
-            //   'type': 2,
-            // },
-            // method: 'get'
-            data: data,
+            page: true,
+            url: Interface.getRiskControlDataList,
+            listParam: "records",
+            queryParameters: queryParameters,
+            method: 'get',
+            throwFunc: _throwFunc,
           ),
         ))
       ],
@@ -631,7 +604,8 @@ class _PersonalTaskState extends State<PersonalTask> {
     queryParameters = {
       "riskObjectId": null,
       "riskUnitId": null,
-      "riskEventId": null
+      "riskEventId": null,
+      "type": 2
     };
     _getDropList();
   }
@@ -724,48 +698,25 @@ class _PersonalTaskState extends State<PersonalTask> {
     }
   }
 
-  List data = [
-    {
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'startTime': '2022-1-4 15:20:63',
-      'endTime': '2022-1-4 15:20:63',
-    },
-    {
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'startTime': '2022-1-4 15:20:63',
-      'endTime': '2022-1-4 15:20:63',
-    },
-    {
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'startTime': '2022-1-4 15:20:63',
-      'endTime': '2022-1-4 15:20:63',
-    },
-    {
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'startTime': '2022-1-4 15:20:63',
-      'endTime': '2022-1-4 15:20:63',
-    },
-  ];
+  String _getCheckMeans(String checkMeans) {
+    // 0_现场确认；1_拍照；2_热成像；3_震动
+    switch (checkMeans) {
+      case '0':
+        return '现场确认';
+        break;
+      case '0':
+        return '拍照';
+        break;
+      case '0':
+        return '热成像';
+        break;
+      case '0':
+        return '震动';
+        break;
+      default:
+        return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -785,6 +736,7 @@ class _PersonalTaskState extends State<PersonalTask> {
                   Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
                       arguments: {
                         "dangerState": '-1',
+                        'id': list[index]['id']
                       }).then((value) {
                     _throwFunc.run();
                   });
@@ -848,7 +800,7 @@ class _PersonalTaskState extends State<PersonalTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['riskObjectName'],
+                                        text: list[index]['riskObjectName'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -867,7 +819,7 @@ class _PersonalTaskState extends State<PersonalTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['riskUnitName'],
+                                        text: list[index]['riskUnitName'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -886,7 +838,7 @@ class _PersonalTaskState extends State<PersonalTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['riskEventName'],
+                                        text: list[index]['riskEventName'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -905,7 +857,7 @@ class _PersonalTaskState extends State<PersonalTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: data[index]['riskMeasureDesc'],
+                                        text: list[index]['riskMeasureDesc'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -927,11 +879,7 @@ class _PersonalTaskState extends State<PersonalTask> {
                                                 style: TextStyle(
                                                     color: Color(0xff333333))),
                                             TextSpan(
-                                                text: data[index]
-                                                            ['checkMeans'] ==
-                                                        0
-                                                    ? "现场确认"
-                                                    : "拍照",
+                                                text: _getCheckMeans(list[index]['checkMeans']),
                                                 style: TextStyle(
                                                     color: Color(0xff7F8A9C))),
                                           ]),
@@ -990,7 +938,7 @@ class _PersonalTaskState extends State<PersonalTask> {
                                   width: size.width * 8,
                                 ),
                                 Text(
-                                  list[index]['startTime'],
+                                  DateTime.fromMillisecondsSinceEpoch(list[index]['checkStartDate']).toString().substring(0, 19),
                                   style: TextStyle(
                                     color: Color(0xff7F8A9C),
                                     fontSize: size.width * 24,
@@ -1022,7 +970,7 @@ class _PersonalTaskState extends State<PersonalTask> {
                                   width: size.width * 8,
                                 ),
                                 Text(
-                                  list[index]['endTime'],
+                                  DateTime.fromMillisecondsSinceEpoch(list[index]['checkEndDate']).toString().substring(0, 19),
                                   style: TextStyle(
                                     color: Color(0xff7F8A9C),
                                     fontSize: size.width * 24,
@@ -1037,14 +985,12 @@ class _PersonalTaskState extends State<PersonalTask> {
                     ],
                   ),
                 )),
-            // page: true,
-            // url: Interface.getHistoricalSubscribe,
-            // listParam: "records",
-            // queryParameters: {
-            //   'type': 2,
-            // },
-            // method: 'get'
-            data: data,
+            page: true,
+            url: Interface.getRiskControlDataList,
+            listParam: "records",
+            queryParameters: queryParameters,
+            method: 'get',
+            throwFunc: _throwFunc,
           ),
         ))
       ],

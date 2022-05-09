@@ -2,11 +2,14 @@ import 'package:enterprise/common/myCount.dart';
 import 'package:enterprise/common/myImageCarma.dart';
 import 'package:enterprise/myView/myRiskButtons.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class Troubleshoot extends StatefulWidget {
+  Troubleshoot({this.id});
+  final String id;
   @override
   State<Troubleshoot> createState() => _TroubleshootState();
 }
@@ -45,28 +48,33 @@ class _TroubleshootState extends State<Troubleshoot> {
       return;
     }
     dynamic submitData = {
-      // "id": widget.id,
-      "opinion": _textEditingController.text,
-      "executionStatus": isFull ? 1 : 2,
+      "id": widget.id,
+      "checkOpinion": _textEditingController.text,
+      "checkStatus": isFull ? '0' : '1',
     };
     if (!isFull) {
-        List image = _generateImage();
-        if (image.isEmpty) {
-          Fluttertoast.showToast(msg: '请拍照');
-          return;
+      List image = _generateImage();
+      if (image.isEmpty) {
+        Fluttertoast.showToast(msg: '请拍照');
+        return;
+      }
+      String carmaStr = '';
+      for (var i = 0; i < image.length; i++) {
+        if (i == image.length - 1) {
+          carmaStr += image[i];
+        } else {
+          carmaStr += image[i] + '|';
         }
-        String carmaStr = '';
-        for (var i = 0; i < image.length; i++) {
-          if (i == image.length - 1) {
-            carmaStr += image[i];
-          } else {
-            carmaStr += image[i] + '|';
-          }
-        }
-        submitData['executionUrl'] = carmaStr;
+      }
+      submitData['checkUrl'] = carmaStr;
     }
-    print(submitData);
-    Navigator.pop(context);
+    myDio
+        .request(
+            type: 'post', url: Interface.postImplementTask, data: submitData)
+        .then((value) {
+      successToast('排查完成');
+      Navigator.pop(context);
+    });
   }
 
   @override
@@ -148,9 +156,6 @@ class _TroubleshootState extends State<Troubleshoot> {
                                 children: <Widget>[
                                   Expanded(
                                     child: TextField(
-                                      onChanged: (val) {
-                                        // callback('opinion', val);
-                                      },
                                       controller: _textEditingController,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -170,29 +175,31 @@ class _TroubleshootState extends State<Troubleshoot> {
                               )),
                         ),
                       ),
-                      !isFull ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                    left: size.width * 30,
-                    top: size.width * 10,
-                    bottom: size.width * 10),
-                child: Text(
-                  '拍照:',
-                  style: TextStyle(
-                      color: Color(0xff343434),
-                      fontSize: size.width * 30,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              MyImageCarma(
-                title: "隐患排查",
-                name: '',
-                purview: '隐患排查',
-              )
-            ],
-          ) : Container(),
+                      !isFull
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: size.width * 30,
+                                      top: size.width * 10,
+                                      bottom: size.width * 10),
+                                  child: Text(
+                                    '拍照:',
+                                    style: TextStyle(
+                                        color: Color(0xff343434),
+                                        fontSize: size.width * 30,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                MyImageCarma(
+                                  title: "隐患排查",
+                                  name: '',
+                                  purview: '隐患排查',
+                                )
+                              ],
+                            )
+                          : Container(),
                       Padding(
                         padding: EdgeInsets.only(
                             left: size.width * 50, right: size.width * 50),
@@ -205,8 +212,8 @@ class _TroubleshootState extends State<Troubleshoot> {
                             margin: EdgeInsets.only(bottom: size.width * 100),
                             decoration: BoxDecoration(
                               color: Color(0xff3074FF),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(size.width * 8)),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(size.width * 8)),
                             ),
                             child: Text(
                               '确定',

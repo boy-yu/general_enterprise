@@ -53,14 +53,13 @@ class Interface {
 
   // 风险一级项下拉 hiddenSpecificItem inspecion risklist worklist controlIndex
   static String getRiskObjectByDepartmentId = baseUrl + '/riskTemplate/getRiskObjectByDepartmentId';
-  static String getCheckOneListAll = '';
   // 风险二级项下拉 hiddenSpecificItem inspecion risklist worklist
   static String getRiskUnitByDepartmentId = baseUrl + '/riskTemplate/getRiskUnitByDepartmentId';
-  static String getCheckTwoListAll = baseUrl + '/api/v4/riskControl/twoListAll';
   // 风险三级项下拉 hiddenSpecificItem inspecion
   static String getRiskEventByDepartmentId = baseUrl + '/riskTemplate/getRiskEventByDepartmentId';
-  static String getCHeckThreeListAll =
-      baseUrl + '/api/v4/riskControl/threeListAll';
+  // （上报）风险一级项下拉
+  static String getCheckRiskObjectList = baseUrl + '/hiddenDangerInvestigation/checkRiskObjectList';
+
 
   // 安全风险清单 风险管控措施列表
   static String getRiskTemplateFourList = baseUrl + '/riskTemplate/riskTemplateFourList';
@@ -69,14 +68,34 @@ class Interface {
   // 根据id查看风险管控措施详情
   static String getRiskTemplateFourById = baseUrl + '/riskTemplate/getRiskTemplateFourById';
   
+  // 隐患排查记录
+  static String getCheckRecordList = baseUrl + '/hiddenDangerInvestigation/checkRecordList';
+  // 根据id查看排查记录详情
+  static String getcheckRecordById = baseUrl + '/hiddenDangerInvestigation/getcheckRecordById';
+
+  // 隐患治理列表（排查）
+  static String getCheckHiddenDangereBookList = baseUrl + '/hiddenDangerInvestigation/checkHiddenDangereBookList';
+  // 隐患治理列表（排查）详情
+  static String getcheckHiddenDangereBookById = baseUrl + '/hiddenDangerInvestigation/getcheckHiddenDangereBookById';
+
+  // 隐患治理列表（上报）
+  static String getReportHiddenDangereBookList = baseUrl + '/hiddenDangerInvestigation/reportHiddenDangereBookList';
+  // 隐患治理列表（上报）详情
+  static String getreportHiddenDangereBookById = baseUrl + '/hiddenDangerInvestigation/getreportHiddenDangereBookById';
   
+  // 隐患排查任务执行列表
+  static String getRiskControlDataList = baseUrl + '/riskControlDataController/riskControlDataList';
+  // 根据执行id查看详情
+  static String getRiskControlDataById = baseUrl + '/riskControlDataController/getRiskControlDataById';
+  // 提交排查任务
+  static String postImplementTask = baseUrl + '/riskControlDataController/implementTask';
+  
+
+
 
 
   // 修改个人信息 (头像 描述 电子邮箱 手机号码 昵称 性别 签名)
   static String putUpdateUser = baseUrl + '/tUser/updateUser';
-  
-
-
   // 风险分析单元列表(风险辨识任务)
   static String getRiskTemplateTwoListAllTask = baseUrl + '/riskTemplateTwo/riskTemplateTwoListAllTask';
   // 风险事件列表

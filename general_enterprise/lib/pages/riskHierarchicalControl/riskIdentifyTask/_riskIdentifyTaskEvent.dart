@@ -27,25 +27,6 @@ class _RiskIdentifyTaskEventState extends State<RiskIdentifyTaskEvent> {
     _queryParameters = {'riskUnitId': widget.leftBarList[leftBarIndex]['id']};
   }
 
-  Color _getColor(String riskLevel) {
-    switch (riskLevel) {
-      case "重大风险":
-        return Color(0xffF56271);
-        break;
-      case "较大风险":
-        return Color(0xffFF9900);
-        break;
-      case "一般风险":
-        return Color(0xffFFCA0E);
-        break;
-      case "低风险":
-        return Color(0xff2276FC);
-        break;
-      default:
-        return Color(0xff333333);
-    }
-  }
-
   TextSpan _getTextSpan(String riskLevel) {
     switch (riskLevel) {
       case "1":

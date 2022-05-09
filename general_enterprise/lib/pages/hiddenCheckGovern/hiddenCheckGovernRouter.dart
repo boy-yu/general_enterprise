@@ -17,7 +17,10 @@ List<Map<String, Widget Function(BuildContext context, {dynamic arguments})>>
   },
   {
     '/hiddenCheckGovern/taskHandle': (context, {arguments}) =>
-        TaskHandle(dangerState: arguments['dangerState'])
+        TaskHandle(
+          dangerState: arguments['dangerState'],
+          id: arguments['id'],
+        )
   },
 
   {
@@ -33,7 +36,9 @@ List<Map<String, Widget Function(BuildContext context, {dynamic arguments})>>
   },
   {
     '/hiddenCheckGovern/hiddenCheckRecordDetails': (context, {arguments}) =>
-        HiddenCheckRecordDetails()
+        HiddenCheckRecordDetails(
+          id: arguments['id']
+        )
   },
 
   {
@@ -42,7 +47,10 @@ List<Map<String, Widget Function(BuildContext context, {dynamic arguments})>>
   },
   {
     '/hiddenCheckGovern/hiddenGovernRecordDetails': (context, {arguments}) =>
-        HiddenGovernRecordDetails()
+        HiddenGovernRecordDetails(
+          id: arguments['id'],
+          type: arguments['type']
+        )
   },
   
 
