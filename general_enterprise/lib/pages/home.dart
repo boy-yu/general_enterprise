@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
       MutipleXAxisSturct(names: "天然气预处理区", nums: [41.0, 30.0, 50.0, 20.0]),
       MutipleXAxisSturct(names: "液化工序", nums: [41.0, 30.0, 100.0, 24.0]),
     ];
-    maxYAxis = 100.0 + 20.0;
+    maxYAxis = 100.0 + 25.0;
   }
 
   // 获取排查、巡检异常处置情况
@@ -66,7 +66,6 @@ class _HomeState extends State<Home> {
   _getCurrentPieData(){
     currentPie.add(PieSturct(color: Color(0xffF56271), nums: 130, title: '重大隐患'));
     currentPie.add(PieSturct(color: Color(0xffFFCA0E), nums: 49, title: '一般隐患'));
-    currentPie.add(PieSturct(color: Color(0xff5FD5EC), nums: 123, title: '无隐患'));
   }
 
   // 管控分类数据数组
@@ -582,7 +581,7 @@ class _HomeState extends State<Home> {
                                   width: size.width * 20,
                                 ),
                                 Text(
-                                  "待整改   3",
+                                  "整改中   3",
                                   style: TextStyle(
                                     color: Color(0xff7F8A9C),
                                     fontSize: size.width * 28,
@@ -608,7 +607,7 @@ class _HomeState extends State<Home> {
                                   width: size.width * 20,
                                 ),
                                 Text(
-                                  "待审批   49",
+                                  "待验收   49",
                                   style: TextStyle(
                                     color: Color(0xff7F8A9C),
                                     fontSize: size.width * 28,
@@ -717,32 +716,6 @@ class _HomeState extends State<Home> {
                                 ),
                                 Text(
                                   "一般隐患   49",
-                                  style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 28,
-                                    fontWeight: FontWeight.w400
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: size.width * 24,
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  height: size.width * 20,
-                                  width: size.width * 20,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xff5FD5EC),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(size.width * 4))),
-                                ),
-                                SizedBox(
-                                  width: size.width * 20,
-                                ),
-                                Text(
-                                  "无隐患   123",
                                   style: TextStyle(
                                     color: Color(0xff7F8A9C),
                                     fontSize: size.width * 28,
