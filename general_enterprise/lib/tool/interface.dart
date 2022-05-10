@@ -89,6 +89,10 @@ class Interface {
   static String getRiskControlDataById = baseUrl + '/riskControlDataController/getRiskControlDataById';
   // 提交排查任务
   static String postImplementTask = baseUrl + '/riskControlDataController/implementTask';
+  // 隐患上报
+  static String postHiddenDangerReporting = baseUrl + '/riskControlDataController/hiddenDangerReporting';
+  // 隐患治理任务列表  排查/上报   isFromCheck  1：排查 0：上报
+  static String getHiddenDangerTreatment = baseUrl + '/riskControlDataController/hiddenDangerTreatment';
   
 
 

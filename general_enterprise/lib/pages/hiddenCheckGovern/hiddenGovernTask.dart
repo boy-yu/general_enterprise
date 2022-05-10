@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/common/refreshList.dart';
+import 'package:enterprise/pages/hiddenCheckGovern/hiddenGovernRecord.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
 import 'package:enterprise/tool/interface.dart';
@@ -148,7 +149,8 @@ class _CheckHiddenState extends State<CheckHidden> {
     queryParameters = {
       "riskObjectId": null,
       "riskUnitId": null,
-      "riskEventId": null
+      "riskEventId": null,
+      "isFromCheck": 1
     };
     _getDropList();
   }
@@ -178,7 +180,8 @@ class _CheckHiddenState extends State<CheckHidden> {
       queryParameters = {
         "riskObjectId": null,
         "riskUnitId": null,
-        "riskEventId": null
+        "riskEventId": null,
+        "isFromCheck": 1
       };
       print(queryParameters);
       _throwFunc.run(argument: queryParameters);
@@ -215,7 +218,6 @@ class _CheckHiddenState extends State<CheckHidden> {
         }
       });
     }
-
     dropTempData.forEach((element) {
       if (element['id'] != null) {
         queryParameters[element['limit'].toString()] = element['id'];
@@ -224,8 +226,6 @@ class _CheckHiddenState extends State<CheckHidden> {
     if (index == 0) {
       queryParameters["riskUnitId"] = null;
     }
-    print(queryParameters);
-
     _throwFunc.run(argument: queryParameters);
     if (mounted) {
       setState(() {});
@@ -236,43 +236,10 @@ class _CheckHiddenState extends State<CheckHidden> {
 
   int stateSelect = 0;
 
-  List data = [
-    {
-      'dangerState': '0',
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'effectiveTime': '2022-1-4 15:20:63',
-    },
-    {
-      'dangerState': '1',
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'effectiveTime': '2022-1-4 15:20:63',
-    },
-    {
-      'dangerState': '9',
-      'troubleshootContent': '隐患排查内容隐患排查内容隐患排查内容隐患排查内容',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'riskUnitName': '风险分析单元风险分析单元风险分析单元风险分析单元',
-      'riskEventName': '风险事件风险事件风险事件风险事件',
-      'riskMeasureDesc': '管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施管控措施',
-      'checkMeans': 0, // 0现场确认 1拍照
-      'effectiveTime': '2022-1-4 15:20:63',
-    },
-  ];
-
   Widget _getButton(String dangerState) {
     // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
     switch (dangerState) {
-      case '0':
+      case '-1':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -289,7 +256,7 @@ class _CheckHiddenState extends State<CheckHidden> {
           ),
         );
         break;
-      case '1':
+      case '0':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -306,7 +273,7 @@ class _CheckHiddenState extends State<CheckHidden> {
           ),
         );
         break;
-      case '9':
+      case '1':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -352,6 +319,17 @@ class _CheckHiddenState extends State<CheckHidden> {
                             return GestureDetector(
                               onTap: () {
                                 stateSelect = indexState;
+                                // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
+                                if(stateList[stateSelect] == '全部'){
+                                  queryParameters['dangerState'] = null;
+                                }else if(stateList[stateSelect] == '待确认'){
+                                  queryParameters['dangerState'] = '-1';
+                                }else if(stateList[stateSelect] == '整改中'){
+                                  queryParameters['dangerState'] = '0';
+                                }else if(stateList[stateSelect] == '待验收'){
+                                  queryParameters['dangerState'] = '1';
+                                }
+                                _throwFunc.run(argument: queryParameters);
                                 setState(() {});
                               },
                               child: Container(
@@ -457,7 +435,7 @@ class _CheckHiddenState extends State<CheckHidden> {
                                                       color:
                                                           Color(0xff333333))),
                                               TextSpan(
-                                                  text: data[index]
+                                                  text: list[index]
                                                       ['riskObjectName'],
                                                   style: TextStyle(
                                                       color:
@@ -479,7 +457,7 @@ class _CheckHiddenState extends State<CheckHidden> {
                                                       color:
                                                           Color(0xff333333))),
                                               TextSpan(
-                                                  text: data[index]
+                                                  text: list[index]
                                                       ['riskUnitName'],
                                                   style: TextStyle(
                                                       color:
@@ -501,7 +479,7 @@ class _CheckHiddenState extends State<CheckHidden> {
                                                       color:
                                                           Color(0xff333333))),
                                               TextSpan(
-                                                  text: data[index]
+                                                  text: list[index]
                                                       ['riskEventName'],
                                                   style: TextStyle(
                                                       color:
@@ -523,7 +501,7 @@ class _CheckHiddenState extends State<CheckHidden> {
                                                       color:
                                                           Color(0xff333333))),
                                               TextSpan(
-                                                  text: data[index]
+                                                  text: list[index]
                                                       ['riskMeasureDesc'],
                                                   style: TextStyle(
                                                       color:
@@ -555,9 +533,9 @@ class _CheckHiddenState extends State<CheckHidden> {
                                                               color: Color(
                                                                   0xff333333))),
                                                       TextSpan(
-                                                          text: data[index][
+                                                          text: list[index][
                                                                       'checkMeans'] ==
-                                                                  0
+                                                                  '0'
                                                               ? "现场确认"
                                                               : "拍照",
                                                           style: TextStyle(
@@ -568,7 +546,7 @@ class _CheckHiddenState extends State<CheckHidden> {
                                               SizedBox(
                                                 height: size.width * 16,
                                               ),
-                                              RichText(
+                                              list[index]['dangerManageDeadline'] != null && list[index]['dangerManageDeadline'] != ''? RichText(
                                                 text: TextSpan(
                                                     style: TextStyle(
                                                         fontSize:
@@ -582,13 +560,12 @@ class _CheckHiddenState extends State<CheckHidden> {
                                                               color: Color(
                                                                   0xff333333))),
                                                       TextSpan(
-                                                          text: data[index]
-                                                              ['effectiveTime'],
+                                                          text: DateTime.fromMillisecondsSinceEpoch(list[index]['dangerManageDeadline']).toString().substring(0, 19),
                                                           style: TextStyle(
                                                               color: Color(
                                                                   0xff7F8A9C))),
                                                     ]),
-                                              ),
+                                              ) : Container(),
                                             ],
                                           ),
                                           Spacer(),
@@ -602,14 +579,12 @@ class _CheckHiddenState extends State<CheckHidden> {
                               ],
                             ),
                           )),
-                      // page: true,
-                      // url: Interface.getHistoricalSubscribe,
-                      // listParam: "records",
-                      // queryParameters: {
-                      //   'type': 2,
-                      // },
-                      // method: 'get'
-                      data: data,
+                      page: true,
+                      url: Interface.getHiddenDangerTreatment,
+                      listParam: "records",
+                      queryParameters: queryParameters,
+                      method: 'get',
+                      throwFunc: _throwFunc,
                     ))
                   ],
                 )))
@@ -624,17 +599,6 @@ class ReportedHidden extends StatefulWidget {
 }
 
 class _ReportedHiddenState extends State<ReportedHidden> {
-  List dropTempData = [
-    {
-      'title': '风险分析对象',
-      'data': [],
-      'value': '',
-      "saveTitle": '风险分析对象',
-      'dataUrl': Interface.getRiskObjectByDepartmentId,
-      'limit': 'riskObjectId'
-    }
-  ];
-
   _deleteIndex(int index) {
     for (var i = dropTempData.length - 1; i > index; i--) {
       dropTempData.removeAt(i);
@@ -647,25 +611,39 @@ class _ReportedHiddenState extends State<ReportedHidden> {
   Map queryParameters = {};
   ThrowFunc _throwFunc = new ThrowFunc();
 
+  @override
+  void initState() {
+    super.initState();
+    queryParameters = {
+      "riskObjectId": null,
+      "riskUnitId": null,
+      "riskEventId": null,
+      "isFromCheck": 0
+    };
+    _getDropList();
+  }
+
+  List dropTempData = [
+    {
+      'title': '风险分析对象',
+      'data': [],
+      'value': '',
+      "saveTitle": '风险分析对象',
+      'dataUrl': Interface.getCheckRiskObjectList,
+      'limit': 'riskObjectId'
+    }
+  ];
+
   List dropList = [
     {
       'title': '风险分析对象',
       'data': [],
       'value': '',
       "saveTitle": '风险分析对象',
-      'dataUrl': Interface.getRiskObjectByDepartmentId,
+      'dataUrl': Interface.getCheckRiskObjectList,
       'limit': 'riskObjectId'
     },
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    queryParameters = {
-      "riskObjectId": null,
-    };
-    _getDropList();
-  }
 
   _getDropList() {
     for (var i = 0; i < dropTempData.length; i++) {
@@ -677,7 +655,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
         )
             .then((value) {
           dropTempData[i]['data'] = value;
-          dropTempData[i]['data'].insert(0, {"name": "查看全部"});
+          dropTempData[i]['data'].insert(0, {"riskObjectName": "查看全部"});
           if (mounted) {
             setState(() {});
           }
@@ -691,6 +669,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
       _deleteIndex(index);
       queryParameters = {
         "riskObjectId": null,
+        "isFromCheck": 0
       };
       print(queryParameters);
       _throwFunc.run(argument: queryParameters);
@@ -718,31 +697,10 @@ class _ReportedHiddenState extends State<ReportedHidden> {
 
   int stateSelect = 0;
 
-  List data = [
-    {
-      'dangerState': '0',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'place': '地点地点地点地点地点地点',
-      'dangerDesc': '隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述',
-    },
-    {
-      'dangerState': '1',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'place': '地点地点地点地点地点地点',
-      'dangerDesc': '隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述',
-    },
-    {
-      'dangerState': '9',
-      'riskObjectName': '风险分析对象风险分析对象风险分析对象风险分析对象',
-      'place': '地点地点地点地点地点地点',
-      'dangerDesc': '隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述',
-    },
-  ];
-
   Widget _getButton(String dangerState) {
     // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
     switch (dangerState) {
-      case '0':
+      case '-1':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -759,7 +717,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
           ),
         );
         break;
-      case '1':
+      case '0':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -776,7 +734,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
           ),
         );
         break;
-      case '9':
+      case '1':
         return Container(
           height: size.width * 56,
           width: size.width * 140,
@@ -802,7 +760,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TitleChoose(
+        GovernObjectNameTitleChoose(
           list: dropTempData,
           getDataList: _dropList,
         ),
@@ -822,6 +780,17 @@ class _ReportedHiddenState extends State<ReportedHidden> {
                             return GestureDetector(
                               onTap: () {
                                 stateSelect = indexState;
+                                // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
+                                if(stateList[stateSelect] == '全部'){
+                                  queryParameters['dangerState'] = null;
+                                }else if(stateList[stateSelect] == '待确认'){
+                                  queryParameters['dangerState'] = '-1';
+                                }else if(stateList[stateSelect] == '整改中'){
+                                  queryParameters['dangerState'] = '0';
+                                }else if(stateList[stateSelect] == '待验收'){
+                                  queryParameters['dangerState'] = '1';
+                                }
+                                _throwFunc.run(argument: queryParameters);
                                 setState(() {});
                               },
                               child: Container(
@@ -938,7 +907,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
                                                               color: Color(
                                                                   0xff333333))),
                                                       TextSpan(
-                                                          text: data[index]['place'],
+                                                          text: list[index]['address'],
                                                           style: TextStyle(
                                                               color: Color(
                                                                   0xff7F8A9C))),
@@ -961,7 +930,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
                                                               color: Color(
                                                                   0xff333333))),
                                                       TextSpan(
-                                                          text: data[index]
+                                                          text: list[index]
                                                               ['dangerDesc'],
                                                           style: TextStyle(
                                                               color: Color(
@@ -982,14 +951,12 @@ class _ReportedHiddenState extends State<ReportedHidden> {
                               ],
                             ),
                           )),
-                      // page: true,
-                      // url: Interface.getHistoricalSubscribe,
-                      // listParam: "records",
-                      // queryParameters: {
-                      //   'type': 2,
-                      // },
-                      // method: 'get'
-                      data: data,
+                      page: true,
+                      url: Interface.getHiddenDangerTreatment,
+                      listParam: "records",
+                      queryParameters: queryParameters,
+                      method: 'get',
+                      throwFunc: _throwFunc,
                     ))
                   ],
                 )))
