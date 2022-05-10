@@ -243,7 +243,7 @@ class _IndexState extends State<Index> {
     }
   }
 
-  int _currentIndex = 3;
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
