@@ -1,6 +1,7 @@
 import 'package:enterprise/common/CustomEcharts.dart';
 import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -102,61 +103,151 @@ class _OverviewState extends State<Overview> {
   void initState() {
     super.initState();
     _getRiskData();
-    _getAreaDistribution();
-    _getAbnormalData();
-    _getCurrentPieData();
+    _getMeasureStatisticsData();
+    _getTaskCompletionData();
+    _getHiddenDangerTreatmentSituation();
   }
+
+  int riskTotal = 0;
 
   // 获取风险管控统计数据
   _getRiskData() {
-    initialPie.add(PieSturct(color: Color(0xffF56271), nums: 5, title: '重大风险'));
-    initialPie.add(PieSturct(color: Color(0xffFF9900), nums: 5, title: '较大风险'));
-    initialPie
-        .add(PieSturct(color: Color(0xffFFCA0E), nums: 10, title: '一般风险'));
-    initialPie.add(PieSturct(color: Color(0xff2276FC), nums: 3, title: '低风险'));
-    residuePie
-        .add(PieSturct(color: Color(0xffF56271), nums: 12, title: '重大风险'));
-    residuePie.add(PieSturct(color: Color(0xffFF9900), nums: 2, title: '较大风险'));
-    residuePie.add(PieSturct(color: Color(0xffFFCA0E), nums: 5, title: '一般风险'));
-    residuePie.add(PieSturct(color: Color(0xff2276FC), nums: 3, title: '低风险'));
+    myDio
+        .request(
+      type: 'get',
+      url: Interface.getRiskStatistics,
+    )
+        .then((value) {
+      if (value is Map) {
+        initialPie.add(PieSturct(
+            color: Color(0xffF56271),
+            nums: value['initialRiskOne'] * 1.0,
+            title: '重大风险'));
+        initialPie.add(PieSturct(
+            color: Color(0xffFF9900),
+            nums: value['initialRiskTwo'] * 1.0,
+            title: '较大风险'));
+        initialPie.add(PieSturct(
+            color: Color(0xffFFCA0E),
+            nums: value['initialRiskThree'] * 1.0,
+            title: '一般风险'));
+        initialPie.add(PieSturct(
+            color: Color(0xff2276FC),
+            nums: value['initialRiskFour'] * 1.0,
+            title: '低风险'));
+
+        residuePie.add(PieSturct(
+            color: Color(0xffF56271),
+            nums: value['riskOne'] * 1.0,
+            title: '重大风险'));
+        residuePie.add(PieSturct(
+            color: Color(0xffFF9900),
+            nums: value['riskTwo'] * 1.0,
+            title: '较大风险'));
+        residuePie.add(PieSturct(
+            color: Color(0xffFFCA0E),
+            nums: value['riskThree'] * 1.0,
+            title: '一般风险'));
+        residuePie.add(PieSturct(
+            color: Color(0xff2276FC),
+            nums: value['riskFour'] * 1.0,
+            title: '低风险'));
+
+        riskTotal = value['total'];
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
-  // 获取区域分布统计数据
-  _getAreaDistribution() {
-    xAxisList = [
-      MutipleXAxisSturct(names: "LNG厂区", nums: [41.0, 30.0, 50.0, 24.0]),
-      MutipleXAxisSturct(names: "循环水站", nums: [41.0, 30.0, 50.0, 20.0]),
-      MutipleXAxisSturct(names: "天然气预处理区", nums: [41.0, 30.0, 50.0, 20.0]),
-      MutipleXAxisSturct(names: "液化工序", nums: [41.0, 30.0, 100.0, 24.0]),
-    ];
-    maxYAxis = 100.0 + 25.0;
+  // 隐患情况
+  _getHiddenDangerTreatmentSituation(){
+    myDio.request(
+      type: 'get',
+      url: Interface.getHiddenDangerTreatmentSituation,
+    ).then((value) {
+      if (value is Map) {
+        abnormalPie
+        .add(PieSturct(color: Color(0xff2276FC), nums: value['confirmed'] * 1.0, title: '待确认'));
+        abnormalPie
+            .add(PieSturct(color: Color(0xffF56271), nums: value['rectification'] * 1.0, title: '整改中'));
+        abnormalPie
+            .add(PieSturct(color: Color(0xffFFCA0E), nums: value['acceptance'] * 1.0, title: '待验收'));
+
+        currentPie
+        .add(PieSturct(color: Color(0xffF56271), nums: value['major'] * 1.0, title: '重大隐患'));
+        currentPie
+            .add(PieSturct(color: Color(0xffFFCA0E), nums: value['commonly'] * 1.0, title: '一般隐患'));
+
+        hiddenDangerTreatmentSituationData = value;
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
-  // 获取排查、巡检异常处置情况
-  _getAbnormalData() {
-    abnormalPie
-        .add(PieSturct(color: Color(0xff2276FC), nums: 123, title: '待确认'));
-    abnormalPie
-        .add(PieSturct(color: Color(0xffF56271), nums: 30, title: '待整改'));
-    abnormalPie
-        .add(PieSturct(color: Color(0xffFFCA0E), nums: 49, title: '待审批'));
-  }
+  Map hiddenDangerTreatmentSituationData = {
+    "acceptance": 0,
+    "commonly": 0,
+    "major": 0,
+    "rectification": 0,
+    "confirmed": 0
+  };
 
-  // 排查、巡检结果实时统计
-  _getCurrentPieData() {
-    currentPie
-        .add(PieSturct(color: Color(0xffF56271), nums: 130, title: '重大隐患'));
-    currentPie
-        .add(PieSturct(color: Color(0xffFFCA0E), nums: 49, title: '一般隐患'));
+  // 管控措施统计
+  _getMeasureStatisticsData() {
+    myDio
+        .request(
+      type: 'get',
+      url: Interface.getMeasureStatistics,
+    )
+        .then((value) {
+      if (value is Map) {
+        measureStatisticsData[0]['num'] = value['engineeringTechnology'];
+        measureStatisticsData[1]['num'] = value['maintenance'];
+        measureStatisticsData[2]['num'] = value['operationBehavior'];
+        measureStatisticsData[3]['num'] = value['emergencyMeasure'];
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   // 管控分类数据数组
-  List data = [
-    {'name': '工程技术', 'num': 123},
-    {'name': '维护保养', 'num': 123},
-    {'name': '操作行为', 'num': 123},
-    {'name': '异常措施', 'num': 123},
+  List measureStatisticsData = [
+    {'name': '工程技术', 'num': 0},
+    {'name': '维护保养', 'num': 0},
+    {'name': '操作行为', 'num': 0},
+    {'name': '异常措施', 'num': 0},
   ];
+
+  // 任务完成情况
+  _getTaskCompletionData() {
+    myDio
+        .request(
+      type: 'get',
+      url: Interface.getTaskCompletion,
+    )
+        .then((value) {
+      if (value is Map) {
+        taskCompletionData = value;
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  // 任务完成情况
+  Map taskCompletionData = {
+    "waitCheck": 0,
+    "total": 0,
+    "beOverdue": 0,
+    "checked": 0
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +298,7 @@ class _OverviewState extends State<Overview> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '10',
+                                riskTotal.toString(),
                                 style: TextStyle(
                                     color: Color(0xff333333),
                                     fontSize: size.width * 40,
@@ -230,7 +321,7 @@ class _OverviewState extends State<Overview> {
                       SizedBox(
                         width: size.width * 10,
                       ),
-                      data.isNotEmpty
+                      measureStatisticsData.isNotEmpty
                           ? CustomPaint(
                               painter: DoubleControlPaint(),
                               child: Container(
@@ -238,7 +329,7 @@ class _OverviewState extends State<Overview> {
                                       EdgeInsets.only(right: size.width * 60),
                                   width: size.width * 160,
                                   child: ListView.builder(
-                                      itemCount: data.length,
+                                      itemCount: measureStatisticsData.length,
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) {
@@ -257,7 +348,8 @@ class _OverviewState extends State<Overview> {
                                                 children: [
                                                   Expanded(
                                                       child: Text(
-                                                    data[index]['name']
+                                                    measureStatisticsData[index]
+                                                            ['name']
                                                         .toString(),
                                                     maxLines: 1,
                                                     overflow: TextOverflow.clip,
@@ -268,7 +360,8 @@ class _OverviewState extends State<Overview> {
                                                             size.width * 20),
                                                   )),
                                                   Text(
-                                                    data[index]['num']
+                                                    measureStatisticsData[index]
+                                                            ['num']
                                                         .toString(),
                                                     style: TextStyle(
                                                         color:
@@ -294,7 +387,7 @@ class _OverviewState extends State<Overview> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '20',
+                                riskTotal.toString(),
                                 style: TextStyle(
                                     color: Color(0xff333333),
                                     fontSize: size.width * 40,
@@ -416,7 +509,7 @@ class _OverviewState extends State<Overview> {
           SizedBox(
             height: size.width * 32,
           ),
-          // 区域分布
+          // 任务完成情况
           Container(
             margin: EdgeInsets.symmetric(horizontal: size.width * 32),
             padding: EdgeInsets.all(size.width * 32),
@@ -437,7 +530,7 @@ class _OverviewState extends State<Overview> {
                       width: size.width * 16,
                     ),
                     Text(
-                      "区域分布",
+                      "任务完成情况",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: size.width * 32,
@@ -448,117 +541,437 @@ class _OverviewState extends State<Overview> {
                 SizedBox(
                   height: size.width * 40,
                 ),
-                CustomEchart()
-                    .mutipleBar(xAxisList: xAxisList, yAxis: maxYAxis, color: [
-                  Color(0xffF56271),
-                  Color(0xffFF9900),
-                  Color(0xffFFCA0E),
-                  Color(0xff2276FC),
-                ]),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: size.width * 144,
+                      width: size.width * 296,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 24),
+                      decoration: BoxDecoration(
+                          color: Color(0xffFF9900).withOpacity(0.1),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 16))),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '应排查任务',
+                                style: TextStyle(
+                                    color: Color(0xffFF9900),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: size.width * 28),
+                              ),
+                              SizedBox(
+                                height: size.width * 12,
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(color: Color(0xffFF9900)),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: taskCompletionData['total']
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: size.width * 40,
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(
+                                          text: '条',
+                                          style: TextStyle(
+                                              fontSize: size.width * 28,
+                                              fontWeight: FontWeight.w400)),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Container(
+                            height: size.width * 64,
+                            width: size.width * 64,
+                            decoration: BoxDecoration(
+                                color: Color(0xffFF9900),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 20))),
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/doubleRiskProjeck/icon_home_pie.png',
+                              height: size.width * 35,
+                              width: size.width * 35,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: size.width * 144,
+                      width: size.width * 296,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 24),
+                      decoration: BoxDecoration(
+                          color: Color(0xff5FD5EC).withOpacity(0.1),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 16))),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '已排查任务',
+                                style: TextStyle(
+                                    color: Color(0xff5FD5EC),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: size.width * 28),
+                              ),
+                              SizedBox(
+                                height: size.width * 12,
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(color: Color(0xff5FD5EC)),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: taskCompletionData['checked']
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: size.width * 40,
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(
+                                          text: '条',
+                                          style: TextStyle(
+                                              fontSize: size.width * 28,
+                                              fontWeight: FontWeight.w400)),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Container(
+                            height: size.width * 64,
+                            width: size.width * 64,
+                            decoration: BoxDecoration(
+                                color: Color(0xff5FD5EC),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 20))),
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/doubleRiskProjeck/icon_home_pie.png',
+                              height: size.width * 35,
+                              width: size.width * 35,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: size.width * 30,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: size.width * 50,
-                    ),
                     Container(
-                      width: size.width * 300,
+                      height: size.width * 144,
+                      width: size.width * 296,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 24),
+                      decoration: BoxDecoration(
+                          color: Color(0xff3074FF).withOpacity(0.1),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 16))),
+                      alignment: Alignment.center,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '待排查任务',
+                                style: TextStyle(
+                                    color: Color(0xff3074FF),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: size.width * 28),
+                              ),
+                              SizedBox(
+                                height: size.width * 12,
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(color: Color(0xff3074FF)),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: taskCompletionData['waitCheck']
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: size.width * 40,
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(
+                                          text: '条',
+                                          style: TextStyle(
+                                              fontSize: size.width * 28,
+                                              fontWeight: FontWeight.w400)),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
                           Container(
-                            height: size.width * 20,
-                            width: size.width * 20,
+                            height: size.width * 64,
+                            width: size.width * 64,
                             decoration: BoxDecoration(
-                                color: Color(0xffF56271),
+                                color: Color(0xff3074FF),
                                 borderRadius: BorderRadius.all(
-                                    Radius.circular(size.width * 4))),
-                          ),
-                          SizedBox(
-                            width: size.width * 8,
-                          ),
-                          Text(
-                            "重大风险总计(12)",
-                            style: TextStyle(
-                                color: Color(0xff7F8A9C),
-                                fontSize: size.width * 24),
-                          ),
+                                    Radius.circular(size.width * 20))),
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/doubleRiskProjeck/icon_home_pie.png',
+                              height: size.width * 35,
+                              width: size.width * 35,
+                            ),
+                          )
                         ],
                       ),
                     ),
                     Container(
-                      height: size.width * 20,
-                      width: size.width * 20,
+                      height: size.width * 144,
+                      width: size.width * 296,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 24),
                       decoration: BoxDecoration(
-                          color: Color(0xffFF9900),
+                          color: Color(0xffF56271).withOpacity(0.1),
                           borderRadius: BorderRadius.all(
-                              Radius.circular(size.width * 4))),
-                    ),
-                    SizedBox(
-                      width: size.width * 8,
-                    ),
-                    Text(
-                      "较大风险总计(31)",
-                      style: TextStyle(
-                          color: Color(0xff7F8A9C), fontSize: size.width * 24),
+                              Radius.circular(size.width * 16))),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '逾期任务',
+                                style: TextStyle(
+                                    color: Color(0xffF56271),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: size.width * 28),
+                              ),
+                              SizedBox(
+                                height: size.width * 12,
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(color: Color(0xffF56271)),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: taskCompletionData['beOverdue']
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontSize: size.width * 40,
+                                              fontWeight: FontWeight.bold)),
+                                      TextSpan(
+                                          text: '条',
+                                          style: TextStyle(
+                                              fontSize: size.width * 28,
+                                              fontWeight: FontWeight.w400)),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Container(
+                            height: size.width * 64,
+                            width: size.width * 64,
+                            decoration: BoxDecoration(
+                                color: Color(0xffF56271),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 20))),
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/doubleRiskProjeck/icon_home_pie.png',
+                              height: size.width * 35,
+                              width: size.width * 35,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: size.width * 20,
+                  height: size.width * 30,
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: size.width * 50,
-                    ),
-                    Container(
-                      width: size.width * 300,
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: size.width * 20,
-                                width: size.width * 20,
-                                decoration: BoxDecoration(
-                                    color: Color(0xffFFCA0E),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(size.width * 4))),
-                              ),
-                              SizedBox(
-                                width: size.width * 8,
-                              ),
-                              Text(
-                                "一般风险总计(47)",
-                                style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 24),
-                              ),
-                            ],
-                          ),
-                        ],
+                Container(
+                  height: size.width * 174,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Color(0xff3074FF),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 16))),
+                  padding: EdgeInsets.all(size.width * 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '排查完成率',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: size.width * 32,
+                            fontWeight: FontWeight.w500),
                       ),
-                    ),
-                    Container(
-                      height: size.width * 20,
-                      width: size.width * 20,
-                      decoration: BoxDecoration(
-                          color: Color(0xff2276FC),
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(size.width * 4))),
-                    ),
-                    SizedBox(
-                      width: size.width * 8,
-                    ),
-                    Text(
-                      "低风险总计(129)",
-                      style: TextStyle(
-                          color: Color(0xff7F8A9C), fontSize: size.width * 24),
-                    ),
-                  ],
+                      SizedBox(
+                        height: size.width * 30,
+                      ),
+                      Row(
+                        children: [
+                          ProgressComp(
+                            value: taskCompletionData['total'] == 0
+                                ? 0
+                                : taskCompletionData['checked'] /
+                                    taskCompletionData['total'],
+                            width: size.width * 450,
+                            height: size.width * 32,
+                            frColor: Colors.white,
+                            bgColor: Color(0xff5F93FF)),
+                          Spacer(),
+                          Text(
+                            taskCompletionData['total'] == 0
+                                ? '0%'
+                                : (taskCompletionData['checked'] / taskCompletionData['total'] * 100).toStringAsFixed(1).toString() + '%',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: size.width * 32
+                            )
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
+                // CustomEchart()
+                //     .mutipleBar(xAxisList: xAxisList, yAxis: maxYAxis, color: [
+                //   Color(0xffF56271),
+                //   Color(0xffFF9900),
+                //   Color(0xffFFCA0E),
+                //   Color(0xff2276FC),
+                // ]),
+                // SizedBox(
+                //   height: size.width * 30,
+                // ),
+                // Row(
+                //   children: [
+                //     SizedBox(
+                //       width: size.width * 50,
+                //     ),
+                //     Container(
+                //       width: size.width * 300,
+                //       child: Row(
+                //         children: [
+                //           Container(
+                //             height: size.width * 20,
+                //             width: size.width * 20,
+                //             decoration: BoxDecoration(
+                //                 color: Color(0xffF56271),
+                //                 borderRadius: BorderRadius.all(
+                //                     Radius.circular(size.width * 4))),
+                //           ),
+                //           SizedBox(
+                //             width: size.width * 8,
+                //           ),
+                //           Text(
+                //             "重大风险总计(12)",
+                //             style: TextStyle(
+                //                 color: Color(0xff7F8A9C),
+                //                 fontSize: size.width * 24),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     Container(
+                //       height: size.width * 20,
+                //       width: size.width * 20,
+                //       decoration: BoxDecoration(
+                //           color: Color(0xffFF9900),
+                //           borderRadius: BorderRadius.all(
+                //               Radius.circular(size.width * 4))),
+                //     ),
+                //     SizedBox(
+                //       width: size.width * 8,
+                //     ),
+                //     Text(
+                //       "较大风险总计(31)",
+                //       style: TextStyle(
+                //           color: Color(0xff7F8A9C), fontSize: size.width * 24),
+                //     ),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: size.width * 20,
+                // ),
+                // Row(
+                //   children: [
+                //     SizedBox(
+                //       width: size.width * 50,
+                //     ),
+                //     Container(
+                //       width: size.width * 300,
+                //       child: Row(
+                //         children: [
+                //           Row(
+                //             children: [
+                //               Container(
+                //                 height: size.width * 20,
+                //                 width: size.width * 20,
+                //                 decoration: BoxDecoration(
+                //                     color: Color(0xffFFCA0E),
+                //                     borderRadius: BorderRadius.all(
+                //                         Radius.circular(size.width * 4))),
+                //               ),
+                //               SizedBox(
+                //                 width: size.width * 8,
+                //               ),
+                //               Text(
+                //                 "一般风险总计(47)",
+                //                 style: TextStyle(
+                //                     color: Color(0xff7F8A9C),
+                //                     fontSize: size.width * 24),
+                //               ),
+                //             ],
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     Container(
+                //       height: size.width * 20,
+                //       width: size.width * 20,
+                //       decoration: BoxDecoration(
+                //           color: Color(0xff2276FC),
+                //           borderRadius: BorderRadius.all(
+                //               Radius.circular(size.width * 4))),
+                //     ),
+                //     SizedBox(
+                //       width: size.width * 8,
+                //     ),
+                //     Text(
+                //       "低风险总计(129)",
+                //       style: TextStyle(
+                //           color: Color(0xff7F8A9C), fontSize: size.width * 24),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: size.width * 30,
                 ),
@@ -568,7 +981,7 @@ class _OverviewState extends State<Overview> {
           SizedBox(
             height: size.width * 32,
           ),
-          // 排查、巡检异常处置情况
+          // 隐患治理情况
           Container(
             margin: EdgeInsets.symmetric(horizontal: size.width * 32),
             padding: EdgeInsets.all(size.width * 32),
@@ -589,7 +1002,7 @@ class _OverviewState extends State<Overview> {
                     width: size.width * 16,
                   ),
                   Text(
-                    "异常状态处置情况",
+                    "隐患治理情况",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: size.width * 32,
@@ -628,7 +1041,7 @@ class _OverviewState extends State<Overview> {
                             width: size.width * 20,
                           ),
                           Text(
-                            "待确认   123",
+                            "待确认   ${hiddenDangerTreatmentSituationData['confirmed']}",
                             style: TextStyle(
                                 color: Color(0xff7F8A9C),
                                 fontSize: size.width * 28,
@@ -653,7 +1066,7 @@ class _OverviewState extends State<Overview> {
                             width: size.width * 20,
                           ),
                           Text(
-                            "整改中   3",
+                            "整改中   ${hiddenDangerTreatmentSituationData['rectification']}",
                             style: TextStyle(
                                 color: Color(0xff7F8A9C),
                                 fontSize: size.width * 28,
@@ -678,7 +1091,7 @@ class _OverviewState extends State<Overview> {
                             width: size.width * 20,
                           ),
                           Text(
-                            "待验收   49",
+                            "待验收   ${hiddenDangerTreatmentSituationData['acceptance']}",
                             style: TextStyle(
                                 color: Color(0xff7F8A9C),
                                 fontSize: size.width * 28,
@@ -698,7 +1111,7 @@ class _OverviewState extends State<Overview> {
           SizedBox(
             height: size.width * 32,
           ),
-          // 排查、巡检结果实时统计
+          // 历史隐患统计
           Container(
             margin: EdgeInsets.symmetric(horizontal: size.width * 32),
             padding: EdgeInsets.all(size.width * 32),
@@ -719,7 +1132,7 @@ class _OverviewState extends State<Overview> {
                     width: size.width * 16,
                   ),
                   Text(
-                    "隐患数量实时统计",
+                    "历史隐患统计",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: size.width * 32,
@@ -758,7 +1171,7 @@ class _OverviewState extends State<Overview> {
                             width: size.width * 20,
                           ),
                           Text(
-                            "重大隐患   130",
+                            "重大隐患   ${hiddenDangerTreatmentSituationData['major']}",
                             style: TextStyle(
                                 color: Color(0xff7F8A9C),
                                 fontSize: size.width * 28,
@@ -783,7 +1196,7 @@ class _OverviewState extends State<Overview> {
                             width: size.width * 20,
                           ),
                           Text(
-                            "一般隐患   49",
+                            "一般隐患   ${hiddenDangerTreatmentSituationData['commonly']}",
                             style: TextStyle(
                                 color: Color(0xff7F8A9C),
                                 fontSize: size.width * 28,
@@ -1464,7 +1877,7 @@ class _MyOverviewState extends State<MyOverview> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           isHiddenRemind = 1;
                           setState(() {});
                         },
@@ -1476,31 +1889,34 @@ class _MyOverviewState extends State<MyOverview> {
                               Text(
                                 '隐患排查提醒',
                                 style: TextStyle(
-                                  color: isHiddenRemind == 1 ? Color(0xff3074FF) : Color(0xff7F8A9C),
-                                  fontSize: size.width * 28,
-                                  fontWeight: FontWeight.w500
-                                ),
+                                    color: isHiddenRemind == 1
+                                        ? Color(0xff3074FF)
+                                        : Color(0xff7F8A9C),
+                                    fontSize: size.width * 28,
+                                    fontWeight: FontWeight.w500),
                               ),
                               SizedBox(
                                 height: size.width * 12,
                               ),
-                              isHiddenRemind == 1 ? Container(
-                                height: size.width * 8,
-                                width: size.width * 56,
-                                decoration: BoxDecoration(
-                                  color: Color(0xff3074FF),
-                                  borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                                ),
-                              ) : Container(
-                                height: size.width * 8,
-                                width: size.width * 56,
-                              )
+                              isHiddenRemind == 1
+                                  ? Container(
+                                      height: size.width * 8,
+                                      width: size.width * 56,
+                                      decoration: BoxDecoration(
+                                          color: Color(0xff3074FF),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(size.width * 8))),
+                                    )
+                                  : Container(
+                                      height: size.width * 8,
+                                      width: size.width * 56,
+                                    )
                             ],
                           ),
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           isHiddenRemind = 2;
                           setState(() {});
                         },
@@ -1512,25 +1928,28 @@ class _MyOverviewState extends State<MyOverview> {
                               Text(
                                 '隐患治理提醒',
                                 style: TextStyle(
-                                  color: isHiddenRemind == 2 ? Color(0xff3074FF) : Color(0xff7F8A9C),
-                                  fontSize: size.width * 28,
-                                  fontWeight: FontWeight.w500
-                                ),
+                                    color: isHiddenRemind == 2
+                                        ? Color(0xff3074FF)
+                                        : Color(0xff7F8A9C),
+                                    fontSize: size.width * 28,
+                                    fontWeight: FontWeight.w500),
                               ),
                               SizedBox(
                                 height: size.width * 12,
                               ),
-                              isHiddenRemind == 2 ? Container(
-                                height: size.width * 8,
-                                width: size.width * 56,
-                                decoration: BoxDecoration(
-                                  color: Color(0xff3074FF),
-                                  borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                                ),
-                              ) : Container(
-                                height: size.width * 8,
-                                width: size.width * 56,
-                              )
+                              isHiddenRemind == 2
+                                  ? Container(
+                                      height: size.width * 8,
+                                      width: size.width * 56,
+                                      decoration: BoxDecoration(
+                                          color: Color(0xff3074FF),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(size.width * 8))),
+                                    )
+                                  : Container(
+                                      height: size.width * 8,
+                                      width: size.width * 56,
+                                    )
                             ],
                           ),
                         ),
@@ -1592,76 +2011,88 @@ class _MyOverviewState extends State<MyOverview> {
                   Container(
                     height: size.width * 310,
                     child: ListView.builder(
-                      itemCount: hiddenCheckReminder.length,
-                      itemBuilder: (context, hiddenCheckReminderIndex) {
-                        return Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 32),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    width: size.width * 300,
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: size.width * 24),
-                                    child: Text(
-                                      hiddenCheckReminder[hiddenCheckReminderIndex]['troubleshootContent'],
-                                      style: TextStyle(
-                                          color: Color(0xff7F8A9C),
-                                          fontSize: size.width * 24,
-                                          fontWeight: FontWeight.w500),
+                        itemCount: hiddenCheckReminder.length,
+                        itemBuilder: (context, hiddenCheckReminderIndex) {
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 32),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      width: size.width * 300,
+                                      alignment: Alignment.centerLeft,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: size.width * 24),
+                                      child: Text(
+                                        hiddenCheckReminder[
+                                                hiddenCheckReminderIndex]
+                                            ['troubleshootContent'],
+                                        style: TextStyle(
+                                            color: Color(0xff7F8A9C),
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    width: size.width * 150,
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: size.width * 24),
-                                    child: Text(
-                                      DateTime.fromMillisecondsSinceEpoch(hiddenCheckReminder[hiddenCheckReminderIndex]['startTime']).toString().substring(0, 16),
-                                      style: TextStyle(
-                                          color: Color(0xff7F8A9C),
-                                          fontSize: size.width * 24,
-                                          fontWeight: FontWeight.w500),
+                                    Container(
+                                      width: size.width * 150,
+                                      alignment: Alignment.centerLeft,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: size.width * 24),
+                                      child: Text(
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                                hiddenCheckReminder[
+                                                        hiddenCheckReminderIndex]
+                                                    ['startTime'])
+                                            .toString()
+                                            .substring(0, 16),
+                                        style: TextStyle(
+                                            color: Color(0xff7F8A9C),
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    width: size.width * 150,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: size.width * 24),
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                     DateTime.fromMillisecondsSinceEpoch(hiddenCheckReminder[hiddenCheckReminderIndex]['endTime']).toString().substring(0, 16),
-                                      style: TextStyle(
-                                          color: Color(0xff7F8A9C),
-                                          fontSize: size.width * 24,
-                                          fontWeight: FontWeight.w500),
+                                    Container(
+                                      width: size.width * 150,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: size.width * 24),
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                                hiddenCheckReminder[
+                                                        hiddenCheckReminderIndex]
+                                                    ['endTime'])
+                                            .toString()
+                                            .substring(0, 16),
+                                        style: TextStyle(
+                                            color: Color(0xff7F8A9C),
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            hiddenCheckReminderIndex != unitOperationEffect.length - 1
-                                ? Container(
-                                    width: double.infinity,
-                                    height: size.width * 2,
-                                    color: Color(0xffF2F2F2),
-                                  )
-                                : Container(),
-                          ],
-                        );
-                      }),
+                              hiddenCheckReminderIndex !=
+                                      unitOperationEffect.length - 1
+                                  ? Container(
+                                      width: double.infinity,
+                                      height: size.width * 2,
+                                      color: Color(0xffF2F2F2),
+                                    )
+                                  : Container(),
+                            ],
+                          );
+                        }),
                   ),
                   SizedBox(
                     height: size.width * 30,
                   )
                 ],
-              )
-          ),
+              )),
           SizedBox(
             height: size.width * 32,
           ),

@@ -104,7 +104,15 @@ class Interface {
   // 整改验收
   static String postRectificationAcceptance = baseUrl + '/riskControlDataController/rectificationAcceptance';
   
-
+  // 初始风险管控统计/剩余风险管控统计
+  static String getRiskStatistics = baseUrl + '/homePageStatisticsController/riskStatistics';
+  // 管控措施统计
+  static String getMeasureStatistics = baseUrl + '/homePageStatisticsController/measureStatistics';
+  // 任务完成情况
+  static String getTaskCompletion = baseUrl + '/homePageStatisticsController/taskCompletion';
+  // 隐患情况
+  static String getHiddenDangerTreatmentSituation = baseUrl + '/homePageStatisticsController/hiddenDangerTreatmentSituation';
+  
 
 
   // 修改个人信息 (头像 描述 电子邮箱 手机号码 昵称 性别 签名)
