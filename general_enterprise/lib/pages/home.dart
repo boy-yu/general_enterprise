@@ -589,7 +589,7 @@ class _OverviewState extends State<Overview> {
                     width: size.width * 16,
                   ),
                   Text(
-                    "排查、巡检异常处置情况",
+                    "异常状态处置情况",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: size.width * 32,
@@ -719,7 +719,7 @@ class _OverviewState extends State<Overview> {
                     width: size.width * 16,
                   ),
                   Text(
-                    "排查、巡检结果实时统计",
+                    "隐患数量实时统计",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: size.width * 32,
@@ -826,12 +826,26 @@ class _MyOverviewState extends State<MyOverview> {
       'name': '待排查任务',
       'num': '15'
     },
-    {
-      'icon': 'assets/images/doubleRiskProjeck/icon_home_alarm.png',
-      'name': '待整改隐患',
-      'num': '15'
-    },
   ];
+
+  // 异常处置数据数组
+  List<PieSturct> hisControlhiddenPie = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getHisControlhiddenData();
+  }
+
+  // 获取排查、巡检异常处置情况
+  _getHisControlhiddenData() {
+    hisControlhiddenPie
+        .add(PieSturct(color: Color(0xff2276FC), nums: 123, title: '待确认'));
+    hisControlhiddenPie
+        .add(PieSturct(color: Color(0xffF56271), nums: 30, title: '待整改'));
+    hisControlhiddenPie
+        .add(PieSturct(color: Color(0xffFFCA0E), nums: 49, title: '待审批'));
+  }
 
   List unitOperationEffect = [
     {
@@ -879,32 +893,40 @@ class _MyOverviewState extends State<MyOverview> {
     }
   }
 
-  List hiddenReminder = [
+  List hiddenCheckReminder = [
     {
       'troubleshootContent': '隐患排查任务',
-      'dangerManageDeadline': 1652169600
+      'startTime': 1652169600,
+      'endTime': 1652169600
     },
     {
       'troubleshootContent': '隐患排查任务',
-      'dangerManageDeadline': 1652169600
+      'startTime': 1652169600,
+      'endTime': 1652169600
     },
     {
       'troubleshootContent': '隐患排查任务',
-      'dangerManageDeadline': 1652169600
+      'startTime': 1652169600,
+      'endTime': 1652169600
     },
     {
       'troubleshootContent': '隐患排查任务',
-      'dangerManageDeadline': 1652169600
+      'startTime': 1652169600,
+      'endTime': 1652169600
     },
     {
       'troubleshootContent': '隐患排查任务',
-      'dangerManageDeadline': 1652169600
+      'startTime': 1652169600,
+      'endTime': 1652169600
     },
     {
       'troubleshootContent': '隐患排查任务',
-      'dangerManageDeadline': 1652169600
+      'startTime': 1652169600,
+      'endTime': 1652169600
     },
   ];
+
+  int isHiddenRemind = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -1299,7 +1321,137 @@ class _MyOverviewState extends State<MyOverview> {
           SizedBox(
             height: size.width * 32,
           ),
-          // 隐患整改提醒
+          // 历史隐患治理情况
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: size.width * 32),
+            padding: EdgeInsets.all(size.width * 32),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 20))),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(
+                children: [
+                  Container(
+                    color: Color(0xff3074FF),
+                    height: size.width * 28,
+                    width: size.width * 8,
+                  ),
+                  SizedBox(
+                    width: size.width * 16,
+                  ),
+                  Text(
+                    "历史隐患治理情况",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: size.width * 32,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: size.width * 60,
+              ),
+              Row(
+                children: [
+                  CustomEchart().pie(
+                      width: size.width * 220,
+                      radius: size.width * 90,
+                      strokeWidth: size.width * 25,
+                      state: false,
+                      data: hisControlhiddenPie),
+                  SizedBox(
+                    width: size.width * 80,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: size.width * 20,
+                            width: size.width * 20,
+                            decoration: BoxDecoration(
+                                color: Color(0xff2276FC),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 4))),
+                          ),
+                          SizedBox(
+                            width: size.width * 20,
+                          ),
+                          Text(
+                            "已确认   123",
+                            style: TextStyle(
+                                color: Color(0xff7F8A9C),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: size.width * 24,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            height: size.width * 20,
+                            width: size.width * 20,
+                            decoration: BoxDecoration(
+                                color: Color(0xffF56271),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 4))),
+                          ),
+                          SizedBox(
+                            width: size.width * 20,
+                          ),
+                          Text(
+                            "已整改   3",
+                            style: TextStyle(
+                                color: Color(0xff7F8A9C),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: size.width * 24,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            height: size.width * 20,
+                            width: size.width * 20,
+                            decoration: BoxDecoration(
+                                color: Color(0xffFFCA0E),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 4))),
+                          ),
+                          SizedBox(
+                            width: size.width * 20,
+                          ),
+                          Text(
+                            "已验收   49",
+                            style: TextStyle(
+                                color: Color(0xff7F8A9C),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w400),
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(
+                height: size.width * 28,
+              ),
+            ]),
+          ),
+          SizedBox(
+            height: size.width * 32,
+          ),
+          // 隐患排查提醒/隐患治理提醒
           Container(
               margin: EdgeInsets.symmetric(horizontal: size.width * 32),
               decoration: BoxDecoration(
@@ -1308,30 +1460,82 @@ class _MyOverviewState extends State<MyOverview> {
                       BorderRadius.all(Radius.circular(size.width * 20))),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: size.width * 32,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 32),
-                    child: Row(
-                      children: [
-                        Container(
-                          color: Color(0xff3074FF),
-                          height: size.width * 28,
-                          width: size.width * 8,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          isHiddenRemind = 1;
+                          setState(() {});
+                        },
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
+                          padding: EdgeInsets.only(top: size.width * 32),
+                          child: Column(
+                            children: [
+                              Text(
+                                '隐患排查提醒',
+                                style: TextStyle(
+                                  color: isHiddenRemind == 1 ? Color(0xff3074FF) : Color(0xff7F8A9C),
+                                  fontSize: size.width * 28,
+                                  fontWeight: FontWeight.w500
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.width * 12,
+                              ),
+                              isHiddenRemind == 1 ? Container(
+                                height: size.width * 8,
+                                width: size.width * 56,
+                                decoration: BoxDecoration(
+                                  color: Color(0xff3074FF),
+                                  borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
+                                ),
+                              ) : Container(
+                                height: size.width * 8,
+                                width: size.width * 56,
+                              )
+                            ],
+                          ),
                         ),
-                        SizedBox(
-                          width: size.width * 16,
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          isHiddenRemind = 2;
+                          setState(() {});
+                        },
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
+                          padding: EdgeInsets.only(top: size.width * 32),
+                          child: Column(
+                            children: [
+                              Text(
+                                '隐患治理提醒',
+                                style: TextStyle(
+                                  color: isHiddenRemind == 2 ? Color(0xff3074FF) : Color(0xff7F8A9C),
+                                  fontSize: size.width * 28,
+                                  fontWeight: FontWeight.w500
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.width * 12,
+                              ),
+                              isHiddenRemind == 2 ? Container(
+                                height: size.width * 8,
+                                width: size.width * 56,
+                                decoration: BoxDecoration(
+                                  color: Color(0xff3074FF),
+                                  borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
+                                ),
+                              ) : Container(
+                                height: size.width * 8,
+                                width: size.width * 56,
+                              )
+                            ],
+                          ),
                         ),
-                        Text(
-                          "隐患整改提醒",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: size.width * 32,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: size.width * 40,
@@ -1342,21 +1546,9 @@ class _MyOverviewState extends State<MyOverview> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: size.width * 100,
+                          width: size.width * 300,
                           padding: EdgeInsets.only(bottom: size.width * 24),
-                          alignment: Alignment.center,
-                          child: Text(
-                            '序号',
-                            style: TextStyle(
-                                color: Color(0xff7F8A9C),
-                                fontSize: size.width * 24,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 250,
-                          padding: EdgeInsets.only(bottom: size.width * 24),
-                          alignment: Alignment.center,
+                          alignment: Alignment.centerLeft,
                           child: Text(
                             '隐患排查任务',
                             style: TextStyle(
@@ -1366,11 +1558,23 @@ class _MyOverviewState extends State<MyOverview> {
                           ),
                         ),
                         Container(
-                          width: size.width * 250,
+                          width: size.width * 150,
                           padding: EdgeInsets.only(bottom: size.width * 24),
-                          alignment: Alignment.center,
+                          alignment: Alignment.centerLeft,
                           child: Text(
-                            '隐患治理期限',
+                            '开始时间',
+                            style: TextStyle(
+                                color: Color(0xff7F8A9C),
+                                fontSize: size.width * 24,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        Container(
+                          width: size.width * 150,
+                          padding: EdgeInsets.only(bottom: size.width * 24),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '结束时间',
                             style: TextStyle(
                                 color: Color(0xff7F8A9C),
                                 fontSize: size.width * 24,
@@ -1385,11 +1589,11 @@ class _MyOverviewState extends State<MyOverview> {
                     height: size.width * 2,
                     color: Color(0xffF2F2F2),
                   ),
-                  ListView.builder(
-                      itemCount: hiddenReminder.length,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, hiddenReminderIndex) {
+                  Container(
+                    height: size.width * 310,
+                    child: ListView.builder(
+                      itemCount: hiddenCheckReminder.length,
+                      itemBuilder: (context, hiddenCheckReminderIndex) {
                         return Column(
                           children: [
                             Padding(
@@ -1400,12 +1604,12 @@ class _MyOverviewState extends State<MyOverview> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    width: size.width * 100,
-                                    alignment: Alignment.center,
+                                    width: size.width * 300,
+                                    alignment: Alignment.centerLeft,
                                     padding: EdgeInsets.symmetric(
                                         vertical: size.width * 24),
                                     child: Text(
-                                      (hiddenReminderIndex + 1).toString(),
+                                      hiddenCheckReminder[hiddenCheckReminderIndex]['troubleshootContent'],
                                       style: TextStyle(
                                           color: Color(0xff7F8A9C),
                                           fontSize: size.width * 24,
@@ -1413,12 +1617,12 @@ class _MyOverviewState extends State<MyOverview> {
                                     ),
                                   ),
                                   Container(
-                                    width: size.width * 250,
-                                    alignment: Alignment.center,
+                                    width: size.width * 150,
+                                    alignment: Alignment.centerLeft,
                                     padding: EdgeInsets.symmetric(
                                         vertical: size.width * 24),
                                     child: Text(
-                                      hiddenReminder[hiddenReminderIndex]['troubleshootContent'],
+                                      DateTime.fromMillisecondsSinceEpoch(hiddenCheckReminder[hiddenCheckReminderIndex]['startTime']).toString().substring(0, 16),
                                       style: TextStyle(
                                           color: Color(0xff7F8A9C),
                                           fontSize: size.width * 24,
@@ -1426,12 +1630,12 @@ class _MyOverviewState extends State<MyOverview> {
                                     ),
                                   ),
                                   Container(
-                                    width: size.width * 250,
+                                    width: size.width * 150,
                                     padding: EdgeInsets.symmetric(
                                         vertical: size.width * 24),
-                                    alignment: Alignment.center,
+                                    alignment: Alignment.centerLeft,
                                     child: Text(
-                                     DateTime.fromMillisecondsSinceEpoch(hiddenReminder[hiddenReminderIndex]['dangerManageDeadline']).toString().substring(0, 16),
+                                     DateTime.fromMillisecondsSinceEpoch(hiddenCheckReminder[hiddenCheckReminderIndex]['endTime']).toString().substring(0, 16),
                                       style: TextStyle(
                                           color: Color(0xff7F8A9C),
                                           fontSize: size.width * 24,
@@ -1441,7 +1645,7 @@ class _MyOverviewState extends State<MyOverview> {
                                 ],
                               ),
                             ),
-                            hiddenReminderIndex != unitOperationEffect.length - 1
+                            hiddenCheckReminderIndex != unitOperationEffect.length - 1
                                 ? Container(
                                     width: double.infinity,
                                     height: size.width * 2,
@@ -1451,11 +1655,16 @@ class _MyOverviewState extends State<MyOverview> {
                           ],
                         );
                       }),
+                  ),
                   SizedBox(
-                    height: size.width * 16,
+                    height: size.width * 30,
                   )
                 ],
-              )),
+              )
+          ),
+          SizedBox(
+            height: size.width * 32,
+          ),
         ],
       ),
     );

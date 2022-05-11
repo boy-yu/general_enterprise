@@ -18,7 +18,7 @@ class HiddenDialog {
           body: Center(
               child: Container(
                   width: size.width * 640,
-                  height: isTakePhotos ? size.width * 696 : size.width * 480,
+                  height: isTakePhotos ? size.width * 710 : size.width * 480,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius:
@@ -109,9 +109,9 @@ class HiddenDialog {
                                   : Container(),
                               isTakePhotos
                                   ? MyImageCarma(
-                                      title: "整改完毕",
+                                      title: editTitle,
                                       name: '',
-                                      purview: '整改完毕',
+                                      purview: editTitle,
                                     )
                                   : Container(),
                             ],
@@ -153,9 +153,9 @@ class HiddenDialog {
                                 if (editStr == '') {
                                   Fluttertoast.showToast(msg: '请填写内容');
                                 } else if (isTakePhotos) {
-                                  if (counter.submitDates['整改完毕'] != null) {
-                                    counter.submitDates['整改完毕'].forEach((ele) {
-                                      if (ele['title'] == '整改完毕') {
+                                  if (counter.submitDates[editTitle] != null) {
+                                    counter.submitDates[editTitle].forEach((ele) {
+                                      if (ele['title'] == editTitle) {
                                         for (var i = 0;
                                             i < ele['value'].length;
                                             i++) {
@@ -175,6 +175,8 @@ class HiddenDialog {
                                       callback(submitData);
                                       Navigator.of(context).pop();
                                     }
+                                  }else{
+                                    Fluttertoast.showToast(msg: '请拍照');
                                   }
                                 } else {
                                   submitData['editStr'] = editStr;

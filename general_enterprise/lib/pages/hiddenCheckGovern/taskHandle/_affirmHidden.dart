@@ -4,11 +4,14 @@ import 'package:enterprise/common/myImageCarma.dart';
 import 'package:enterprise/myView/myChoosePeople.dart';
 import 'package:enterprise/myView/myRiskButtons.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class AffirmHidden extends StatefulWidget {
+  AffirmHidden({this.id});
+  final String id;
   @override
   State<AffirmHidden> createState() => _AffirmHiddenState();
 }
@@ -26,25 +29,25 @@ class _AffirmHiddenState extends State<AffirmHidden> {
   TextEditingController _controllerControlMeasures = TextEditingController();
   TextEditingController _controllerCost = TextEditingController();
 
-  Map data = {'reportingOpinion': '隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述隐患描述'};
-
-  List<String> imageList = [
-    'http://171.91.196.161:31010/2022-04-25/16508788624301650878859864.png'
-  ];
+  List<String> imageList = [];
 
   Map fiveMeasuresData = {
     'dangerLevel': '', // 隐患等级（一般隐患：0；重大隐患：1）
     'dangerName': '',
-    'dangerSrc':
-        '', // 隐患来源：日常排查：1；综合性排查：2；专业性排查：3；季节性排查：4；重点时段及节假日前排查:5；事故类比排查:6；复产复工前排查：7；外聘专家诊断式排查：8；管控措施失效：9；其他：10
+    'dangerSrc': '', // 隐患来源：日常排查：1；综合性排查：2；专业性排查：3；季节性排查：4；重点时段及节假日前排查:5；事故类比排查:6；复产复工前排查：7；外聘专家诊断式排查：8；管控措施失效：9；其他：10
     'hazardDangerType': '', // 隐患类型（安全：1，工艺：2，电气：3，仪表：4，消防：5，总图：6，设备：7，其他：8）
     'dangerDesc': '',
     'dangerReason': '',
     'controlMeasures': '',
     'cost': '',
-    'liablePerson': '',
+    'liableUserId': '',
     'dangerManageDeadline': '',
-    'checkAcceptPerson': ''
+    'checkAcceptUserId': '',
+
+    "isHiddenDangere": 0,
+    "id": '',
+    "registOpinion": "",
+    "registUrl": ""
   };
 
   List levelList = [
@@ -146,49 +149,36 @@ class _AffirmHiddenState extends State<AffirmHidden> {
 
   Map liablePersonMsg = {};
 
-  // void _changeLiablePersonMsg(List<PeopleStructure> data, Counter _context) {
-  //   liablePersonMsg = [];
-  //   for (var i = 0; i < data.length; i++) {
-  //     fiveMeasuresData['liablePerson'].add(data[i].id);
-  //     liablePersonMsg.add(data[i].name);
-  //   }
-  //   if (mounted) {
-  //     setState(() {});
-  //   }
-  //   Navigator.pop(context);
-  // }
-
-  // String _getLiablePerName() {
-  //   String perName = '';
-  //   for (int i = 0; i < liablePersonMsg.length; i++) {
-  //     perName += liablePersonMsg[i] + '、';
-  //   }
-  //   return perName;
-  // }
-
   Map acceptPersonMsg = {};
+  
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
 
-  // void _changeAcceptPersonMsg(List<PeopleStructure> data, Counter _context) {
-  //   acceptPersonMsg = [];
-  //   for (var i = 0; i < data.length; i++) {
-  //     fiveMeasuresData['checkAcceptPerson'].add(data[i].id);
-  //     acceptPersonMsg.add(data[i].name);
-  //   }
-  //   if (mounted) {
-  //     setState(() {});
-  //   }
-  //   Navigator.pop(context);
-  // }
+  Map data = {};
+
+  _getData(){
+    myDio.request(
+          type: 'get',
+          url: Interface.getRiskHiddenDangereBook,
+          queryParameters: {'id': widget.id}).then((value) {
+        if (value is Map) {
+          data = value;
+          imageList = value['checkUrl'].toString().split('|');
+        }
+        if (mounted) {
+          setState(() {});
+        }
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Color(0xffffffff),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      margin: EdgeInsets.only(bottom: size.width * 74, top: size.width * 35),
       child: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: size.width * 74, top: size.width * 35),
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -239,7 +229,7 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                 top: size.width * 10,
                 right: size.width * 50),
             child: Text(
-              data['reportingOpinion'].toString(),
+              data['dangerDesc'].toString(),
               style: TextStyle(
                 color: Color(0xff343434),
                 fontSize: size.width * 26,
@@ -887,9 +877,8 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                                 context: context,
                                 builder: (context) => ChoosePeople(
                                       changeMsg: (value){
-                                        print(value);
                                         liablePersonMsg = value;
-                                        fiveMeasuresData['liablePerson'] = liablePersonMsg['id'];
+                                        fiveMeasuresData['liableUserId'] = liablePersonMsg['id'];
                                         setState(() {
                                           
                                         });
@@ -951,7 +940,7 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                                 builder: (context) => ChoosePeople(
                                       changeMsg: (value){
                                         acceptPersonMsg = value;
-                                        fiveMeasuresData['acceptPerson'] = liablePersonMsg['id'];
+                                        fiveMeasuresData['checkAcceptUserId'] = liablePersonMsg['id'];
                                         setState(() {
                                           
                                         });
@@ -1029,15 +1018,22 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                     }
                   }
                   if (next) {
-                    print(_textEditingController.text);
-                    print(image);
-                    Fluttertoast.showToast(msg: '驳回成功');
-                    Navigator.pop(context);
+                    fiveMeasuresData['registOpinion'] = _textEditingController.text;
+                    fiveMeasuresData['registUrl'] = image;
+                    fiveMeasuresData['id'] = widget.id;
+                    fiveMeasuresData['isHiddenDangere'] = 0;
+                    myDio.request(
+                          type: 'post',
+                          url: Interface.postIdentifyHiddenDangers,
+                          data: fiveMeasuresData)
+                      .then((value) {
+                      successToast('驳回成功');
+                      Navigator.pop(context);
+                    });
                   } else {
                     Fluttertoast.showToast(msg: '请填写驳回的原因以及拍照');
                   }
                 } else {
-                  print(fiveMeasuresData);
                   if(fiveMeasuresData['dangerLevel'] == ''){
                     Fluttertoast.showToast(msg: '请选择隐患等级');
                   }else if(fiveMeasuresData['dangerName'] == ''){
@@ -1050,23 +1046,22 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                     Fluttertoast.showToast(msg: '请填写隐患描述');
                   }else if(fiveMeasuresData['dangerManageDeadline'] == ''){
                     Fluttertoast.showToast(msg: '请选择治理隐患期限');
-                  }else if(fiveMeasuresData['liablePerson'].isEmpty){
+                  }else if(fiveMeasuresData['liableUserId'].isEmpty){
                     Fluttertoast.showToast(msg: '请选择整改责任人');
-                  }else if(fiveMeasuresData['checkAcceptPerson'].isEmpty){
+                  }else if(fiveMeasuresData['checkAcceptUserId'].isEmpty){
                     Fluttertoast.showToast(msg: '请选择验收人');
                   }else{
-                    print(fiveMeasuresData);
+                    fiveMeasuresData['id'] = widget.id;
+                    fiveMeasuresData['isHiddenDangere'] = 1;
+                    myDio.request(
+                          type: 'post',
+                          url: Interface.postIdentifyHiddenDangers,
+                          data: fiveMeasuresData)
+                      .then((value) {
+                      successToast('确认完成');
+                      Navigator.pop(context);
+                    });
                   }
-                  
-                  
-                  // Navigator.pushNamed(context, '/home/hiddenConfirm',
-                  //       arguments: {
-                  //         "id": widget.id,
-                  //         "data": data,
-                  //         "fourId": widget.fourId
-                  //       }).then((value) {
-                  //     Navigator.pop(context);
-                  //   });
                 }
               },
               child: Container(

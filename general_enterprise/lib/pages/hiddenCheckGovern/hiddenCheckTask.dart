@@ -180,7 +180,8 @@ class _DepartmentTaskState extends State<DepartmentTask> {
       queryParameters = {
         "riskObjectId": null,
         "riskUnitId": null,
-        "riskEventId": null
+        "riskEventId": null,
+        "type": 1
       };
       print(queryParameters);
       _throwFunc.run(argument: queryParameters);
@@ -279,7 +280,7 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                 onTap: () {
                   Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
                       arguments: {
-                        "dangerState": '-1',
+                        "dangerState": 'check',
                         'id': list[index]['id']
                       }).then((value) {
                     _throwFunc.run();

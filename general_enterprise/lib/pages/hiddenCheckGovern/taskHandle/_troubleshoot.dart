@@ -80,8 +80,11 @@ class _TroubleshootState extends State<Troubleshoot> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Color(0xffFfFfFf),
         width: double.infinity,
+        // decoration: BoxDecoration(
+        //   color: Color(0xffFfFfFf),
+        //   borderRadius: BorderRadius.only(topLeft: Radius.circular(size.width * 80))
+        // ),
         child: InkWell(
           onTap: () {
             FocusScope.of(context).unfocus();

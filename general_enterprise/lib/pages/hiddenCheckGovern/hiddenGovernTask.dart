@@ -365,6 +365,7 @@ class _CheckHiddenState extends State<CheckHidden> {
                                 context, '/hiddenCheckGovern/taskHandle',
                                 arguments: {
                                   "dangerState": list[index]['dangerState'],
+                                  'id': list[index]['id']
                                 }).then((value) {
                               _throwFunc.run();
                             });
@@ -826,6 +827,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
                                 context, '/hiddenCheckGovern/taskHandle',
                                 arguments: {
                                   "dangerState": list[index]['dangerState'],
+                                  'id': list[index]['id']
                                 }).then((value) {
                               _throwFunc.run();
                             });

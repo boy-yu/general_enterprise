@@ -85,7 +85,7 @@ class Interface {
   
   // 隐患排查任务执行列表
   static String getRiskControlDataList = baseUrl + '/riskControlDataController/riskControlDataList';
-  // 根据执行id查看详情
+  // 根据执行id查看详情 (蓝色部分)
   static String getRiskControlDataById = baseUrl + '/riskControlDataController/getRiskControlDataById';
   // 提交排查任务
   static String postImplementTask = baseUrl + '/riskControlDataController/implementTask';
@@ -93,8 +93,17 @@ class Interface {
   static String postHiddenDangerReporting = baseUrl + '/riskControlDataController/hiddenDangerReporting';
   // 隐患治理任务列表  排查/上报   isFromCheck  1：排查 0：上报
   static String getHiddenDangerTreatment = baseUrl + '/riskControlDataController/hiddenDangerTreatment';
+  // 根据隐患治理id查看详情 (蓝色部分)
+  static String getHiddenDangereById = baseUrl + '/riskControlDataController/getHiddenDangereById';
+  // 查看整改中白色部分详情
+  static String getRiskHiddenDangereBook = baseUrl + '/riskControlDataController/getRiskHiddenDangereBook';
+  // 确认隐患
+  static String postIdentifyHiddenDangers = baseUrl + '/riskControlDataController/identifyHiddenDangers';
+  // 整改隐患
+  static String postRectificationHiddenDanger = baseUrl + '/riskControlDataController/rectificationHiddenDanger';
+  // 整改验收
+  static String postRectificationAcceptance = baseUrl + '/riskControlDataController/rectificationAcceptance';
   
-
 
 
 

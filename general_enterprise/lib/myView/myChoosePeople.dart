@@ -47,6 +47,8 @@ class _ChoosePeopleState extends State<ChoosePeople> {
     }
   }
 
+  List perData = [];
+
   _getPeople(Map map) {
     myDio.request(
         type: 'get',
@@ -54,7 +56,8 @@ class _ChoosePeopleState extends State<ChoosePeople> {
         queryParameters: {'id': map['id']}).then((value) {
       if (value is List) {
         tableList.add(map['name']);
-        data = value;
+        perData = value;
+        print(perData);
       }
       if (mounted) {
         setState(() {});
@@ -104,9 +107,13 @@ class _ChoosePeopleState extends State<ChoosePeople> {
             ),
           ),
           Expanded(
-              child: data.isNotEmpty
+              child: ListView(
+                children: [
+                  data.isNotEmpty
                   ? ListView.builder(
                       itemCount: data.length,
+                      shrinkWrap: true, 
+		                  physics: new NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Container(
                           decoration: BoxDecoration(
@@ -124,8 +131,7 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                               margin: EdgeInsets.only(top: size.width * 2),
                               padding: EdgeInsets.all(size.width * 20),
                               decoration: BoxDecoration(color: Colors.white),
-                              child: data[index]['isAssessment'] is int
-                                  ? Row(
+                              child:  Row(
                                       children: [
                                         SizedBox(
                                           width: size.width * 125,
@@ -151,10 +157,9 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                                                     MaterialStateProperty.all(
                                                         Colors.white)),
                                             onPressed: () {
-                                              if (data[index]['children']
-                                                  is List) {
-                                                _getOrganization(
-                                                    map: data[index]);
+                                              if (data[index]['children']is List) {
+                                                _getOrganization(map: data[index]);
+                                                _getPeople(data[index]);
                                               } else {
                                                 _getPeople(data[index]);
                                               }
@@ -170,7 +175,38 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                                             ))
                                       ],
                                     )
-                                  : Row(
+                                 
+                            ),
+                          ),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text('该部门下无子级部门'),
+                    ),
+                  perData.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: perData.length,
+                      shrinkWrap: true, 
+		                  physics: new NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom:
+                                      BorderSide(color: underColor, width: 1))),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              elevation: MaterialStateProperty.all(0),
+                            ),
+                            onPressed: () {},
+                            child: Container(
+                              margin: EdgeInsets.only(top: size.width * 2),
+                              padding: EdgeInsets.all(size.width * 20),
+                              decoration: BoxDecoration(color: Colors.white),
+                              child: Row(
                                       children: [
                                         ElevatedButton(
                                           style: ButtonStyle(
@@ -180,13 +216,13 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                                                   MaterialStateProperty.all(
                                                       Colors.white)),
                                           onPressed: () {
-                                            choosePeople = data[index];
+                                            choosePeople = perData[index];
                                             if (mounted) {
                                               setState(() {});
                                             }
                                           },
                                           child: choosePeople['id'] ==
-                                                  data[index]['id']
+                                                  perData[index]['id']
                                               ? Container(
                                                   margin: EdgeInsets.symmetric(
                                                       horizontal:
@@ -228,26 +264,33 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                                                 right: size.width * 25),
                                             child: ClipOval(
                                               child: ClickImage(
-                                                data[index]['avatar'],
+                                                perData[index]['avatar'],
                                                 width: size.width * 60,
                                                 height: size.width * 60,
                                               ),
                                             )),
                                         Expanded(
                                             child: Text(
-                                          data[index]['nickname'],
+                                          perData[index]['nickname'],
                                           style: TextStyle(color: placeHolder),
                                         )),
                                       ],
-                                    ),
-                            ),
-                          ),
+                                    )
+                            )
+                          )
                         );
-                      },
-                    )
-                  : Center(
-                      child: Text('该部门下无子级部门或人员信息'),
-                    )),
+                        
+                        
+                        
+                      }
+                  ): Center(
+                      child: Text('该部门下无人员信息'),
+                    ),
+                ],
+              )
+              
+              
+              ),
           Container(
             decoration: BoxDecoration(
                 color: Colors.white,

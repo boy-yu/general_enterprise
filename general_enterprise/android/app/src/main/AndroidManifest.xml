@@ -49,7 +49,8 @@
       tools:ignore="ProtectedPermissions" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
+  <!--拨打电话权限-->
+  <uses-permission android:name="android.permission.CALL_PHONE"/>
   <!-- 百度地图定位权限 -->
   <uses-permission android:name="android.permission.WAKE_LOCK"/>
   <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
