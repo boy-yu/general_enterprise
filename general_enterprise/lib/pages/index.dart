@@ -232,7 +232,7 @@ class _IndexState extends State<Index> {
   }
 
   _pages(width) {
-    List<Widget> pages = [Home(), RiskHierarchicalControl(), HiddenReported(), HiddenCheckGovern(), Mine()];
+    List<Widget> pages = [Home(), RiskHierarchicalControl(), HiddenReported(callback: (){setState(() {_currentIndex = 3;});}), HiddenCheckGovern(), Mine()];
     return pages[_currentIndex];
   }
 

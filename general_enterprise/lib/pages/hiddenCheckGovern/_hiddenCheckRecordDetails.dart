@@ -375,7 +375,7 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                                         color:
                                                             Color(0xff333333))),
                                                 TextSpan(
-                                                    text: '在管控范围内',
+                                                    text: data['checkUser'] == '' ? '' : '在管控范围内',
                                                     style: TextStyle(
                                                         color:
                                                             Color(0xff7F8A9C))),

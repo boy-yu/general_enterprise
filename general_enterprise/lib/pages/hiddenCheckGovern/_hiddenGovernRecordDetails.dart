@@ -417,7 +417,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                             0xff333333))),
                                                                 TextSpan(
                                                                     text:
-                                                                        '在管控范围内',
+                                                                        data['checkUser'] == '' ? '' : '在管控范围内',
                                                                     style: TextStyle(
                                                                         color: Color(
                                                                             0xff7F8A9C))),
