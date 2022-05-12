@@ -737,7 +737,7 @@ class _PersonalTaskState extends State<PersonalTask> {
                 onTap: () {
                   Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
                       arguments: {
-                        "dangerState": '-1',
+                        "dangerState": 'check',
                         'id': list[index]['id']
                       }).then((value) {
                     _throwFunc.run();
