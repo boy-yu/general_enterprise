@@ -246,8 +246,7 @@ class _TroubleshootState extends State<Troubleshoot> {
                                   width: size.width * 2,
                                   color: Color(0XFFECECEC)),
                             ),
-                            child: Expanded(
-                                  child: TextField(
+                            child: TextField(
                                     controller: _textEditingController,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
@@ -260,7 +259,6 @@ class _TroubleshootState extends State<Troubleshoot> {
                                     ),
                                     keyboardType: TextInputType.multiline,
                                   ),
-                                ),
                             ),
                     ),
                     SizedBox(

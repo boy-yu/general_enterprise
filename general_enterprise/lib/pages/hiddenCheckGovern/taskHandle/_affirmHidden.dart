@@ -413,8 +413,7 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                                 width: size.width * 2,
                                 color: Color(0XFFECECEC)),
                           ),
-                          child: Expanded(
-                            child: TextField(
+                          child: TextField(
                               controller: _textEditingController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -427,7 +426,6 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                               ),
                               keyboardType: TextInputType.multiline,
                             ),
-                          ),
                         ),
                     ),
                     SizedBox(
