@@ -20,6 +20,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
   }
 
   _getData() {
+    print(widget.id);
     if (widget.type == '排查') {
       myDio.request(
           type: 'get',
@@ -469,9 +470,8 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                       size.width *
                                                                           20)),
                                                               image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      data[
-                                                                          'checkUrl']),
+                                                                  image: NetworkImage(
+                                                                    data['checkUrl'].toString().split('|')[0]),
                                                                   fit: BoxFit
                                                                       .fill),
                                                             ),
@@ -702,9 +702,8 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                       size.width *
                                                                           20)),
                                                               image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      data[
-                                                                          'checkUrl']),
+                                                                  image: NetworkImage(
+                                                                    data['checkUrl'].toString().split('|')[0]),
                                                                   fit: BoxFit
                                                                       .fill),
                                                             ),
@@ -1363,7 +1362,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         size.width *
                                                                             20)),
                                                                 image: DecorationImage(
-                                                                    image: AssetImage(
+                                                                    image: NetworkImage(
                                                                         data[
                                                                             'registUrl']),
                                                                     fit: BoxFit
@@ -1537,7 +1536,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                       size.width *
                                                                           20)),
                                                           image: DecorationImage(
-                                                              image: AssetImage(
+                                                              image: NetworkImage(
                                                                   data[
                                                                       'liableUrl']),
                                                               fit: BoxFit.fill),

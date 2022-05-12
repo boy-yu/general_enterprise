@@ -2257,7 +2257,7 @@ class _MyOverviewState extends State<MyOverview> {
           SizedBox(
             height: size.width * 32,
           ),
-          // 隐患排查提醒/隐患治理提醒
+          // 任务完成情况/隐患治理情况
           Container(
               margin: EdgeInsets.symmetric(horizontal: size.width * 32),
               decoration: BoxDecoration(
@@ -2530,61 +2530,61 @@ class _MyOverviewState extends State<MyOverview> {
                   ) : Column(
                     children: [
                       Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 32),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: size.width * 280,
-                          padding: EdgeInsets.only(bottom: size.width * 24),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '装置名称',
-                            style: TextStyle(
-                                color: Color(0xff7F8A9C),
-                                fontSize: size.width * 24,
-                                fontWeight: FontWeight.w500),
-                          ),
+                        padding: EdgeInsets.symmetric(horizontal: size.width * 32),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: size.width * 280,
+                              padding: EdgeInsets.only(bottom: size.width * 24),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '装置名称',
+                                style: TextStyle(
+                                    color: Color(0xff7F8A9C),
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Container(
+                              width: size.width * 120,
+                              padding: EdgeInsets.only(bottom: size.width * 24),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '隐患\n总数',
+                                style: TextStyle(
+                                    color: Color(0xff7F8A9C),
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Container(
+                              width: size.width * 100,
+                              padding: EdgeInsets.only(bottom: size.width * 24),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '待整改',
+                                style: TextStyle(
+                                    color: Color(0xff7F8A9C),
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            Container(
+                              width: size.width * 100,
+                              padding: EdgeInsets.only(bottom: size.width * 24),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '待验收',
+                                style: TextStyle(
+                                    color: Color(0xff7F8A9C),
+                                    fontSize: size.width * 24,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          width: size.width * 120,
-                          padding: EdgeInsets.only(bottom: size.width * 24),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '隐患总数',
-                            style: TextStyle(
-                                color: Color(0xff7F8A9C),
-                                fontSize: size.width * 24,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 100,
-                          padding: EdgeInsets.only(bottom: size.width * 24),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '待整改',
-                            style: TextStyle(
-                                color: Color(0xff7F8A9C),
-                                fontSize: size.width * 24,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 100,
-                          padding: EdgeInsets.only(bottom: size.width * 24),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '待验收',
-                            style: TextStyle(
-                                color: Color(0xff7F8A9C),
-                                fontSize: size.width * 24,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
                       Container(
                         width: double.infinity,
                         height: size.width * 2,

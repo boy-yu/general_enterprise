@@ -861,8 +861,6 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
         queryParameters[element['limit'].toString()] = element['id'];
       }
     });
-    print(queryParameters);
-
     _throwFunc.run(argument: queryParameters);
     if (mounted) {
       setState(() {});
@@ -1232,8 +1230,12 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                 child: MyRefres(
                     child: (index, list) => GestureDetector(
                           onTap: () {
-                            // Navigator.pushNamed(context,
-                            //     '/hiddenCheckGovern/hiddenGovernRecordDetails');
+                            Navigator.pushNamed(context,
+                                '/hiddenCheckGovern/hiddenGovernRecordDetails',
+                                arguments: {
+                                  'id': list[index]['id'],
+                                  'type': '上报'
+                                });
                           },
                           child: Container(
                             margin: EdgeInsets.only(
@@ -1397,9 +1399,8 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                                                           Radius.circular(
                                                               size.width * 8)),
                                                   image: DecorationImage(
-                                                      image: AssetImage(
-                                                          list[index]
-                                                              ['checkUrl']),
+                                                      image: NetworkImage(
+                                                          list[index]['checkUrl'].toString().split('|')[0]   ),
                                                       fit: BoxFit.fill),
                                                 ),
                                               )
@@ -1430,8 +1431,7 @@ class GovernObjectNameTitleChoose extends StatefulWidget {
       _GovernObjectNameTitleChooseState();
 }
 
-class _GovernObjectNameTitleChooseState
-    extends State<GovernObjectNameTitleChoose> {
+class _GovernObjectNameTitleChooseState extends State<GovernObjectNameTitleChoose> {
   @override
   void initState() {
     super.initState();
