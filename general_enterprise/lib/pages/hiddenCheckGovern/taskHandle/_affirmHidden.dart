@@ -34,7 +34,8 @@ class _AffirmHiddenState extends State<AffirmHidden> {
   Map fiveMeasuresData = {
     'dangerLevel': '', // 隐患等级（一般隐患：0；重大隐患：1）
     'dangerName': '',
-    'dangerSrc': '', // 隐患来源：日常排查：1；综合性排查：2；专业性排查：3；季节性排查：4；重点时段及节假日前排查:5；事故类比排查:6；复产复工前排查：7；外聘专家诊断式排查：8；管控措施失效：9；其他：10
+    'dangerSrc':
+        '', // 隐患来源：日常排查：1；综合性排查：2；专业性排查：3；季节性排查：4；重点时段及节假日前排查:5；事故类比排查:6；复产复工前排查：7；外聘专家诊断式排查：8；管控措施失效：9；其他：10
     'hazardDangerType': '', // 隐患类型（安全：1，工艺：2，电气：3，仪表：4，消防：5，总图：6，设备：7，其他：8）
     'dangerDesc': '',
     'dangerReason': '',
@@ -150,7 +151,7 @@ class _AffirmHiddenState extends State<AffirmHidden> {
   Map liablePersonMsg = {};
 
   Map acceptPersonMsg = {};
-  
+
   @override
   void initState() {
     super.initState();
@@ -159,102 +160,209 @@ class _AffirmHiddenState extends State<AffirmHidden> {
 
   Map data = {};
 
-  _getData(){
+  _getData() {
     myDio.request(
-          type: 'get',
-          url: Interface.getRiskHiddenDangereBook,
-          queryParameters: {'id': widget.id}).then((value) {
-        if (value is Map) {
-          data = value;
-          imageList = value['checkUrl'].toString().split('|');
-        }
-        if (mounted) {
-          setState(() {});
-        }
-      });
+        type: 'get',
+        url: Interface.getRiskHiddenDangereBook,
+        queryParameters: {'id': widget.id}).then((value) {
+      if (value is Map) {
+        data = value;
+        imageList = value['checkUrl'].toString().split('|');
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+        child: InkWell(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
       child: SingleChildScrollView(
-        padding: EdgeInsets.only(bottom: size.width * 74, top: size.width * 35),
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          SizedBox(
+            height: size.width * 80,
+          ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(right: size.width * 60),
-                child: RiskButtons(
-                  text: "正常",
-                  testcolor: isFull ? selecttextColor : 0xff9A9A9A,
-                  bgcolor: isFull ? selectbgColor : 0xffFFFFFF,
-                  callback: () {
+              GestureDetector(
+                onTap: () {
+                  setState(() {
                     isFull = !isFull;
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
+                  });
+                },
+                child: Container(
+                  height: size.width * 72,
+                  width: size.width * 196,
+                  decoration: BoxDecoration(
+                    color: isFull
+                        ? Color(0xff3074FF).withOpacity(0.1)
+                        : Colors.white,
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(size.width * 8)),
+                    border: Border.all(
+                        width: size.width * 2,
+                        color: isFull ? Color(0xff3074FF) : Color(0XFFECECEC)),
+                  ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: size.width * 28,
+                        width: size.width * 28,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                          border: Border.all(
+                              width: size.width * 4,
+                              color: isFull
+                                  ? Color(0xff3074FF)
+                                  : Color(0XFFE0E0E0)),
+                        ),
+                      ),
+                      SizedBox(
+                        width: size.width * 8,
+                      ),
+                      Text(
+                        '正常',
+                        style: TextStyle(
+                            color:
+                                isFull ? Color(0xff3074FF) : Color(0xff7F8A9C),
+                            fontSize: size.width * 32,
+                            fontWeight: FontWeight.w400),
+                      )
+                    ],
+                  ),
                 ),
               ),
-              RiskButtons(
-                text: "隐患",
-                testcolor: isFull ? 0xff9A9A9A : 0xffffffff,
-                bgcolor: isFull ? 0xffFFFFFF : 0xffFF1818,
-                callback: () {
-                  isFull = !isFull;
-                  if (mounted) {
-                    setState(() {});
-                  }
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isFull = !isFull;
+                  });
                 },
-              )
+                child: Container(
+                  height: size.width * 72,
+                  width: size.width * 196,
+                  decoration: BoxDecoration(
+                    color: !isFull
+                        ? Color(0xff3074FF).withOpacity(0.1)
+                        : Colors.white,
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(size.width * 8)),
+                    border: Border.all(
+                        width: size.width * 2,
+                        color: !isFull ? Color(0xff3074FF) : Color(0XFFECECEC)),
+                  ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: size.width * 28,
+                        width: size.width * 28,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                          border: Border.all(
+                              width: size.width * 4,
+                              color: !isFull
+                                  ? Color(0xff3074FF)
+                                  : Color(0XFFE0E0E0)),
+                        ),
+                      ),
+                      SizedBox(
+                        width: size.width * 8,
+                      ),
+                      Text(
+                        '存在隐患',
+                        style: TextStyle(
+                            color:
+                                !isFull ? Color(0xff3074FF) : Color(0xff7F8A9C),
+                            fontSize: size.width * 32,
+                            fontWeight: FontWeight.w400),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
-          Padding(
-            padding:
-                EdgeInsets.only(left: size.width * 30, top: size.width * 10),
-            child: Text(
-              '隐患描述：',
-              style: TextStyle(
-                  color: Color(0xff343434),
-                  fontSize: size.width * 30,
-                  fontWeight: FontWeight.bold),
-            ),
+          SizedBox(
+            height: size.width * 40,
           ),
-          Padding(
-            padding: EdgeInsets.only(
-                left: size.width * 50,
-                top: size.width * 10,
-                right: size.width * 50),
-            child: Text(
-              data['dangerDesc'].toString(),
-              style: TextStyle(
-                color: Color(0xff343434),
-                fontSize: size.width * 26,
+          Row(
+            children: [
+              Container(
+                height: size.width * 40,
+                width: size.width * 8,
+                decoration: BoxDecoration(
+                    color: Color(0xffFF943D),
+                    borderRadius: BorderRadius.horizontal(
+                        right: Radius.circular(size.width * 24))),
               ),
-            ),
+              SizedBox(
+                width: size.width * 32,
+              ),
+              Text(
+                '隐患描述：',
+                style: TextStyle(
+                    color: Color(0xff343434),
+                    fontSize: size.width * 30,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: size.width * 16,
           ),
           Container(
-            padding: EdgeInsets.only(left: size.width * 30),
-            height: size.width * 200,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: imageList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(right: size.width * 10),
-                    child: imageList[index].isNotEmpty
-                        ? Image.network(
-                            imageList[index],
-                            width: size.width * 167,
-                            height: size.width * 125,
-                          )
-                        : Container(),
-                  );
-                }),
+            margin: EdgeInsets.symmetric(horizontal: size.width * 40),
+            padding: EdgeInsets.all(size.width * 16),
+            height: size.width * 272,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Color(0xffF2F2F2),
+              borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data['dangerDesc'].toString(),
+                  style: TextStyle(
+                    color: Color(0xff343434),
+                    fontSize: size.width * 26,
+                  ),
+                ),
+                Container(
+                    height: size.width * 144,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: imageList.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(right: size.width * 10),
+                            child: imageList[index].isNotEmpty
+                                ? Image.network(
+                                    imageList[index],
+                                    width: size.width * 167,
+                                    height: size.width * 125,
+                                  )
+                                : Container(),
+                          );
+                        }),
+                  ),
+              ],
+            ),
           ),
+          
           isFull
               // 正常
               ? Column(
@@ -876,17 +984,15 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                             showDialog(
                                 context: context,
                                 builder: (context) => ChoosePeople(
-                                      changeMsg: (value){
-                                        if(value['id'] != ''){
-                                          liablePersonMsg = value;
-                                          fiveMeasuresData['liableUserId'] = liablePersonMsg['id'];
-                                        }
-                                        setState(() {
-                                          
-                                        });
-                                      },
-                                      title: '选择整改责任人'
-                                    ));
+                                    changeMsg: (value) {
+                                      if (value['id'] != '') {
+                                        liablePersonMsg = value;
+                                        fiveMeasuresData['liableUserId'] =
+                                            liablePersonMsg['id'];
+                                      }
+                                      setState(() {});
+                                    },
+                                    title: '选择整改责任人'));
                           },
                           child: Container(
                               height: size.width * 75,
@@ -914,7 +1020,8 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                                         ))
                                       : Expanded(
                                           child: Text(
-                                            liablePersonMsg['nickname'].toString(),
+                                            liablePersonMsg['nickname']
+                                                .toString(),
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C),
                                                 fontSize: size.width * 28,
@@ -940,15 +1047,13 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                             showDialog(
                                 context: context,
                                 builder: (context) => ChoosePeople(
-                                      changeMsg: (value){
-                                        acceptPersonMsg = value;
-                                        fiveMeasuresData['checkAcceptUserId'] = liablePersonMsg['id'];
-                                        setState(() {
-                                          
-                                        });
-                                      },
-                                      title: '选择验收人'
-                                    ));
+                                    changeMsg: (value) {
+                                      acceptPersonMsg = value;
+                                      fiveMeasuresData['checkAcceptUserId'] =
+                                          liablePersonMsg['id'];
+                                      setState(() {});
+                                    },
+                                    title: '选择验收人'));
                           },
                           child: Container(
                               height: size.width * 75,
@@ -1020,15 +1125,17 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                     }
                   }
                   if (next) {
-                    fiveMeasuresData['registOpinion'] = _textEditingController.text;
+                    fiveMeasuresData['registOpinion'] =
+                        _textEditingController.text;
                     fiveMeasuresData['registUrl'] = image;
                     fiveMeasuresData['id'] = widget.id;
                     fiveMeasuresData['isHiddenDangere'] = 0;
-                    myDio.request(
-                          type: 'post',
-                          url: Interface.postIdentifyHiddenDangers,
-                          data: fiveMeasuresData)
-                      .then((value) {
+                    myDio
+                        .request(
+                            type: 'post',
+                            url: Interface.postIdentifyHiddenDangers,
+                            data: fiveMeasuresData)
+                        .then((value) {
                       successToast('驳回成功');
                       Navigator.pop(context);
                     });
@@ -1036,30 +1143,31 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                     Fluttertoast.showToast(msg: '请填写驳回的原因以及拍照');
                   }
                 } else {
-                  if(fiveMeasuresData['dangerLevel'] == ''){
+                  if (fiveMeasuresData['dangerLevel'] == '') {
                     Fluttertoast.showToast(msg: '请选择隐患等级');
-                  }else if(fiveMeasuresData['dangerName'] == ''){
+                  } else if (fiveMeasuresData['dangerName'] == '') {
                     Fluttertoast.showToast(msg: '请填写隐患名称');
-                  }else if(fiveMeasuresData['dangerSrc'] == ''){
+                  } else if (fiveMeasuresData['dangerSrc'] == '') {
                     Fluttertoast.showToast(msg: '请选择隐患来源');
-                  }else if(fiveMeasuresData['hazardDangerType'] == ''){
+                  } else if (fiveMeasuresData['hazardDangerType'] == '') {
                     Fluttertoast.showToast(msg: '请选择隐患类型');
-                  }else if(fiveMeasuresData['dangerDesc'] == ''){
+                  } else if (fiveMeasuresData['dangerDesc'] == '') {
                     Fluttertoast.showToast(msg: '请填写隐患描述');
-                  }else if(fiveMeasuresData['dangerManageDeadline'] == ''){
+                  } else if (fiveMeasuresData['dangerManageDeadline'] == '') {
                     Fluttertoast.showToast(msg: '请选择治理隐患期限');
-                  }else if(fiveMeasuresData['liableUserId'].isEmpty){
+                  } else if (fiveMeasuresData['liableUserId'].isEmpty) {
                     Fluttertoast.showToast(msg: '请选择整改责任人');
-                  }else if(fiveMeasuresData['checkAcceptUserId'].isEmpty){
+                  } else if (fiveMeasuresData['checkAcceptUserId'].isEmpty) {
                     Fluttertoast.showToast(msg: '请选择验收人');
-                  }else{
+                  } else {
                     fiveMeasuresData['id'] = widget.id;
                     fiveMeasuresData['isHiddenDangere'] = 1;
-                    myDio.request(
-                          type: 'post',
-                          url: Interface.postIdentifyHiddenDangers,
-                          data: fiveMeasuresData)
-                      .then((value) {
+                    myDio
+                        .request(
+                            type: 'post',
+                            url: Interface.postIdentifyHiddenDangers,
+                            data: fiveMeasuresData)
+                        .then((value) {
                       successToast('确认完成');
                       Navigator.pop(context);
                     });
@@ -1074,7 +1182,8 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                     bottom: size.width * 100, top: size.width * 50),
                 decoration: BoxDecoration(
                   color: Color(0xff3074FF),
-                  borderRadius: BorderRadius.all(Radius.circular(size.width * 8)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(size.width * 8)),
                 ),
                 child: Text(
                   '确认',
@@ -1086,6 +1195,6 @@ class _AffirmHiddenState extends State<AffirmHidden> {
           )
         ],
       )),
-    );
+    ));
   }
 }
