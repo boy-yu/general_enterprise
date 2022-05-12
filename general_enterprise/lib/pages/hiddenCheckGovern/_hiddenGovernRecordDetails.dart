@@ -1139,9 +1139,8 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                       color: Color(
                                                                           0xff333333))),
                                                               TextSpan(
-                                                                  text: data[
-                                                                          'dangerManageDeadline']
-                                                                      .toString(),
+                                                                  text: DateTime.fromMillisecondsSinceEpoch(data[
+                                                                          'dangerManageDeadline']).toString().substring(0, 19),
                                                                   style: TextStyle(
                                                                       color: Color(
                                                                           0xff7F8A9C))),
