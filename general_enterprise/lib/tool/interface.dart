@@ -112,8 +112,29 @@ class Interface {
   static String getTaskCompletion = baseUrl + '/homePageStatisticsController/taskCompletion';
   // 隐患情况
   static String getHiddenDangerTreatmentSituation = baseUrl + '/homePageStatisticsController/hiddenDangerTreatmentSituation';
-  
 
+
+  // 我的隐患排查任务相关统计
+  static String getMyTaskStatistics = baseUrl + '/myStatisticsController/myTaskStatistics';
+
+  // 隐患情况
+  static String getMyHiddenDangerTreatmentSituation = baseUrl + '/myStatisticsController/myHiddenDangerTreatmentSituation';
+  
+  // 运行效果
+  static String getOperationEffect = baseUrl + '/myStatisticsController/operationEffect';
+
+  // 我的待排查任务列表
+  static String getMyCheckList = baseUrl + '/myStatisticsController/myCheckList';
+  
+  // 我的隐患治理任务列表
+  static String getMyHiddenDangerTreatmentTaskList = baseUrl + '/myStatisticsController/myHiddenDangerTreatmentTaskList';
+
+  // 我的任务完成情况
+  static String getMyCheckListStatistics = baseUrl + '/myStatisticsController/myCheckListStatistics';
+
+  // 我的隐患治理情况
+  static String getMyHiddenDangerTreatmentTaskListStatistics = baseUrl + '/myStatisticsController/myHiddenDangerTreatmentTaskListStatistics';
+  
 
   // 修改个人信息 (头像 描述 电子邮箱 手机号码 昵称 性别 签名)
   static String putUpdateUser = baseUrl + '/tUser/updateUser';

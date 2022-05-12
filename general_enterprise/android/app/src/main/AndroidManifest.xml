@@ -4,7 +4,7 @@
   <uses-permission android:name="android.permission.CAMERA" />
   <application
       android:name=".Myapplication"
-      android:label="双重预防机制平台"
+      android:label="双重预防系统"
       android:icon="@mipmap/ic_launcher"
       android:theme="@style/Theme.AppCompat"
       tools:replace="label,theme"
