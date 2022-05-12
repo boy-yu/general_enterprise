@@ -334,11 +334,14 @@ class _OverviewState extends State<Overview> {
                                     fontSize: size.width * 24,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(
+                                height: size.width * 13,
+                              )
                             ],
                           ),
                           width: 100,
                           radius: 40,
-                          strokeWidth: 10,
+                          strokeWidth: 13,
                           state: false,
                           data: initialPie),
                       SizedBox(
@@ -423,12 +426,15 @@ class _OverviewState extends State<Overview> {
                                     fontSize: size.width * 24,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(
+                                height: size.width * 13,
+                              )
                             ],
                           ),
                           width: 100,
                           radius: 40,
                           state: false,
-                          strokeWidth: 10,
+                          strokeWidth: 13,
                           data: residuePie),
                     ],
                   ),
@@ -933,7 +939,7 @@ class _OverviewState extends State<Overview> {
                   CustomEchart().pie(
                       width: size.width * 220,
                       radius: size.width * 90,
-                      strokeWidth: size.width * 25,
+                      strokeWidth: size.width * 38,
                       state: false,
                       data: abnormalPie),
                   SizedBox(
@@ -1063,7 +1069,7 @@ class _OverviewState extends State<Overview> {
                   CustomEchart().pie(
                       width: size.width * 220,
                       radius: size.width * 90,
-                      strokeWidth: size.width * 25,
+                      strokeWidth: size.width * 38,
                       state: false,
                       data: currentPie),
                   SizedBox(
@@ -2046,7 +2052,7 @@ class _MyOverviewState extends State<MyOverview> {
                   CustomEchart().pie(
                       width: size.width * 220,
                       radius: size.width * 90,
-                      strokeWidth: size.width * 25,
+                      strokeWidth: size.width * 38,
                       state: false,
                       data: hisControlhiddenPie),
                   SizedBox(

@@ -152,7 +152,7 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                              Color(0xffF56271).withOpacity(0.12),
+                              Color(0xff2276FC).withOpacity(0.12),
                               Colors.transparent,
                             ],
                           ),

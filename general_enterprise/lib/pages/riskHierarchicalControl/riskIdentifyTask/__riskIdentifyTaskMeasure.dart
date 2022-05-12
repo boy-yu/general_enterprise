@@ -139,7 +139,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                              Color(0xff5FD5EC).withOpacity(0.12),
+                              Color(0xff2276FC).withOpacity(0.12),
                               Colors.transparent,
                             ],
                           ),

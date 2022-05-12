@@ -776,7 +776,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                           Row(
                                             children: [
                                               Text(
-                                                '隐患确认  ${data['registTime']}',
+                                                '隐患确认  ${DateTime.fromMillisecondsSinceEpoch(data['registTime']).toString().substring(0, 19)}',
                                                 style: TextStyle(
                                                     color: Color(0xff7F8A9C),
                                                     fontSize: size.width * 28,
@@ -1212,7 +1212,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                           Row(
                                             children: [
                                               Text(
-                                                '隐患确认  ${data['registTime']}',
+                                                '隐患确认  ${DateTime.fromMillisecondsSinceEpoch(data['registTime']).toString().substring(0, 19)}',
                                                 style: TextStyle(
                                                     color: Color(0xff7F8A9C),
                                                     fontSize: size.width * 28,
