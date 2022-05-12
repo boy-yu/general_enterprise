@@ -1363,8 +1363,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                             20)),
                                                                 image: DecorationImage(
                                                                     image: NetworkImage(
-                                                                        data[
-                                                                            'registUrl']),
+                                                                      data['registUrl'].toString().split('|')[0]),
                                                                     fit: BoxFit
                                                                         .fill),
                                                               ),

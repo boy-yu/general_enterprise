@@ -415,8 +415,8 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                                   Radius.circular(
                                                       size.width * 20)),
                                               image: DecorationImage(
-                                                  image: AssetImage(
-                                                      data['checkUrl']),
+                                                  image: NetworkImage(
+                                                    data['checkUrl'].toString().split('|')[0]),
                                                   fit: BoxFit.fill),
                                             ),
                                           )
