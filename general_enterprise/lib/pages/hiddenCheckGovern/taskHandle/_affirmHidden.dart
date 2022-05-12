@@ -403,8 +403,7 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                     Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: size.width * 40),
-                      child: ClipRRect(
-                        child: Container(
+                      child: Container(
                           height: size.width * 160,
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -430,7 +429,6 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                             ),
                           ),
                         ),
-                      ),
                     ),
                     SizedBox(
                       height: size.width * 40,

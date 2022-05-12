@@ -236,8 +236,7 @@ class _TroubleshootState extends State<Troubleshoot> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: size.width * 40),
-                      child: ClipRRect(
-                        child: Container(
+                      child: Container(
                             height: size.width * 160,
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -263,7 +262,6 @@ class _TroubleshootState extends State<Troubleshoot> {
                                   ),
                                 ),
                             ),
-                      ),
                     ),
                     SizedBox(
                       height: size.width * 40,
