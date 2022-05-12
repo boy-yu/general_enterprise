@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/common/myUpdateDialog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/down.dart';
@@ -50,7 +49,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     Size currenWidow = MediaQuery.of(context).size;
-    print(_version);
     return WillPopScope(
         child: Scaffold(
             backgroundColor: Colors.white,
@@ -63,7 +61,7 @@ class _LoginState extends State<Login> {
                   height: currenWidow.height,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/bg_login.png"),
+                      image: AssetImage("assets/images/doubleRiskProjeck/bg_login.png"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -82,15 +80,16 @@ class _LoginState extends State<Login> {
                                 '四川省天顺慧智安全科技有限公司',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Color(0xff2143AF).withOpacity(0.5),
-                                    fontSize: size.width * 24),
+                                          color: Color(0xff7F8A9C),
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
                               ),
                               width: double.infinity,
                             ),
                             Container(
                                 width: double.infinity,
                                 margin: EdgeInsets.only(
-                                    top: size.width * 20,
+                                    top: size.width * 12,
                                     bottom: size.width * 10),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +97,7 @@ class _LoginState extends State<Login> {
                                     Image.asset(
                                       'assets/images/login_left.png',
                                       height: size.width * 2,
-                                      width: size.width * 54,
+                                      width: size.width * 72,
                                     ),
                                     SizedBox(
                                       width: size.width * 10,
@@ -108,9 +107,9 @@ class _LoginState extends State<Login> {
                                           ? 'V' + _version.toString()
                                           : '',
                                       style: TextStyle(
-                                          color: Color(0xff2143AF)
-                                              .withOpacity(0.5),
-                                          fontSize: size.width * 24),
+                                          color: Color(0xff7F8A9C),
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                     SizedBox(
                                       width: size.width * 10,
@@ -118,7 +117,7 @@ class _LoginState extends State<Login> {
                                     Image.asset(
                                       'assets/images/login_right.png',
                                       height: size.width * 2,
-                                      width: size.width * 54,
+                                      width: size.width * 72,
                                     ),
                                   ],
                                 ))
@@ -237,50 +236,43 @@ class _LoginFormState extends State<LoginForm> {
       children: [
         Padding(
             padding: EdgeInsets.only(
-                bottom: size.height * 75,
-                left: size.height * 56,
-                top: size.height * 230),
-            child: Text('双重预防机制平台',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: size.width * 40,
-                    fontWeight: FontWeight.bold))),
+              left: size.width * 60,
+                bottom: size.height * 160,
+                top: size.height * 224),
+            child: Image.asset(
+              "assets/images/doubleRiskProjeck/text_login_title.png",
+              height: size.width * 140,
+              width: size.width * 462,
+            )
+                    ),
         Container(
-          margin: EdgeInsets.symmetric(
-              horizontal: size.height * 57, vertical: size.height * 60),
-          padding: EdgeInsets.only(
-              left: size.height * 59,
-              top: size.height * 40,
-              right: size.height * 57),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24.0),
-                  bottomRight: Radius.circular(24.0)),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black12,
-                    offset: Offset(0.0, 1.0), //阴影xy轴偏移量
-                    blurRadius: 15.0, //阴影模糊程度
-                    spreadRadius: 1.0 //阴影扩散程度
-                    )
-              ]),
+          padding: EdgeInsets.symmetric(horizontal: size.width * 60),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Center(
-                child: Text(
-                  '欢迎登录',
+              Text(
+                  '登录',
                   style: TextStyle(
-                      color: Color(0xff4684FF), fontSize: size.width * 44),
+                      color: Color(0xff333333), fontSize: size.width * 40, fontWeight: FontWeight.w500),
                 ),
-              ),
               SizedBox(
                 height: size.width * 20,
               ),
-              Text(
-                '用户名',
-                style: TextStyle(color: placeHolder, fontSize: 11),
+              Row(
+                children: [
+                  Image.asset(
+                    "assets/images/doubleRiskProjeck/icon_login_usernae.png",
+                    width: size.width * 36,
+                    height: size.width * 36,
+                  ),
+                  SizedBox(
+                    width: size.width * 16,
+                  ),
+                  Text(
+                    '用户名',
+                    style: TextStyle(color: Color(0xff333333), fontSize: size.width * 28, fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
               Container(
                 height: size.height * 74,
@@ -292,9 +284,21 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 height: size.height * 40,
               ),
-              Text(
-                '密码',
-                style: TextStyle(color: placeHolder, fontSize: 11),
+              Row(
+                children: [
+                  Image.asset(
+                    "assets/images/doubleRiskProjeck/icon_login_pwd.png",
+                    width: size.width * 36,
+                    height: size.width * 36,
+                  ),
+                  SizedBox(
+                    width: size.width * 16,
+                  ),
+                  Text(
+                    '密码',
+                    style: TextStyle(color: Color(0xff333333), fontSize: size.width * 28, fontWeight: FontWeight.w500),
+                  ),
+                ],
               ),
               Container(
                   margin: EdgeInsets.only(top: size.height * 0),
@@ -304,48 +308,27 @@ class _LoginFormState extends State<LoginForm> {
                       hintText: '请输入密码',
                       obscureText: true)),
               SizedBox(
-                height: size.height * 47,
+                height: size.height * 120,
               ),
-              Container(
+              GestureDetector(
+                onTap: _login,
+                child: Container(
                   decoration: BoxDecoration(
-                    color: Color(0xff4481FE),
-                    borderRadius: BorderRadius.all(Radius.circular(43)),
+                    color: Color(0xff3074FF),
+                    borderRadius: BorderRadius.all(Radius.circular(size.width * 20)),
                   ),
-                  height: size.height * 85,
-                  width: double.infinity,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(43),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Color(0xff4481FE))),
-                      onPressed: _login,
-                      child: Center(
-                          child: Text(
-                        '登录',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white, fontSize: size.width * 40),
-                      )),
+                  height: size.height * 100,
+                  width: size.height * 630,
+                  alignment: Alignment.center,
+                  child: Text(
+                    '登录',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size.width * 36,
+                      fontWeight: FontWeight.w600
                     ),
-                  )),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Spacer(),
-                    Text(
-                      '忘记密码？',
-                      style: TextStyle(
-                          color: Color(0xff2143AF), fontSize: size.width * 21),
-                    )
-                  ],
+                  ),
                 ),
-                width: double.infinity,
-                margin: EdgeInsets.only(
-                    left: size.width * 40,
-                    top: size.width * 35,
-                    bottom: size.height * 32),
               )
             ],
           ),
@@ -379,11 +362,23 @@ class _InputKeyState extends State<InputKey> {
       style: TextStyle(color: Color(0xff999999), fontSize: size.width * 26),
       obscureText: widget.obscureText ?? false,
       decoration: InputDecoration(
+        enabledBorder: UnderlineInputBorder( // 不是焦点的时候颜色
+                    borderSide: BorderSide(
+                        color: Color(0xffECECEC),
+                        width: size.width * 2
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder( // 焦点集中的时候颜色
+                    borderSide: BorderSide(
+                        color: Color(0xffECECEC),
+                        width: size.width * 2
+                    ),
+                  ),
         hintText: widget.hintText,
         hintStyle:
-            TextStyle(fontSize: size.width * 26, color: Color(0xff999999)),
+            TextStyle(fontSize: size.width * 28, color: Color(0xff7F8A9C)),
         labelStyle:
-            TextStyle(fontSize: size.width * 26, color: Color(0xff999999)),
+            TextStyle(fontSize: size.width * 28, color: Color(0xff7F8A9C)),
         suffixIcon: widget.textEditingController.text.length > 0
             ? GestureDetector(
                 child: Icon(Icons.clear),

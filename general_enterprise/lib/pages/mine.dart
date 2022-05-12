@@ -215,13 +215,12 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
                           //     type: 'put',
                           //     url: Interface.putAmendChatStatus,
                           //     data: {"onlineStatus": "0"}).then((value) {});
-
+                          myprefs.clear();
                           context.read<Counter>().emptyNotity();
                           ChatData().dropTable();
                           setState(() {
                             show = false;
                           });
-
                           Navigator.pushNamed(context, '/login').then((value) {
                             setState(() {
                               show = true;
