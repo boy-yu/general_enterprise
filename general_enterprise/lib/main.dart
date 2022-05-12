@@ -67,12 +67,8 @@ class _MyContextState extends State<MyContext> {
     ).then((value) async {
       if (value is Map) {
         Interface.mainBaseUrl = value["mainApiUrl"];
-        // Interface.eduBaseUrl = value["etApiUrl"];
-        // Interface.closeBaseUrl = value["accessControlUrl"];
       }
-
       Mysize().init();
-
       show = true;
       setState(() {});
     }).catchError((onError) {

@@ -13,6 +13,16 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int chooseIndex = 0;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getIsLogin();
+  // }
+
+  // _getIsLogin(){
+
+  // }
+
   @override
   Widget build(BuildContext context) {
     return MyAppbar(

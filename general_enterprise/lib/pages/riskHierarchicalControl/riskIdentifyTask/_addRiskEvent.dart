@@ -17,30 +17,17 @@ class _AddRiskEventState extends State<AddRiskEvent> {
   
 
   Map submitData = {
-	"companyCode": "",
-	"companyId": "",
-	"createBy": "",
-	"createDate": "",
-	"currentRiskLevel": "",
-	"deleted": "",
-	"hazardCode": "",
-	"id": "",
-	"initialRiskConsequences": 0,
-	"initialRiskDegree": 0,
-	"initialRiskLevel": "",
-	"initialRiskPossibility": 0,
-	"riskConsequences": 0,
-	"riskDegree": 0,
-	"riskDescription": "",
-	"riskEventName": "",
-	"riskLevel": "",
-	"riskObjectId": "",
-	"riskPossibility": 0,
-	"riskUnitId": "",
-	"selected": "",
-	"status": "",
-	"updateBy": "",
-	"updateDate": ""
+	'currentRiskLevel': '', 
+	'initialRiskConsequences': 0, 
+	'initialRiskDegree': 0, 
+	'initialRiskLevel': '', 
+	'initialRiskPossibility': 0, 
+	'riskConsequences': 0, 
+	'riskDegree': 0, 
+	'riskDescription': '', 
+	'riskEventName': '', 
+	'riskLevel': '', 
+	'riskPossibility': 0, 
 };
 
   List levelChoice = [1, 2, 3, 4, 5];
@@ -580,7 +567,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               padding: EdgeInsets.symmetric(horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['initialRiskDegree'] != 0 ? _getInitialRiskLevel(submitData['initialRiskDegree']) : '系统自动判断',
+                                submitData['initialRiskDegree'] != 0 && submitData['initialRiskDegree'] != null? _getInitialRiskLevel(submitData['initialRiskDegree']) : '系统自动判断',
                                 style: TextStyle(
                                   color: Color(0xff7F8A9C),
                                   fontSize: size.width * 28,
@@ -613,7 +600,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               padding: EdgeInsets.symmetric(horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['riskDegree'] != ''? _getCurrentRiskLevel(submitData['riskDegree']) : '系统自动判断',
+                                submitData['riskDegree'] != 0 ? _getCurrentRiskLevel(submitData['riskDegree']) : '系统自动判断',
                                 style: TextStyle(
                                   color: Color(0xff7F8A9C),
                                   fontSize: size.width * 28,
