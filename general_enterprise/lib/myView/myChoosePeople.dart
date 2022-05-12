@@ -30,7 +30,6 @@ class _ChoosePeopleState extends State<ChoosePeople> {
           .request(type: 'get', url: Interface.getDepartmentTree)
           .then((value) {
         if (value is List) {
-          print(value);
           tableList.add('联络人');
           data = value;
         }
@@ -57,7 +56,6 @@ class _ChoosePeopleState extends State<ChoosePeople> {
       if (value is List) {
         tableList.add(map['name']);
         perData = value;
-        print(perData);
       }
       if (mounted) {
         setState(() {});
@@ -216,13 +214,17 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                                                   MaterialStateProperty.all(
                                                       Colors.white)),
                                           onPressed: () {
-                                            choosePeople = perData[index];
+                                            print(perData[index]);
+                                            if(choosePeople['id'] == perData[index]['id']){
+                                              choosePeople = {'id': ''};
+                                            }else{
+                                              choosePeople = perData[index];
+                                            }
                                             if (mounted) {
                                               setState(() {});
                                             }
                                           },
-                                          child: choosePeople['id'] ==
-                                                  perData[index]['id']
+                                          child: choosePeople['id'] == perData[index]['id']
                                               ? Container(
                                                   margin: EdgeInsets.symmetric(
                                                       horizontal:
@@ -271,7 +273,7 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                                             )),
                                         Expanded(
                                             child: Text(
-                                          perData[index]['nickname'],
+                                          perData[index]['nickname'].toString(),
                                           style: TextStyle(color: placeHolder),
                                         )),
                                       ],
@@ -279,9 +281,6 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                             )
                           )
                         );
-                        
-                        
-                        
                       }
                   ): Center(
                       child: Text('该部门下无人员信息'),

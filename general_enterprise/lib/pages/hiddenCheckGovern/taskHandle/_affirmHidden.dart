@@ -877,8 +877,10 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                                 context: context,
                                 builder: (context) => ChoosePeople(
                                       changeMsg: (value){
-                                        liablePersonMsg = value;
-                                        fiveMeasuresData['liableUserId'] = liablePersonMsg['id'];
+                                        if(value['id'] != ''){
+                                          liablePersonMsg = value;
+                                          fiveMeasuresData['liableUserId'] = liablePersonMsg['id'];
+                                        }
                                         setState(() {
                                           
                                         });
@@ -912,7 +914,7 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                                         ))
                                       : Expanded(
                                           child: Text(
-                                            liablePersonMsg['nickname'],
+                                            liablePersonMsg['nickname'].toString(),
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C),
                                                 fontSize: size.width * 28,
