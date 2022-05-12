@@ -1436,7 +1436,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                     Row(
                                       children: [
                                         Text(
-                                          '隐患整改  ${data['liableCompletedTime']}',
+                                          '隐患整改  ${DateTime.fromMillisecondsSinceEpoch(data['liableCompletedTime']).toString().substring(0, 19)}',
                                           style: TextStyle(
                                               color: Color(0xff7F8A9C),
                                               fontSize: size.width * 28,
@@ -1605,7 +1605,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                     Row(
                                       children: [
                                         Text(
-                                          '整改完成审批  ${data['checkAcceptTime']}',
+                                          '整改完成审批  ${DateTime.fromMillisecondsSinceEpoch(data['checkAcceptTime']).toString().substring(0, 19)}',
                                           style: TextStyle(
                                               color: Color(0xff7F8A9C),
                                               fontSize: size.width * 28,
