@@ -353,14 +353,17 @@ class InputKey extends StatefulWidget {
 }
 
 class _InputKeyState extends State<InputKey> {
+  bool obscureText = false;
+
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: widget.obscureText != null ? TextInputType.visiblePassword : TextInputType.number,
       controller: widget.textEditingController,
       textInputAction: TextInputAction.next,
       onSubmitted: widget.onSubmitted,
       style: TextStyle(color: Color(0xff999999), fontSize: size.width * 26),
-      obscureText: widget.obscureText ?? false,
+      obscureText: widget.obscureText != null ? obscureText : false,
       decoration: InputDecoration(
         enabledBorder: UnderlineInputBorder( // 不是焦点的时候颜色
                     borderSide: BorderSide(
@@ -379,12 +382,13 @@ class _InputKeyState extends State<InputKey> {
             TextStyle(fontSize: size.width * 28, color: Color(0xff7F8A9C)),
         labelStyle:
             TextStyle(fontSize: size.width * 28, color: Color(0xff7F8A9C)),
-        suffixIcon: widget.textEditingController.text.length > 0
+        suffixIcon: widget.obscureText != null
             ? GestureDetector(
-                child: Icon(Icons.clear),
+                child: obscureText ? Icon(Icons.visibility_off, color: Color(0xff7F8A9C),) 
+                            : Icon(Icons.visibility, color: Color(0xff7F8A9C),),
                 onTap: () {
                   setState(() {
-                    widget.textEditingController.text = '';
+                    obscureText = !obscureText;
                   });
                 },
               )
