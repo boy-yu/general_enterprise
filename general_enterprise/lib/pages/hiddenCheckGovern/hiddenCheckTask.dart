@@ -637,7 +637,8 @@ class _PersonalTaskState extends State<PersonalTask> {
       queryParameters = {
         "riskObjectId": null,
         "riskUnitId": null,
-        "riskEventId": null
+        "riskEventId": null,
+        "type": 2
       };
       print(queryParameters);
       _throwFunc.run(argument: queryParameters);

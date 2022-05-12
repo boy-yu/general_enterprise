@@ -81,10 +81,6 @@ class _TroubleshootState extends State<Troubleshoot> {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        // decoration: BoxDecoration(
-        //   color: Color(0xffFfFfFf),
-        //   borderRadius: BorderRadius.only(topLeft: Radius.circular(size.width * 80))
-        // ),
         child: InkWell(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -92,44 +88,100 @@ class _TroubleshootState extends State<Troubleshoot> {
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.only(
-                  top: size.width * 60,
+                  top: size.width * 80,
                   right: size.width * 20,
                   left: size.width * 20),
               child: Column(
                 children: <Widget>[
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(right: size.width * 60),
-                        child: RiskButtons(
-                          text: "正常",
-                          testcolor: isFull ? selecttextColor : 0xff9A9A9A,
-                          bgcolor: isFull ? selectbgColor : 0xffFFFFFF,
-                          callback: () {
-                            _textEditingController.text = '正常';
-                            if (mounted) {
-                              setState(() {
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
                                 isFull = !isFull;
                               });
-                            }
-                          },
+                        },
+                        child: Container(
+                          height: size.width * 72,
+                          width: size.width * 196,
+                          decoration: BoxDecoration(
+                            color: isFull ? Color(0xff3074FF).withOpacity(0.1) : Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(size.width * 8)),
+                            border: Border.all(width: size.width * 2, color: isFull ? Color(0xff3074FF) : Color(0XFFECECEC)),
+                          ),
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: size.width * 28,
+                                width: size.width * 28,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                                  border: Border.all(width: size.width * 4, color: isFull ? Color(0xff3074FF) : Color(0XFFE0E0E0 )),
+                                ),
+                              ),
+                              SizedBox(
+                                width: size.width * 8,
+                              ),
+                              Text(
+                                '正常',
+                                style: TextStyle(
+                                  color: isFull ? Color(0xff3074FF) : Color(0xff7F8A9C),
+                                  fontSize: size.width * 32,
+                                  fontWeight: FontWeight.w400
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                      RiskButtons(
-                        text: "存在隐患",
-                        testcolor: isFull ? 0xff9A9A9A : 0xffffffff,
-                        bgcolor: isFull ? 0xffFFFFFF : 0xffFF1818,
-                        callback: () {
-                          _textEditingController.text = '';
-                          if (mounted) {
-                            setState(() {
-                              isFull = !isFull;
-                            });
-                          }
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                                isFull = !isFull;
+                              });
                         },
-                      )
+                        child: Container(
+                          height: size.width * 72,
+                          width: size.width * 196,
+                          decoration: BoxDecoration(
+                            color: !isFull ? Color(0xff3074FF).withOpacity(0.1) : Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(size.width * 8)),
+                            border: Border.all(width: size.width * 2, color: !isFull ? Color(0xff3074FF) : Color(0XFFECECEC)),
+                          ),
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: size.width * 28,
+                                width: size.width * 28,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                                  border: Border.all(width: size.width * 4, color: !isFull ? Color(0xff3074FF) : Color(0XFFE0E0E0 )),
+                                ),
+                              ),
+                              SizedBox(
+                                width: size.width * 8,
+                              ),
+                              Text(
+                                '存在隐患',
+                                style: TextStyle(
+                                  color: !isFull ? Color(0xff3074FF) : Color(0xff7F8A9C),
+                                  fontSize: size.width * 32,
+                                  fontWeight: FontWeight.w400
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
+                  ),
+                  SizedBox(
+                    height: size.width * 40,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
