@@ -26,8 +26,7 @@ class _ChoosePeopleState extends State<ChoosePeople> {
 
   _getOrganization({Map map}) {
     if (map == null) {
-      myDio
-          .request(type: 'get', url: Interface.getDepartmentTree)
+      myDio.request(type: 'get', url: Interface.getDepartmentTree)
           .then((value) {
         if (value is List) {
           tableList.add('联络人');
@@ -54,8 +53,9 @@ class _ChoosePeopleState extends State<ChoosePeople> {
         url: Interface.getCoUserByDepartment,
         queryParameters: {'id': map['id']}).then((value) {
       if (value is List) {
-        tableList.add(map['name']);
-        perData = value;
+        for (int i = 0; i < value.length; i++) {
+          perData.add(value[i]);
+        }
       }
       if (mounted) {
         setState(() {});
@@ -65,6 +65,8 @@ class _ChoosePeopleState extends State<ChoosePeople> {
 
   @override
   Widget build(BuildContext context) {
+    print(choosePeople['id']);
+    print(perData);
     return MyAppbar(
       title: Text(
         widget.title,
@@ -85,6 +87,7 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                             onTap: () {
                               if (index == 0) {
                                 tableList.clear();
+                                perData.clear();
                                 _getOrganization();
                               }
                             },
@@ -155,11 +158,9 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                                                     MaterialStateProperty.all(
                                                         Colors.white)),
                                             onPressed: () {
-                                              if (data[index]['children']is List) {
+                                              _getPeople(data[index]);
+                                              if (data[index]['children'] is List) {
                                                 _getOrganization(map: data[index]);
-                                                _getPeople(data[index]);
-                                              } else {
-                                                _getPeople(data[index]);
                                               }
                                             },
                                             icon: Icon(
@@ -187,7 +188,7 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                       itemCount: perData.length,
                       shrinkWrap: true, 
 		                  physics: new NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, perIndex) {
                         return Container(
                           decoration: BoxDecoration(
                               border: Border(
@@ -214,17 +215,17 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                                                   MaterialStateProperty.all(
                                                       Colors.white)),
                                           onPressed: () {
-                                            print(perData[index]);
-                                            if(choosePeople['id'] == perData[index]['id']){
+                                            print(perData[perIndex]);
+                                            if(choosePeople['id'] == perData[perIndex]['id']){
                                               choosePeople = {'id': ''};
                                             }else{
-                                              choosePeople = perData[index];
+                                              choosePeople = perData[perIndex];
                                             }
                                             if (mounted) {
                                               setState(() {});
                                             }
                                           },
-                                          child: choosePeople['id'] == perData[index]['id']
+                                          child: choosePeople['id'] == perData[perIndex]['id'].toString()
                                               ? Container(
                                                   margin: EdgeInsets.symmetric(
                                                       horizontal:
@@ -266,14 +267,14 @@ class _ChoosePeopleState extends State<ChoosePeople> {
                                                 right: size.width * 25),
                                             child: ClipOval(
                                               child: ClickImage(
-                                                perData[index]['avatar'],
+                                                perData[perIndex]['avatar'],
                                                 width: size.width * 60,
                                                 height: size.width * 60,
                                               ),
                                             )),
                                         Expanded(
                                             child: Text(
-                                          perData[index]['nickname'].toString(),
+                                          perData[perIndex]['nickname'].toString(),
                                           style: TextStyle(color: placeHolder),
                                         )),
                                       ],
