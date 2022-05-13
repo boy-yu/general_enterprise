@@ -20,6 +20,7 @@ List<Map<String, Widget Function(BuildContext context, {dynamic arguments})>>
         TaskHandle(
           dangerState: arguments['dangerState'],
           id: arguments['id'],
+          checkMeans: arguments['checkMeans']
         )
   },
 

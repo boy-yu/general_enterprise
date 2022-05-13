@@ -249,13 +249,13 @@ class _DepartmentTaskState extends State<DepartmentTask> {
       case '0':
         return '现场确认';
         break;
-      case '0':
+      case '1':
         return '拍照';
         break;
-      case '0':
+      case '2':
         return '热成像';
         break;
-      case '0':
+      case '3':
         return '震动';
         break;
       default:
@@ -281,7 +281,8 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                   Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
                       arguments: {
                         "dangerState": 'check',
-                        'id': list[index]['id']
+                        'id': list[index]['id'],
+                        'checkMeans': list[index]['checkMeans'],
                       }).then((value) {
                     _throwFunc.run();
                   });
@@ -706,13 +707,13 @@ class _PersonalTaskState extends State<PersonalTask> {
       case '0':
         return '现场确认';
         break;
-      case '0':
+      case '1':
         return '拍照';
         break;
-      case '0':
+      case '2':
         return '热成像';
         break;
-      case '0':
+      case '3':
         return '震动';
         break;
       default:
@@ -738,7 +739,8 @@ class _PersonalTaskState extends State<PersonalTask> {
                   Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
                       arguments: {
                         "dangerState": 'check',
-                        'id': list[index]['id']
+                        'id': list[index]['id'],
+                        'checkMeans': list[index]['checkMeans'],
                       }).then((value) {
                     _throwFunc.run();
                   });

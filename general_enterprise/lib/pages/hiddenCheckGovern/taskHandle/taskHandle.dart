@@ -11,9 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TaskHandle extends StatefulWidget {
-  TaskHandle({this.dangerState, this.id});
+  TaskHandle({this.dangerState, this.id, this.checkMeans});
   final String dangerState;
   final String id;
+  final String checkMeans;
   @override
   State<TaskHandle> createState() => _TaskHandleState();
 }
@@ -50,7 +51,7 @@ class _TaskHandleState extends State<TaskHandle> {
       child: Stack(
         children: [
           ScrollTop(dangerState: widget.dangerState, id: widget.id),
-          BuildDragWidget(dangerState: widget.dangerState, id: widget.id),
+          BuildDragWidget(dangerState: widget.dangerState, id: widget.id, checkMeans: widget.checkMeans),
         ],
       ),
     );
@@ -570,9 +571,10 @@ class _ScrollTopState extends State<ScrollTop> {
 }
 
 class BuildDragWidget extends StatefulWidget {
-  BuildDragWidget({this.dangerState, this.id});
+  BuildDragWidget({this.dangerState, this.id, this.checkMeans});
   final String dangerState;
   final String id;
+  final String checkMeans;
   @override
   State<BuildDragWidget> createState() => _BuildDragWidgetState();
 }
@@ -585,7 +587,7 @@ class _BuildDragWidgetState extends State<BuildDragWidget> {
     // 隐患状态（排查：check；确认隐患：-1；整改完毕：0；整改审批：-1）
     switch (widget.dangerState) {
       case 'check':
-        return Troubleshoot(id: widget.id);
+        return Troubleshoot(id: widget.id, checkMeans: widget.checkMeans);
         break;
       case '-1':
         return AffirmHidden(id: widget.id);

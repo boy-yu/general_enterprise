@@ -7,8 +7,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class Troubleshoot extends StatefulWidget {
-  Troubleshoot({this.id});
+  Troubleshoot({this.id, this.checkMeans});
   final String id;
+  final String checkMeans;
   @override
   State<Troubleshoot> createState() => _TroubleshootState();
 }
@@ -51,7 +52,7 @@ class _TroubleshootState extends State<Troubleshoot> {
       "checkOpinion": _textEditingController.text,
       "checkStatus": isFull ? '0' : '1',
     };
-    if (!isFull) {
+    if (!isFull || widget.checkMeans == '1') {
       List image = _generateImage();
       if (image.isEmpty) {
         Fluttertoast.showToast(msg: '请拍照');
@@ -264,7 +265,7 @@ class _TroubleshootState extends State<Troubleshoot> {
                     SizedBox(
                       height: size.width * 40,
                     ),
-                    !isFull
+                    !isFull || widget.checkMeans == '1'
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
