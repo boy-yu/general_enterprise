@@ -20,6 +20,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
   }
 
   _getData() {
+    print(widget.id);
     if (widget.type == '排查') {
       myDio.request(
           type: 'get',
@@ -274,128 +275,175 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                         children: [
                           // 隐患排查/隐患上报
                           data['checkTime'] != null && data['checkTime'] != ''
-                          ? widget.type == '排查'
-                              ? Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: size.width * 28,
-                                      width: size.width * 28,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(size.width * 50)),
-                                          border: Border.all(
-                                              width: size.width * 6,
-                                              color: Color(0xff5FD5EC))),
-                                    ),
-                                    SizedBox(
-                                      width: size.width * 20,
-                                    ),
-                                    Column(
+                              ? widget.type == '排查'
+                                  ? Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '隐患排查  ${DateTime.fromMillisecondsSinceEpoch(data['checkTime']).toString().substring(0, 19)}',
-                                              style: TextStyle(
-                                                  color: Color(0xff7F8A9C),
-                                                  fontSize: size.width * 28,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                          ],
+                                        Container(
+                                          height: size.width * 28,
+                                          width: size.width * 28,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      size.width * 50)),
+                                              border: Border.all(
+                                                  width: size.width * 6,
+                                                  color: Color(0xff5FD5EC))),
                                         ),
                                         SizedBox(
-                                          height: size.width * 20,
+                                          width: size.width * 20,
                                         ),
-                                        Container(
-                                          width: size.width * 638,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(
-                                                    size.width * 20),
-                                                bottomLeft: Radius.circular(
-                                                    size.width * 20),
-                                                bottomRight: Radius.circular(
-                                                    size.width * 20)),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: double.infinity,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: size.width * 32,
-                                                    vertical: size.width * 16),
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.centerLeft,
-                                                    end: Alignment.centerRight,
-                                                    colors: [
-                                                      Color(0xff2276FC)
-                                                          .withOpacity(0.12),
-                                                      Colors.transparent,
-                                                    ],
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  size.width *
-                                                                      20)),
-                                                ),
-                                                child: Text(
-                                                  // '排查结果是否异常0否1是',
-                                                  '排查结果：${data['isAbnormal'] == 0 ? '正常' : '存在隐患'}',
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  '隐患排查  ${DateTime.fromMillisecondsSinceEpoch(data['checkTime']).toString().substring(0, 19)}',
                                                   style: TextStyle(
-                                                      color: Color(0xff333333),
+                                                      color: Color(0xff7F8A9C),
                                                       fontSize: size.width * 28,
                                                       fontWeight:
-                                                          FontWeight.w500),
+                                                          FontWeight.w400),
                                                 ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: size.width * 20,
+                                            ),
+                                            Container(
+                                              width: size.width * 638,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(
+                                                        size.width * 20),
+                                                    bottomLeft: Radius.circular(
+                                                        size.width * 20),
+                                                    bottomRight:
+                                                        Radius.circular(
+                                                            size.width * 20)),
                                               ),
-                                              Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    size.width * 32,
-                                                    size.width * 16,
-                                                    size.width * 32,
-                                                    size.width * 32),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    width: double.infinity,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                size.width * 32,
+                                                            vertical:
+                                                                size.width *
+                                                                    16),
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                        begin: Alignment
+                                                            .centerLeft,
+                                                        end: Alignment
+                                                            .centerRight,
+                                                        colors: [
+                                                          Color(0xff2276FC)
+                                                              .withOpacity(
+                                                                  0.12),
+                                                          Colors.transparent,
+                                                        ],
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      size.width *
+                                                                          20)),
+                                                    ),
+                                                    child: Text(
+                                                      // '排查结果是否异常0否1是',
+                                                      '排查结果：${data['isAbnormal'] == 0 ? '正常' : '存在隐患'}',
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xff333333),
+                                                          fontSize:
+                                                              size.width * 28,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            size.width * 32,
+                                                            size.width * 16,
+                                                            size.width * 32,
+                                                            size.width * 32),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        Container(
-                                                          width:
-                                                              size.width * 285,
-                                                          child: RichText(
-                                                            text: TextSpan(
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        size.width *
-                                                                            24,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                                children: <
-                                                                    InlineSpan>[
-                                                                  TextSpan(
-                                                                      text:
-                                                                          '排查人：',
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Color(0xff333333))),
-                                                                  TextSpan(
-                                                                      text: data[
-                                                                          'checkUser'],
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Color(0xff7F8A9C))),
-                                                                ]),
-                                                          ),
+                                                        Row(
+                                                          children: [
+                                                            Container(
+                                                              width:
+                                                                  size.width *
+                                                                      285,
+                                                              child: RichText(
+                                                                text: TextSpan(
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            size.width *
+                                                                                24,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400),
+                                                                    children: <
+                                                                        InlineSpan>[
+                                                                      TextSpan(
+                                                                          text:
+                                                                              '排查人：',
+                                                                          style:
+                                                                              TextStyle(color: Color(0xff333333))),
+                                                                      TextSpan(
+                                                                          text: data[
+                                                                              'checkUser'],
+                                                                          style:
+                                                                              TextStyle(color: Color(0xff7F8A9C))),
+                                                                    ]),
+                                                              ),
+                                                            ),
+                                                            RichText(
+                                                              text: TextSpan(
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          size.width *
+                                                                              24,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400),
+                                                                  children: <
+                                                                      InlineSpan>[
+                                                                    TextSpan(
+                                                                        text:
+                                                                            'GPS：',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Color(0xff333333))),
+                                                                    TextSpan(
+                                                                        text: data['checkUser'] ==
+                                                                                ''
+                                                                            ? ''
+                                                                            : '在管控范围内',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Color(0xff7F8A9C))),
+                                                                  ]),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height:
+                                                              size.width * 16,
                                                         ),
                                                         RichText(
                                                           text: TextSpan(
@@ -410,348 +458,1046 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                   InlineSpan>[
                                                                 TextSpan(
                                                                     text:
-                                                                        'GPS：',
+                                                                        '隐患描述：',
                                                                     style: TextStyle(
                                                                         color: Color(
                                                                             0xff333333))),
                                                                 TextSpan(
-                                                                    text:
-                                                                        '在管控范围内',
+                                                                    text: data[
+                                                                        'dangerDesc'],
                                                                     style: TextStyle(
                                                                         color: Color(
                                                                             0xff7F8A9C))),
                                                               ]),
                                                         ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: size.width * 16,
-                                                    ),
-                                                    RichText(
-                                                      text: TextSpan(
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  size.width *
-                                                                      24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                          children: <
-                                                              InlineSpan>[
-                                                            TextSpan(
-                                                                text: '隐患描述：',
-                                                                style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff333333))),
-                                                            TextSpan(
-                                                                text: data[
-                                                                    'dangerDesc'],
-                                                                style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff7F8A9C))),
-                                                          ]),
-                                                    ),
-                                                    SizedBox(
-                                                      height: size.width * 16,
-                                                    ),
-                                                    data['checkUrl'] != ''
-                                                        ? Container(
-                                                            height: size.width *
-                                                                320,
-                                                            width: size.width *
-                                                                574,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              borderRadius: BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      size.width *
-                                                                          20)),
-                                                              image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      data[
-                                                                          'checkUrl']),
-                                                                  fit: BoxFit
-                                                                      .fill),
-                                                            ),
-                                                          )
-                                                        : Container(
-                                                            height: size.width *
-                                                                320,
-                                                            width: size.width *
-                                                                574,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  Colors.blue,
-                                                              borderRadius: BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      size.width *
-                                                                          20)),
-                                                            ),
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child: Text(
-                                                              '暂无图片',
-                                                              style: TextStyle(
+                                                        SizedBox(
+                                                          height:
+                                                              size.width * 16,
+                                                        ),
+                                                        data['checkUrl'] != ''
+                                                            ? Container(
+                                                                height:
+                                                                    size.width *
+                                                                        320,
+                                                                width:
+                                                                    size.width *
+                                                                        574,
+                                                                decoration:
+                                                                    BoxDecoration(
                                                                   color: Colors
                                                                       .white,
-                                                                  fontSize:
-                                                                      size.width *
-                                                                          32),
-                                                            ),
-                                                          )
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: size.width * 40,
-                                        ),
+                                                                  borderRadius: BorderRadius.all(
+                                                                      Radius.circular(
+                                                                          size.width *
+                                                                              20)),
+                                                                  image: DecorationImage(
+                                                                      image: NetworkImage(data[
+                                                                              'checkUrl']
+                                                                          .toString()
+                                                                          .split(
+                                                                              '|')[0]),
+                                                                      fit: BoxFit.fill),
+                                                                ),
+                                                              )
+                                                            : Container(
+                                                                height:
+                                                                    size.width *
+                                                                        320,
+                                                                width:
+                                                                    size.width *
+                                                                        574,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                      .blue,
+                                                                  borderRadius: BorderRadius.all(
+                                                                      Radius.circular(
+                                                                          size.width *
+                                                                              20)),
+                                                                ),
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Text(
+                                                                  '暂无图片',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          size.width *
+                                                                              32),
+                                                                ),
+                                                              )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: size.width * 40,
+                                            ),
+                                          ],
+                                        )
                                       ],
                                     )
-                                  ],
-                                )
-                              : Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: size.width * 28,
-                                      width: size.width * 28,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(size.width * 50)),
-                                          border: Border.all(
-                                              width: size.width * 6,
-                                              color: Color(0xff5FD5EC))),
-                                    ),
-                                    SizedBox(
-                                      width: size.width * 20,
-                                    ),
-                                    Column(
+                                  : Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '隐患上报  ${DateTime.fromMillisecondsSinceEpoch(data['checkTime']).toString().substring(0, 19)}',
-                                              style: TextStyle(
-                                                  color: Color(0xff7F8A9C),
-                                                  fontSize: size.width * 28,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                          ],
+                                        Container(
+                                          height: size.width * 28,
+                                          width: size.width * 28,
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      size.width * 50)),
+                                              border: Border.all(
+                                                  width: size.width * 6,
+                                                  color: Color(0xff5FD5EC))),
                                         ),
                                         SizedBox(
-                                          height: size.width * 20,
+                                          width: size.width * 20,
                                         ),
-                                        Container(
-                                          width: size.width * 638,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(
-                                                    size.width * 20),
-                                                bottomLeft: Radius.circular(
-                                                    size.width * 20),
-                                                bottomRight: Radius.circular(
-                                                    size.width * 20)),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: double.infinity,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: size.width * 32,
-                                                    vertical: size.width * 16),
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.centerLeft,
-                                                    end: Alignment.centerRight,
-                                                    colors: [
-                                                      Color(0xff2276FC)
-                                                          .withOpacity(0.12),
-                                                      Colors.transparent,
-                                                    ],
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  '隐患上报  ${DateTime.fromMillisecondsSinceEpoch(data['checkTime']).toString().substring(0, 19)}',
+                                                  style: TextStyle(
+                                                      color: Color(0xff7F8A9C),
+                                                      fontSize: size.width * 28,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: size.width * 20,
+                                            ),
+                                            Container(
+                                              width: size.width * 638,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(
+                                                        size.width * 20),
+                                                    bottomLeft: Radius.circular(
+                                                        size.width * 20),
+                                                    bottomRight:
+                                                        Radius.circular(
+                                                            size.width * 20)),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    width: double.infinity,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal:
+                                                                size.width * 32,
+                                                            vertical:
+                                                                size.width *
+                                                                    16),
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                        begin: Alignment
+                                                            .centerLeft,
+                                                        end: Alignment
+                                                            .centerRight,
+                                                        colors: [
+                                                          Color(0xff2276FC)
+                                                              .withOpacity(
+                                                                  0.12),
+                                                          Colors.transparent,
+                                                        ],
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      size.width *
+                                                                          20)),
+                                                    ),
+                                                    child: Text(
+                                                      // '排查结果是否异常0否1是',
+                                                      '上报结果：${data['isAbnormal'] == 0 ? '正常' : '存在隐患'}',
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xff333333),
+                                                          fontSize:
+                                                              size.width * 28,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topRight:
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            size.width * 32,
+                                                            size.width * 16,
+                                                            size.width * 32,
+                                                            size.width * 32),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        RichText(
+                                                          text: TextSpan(
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      size.width *
+                                                                          24,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400),
+                                                              children: <
+                                                                  InlineSpan>[
+                                                                TextSpan(
+                                                                    text:
+                                                                        '上报人：',
+                                                                    style: TextStyle(
+                                                                        color: Color(
+                                                                            0xff333333))),
+                                                                TextSpan(
+                                                                    text: data[
+                                                                        'checkUser'],
+                                                                    style: TextStyle(
+                                                                        color: Color(
+                                                                            0xff7F8A9C))),
+                                                              ]),
+                                                        ),
+                                                        SizedBox(
+                                                          height:
+                                                              size.width * 16,
+                                                        ),
+                                                        RichText(
+                                                          text: TextSpan(
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      size.width *
+                                                                          24,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400),
+                                                              children: <
+                                                                  InlineSpan>[
+                                                                TextSpan(
+                                                                    text: '地点：',
+                                                                    style: TextStyle(
+                                                                        color: Color(
+                                                                            0xff333333))),
+                                                                TextSpan(
+                                                                    text: data[
+                                                                        'address'],
+                                                                    style: TextStyle(
+                                                                        color: Color(
+                                                                            0xff7F8A9C))),
+                                                              ]),
+                                                        ),
+                                                        SizedBox(
+                                                          height:
+                                                              size.width * 16,
+                                                        ),
+                                                        RichText(
+                                                          text: TextSpan(
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      size.width *
+                                                                          24,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400),
+                                                              children: <
+                                                                  InlineSpan>[
+                                                                TextSpan(
+                                                                    text:
+                                                                        '隐患描述：',
+                                                                    style: TextStyle(
+                                                                        color: Color(
+                                                                            0xff333333))),
+                                                                TextSpan(
+                                                                    text: data[
+                                                                        'dangerDesc'],
+                                                                    style: TextStyle(
+                                                                        color: Color(
+                                                                            0xff7F8A9C))),
+                                                              ]),
+                                                        ),
+                                                        SizedBox(
+                                                          height:
+                                                              size.width * 16,
+                                                        ),
+                                                        data['checkUrl'] != ''
+                                                            ? Container(
+                                                                height:
+                                                                    size.width *
+                                                                        320,
+                                                                width:
+                                                                    size.width *
+                                                                        574,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  borderRadius: BorderRadius.all(
+                                                                      Radius.circular(
+                                                                          size.width *
+                                                                              20)),
+                                                                  image: DecorationImage(
+                                                                      image: NetworkImage(data[
+                                                                              'checkUrl']
+                                                                          .toString()
+                                                                          .split(
+                                                                              '|')[0]),
+                                                                      fit: BoxFit.fill),
+                                                                ),
+                                                              )
+                                                            : Container(
+                                                                height:
+                                                                    size.width *
+                                                                        320,
+                                                                width:
+                                                                    size.width *
+                                                                        574,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                      .blue,
+                                                                  borderRadius: BorderRadius.all(
+                                                                      Radius.circular(
+                                                                          size.width *
+                                                                              20)),
+                                                                ),
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Text(
+                                                                  '暂无图片',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          size.width *
+                                                                              32),
+                                                                ),
+                                                              )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: size.width * 40,
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    )
+                              : Container(),
+                          // 是否有隐患0否1是
+                          data['registTime'] != null && data['registTime'] != ''
+                              ? data['isHiddenDangere'] == 1
+                                  ? Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                          Container(
+                                            height: size.width * 28,
+                                            width: size.width * 28,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(
+                                                        size.width * 50)),
+                                                border: Border.all(
+                                                    width: size.width * 6,
+                                                    color: Color(0xff5FD5EC))),
+                                          ),
+                                          SizedBox(
+                                            width: size.width * 20,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    '隐患确认  ${DateTime.fromMillisecondsSinceEpoch(data['registTime']).toString().substring(0, 19)}',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff7F8A9C),
+                                                        fontSize:
+                                                            size.width * 28,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: size.width * 20,
+                                              ),
+                                              Container(
+                                                width: size.width * 638,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius
+                                                      .only(
+                                                          topRight: Radius
+                                                              .circular(
+                                                                  size.width *
+                                                                      20),
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  size.width *
+                                                                      20),
+                                                          bottomRight:
                                                               Radius.circular(
                                                                   size.width *
                                                                       20)),
                                                 ),
-                                                child: Text(
-                                                  // '排查结果是否异常0否1是',
-                                                  '上报结果：${data['isAbnormal'] == 0 ? '正常' : '存在隐患'}',
-                                                  style: TextStyle(
-                                                      color: Color(0xff333333),
-                                                      fontSize: size.width * 28,
-                                                      fontWeight:
-                                                          FontWeight.w500),
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      width: double.infinity,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: size
+                                                                      .width *
+                                                                  32,
+                                                              vertical:
+                                                                  size.width *
+                                                                      16),
+                                                      decoration: BoxDecoration(
+                                                        gradient:
+                                                            LinearGradient(
+                                                          begin: Alignment
+                                                              .centerLeft,
+                                                          end: Alignment
+                                                              .centerRight,
+                                                          colors: [
+                                                            Color(0xff2276FC)
+                                                                .withOpacity(
+                                                                    0.12),
+                                                            Colors.transparent,
+                                                          ],
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        size.width *
+                                                                            20)),
+                                                      ),
+                                                      child: Text(
+                                                        '隐患等级：${data['dangerLevel'] == '0' ? '一般隐患' : '重大隐患'}',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xff333333),
+                                                            fontSize:
+                                                                size.width * 28,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              size.width * 32,
+                                                              size.width * 16,
+                                                              size.width * 32,
+                                                              size.width * 32),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Container(
+                                                                width:
+                                                                    size.width *
+                                                                        285,
+                                                                child: RichText(
+                                                                  text: TextSpan(
+                                                                      style: TextStyle(
+                                                                          fontSize: size.width *
+                                                                              24,
+                                                                          fontWeight: FontWeight
+                                                                              .w400),
+                                                                      children: <
+                                                                          InlineSpan>[
+                                                                        TextSpan(
+                                                                            text:
+                                                                                '确认人：',
+                                                                            style:
+                                                                                TextStyle(color: Color(0xff333333))),
+                                                                        TextSpan(
+                                                                            text:
+                                                                                data['registrant'],
+                                                                            style: TextStyle(color: Color(0xff7F8A9C))),
+                                                                      ]),
+                                                                ),
+                                                              ),
+                                                              RichText(
+                                                                text: TextSpan(
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            size.width *
+                                                                                24,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400),
+                                                                    children: <
+                                                                        InlineSpan>[
+                                                                      TextSpan(
+                                                                          text:
+                                                                              '隐患名称：',
+                                                                          style:
+                                                                              TextStyle(color: Color(0xff333333))),
+                                                                      TextSpan(
+                                                                          text: data[
+                                                                              'dangerName'],
+                                                                          style:
+                                                                              TextStyle(color: Color(0xff7F8A9C))),
+                                                                    ]),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                size.width * 16,
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Container(
+                                                                width:
+                                                                    size.width *
+                                                                        285,
+                                                                child: RichText(
+                                                                  text: TextSpan(
+                                                                      style: TextStyle(
+                                                                          fontSize: size.width *
+                                                                              24,
+                                                                          fontWeight: FontWeight
+                                                                              .w400),
+                                                                      children: <
+                                                                          InlineSpan>[
+                                                                        TextSpan(
+                                                                            text:
+                                                                                '隐患来源：',
+                                                                            style:
+                                                                                TextStyle(color: Color(0xff333333))),
+                                                                        TextSpan(
+                                                                            text:
+                                                                                _getDangerSrc(data['dangerSrc']),
+                                                                            style: TextStyle(color: Color(0xff7F8A9C))),
+                                                                      ]),
+                                                                ),
+                                                              ),
+                                                              RichText(
+                                                                text: TextSpan(
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            size.width *
+                                                                                24,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400),
+                                                                    children: <
+                                                                        InlineSpan>[
+                                                                      TextSpan(
+                                                                          text:
+                                                                              '隐患类型：',
+                                                                          style:
+                                                                              TextStyle(color: Color(0xff333333))),
+                                                                      TextSpan(
+                                                                          text: _getHazardDangerType(data[
+                                                                              'hazardDangerType']),
+                                                                          style:
+                                                                              TextStyle(color: Color(0xff7F8A9C))),
+                                                                    ]),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                size.width * 16,
+                                                          ),
+                                                          RichText(
+                                                            text: TextSpan(
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        size.width *
+                                                                            24,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                                children: <
+                                                                    InlineSpan>[
+                                                                  TextSpan(
+                                                                      text:
+                                                                          '隐患描述：',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff333333))),
+                                                                  TextSpan(
+                                                                      text: data[
+                                                                          'dangerDesc'],
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff7F8A9C))),
+                                                                ]),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                size.width * 16,
+                                                          ),
+                                                          RichText(
+                                                            text: TextSpan(
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        size.width *
+                                                                            24,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                                children: <
+                                                                    InlineSpan>[
+                                                                  TextSpan(
+                                                                      text:
+                                                                          '原因分析：',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff333333))),
+                                                                  TextSpan(
+                                                                      text: data['dangerReason'] ==
+                                                                              ''
+                                                                          ? '无'
+                                                                          : data[
+                                                                              'dangerReason'],
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff7F8A9C))),
+                                                                ]),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                size.width * 16,
+                                                          ),
+                                                          RichText(
+                                                            text: TextSpan(
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        size.width *
+                                                                            24,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                                children: <
+                                                                    InlineSpan>[
+                                                                  TextSpan(
+                                                                      text:
+                                                                          '控制措施：',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff333333))),
+                                                                  TextSpan(
+                                                                      text: data['controlMeasures'] ==
+                                                                              ''
+                                                                          ? '无'
+                                                                          : data[
+                                                                              'controlMeasures'],
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff7F8A9C))),
+                                                                ]),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                size.width * 16,
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Container(
+                                                                width:
+                                                                    size.width *
+                                                                        285,
+                                                                child: RichText(
+                                                                  text: TextSpan(
+                                                                      style: TextStyle(
+                                                                          fontSize: size.width *
+                                                                              24,
+                                                                          fontWeight: FontWeight
+                                                                              .w400),
+                                                                      children: <
+                                                                          InlineSpan>[
+                                                                        TextSpan(
+                                                                            text:
+                                                                                '资金：',
+                                                                            style:
+                                                                                TextStyle(color: Color(0xff333333))),
+                                                                        TextSpan(
+                                                                            text:
+                                                                                '${data['cost']} 万元',
+                                                                            style:
+                                                                                TextStyle(color: Color(0xff7F8A9C))),
+                                                                      ]),
+                                                                ),
+                                                              ),
+                                                              RichText(
+                                                                text: TextSpan(
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            size.width *
+                                                                                24,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400),
+                                                                    children: <
+                                                                        InlineSpan>[
+                                                                      TextSpan(
+                                                                          text:
+                                                                              '整改责任人：',
+                                                                          style:
+                                                                              TextStyle(color: Color(0xff333333))),
+                                                                      TextSpan(
+                                                                          text: data[
+                                                                              'liablePerson'],
+                                                                          style:
+                                                                              TextStyle(color: Color(0xff7F8A9C))),
+                                                                    ]),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                size.width * 16,
+                                                          ),
+                                                          RichText(
+                                                            text: TextSpan(
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        size.width *
+                                                                            24,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                                children: <
+                                                                    InlineSpan>[
+                                                                  TextSpan(
+                                                                      text:
+                                                                          '隐患治理期限：',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff333333))),
+                                                                  TextSpan(
+                                                                      text: DateTime.fromMillisecondsSinceEpoch(data[
+                                                                              'dangerManageDeadline'])
+                                                                          .toString()
+                                                                          .substring(
+                                                                              0,
+                                                                              19),
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff7F8A9C))),
+                                                                ]),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                size.width * 16,
+                                                          ),
+                                                          RichText(
+                                                            text: TextSpan(
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        size.width *
+                                                                            24,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                                children: <
+                                                                    InlineSpan>[
+                                                                  TextSpan(
+                                                                      text:
+                                                                          '验收人姓名：',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff333333))),
+                                                                  TextSpan(
+                                                                      text: data[
+                                                                          'checkAcceptPerson'],
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff7F8A9C))),
+                                                                ]),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
                                               ),
-                                              Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    size.width * 32,
-                                                    size.width * 16,
-                                                    size.width * 32,
-                                                    size.width * 32),
+                                              SizedBox(
+                                                height: size.width * 40,
+                                              ),
+                                            ],
+                                          )
+                                        ])
+                                  : Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                          Container(
+                                            height: size.width * 28,
+                                            width: size.width * 28,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(
+                                                        size.width * 50)),
+                                                border: Border.all(
+                                                    width: size.width * 6,
+                                                    color: Color(0xff5FD5EC))),
+                                          ),
+                                          SizedBox(
+                                            width: size.width * 20,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    '隐患确认  ${DateTime.fromMillisecondsSinceEpoch(data['registTime']).toString().substring(0, 19)}',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff7F8A9C),
+                                                        fontSize:
+                                                            size.width * 28,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: size.width * 20,
+                                              ),
+                                              Container(
+                                                width: size.width * 638,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius
+                                                      .only(
+                                                          topRight: Radius
+                                                              .circular(
+                                                                  size.width *
+                                                                      20),
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  size.width *
+                                                                      20),
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  size.width *
+                                                                      20)),
+                                                ),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    RichText(
-                                                      text: TextSpan(
-                                                          style: TextStyle(
-                                                              fontSize:
+                                                    Container(
+                                                      width: double.infinity,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: size
+                                                                      .width *
+                                                                  32,
+                                                              vertical:
                                                                   size.width *
-                                                                      24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                          children: <
-                                                              InlineSpan>[
-                                                            TextSpan(
-                                                                text: '上报人：',
-                                                                style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff333333))),
-                                                            TextSpan(
-                                                                text: data[
-                                                                    'checkUser'],
-                                                                style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff7F8A9C))),
-                                                          ]),
+                                                                      16),
+                                                      decoration: BoxDecoration(
+                                                        gradient:
+                                                            LinearGradient(
+                                                          begin: Alignment
+                                                              .centerLeft,
+                                                          end: Alignment
+                                                              .centerRight,
+                                                          colors: [
+                                                            Color(0xff2276FC)
+                                                                .withOpacity(
+                                                                    0.12),
+                                                            Colors.transparent,
+                                                          ],
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        size.width *
+                                                                            20)),
+                                                      ),
+                                                      child: Text(
+                                                        '隐患确认结果：已驳回',
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xff333333),
+                                                            fontSize:
+                                                                size.width * 28,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      ),
                                                     ),
-                                                    SizedBox(
-                                                      height: size.width * 16,
-                                                    ),
-                                                    RichText(
-                                                      text: TextSpan(
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  size.width *
-                                                                      24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                          children: <
-                                                              InlineSpan>[
-                                                            TextSpan(
-                                                                text: '地点：',
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              size.width * 32,
+                                                              size.width * 16,
+                                                              size.width * 32,
+                                                              size.width * 32),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          RichText(
+                                                            text: TextSpan(
                                                                 style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff333333))),
-                                                            TextSpan(
-                                                                text: data[
-                                                                    'address'],
+                                                                    fontSize:
+                                                                        size.width *
+                                                                            24,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                                children: <
+                                                                    InlineSpan>[
+                                                                  TextSpan(
+                                                                      text:
+                                                                          '确认人：',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff333333))),
+                                                                  TextSpan(
+                                                                      text: data[
+                                                                          'registrant'],
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff7F8A9C))),
+                                                                ]),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                size.width * 16,
+                                                          ),
+                                                          RichText(
+                                                            text: TextSpan(
                                                                 style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff7F8A9C))),
-                                                          ]),
-                                                    ),
-                                                    SizedBox(
-                                                      height: size.width * 16,
-                                                    ),
-                                                    RichText(
-                                                      text: TextSpan(
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  size.width *
-                                                                      24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                          children: <
-                                                              InlineSpan>[
-                                                            TextSpan(
-                                                                text: '隐患描述：',
-                                                                style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff333333))),
-                                                            TextSpan(
-                                                                text: data[
-                                                                    'dangerDesc'],
-                                                                style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff7F8A9C))),
-                                                          ]),
-                                                    ),
-                                                    SizedBox(
-                                                      height: size.width * 16,
-                                                    ),
-                                                    data['checkUrl'] != ''
-                                                        ? Container(
-                                                            height: size.width *
-                                                                320,
-                                                            width: size.width *
-                                                                574,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              borderRadius: BorderRadius.all(
-                                                                  Radius.circular(
+                                                                    fontSize:
+                                                                        size.width *
+                                                                            24,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400),
+                                                                children: <
+                                                                    InlineSpan>[
+                                                                  TextSpan(
+                                                                      text:
+                                                                          '驳回意见：',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff333333))),
+                                                                  TextSpan(
+                                                                      text: data['registOpinion'] ==
+                                                                              ''
+                                                                          ? '无'
+                                                                          : data[
+                                                                              'registOpinion'],
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Color(0xff7F8A9C))),
+                                                                ]),
+                                                          ),
+                                                          SizedBox(
+                                                            height:
+                                                                size.width * 16,
+                                                          ),
+                                                          data['registUrl'] !=
+                                                                  ''
+                                                              ? Container(
+                                                                  height:
                                                                       size.width *
-                                                                          20)),
-                                                              image: DecorationImage(
-                                                                  image: AssetImage(
-                                                                      data[
-                                                                          'checkUrl']),
-                                                                  fit: BoxFit
-                                                                      .fill),
-                                                            ),
-                                                          )
-                                                        : Container(
-                                                            height: size.width *
-                                                                320,
-                                                            width: size.width *
-                                                                574,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  Colors.blue,
-                                                              borderRadius: BorderRadius.all(
-                                                                  Radius.circular(
+                                                                          320,
+                                                                  width:
                                                                       size.width *
-                                                                          20)),
-                                                            ),
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child: Text(
-                                                              '暂无图片',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize:
+                                                                          574,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    borderRadius:
+                                                                        BorderRadius.all(Radius.circular(size.width *
+                                                                            20)),
+                                                                    image: DecorationImage(
+                                                                        image: NetworkImage(data['registUrl']
+                                                                            .toString()
+                                                                            .split('|')[0]),
+                                                                        fit: BoxFit.fill),
+                                                                  ),
+                                                                )
+                                                              : Container(
+                                                                  height:
                                                                       size.width *
-                                                                          32),
-                                                            ),
-                                                          )
+                                                                          320,
+                                                                  width:
+                                                                      size.width *
+                                                                          574,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Colors
+                                                                        .blue,
+                                                                    borderRadius:
+                                                                        BorderRadius.all(Radius.circular(size.width *
+                                                                            20)),
+                                                                  ),
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child: Text(
+                                                                    '暂无图片',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            size.width *
+                                                                                32),
+                                                                  ),
+                                                                )
+                                                        ],
+                                                      ),
+                                                    )
                                                   ],
                                                 ),
-                                              )
+                                              ),
+                                              SizedBox(
+                                                height: size.width * 40,
+                                              ),
                                             ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: size.width * 40,
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                          : Container(),
-                          // 是否有隐患0否1是
-                          data['registTime'] != null && data['registTime'] != ''
-                          ? data['isHiddenDangere'] == 1
+                                          )
+                                        ])
+                              : Container(),
+                          // 隐患整改
+                          data['liableCompletedTime'] != null &&
+                                  data['liableCompletedTime'] != ''
                               ? Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -777,7 +1523,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                           Row(
                                             children: [
                                               Text(
-                                                '隐患确认  ${data['registTime']}',
+                                                '隐患整改  ${DateTime.fromMillisecondsSinceEpoch(data['liableCompletedTime']).toString().substring(0, 19)}',
                                                 style: TextStyle(
                                                     color: Color(0xff7F8A9C),
                                                     fontSize: size.width * 28,
@@ -830,445 +1576,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         20)),
                                                   ),
                                                   child: Text(
-                                                    '隐患等级：${data['dangerLevel'] == '0' ? '一般隐患' : '重大隐患'}',
-                                                    style: TextStyle(
-                                                        color:
-                                                            Color(0xff333333),
-                                                        fontSize:
-                                                            size.width * 28,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      size.width * 32,
-                                                      size.width * 16,
-                                                      size.width * 32,
-                                                      size.width * 32),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                            width: size.width *
-                                                                285,
-                                                            child: RichText(
-                                                              text: TextSpan(
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          size.width *
-                                                                              24,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400),
-                                                                  children: <
-                                                                      InlineSpan>[
-                                                                    TextSpan(
-                                                                        text:
-                                                                            '确认人：',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Color(0xff333333))),
-                                                                    TextSpan(
-                                                                        text: data[
-                                                                            'registrant'],
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Color(0xff7F8A9C))),
-                                                                  ]),
-                                                            ),
-                                                          ),
-                                                          RichText(
-                                                            text: TextSpan(
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        size.width *
-                                                                            24,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                                children: <
-                                                                    InlineSpan>[
-                                                                  TextSpan(
-                                                                      text:
-                                                                          '隐患名称：',
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Color(0xff333333))),
-                                                                  TextSpan(
-                                                                      text: data[
-                                                                          'dangerName'],
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Color(0xff7F8A9C))),
-                                                                ]),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: size.width * 16,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                            width: size.width *
-                                                                285,
-                                                            child: RichText(
-                                                              text: TextSpan(
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          size.width *
-                                                                              24,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400),
-                                                                  children: <
-                                                                      InlineSpan>[
-                                                                    TextSpan(
-                                                                        text:
-                                                                            '隐患来源：',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Color(0xff333333))),
-                                                                    TextSpan(
-                                                                        text: _getDangerSrc(data[
-                                                                            'dangerSrc']),
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Color(0xff7F8A9C))),
-                                                                  ]),
-                                                            ),
-                                                          ),
-                                                          RichText(
-                                                            text: TextSpan(
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        size.width *
-                                                                            24,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                                children: <
-                                                                    InlineSpan>[
-                                                                  TextSpan(
-                                                                      text:
-                                                                          '隐患类型：',
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Color(0xff333333))),
-                                                                  TextSpan(
-                                                                      text: _getHazardDangerType(
-                                                                          data[
-                                                                              'hazardDangerType']),
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Color(0xff7F8A9C))),
-                                                                ]),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: size.width * 16,
-                                                      ),
-                                                      RichText(
-                                                        text: TextSpan(
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    size.width *
-                                                                        24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                            children: <
-                                                                InlineSpan>[
-                                                              TextSpan(
-                                                                  text: '隐患描述：',
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff333333))),
-                                                              TextSpan(
-                                                                  text: data[
-                                                                      'dangerDesc'],
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff7F8A9C))),
-                                                            ]),
-                                                      ),
-                                                      SizedBox(
-                                                        height: size.width * 16,
-                                                      ),
-                                                      RichText(
-                                                        text: TextSpan(
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    size.width *
-                                                                        24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                            children: <
-                                                                InlineSpan>[
-                                                              TextSpan(
-                                                                  text: '原因分析：',
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff333333))),
-                                                              TextSpan(
-                                                                  text: data['dangerReason'] ==
-                                                                          ''
-                                                                      ? '无'
-                                                                      : data[
-                                                                          'dangerReason'],
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff7F8A9C))),
-                                                            ]),
-                                                      ),
-                                                      SizedBox(
-                                                        height: size.width * 16,
-                                                      ),
-                                                      RichText(
-                                                        text: TextSpan(
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    size.width *
-                                                                        24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                            children: <
-                                                                InlineSpan>[
-                                                              TextSpan(
-                                                                  text: '控制措施：',
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff333333))),
-                                                              TextSpan(
-                                                                  text: data['controlMeasures'] ==
-                                                                          ''
-                                                                      ? '无'
-                                                                      : data[
-                                                                          'controlMeasures'],
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff7F8A9C))),
-                                                            ]),
-                                                      ),
-                                                      SizedBox(
-                                                        height: size.width * 16,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                            width: size.width *
-                                                                285,
-                                                            child: RichText(
-                                                              text: TextSpan(
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          size.width *
-                                                                              24,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400),
-                                                                  children: <
-                                                                      InlineSpan>[
-                                                                    TextSpan(
-                                                                        text:
-                                                                            '资金：',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Color(0xff333333))),
-                                                                    TextSpan(
-                                                                        text:
-                                                                            '${data['cost']} 万元',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Color(0xff7F8A9C))),
-                                                                  ]),
-                                                            ),
-                                                          ),
-                                                          RichText(
-                                                            text: TextSpan(
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        size.width *
-                                                                            24,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                                children: <
-                                                                    InlineSpan>[
-                                                                  TextSpan(
-                                                                      text:
-                                                                          '整改责任人：',
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Color(0xff333333))),
-                                                                  TextSpan(
-                                                                      text: data[
-                                                                          'liablePerson'],
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              Color(0xff7F8A9C))),
-                                                                ]),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: size.width * 16,
-                                                      ),
-                                                      RichText(
-                                                        text: TextSpan(
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    size.width *
-                                                                        24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                            children: <
-                                                                InlineSpan>[
-                                                              TextSpan(
-                                                                  text:
-                                                                      '隐患治理期限：',
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff333333))),
-                                                              TextSpan(
-                                                                  text: data[
-                                                                          'dangerManageDeadline']
-                                                                      .toString(),
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff7F8A9C))),
-                                                            ]),
-                                                      ),
-                                                      SizedBox(
-                                                        height: size.width * 16,
-                                                      ),
-                                                      RichText(
-                                                        text: TextSpan(
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    size.width *
-                                                                        24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                            children: <
-                                                                InlineSpan>[
-                                                              TextSpan(
-                                                                  text:
-                                                                      '验收人姓名：',
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff333333))),
-                                                              TextSpan(
-                                                                  text: data[
-                                                                      'checkAcceptPerson'],
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff7F8A9C))),
-                                                            ]),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: size.width * 40,
-                                          ),
-                                        ],
-                                      )
-                                    ])
-                              : Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                      Container(
-                                        height: size.width * 28,
-                                        width: size.width * 28,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(
-                                                    size.width * 50)),
-                                            border: Border.all(
-                                                width: size.width * 6,
-                                                color: Color(0xff5FD5EC))),
-                                      ),
-                                      SizedBox(
-                                        width: size.width * 20,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '隐患确认  ${data['registTime']}',
-                                                style: TextStyle(
-                                                    color: Color(0xff7F8A9C),
-                                                    fontSize: size.width * 28,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: size.width * 20,
-                                          ),
-                                          Container(
-                                            width: size.width * 638,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(
-                                                      size.width * 20),
-                                                  bottomLeft: Radius.circular(
-                                                      size.width * 20),
-                                                  bottomRight: Radius.circular(
-                                                      size.width * 20)),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  width: double.infinity,
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          size.width * 32,
-                                                      vertical:
-                                                          size.width * 16),
-                                                  decoration: BoxDecoration(
-                                                    gradient: LinearGradient(
-                                                      begin:
-                                                          Alignment.centerLeft,
-                                                      end:
-                                                          Alignment.centerRight,
-                                                      colors: [
-                                                        Color(0xff2276FC)
-                                                            .withOpacity(0.12),
-                                                        Colors.transparent,
-                                                      ],
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    size.width *
-                                                                        20)),
-                                                  ),
-                                                  child: Text(
-                                                    '隐患确认结果：已驳回',
+                                                    '整改责任人：${data['liablePerson']}',
                                                     style: TextStyle(
                                                         color:
                                                             Color(0xff333333),
@@ -1301,13 +1609,13 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                             children: <
                                                                 InlineSpan>[
                                                               TextSpan(
-                                                                  text: '确认人：',
+                                                                  text: '整改意见：',
                                                                   style: TextStyle(
                                                                       color: Color(
                                                                           0xff333333))),
                                                               TextSpan(
                                                                   text: data[
-                                                                      'registrant'],
+                                                                      'liableOpinion'],
                                                                   style: TextStyle(
                                                                       color: Color(
                                                                           0xff7F8A9C))),
@@ -1316,37 +1624,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                       SizedBox(
                                                         height: size.width * 16,
                                                       ),
-                                                      RichText(
-                                                        text: TextSpan(
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    size.width *
-                                                                        24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                            children: <
-                                                                InlineSpan>[
-                                                              TextSpan(
-                                                                  text: '驳回意见：',
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff333333))),
-                                                              TextSpan(
-                                                                  text: data['registOpinion'] ==
-                                                                          ''
-                                                                      ? '无'
-                                                                      : data[
-                                                                          'registOpinion'],
-                                                                  style: TextStyle(
-                                                                      color: Color(
-                                                                          0xff7F8A9C))),
-                                                            ]),
-                                                      ),
-                                                      SizedBox(
-                                                        height: size.width * 16,
-                                                      ),
-                                                      data['registUrl'] != ''
+                                                      data['liableUrl'] != ''
                                                           ? Container(
                                                               height:
                                                                   size.width *
@@ -1363,9 +1641,9 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         size.width *
                                                                             20)),
                                                                 image: DecorationImage(
-                                                                    image: AssetImage(
+                                                                    image: NetworkImage(
                                                                         data[
-                                                                            'registUrl']),
+                                                                            'liableUrl']),
                                                                     fit: BoxFit
                                                                         .fill),
                                                               ),
@@ -1411,291 +1689,139 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                         ],
                                       )
                                     ])
-                          : Container(),
-                          // 隐患整改
-                          data['liableCompletedTime'] != null && data['liableCompletedTime'] != ''
-                          ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: size.width * 28,
-                                  width: size.width * 28,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(size.width * 50)),
-                                      border: Border.all(
-                                          width: size.width * 6,
-                                          color: Color(0xff5FD5EC))),
-                                ),
-                                SizedBox(
-                                  width: size.width * 20,
-                                ),
-                                Column(
+                              : Container(),
+                          // 整改完成审批
+                          data['checkAcceptTime'] != null &&
+                                  data['checkAcceptTime'] != ''
+                              ? Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '隐患整改  ${data['liableCompletedTime']}',
-                                          style: TextStyle(
-                                              color: Color(0xff7F8A9C),
-                                              fontSize: size.width * 28,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: size.width * 20,
-                                    ),
-                                    Container(
-                                      width: size.width * 638,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(
-                                                size.width * 20),
-                                            bottomLeft: Radius.circular(
-                                                size.width * 20),
-                                            bottomRight: Radius.circular(
-                                                size.width * 20)),
+                                      Container(
+                                        height: size.width * 28,
+                                        width: size.width * 28,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(
+                                                    size.width * 50)),
+                                            border: Border.all(
+                                                width: size.width * 6,
+                                                color: Color(0xff5FD5EC))),
                                       ),
-                                      child: Column(
+                                      SizedBox(
+                                        width: size.width * 20,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Container(
-                                            width: double.infinity,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: size.width * 32,
-                                                vertical: size.width * 16),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment.centerLeft,
-                                                end: Alignment.centerRight,
-                                                colors: [
-                                                  Color(0xff2276FC)
-                                                      .withOpacity(0.12),
-                                                  Colors.transparent,
-                                                ],
+                                          Row(
+                                            children: [
+                                              Text(
+                                                '整改完成审批  ${DateTime.fromMillisecondsSinceEpoch(data['checkAcceptTime']).toString().substring(0, 19)}',
+                                                style: TextStyle(
+                                                    color: Color(0xff7F8A9C),
+                                                    fontSize: size.width * 28,
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: size.width * 20,
+                                          ),
+                                          Container(
+                                            width: size.width * 638,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
                                               borderRadius: BorderRadius.only(
                                                   topRight: Radius.circular(
+                                                      size.width * 20),
+                                                  bottomLeft: Radius.circular(
+                                                      size.width * 20),
+                                                  bottomRight: Radius.circular(
                                                       size.width * 20)),
                                             ),
-                                            child: Text(
-                                              '整改责任人：${data['liablePerson']}',
-                                              style: TextStyle(
-                                                  color: Color(0xff333333),
-                                                  fontSize: size.width * 28,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                size.width * 32,
-                                                size.width * 16,
-                                                size.width * 32,
-                                                size.width * 32),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                RichText(
-                                                  text: TextSpan(
-                                                      style: TextStyle(
-                                                          fontSize:
-                                                              size.width * 24,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                      children: <InlineSpan>[
-                                                        TextSpan(
-                                                            text: '整改意见：',
-                                                            style: TextStyle(
-                                                                color: Color(
-                                                                    0xff333333))),
-                                                        TextSpan(
-                                                            text: data[
-                                                                'liableOpinion'],
-                                                            style: TextStyle(
-                                                                color: Color(
-                                                                    0xff7F8A9C))),
-                                                      ]),
+                                                Container(
+                                                  width: double.infinity,
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal:
+                                                          size.width * 32,
+                                                      vertical:
+                                                          size.width * 16),
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      begin:
+                                                          Alignment.centerLeft,
+                                                      end:
+                                                          Alignment.centerRight,
+                                                      colors: [
+                                                        Color(0xff2276FC)
+                                                            .withOpacity(0.12),
+                                                        Colors.transparent,
+                                                      ],
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    size.width *
+                                                                        20)),
+                                                  ),
+                                                  child: Text(
+                                                    '验收人姓名：${data['checkAcceptPerson']}',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff333333),
+                                                        fontSize:
+                                                            size.width * 28,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
                                                 ),
-                                                SizedBox(
-                                                  height: size.width * 16,
-                                                ),
-                                                data['liableUrl'] != ''
-                                                    ? Container(
-                                                        height:
-                                                            size.width * 320,
-                                                        width: size.width * 574,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      size.width *
-                                                                          20)),
-                                                          image: DecorationImage(
-                                                              image: AssetImage(
-                                                                  data[
-                                                                      'liableUrl']),
-                                                              fit: BoxFit.fill),
-                                                        ),
-                                                      )
-                                                    : Container(
-                                                        height:
-                                                            size.width * 320,
-                                                        width: size.width * 574,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.blue,
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      size.width *
-                                                                          20)),
-                                                        ),
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(
-                                                          '暂无图片',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize:
-                                                                  size.width *
-                                                                      32),
-                                                        ),
-                                                      )
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      size.width * 32,
+                                                      size.width * 16,
+                                                      size.width * 32,
+                                                      size.width * 32),
+                                                  child: RichText(
+                                                    text: TextSpan(
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                size.width * 24,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                        children: <InlineSpan>[
+                                                          TextSpan(
+                                                              text: '验收情况：',
+                                                              style: TextStyle(
+                                                                  color: Color(
+                                                                      0xff333333))),
+                                                          TextSpan(
+                                                              text: data[
+                                                                  'checkAcceptComment'],
+                                                              style: TextStyle(
+                                                                  color: Color(
+                                                                      0xff7F8A9C))),
+                                                        ]),
+                                                  ),
+                                                )
                                               ],
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: size.width * 40,
-                                    ),
-                                  ],
-                                )
-                              ])
-                          : Container(),
-                          // 整改完成审批
-                          data['checkAcceptTime'] != null && data['checkAcceptTime'] != ''
-                          ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: size.width * 28,
-                                  width: size.width * 28,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(size.width * 50)),
-                                      border: Border.all(
-                                          width: size.width * 6,
-                                          color: Color(0xff5FD5EC))),
-                                ),
-                                SizedBox(
-                                  width: size.width * 20,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '整改完成审批  ${data['checkAcceptTime']}',
-                                          style: TextStyle(
-                                              color: Color(0xff7F8A9C),
-                                              fontSize: size.width * 28,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: size.width * 20,
-                                    ),
-                                    Container(
-                                      width: size.width * 638,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(
-                                                size.width * 20),
-                                            bottomLeft: Radius.circular(
-                                                size.width * 20),
-                                            bottomRight: Radius.circular(
-                                                size.width * 20)),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            width: double.infinity,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: size.width * 32,
-                                                vertical: size.width * 16),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment.centerLeft,
-                                                end: Alignment.centerRight,
-                                                colors: [
-                                                  Color(0xff2276FC)
-                                                      .withOpacity(0.12),
-                                                  Colors.transparent,
-                                                ],
-                                              ),
-                                              borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(
-                                                      size.width * 20)),
-                                            ),
-                                            child: Text(
-                                              '验收人姓名：${data['checkAcceptPerson']}',
-                                              style: TextStyle(
-                                                  color: Color(0xff333333),
-                                                  fontSize: size.width * 28,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
                                           ),
-                                          Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                size.width * 32,
-                                                size.width * 16,
-                                                size.width * 32,
-                                                size.width * 32),
-                                            child: RichText(
-                                              text: TextSpan(
-                                                  style: TextStyle(
-                                                      fontSize: size.width * 24,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                  children: <InlineSpan>[
-                                                    TextSpan(
-                                                        text: '验收情况：',
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xff333333))),
-                                                    TextSpan(
-                                                        text: data[
-                                                            'checkAcceptComment'],
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xff7F8A9C))),
-                                                  ]),
-                                            ),
-                                          )
+                                          SizedBox(
+                                            height: size.width * 40,
+                                          ),
                                         ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: size.width * 40,
-                                    ),
-                                  ],
-                                )
-                              ])
-                          : Container()
+                                      )
+                                    ])
+                              : Container()
                         ],
                       ),
                     )

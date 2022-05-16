@@ -90,7 +90,7 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
     }
   }
 
-  String _getCheckMeans(String checkMeans){
+  String _getCheckMeans(String checkMeans) {
     // 0_现场确认；1_拍照；2_热成像；3_震动
     switch (checkMeans) {
       case '0':
@@ -375,7 +375,10 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                                         color:
                                                             Color(0xff333333))),
                                                 TextSpan(
-                                                    text: '在管控范围内',
+                                                    text:
+                                                        data['checkUser'] == ''
+                                                            ? ''
+                                                            : '在管控范围内',
                                                     style: TextStyle(
                                                         color:
                                                             Color(0xff7F8A9C))),
@@ -415,8 +418,10 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                                   Radius.circular(
                                                       size.width * 20)),
                                               image: DecorationImage(
-                                                  image: AssetImage(
-                                                      data['checkUrl']),
+                                                  image: NetworkImage(
+                                                      data['checkUrl']
+                                                          .toString()
+                                                          .split('|')[0]),
                                                   fit: BoxFit.fill),
                                             ),
                                           )
@@ -433,9 +438,8 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                             child: Text(
                                               '暂无图片',
                                               style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: size.width * 32
-                                              ),
+                                                  color: Colors.white,
+                                                  fontSize: size.width * 32),
                                             ),
                                           )
                                   ],

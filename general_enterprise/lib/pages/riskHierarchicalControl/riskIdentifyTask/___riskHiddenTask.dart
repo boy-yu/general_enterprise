@@ -28,8 +28,28 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
     };
   }
 
+  String _getCheckMeans(String checkMeans) {
+    switch (checkMeans) {
+      case '0':
+        return '现场确认';
+        break;
+      case '1':
+        return '拍照';
+        break;
+      case '2':
+        return '热成像';
+        break;
+      case '3':
+        return '震动';
+        break;
+      default:
+        return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(_queryParameters);
     return MyAppbar(
       title: Text(
         "隐患排查内容",
@@ -132,7 +152,7 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                              Color(0xffF56271).withOpacity(0.12),
+                              Color(0xff2276FC).withOpacity(0.12),
                               Colors.transparent,
                             ],
                           ),
@@ -142,7 +162,7 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
                           horizontal: size.width * 20,
                           vertical: size.width * 16),
                       child: Text(
-                        list[index]['checkTask'],
+                        list[index]['troubleshootContent'].toString(),
                         style: TextStyle(
                             color: Color(0xff333333),
                             fontSize: size.width * 28,
@@ -169,7 +189,8 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['pollingPeriod'],
+                                        text:
+                                            '${list[index]['checkCycle']}/${list[index]['checkCycleUnit']}',
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -188,7 +209,8 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['controlMeans'],
+                                        text: _getCheckMeans(
+                                            list[index]['checkMeans']),
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -212,10 +234,10 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
       actions: [
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/riskIdentifyTask/addHiddenTask', arguments: {
-              'riskMeasureId': widget.leftBarList[leftBarIndex]['id']
-            })
-                .then((value) => {_throwFunc.run()});
+            Navigator.pushNamed(context, '/riskIdentifyTask/addHiddenTask',
+                arguments: {
+                  'riskMeasureId': widget.leftBarList[leftBarIndex]['id']
+                }).then((value) => {_throwFunc.run()});
           },
           child: Container(
             decoration: BoxDecoration(

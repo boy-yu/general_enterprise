@@ -9,6 +9,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class HiddenReported extends StatefulWidget {
+  HiddenReported({this.callback});
+  final Function callback;
   @override
   State<HiddenReported> createState() => _HiddenReportedState();
 }
@@ -25,16 +27,7 @@ class _HiddenReportedState extends State<HiddenReported> {
     "riskObjectId": ""
   };
 
-  List riskObjectList = [
-    {'riskObjectName': '风险分析对象1'},
-    {'riskObjectName': '风险分析对象2'},
-    {'riskObjectName': '风险分析对象3'},
-    {'riskObjectName': '风险分析对象4'},
-    {'riskObjectName': '风险分析对象5'},
-    {'riskObjectName': '风险分析对象6'},
-    {'riskObjectName': '风险分析对象7'},
-    {'riskObjectName': '风险分析对象8'},
-  ];
+  List riskObjectList = [];
 
   @override
   void initState() {
@@ -58,7 +51,7 @@ class _HiddenReportedState extends State<HiddenReported> {
   List _generateImage({String state}) {
     List image = [];
     if (_counter.submitDates['上报隐患'] == null) {
-      // Fluttertoast.showToast(msg: '请拍照');
+      Fluttertoast.showToast(msg: '请拍照');
     } else {
       bool next = false;
       _counter.submitDates['上报隐患'].forEach((ele) {
@@ -104,17 +97,18 @@ class _HiddenReportedState extends State<HiddenReported> {
               url: Interface.postHiddenDangerReporting,
               data: submitData)
           .then((value) {
-        Fluttertoast.showToast(msg: '隐患上报成功');
         submitData = {
           "address": "",
           "checkUrl": "",
           "dangerDesc": "",
           "riskObjectId": ""
         };
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
+        successToast('隐患上报成功');
+        widget.callback();
       });
-      // Fluttertoast.showToast(msg: '上报成功');
-
     }
   }
 

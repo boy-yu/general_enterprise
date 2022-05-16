@@ -14,7 +14,7 @@ class Mine extends StatefulWidget {
   State<Mine> createState() => _MineState();
 }
 
-class _MineState extends State<Mine> with TickerProviderStateMixin{
+class _MineState extends State<Mine> with TickerProviderStateMixin {
   Counter _counter;
 
   bool isVersion = false;
@@ -99,157 +99,172 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
                     fit: BoxFit.fill, // 完全填充
                   ),
                 ),
-                child: show ? Row(
-                  children: [
-                    SizedBox(
-                      width: size.width * 40,
-                    ),
-                    Container(
-                      height: size.width * 120,
-                      width: size.width * 120,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(size.width * 48)),
-                        image: DecorationImage(
-                          image: myprefs.getString('avatar') == '' ||
-                                  myprefs.getString('avatar') == null
-                              ? AssetImage(
-                                  'assets/images/doubleRiskProjeck/image_avatar_default.png')
-                              : NetworkImage(myprefs.getString('avatar')),
-                          fit: BoxFit.fill, // 完全填充
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: size.width * 24,
-                    ),
-                    Text(
-                      myprefs.getString('nickname') ?? '',
-                      style: TextStyle(
-                          color: Colors.white, fontSize: size.width * 30),
-                    ),
-                  ],
-                ) : Container(),
+                child: show
+                    ? Row(
+                        children: [
+                          SizedBox(
+                            width: size.width * 40,
+                          ),
+                          Container(
+                            height: size.width * 120,
+                            width: size.width * 120,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(size.width * 48)),
+                              image: DecorationImage(
+                                image: myprefs.getString('avatar') == '' ||
+                                        myprefs.getString('avatar') == null
+                                    ? AssetImage(
+                                        'assets/images/doubleRiskProjeck/image_avatar_default.png')
+                                    : NetworkImage(myprefs.getString('avatar')),
+                                fit: BoxFit.fill, // 完全填充
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: size.width * 24,
+                          ),
+                          Text(
+                            myprefs.getString('nickname') ?? '',
+                            style: TextStyle(
+                                color: Colors.white, fontSize: size.width * 30),
+                          ),
+                        ],
+                      )
+                    : Container(),
               ),
               Expanded(
                 child: Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.only(top: size.width * 200),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: data.length,
-                          padding: EdgeInsets.all(0),
-                          itemBuilder: (context, index){
-                            return InkWell(
-                              onTap: () {
-                                if (data[index]['router'] == null) {
-                                  Fluttertoast.showToast(msg: '敬请期待');
-                                } else {
-                                  Navigator.of(context).pushNamed(data[index]['router'],
-                                      arguments: {'width': size.width}).then((value) {
-                                    // 返回值
-                                  });
-                                }
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: size.width * 40, vertical: size.width * 30),
-                                  child: Column(
-                                    children: [
-                                      Row(
+                    color: Colors.white,
+                    padding: EdgeInsets.only(top: size.width * 200),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: data.length,
+                              padding: EdgeInsets.all(0),
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    if (data[index]['router'] == null) {
+                                      Fluttertoast.showToast(msg: '敬请期待');
+                                    } else {
+                                      Navigator.of(context).pushNamed(
+                                          data[index]['router'],
+                                          arguments: {
+                                            'width': size.width
+                                          }).then((value) {
+                                        // 返回值
+                                      });
+                                    }
+                                  },
+                                  child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: size.width * 40,
+                                          vertical: size.width * 30),
+                                      child: Column(
                                         children: [
-                                          Image.asset(
-                                            data[index]['icon'],
-                                            height: size.width * 44,
-                                            width: size.width * 44,
+                                          Row(
+                                            children: [
+                                              Image.asset(
+                                                data[index]['icon'],
+                                                height: size.width * 44,
+                                                width: size.width * 44,
+                                              ),
+                                              SizedBox(
+                                                width: size.width * 26,
+                                              ),
+                                              Text(
+                                                data[index]['name'],
+                                                style: TextStyle(
+                                                    color: Color(0xff333333),
+                                                    fontSize: size.width * 32,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              data[index]['name'] == '版本更新' &&
+                                                      isVersion
+                                                  ? Container(
+                                                      width: size.width * 12,
+                                                      height: size.width * 12,
+                                                      margin: EdgeInsets.only(
+                                                          left:
+                                                              size.width * 10),
+                                                      decoration: BoxDecoration(
+                                                          color:
+                                                              Color(0xffFF3434),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      50.0))),
+                                                    )
+                                                  : Container(),
+                                              Spacer(),
+                                              Image.asset(
+                                                data[index]['active'],
+                                                height: size.width * 40,
+                                                width: size.width * 40,
+                                              ),
+                                              SizedBox(
+                                                width: size.width * 20,
+                                              )
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: size.width * 26,
-                                          ),
-                                          Text(
-                                            data[index]['name'],
-                                            style: TextStyle(
-                                                color: Color(0xff333333),
-                                                fontSize: size.width * 32,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          data[index]['name'] == '版本更新' && isVersion
-                                              ? Container(
-                                                  width: size.width * 12,
-                                                  height: size.width * 12,
-                                                  margin:
-                                                      EdgeInsets.only(left: size.width * 10),
-                                                  decoration: BoxDecoration(
-                                                      color: Color(0xffFF3434),
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(50.0))),
-                                                )
-                                              : Container(),
-                                          Spacer(),
-                                          Image.asset(
-                                            data[index]['active'],
-                                            height: size.width * 40,
-                                            width: size.width * 40,
-                                          ),
-                                          SizedBox(
-                                            width: size.width * 20,
-                                          )
                                         ],
-                                      ),
-                                    ],
-                                  )),
-                            );
-                          }
+                                      )),
+                                );
+                              }),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          // XgFlutterPlugin().unbindWithIdentifier(
-                          //     identify: _accout, bindType: XGBindType.account);
-                          // XgFlutterPlugin().cleanAccounts();
-                          // XgFlutterPlugin().stopXg();
-                          MethodChannel _channel = MethodChannel("messagePushChannel");
-                          _channel.invokeMethod("logout").then((value) => print(value));
-                          // myDio.request(
-                          //     type: 'put',
-                          //     url: Interface.putAmendChatStatus,
-                          //     data: {"onlineStatus": "0"}).then((value) {});
-
-                          context.read<Counter>().emptyNotity();
-                          ChatData().dropTable();
-                          setState(() {
-                            show = false;
-                          });
-
-                          Navigator.pushNamed(context, '/login').then((value) {
+                        GestureDetector(
+                          onTap: () async {
+                            // XgFlutterPlugin().unbindWithIdentifier(
+                            //     identify: _accout, bindType: XGBindType.account);
+                            // XgFlutterPlugin().cleanAccounts();
+                            // XgFlutterPlugin().stopXg();
+                            MethodChannel _channel =
+                                MethodChannel("messagePushChannel");
+                            _channel
+                                .invokeMethod("logout")
+                                .then((value) => print(value));
+                            // myDio.request(
+                            //     type: 'put',
+                            //     url: Interface.putAmendChatStatus,
+                            //     data: {"onlineStatus": "0"}).then((value) {});
+                            myprefs.clear();
+                            context.read<Counter>().emptyNotity();
+                            ChatData().dropTable();
                             setState(() {
-                              show = true;
+                              show = false;
                             });
-                          });
-                        },
-                        child: Container(
-                          height: size.width * 96,
-                          width: size.width * 686,
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.only(bottom: size.width * 20),
-                          decoration: BoxDecoration(
-                            border: Border.all(width: size.width * 2, color: Color(0xffF2F2F2)),
-                            borderRadius: BorderRadius.all(Radius.circular(size.width * 16))
-                          ),
-                          child: Text(
-                            "退出登录",
-                            style: TextStyle(
-                              color: Color(0xff7F8A9C),
-                              fontSize: size.width * 32,
-                              fontWeight: FontWeight.w400
+                            Navigator.pushNamed(context, '/login')
+                                .then((value) {
+                              setState(() {
+                                show = true;
+                              });
+                            });
+                          },
+                          child: Container(
+                            height: size.width * 96,
+                            width: size.width * 686,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(bottom: size.width * 20),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: size.width * 2,
+                                    color: Color(0xffF2F2F2)),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 16))),
+                            child: Text(
+                              "退出登录",
+                              style: TextStyle(
+                                  color: Color(0xff7F8A9C),
+                                  fontSize: size.width * 32,
+                                  fontWeight: FontWeight.w400),
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  )
-                ),
+                        )
+                      ],
+                    )),
               ),
             ],
           ),
@@ -265,63 +280,64 @@ class _MineState extends State<Mine> with TickerProviderStateMixin{
                       BorderRadius.all(Radius.circular(size.width * 32)),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xff7F8A9C).withOpacity(0.1),
-                      offset: Offset(size.width * 2, size.width * 6), //阴影xy轴偏移量
-                      blurRadius: size.width * 60.0, //阴影模糊程度
-                      spreadRadius: size.width *1.0 //阴影扩散程度
-                    ),
-                  ]
-              ),
+                        color: Color(0xff7F8A9C).withOpacity(0.1),
+                        offset:
+                            Offset(size.width * 2, size.width * 6), //阴影xy轴偏移量
+                        blurRadius: size.width * 60.0, //阴影模糊程度
+                        spreadRadius: size.width * 1.0 //阴影扩散程度
+                        ),
+                  ]),
               child: CancelSign(
                 widget: InkWell(
-                  onTap: () {
-                    bool next = false;
-                    if (_counter.submitDates['mySign'] is List) {
-                      _counter.submitDates['mySign'].forEach((element) {
-                        if (element['title'] == '请点击进行签名') {
-                          next = true;
-                          signUrl = element['value'];
-                        }
-                      });
-                    }
-                    if (next) {
-                      myDio.request(
-                          type: 'put',
-                          url: Interface.putUpdateUser,
-                          data: {
-                            "avatar": myprefs.getString('avatar'),
-                            "description": myprefs.getString('description'),
-                            "email": myprefs.getString('email'),
-                            "mobile": myprefs.getString('mobile'),
-                            "nickname": myprefs.getString('nickname'),
-                            "sex": myprefs.getString('sex'),
-                            "sign": signUrl,
+                    onTap: () {
+                      bool next = false;
+                      if (_counter.submitDates['mySign'] is List) {
+                        _counter.submitDates['mySign'].forEach((element) {
+                          if (element['title'] == '请点击进行签名') {
+                            next = true;
+                            signUrl = element['value'];
                           }
-                      ).then((value) async {
-                        await myprefs.setString('sign', signUrl);
-                        successToast('修改成功');
-                        setState(() {});
-                      });
-                    } else {
-                      Fluttertoast.showToast(msg: '签字不能为空');
-                    }
-                  },
-                  child: Container(
-                    height: size.width * 52,
-                    width: size.width * 144,
-                    margin: EdgeInsets.only(right: size.width * 32, top: size.width * 25),
-                    decoration: BoxDecoration(
-                      color: Color(0xff3074FF).withOpacity(0.1),
-                      borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      '确认签字',
-                      style: TextStyle(
-                          color: Color(0xff3074FF), fontSize: size.width * 28, fontWeight: FontWeight.w400),
-                    ),
-                  )
-                ),
+                        });
+                      }
+                      if (next) {
+                        myDio.request(
+                            type: 'put',
+                            url: Interface.putUpdateUser,
+                            data: {
+                              "avatar": myprefs.getString('avatar'),
+                              "description": myprefs.getString('description'),
+                              "email": myprefs.getString('email'),
+                              "mobile": myprefs.getString('mobile'),
+                              "nickname": myprefs.getString('nickname'),
+                              "sex": myprefs.getString('sex'),
+                              "sign": signUrl,
+                            }).then((value) async {
+                          await myprefs.setString('sign', signUrl);
+                          successToast('修改成功');
+                          setState(() {});
+                        });
+                      } else {
+                        Fluttertoast.showToast(msg: '签字不能为空');
+                      }
+                    },
+                    child: Container(
+                      height: size.width * 52,
+                      width: size.width * 144,
+                      margin: EdgeInsets.only(
+                          right: size.width * 32, top: size.width * 25),
+                      decoration: BoxDecoration(
+                          color: Color(0xff3074FF).withOpacity(0.1),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 8))),
+                      alignment: Alignment.center,
+                      child: Text(
+                        '确认签字',
+                        style: TextStyle(
+                            color: Color(0xff3074FF),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    )),
                 title: '请点击进行签名',
                 purview: 'mySign',
                 url: myprefs.getString('sign'),

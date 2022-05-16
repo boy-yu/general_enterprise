@@ -10,7 +10,8 @@ class RiskIdentifyTaskMeasure extends StatefulWidget {
   final List leftBarList;
   final int index;
   @override
-  State<RiskIdentifyTaskMeasure> createState() => _RiskIdentifyTaskMeasureState();
+  State<RiskIdentifyTaskMeasure> createState() =>
+      _RiskIdentifyTaskMeasureState();
 }
 
 class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
@@ -23,9 +24,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
   void initState() {
     super.initState();
     leftBarIndex = widget.index;
-    _queryParameters = {
-      'riskEventId': widget.leftBarList[leftBarIndex]['id']
-    };
+    _queryParameters = {'riskEventId': widget.leftBarList[leftBarIndex]['id']};
   }
 
   @override
@@ -77,7 +76,8 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                         ),
                         Container(
                           width: size.width * 200,
-                          child: Text(widget.leftBarList[index]['riskEventName'],
+                          child: Text(
+                              widget.leftBarList[index]['riskEventName'],
                               style: TextStyle(
                                   color: index == leftBarIndex
                                       ? Color(0xff333333)
@@ -101,14 +101,8 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
           child: MyRefres(
             child: (index, list) => GestureDetector(
               onTap: () {
-                Navigator.pushNamed(
-                    context, 
-                    '/riskIdentifyTask/riskHiddenTask',
-                    arguments: {
-                      'index': index,
-                      'data': list
-                    }
-                  );
+                Navigator.pushNamed(context, '/riskIdentifyTask/riskHiddenTask',
+                    arguments: {'index': index, 'data': list});
               },
               child: Container(
                 margin: EdgeInsets.only(
@@ -139,7 +133,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                             colors: [
-                              Color(0xff5FD5EC).withOpacity(0.12),
+                              Color(0xff2276FC).withOpacity(0.12),
                               Colors.transparent,
                             ],
                           ),
@@ -176,7 +170,9 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['dataSrc'] == "2" ? '隐患排查' : '自动化监控',
+                                        text: list[index]['dataSrc'] == "2"
+                                            ? '隐患排查'
+                                            : '自动化监控',
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -233,7 +229,9 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['classify3'] == '' ? '无' : list[index]['classify3'],
+                                        text: list[index]['classify3'] == ''
+                                            ? '无'
+                                            : list[index]['classify3'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -252,7 +250,8 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['troubleshootContent'],
+                                        text: list[index]
+                                            ['troubleshootContent'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -272,32 +271,29 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
       ]),
       actions: [
         GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(
-              context, 
-              '/riskIdentifyTask/addControlMeasure',
-              arguments: {
-                'riskEventId': widget.leftBarList[leftBarIndex]['id']
-              }
-            ).then((value) => {
-              _throwFunc.run()
-            });
+          onTap: () {
+            Navigator.pushNamed(context, '/riskIdentifyTask/addControlMeasure',
+                arguments: {
+                  'riskEventId': widget.leftBarList[leftBarIndex]['id']
+                }).then((value) => {_throwFunc.run()});
           },
           child: Container(
             decoration: BoxDecoration(
-              color: Color(0xff1E62EB),
-              borderRadius: BorderRadius.all(Radius.circular(size.width * 40))
-            ),
+                color: Color(0xff1E62EB),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 40))),
             padding: EdgeInsets.symmetric(horizontal: size.width * 20),
-            margin: EdgeInsets.only(top: size.width * 30, bottom: size.width * 10, right: size.width * 30),
+            margin: EdgeInsets.only(
+                top: size.width * 30,
+                bottom: size.width * 10,
+                right: size.width * 30),
             alignment: Alignment.center,
             child: Text(
               "+ 新增",
               style: TextStyle(
-                color: Colors.white,
-                fontSize: size.width * 28,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.white,
+                  fontSize: size.width * 28,
+                  fontWeight: FontWeight.w500),
             ),
           ),
         )

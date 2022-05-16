@@ -135,9 +135,7 @@ class _IndexState extends State<Index> {
 
   _getUrl() {
     print(Interface.webUrl);
-    myDio.request(
-        type: 'get',
-        url: Interface.webUrl).then((value) async {
+    myDio.request(type: 'get', url: Interface.webUrl).then((value) async {
       // print(mainBaseUrl);
       // print(value);
       if (value is Map) {
@@ -177,7 +175,8 @@ class _IndexState extends State<Index> {
       },
       {
         "icon": 'assets/images/doubleRiskProjeck/icon_hidden_check_govern.png',
-        "iconDis": "assets/images/doubleRiskProjeck/un_icon_hidden_check_govern.png",
+        "iconDis":
+            "assets/images/doubleRiskProjeck/un_icon_hidden_check_govern.png",
         "name": "隐患排查治理"
       },
       {
@@ -205,7 +204,7 @@ class _IndexState extends State<Index> {
             ),
           ),
         ));
-      }else{
+      } else {
         bottomRoute.add(BottomNavigationBarItem(
           activeIcon: Image.asset(
             item['icon'],
@@ -232,7 +231,17 @@ class _IndexState extends State<Index> {
   }
 
   _pages(width) {
-    List<Widget> pages = [Home(), RiskHierarchicalControl(), HiddenReported(), HiddenCheckGovern(), Mine()];
+    List<Widget> pages = [
+      Home(),
+      RiskHierarchicalControl(),
+      HiddenReported(callback: () {
+        setState(() {
+          _currentIndex = 3;
+        });
+      }),
+      HiddenCheckGovern(),
+      Mine()
+    ];
     return pages[_currentIndex];
   }
 

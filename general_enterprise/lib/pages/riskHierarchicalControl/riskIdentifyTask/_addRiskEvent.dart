@@ -14,77 +14,62 @@ class AddRiskEvent extends StatefulWidget {
 class _AddRiskEventState extends State<AddRiskEvent> {
   TextEditingController _controllerEvent = TextEditingController();
   TextEditingController _controllerDescribe = TextEditingController();
-  
 
   Map submitData = {
-	"companyCode": "",
-	"companyId": "",
-	"createBy": "",
-	"createDate": "",
-	"currentRiskLevel": "",
-	"deleted": "",
-	"hazardCode": "",
-	"id": "",
-	"initialRiskConsequences": 0,
-	"initialRiskDegree": 0,
-	"initialRiskLevel": "",
-	"initialRiskPossibility": 0,
-	"riskConsequences": 0,
-	"riskDegree": 0,
-	"riskDescription": "",
-	"riskEventName": "",
-	"riskLevel": "",
-	"riskObjectId": "",
-	"riskPossibility": 0,
-	"riskUnitId": "",
-	"selected": "",
-	"status": "",
-	"updateBy": "",
-	"updateDate": ""
-};
+    'currentRiskLevel': '',
+    'initialRiskConsequences': 0,
+    'initialRiskDegree': 0,
+    'initialRiskLevel': '',
+    'initialRiskPossibility': 0,
+    'riskConsequences': 0,
+    'riskDegree': 0,
+    'riskDescription': '',
+    'riskEventName': '',
+    'riskLevel': '',
+    'riskPossibility': 0,
+  };
 
   List levelChoice = [1, 2, 3, 4, 5];
 
-  String _getInitialRiskLevel(int riskLevel){
-    if(25 >= riskLevel && riskLevel >= 20){
+  String _getInitialRiskLevel(int riskLevel) {
+    if (25 >= riskLevel && riskLevel >= 20) {
       submitData['initialRiskLevel'] = '1';
       submitData['currentRiskLevel'] = '1';
       return '重大风险';
-    }else if(20 > riskLevel && riskLevel >= 15){
+    } else if (20 > riskLevel && riskLevel >= 15) {
       submitData['initialRiskLevel'] = '2';
       submitData['currentRiskLevel'] = '2';
       return '较大风险';
-    }else if(15 > riskLevel && riskLevel >= 9){
+    } else if (15 > riskLevel && riskLevel >= 9) {
       submitData['initialRiskLevel'] = '3';
       submitData['currentRiskLevel'] = '3';
       return '一般风险';
-    }else if(8 >= riskLevel){
+    } else if (8 >= riskLevel) {
       submitData['initialRiskLevel'] = '4';
       submitData['currentRiskLevel'] = '4';
       return '低风险';
-    }else{
+    } else {
       return '系统自动判断';
     }
   }
 
-  String _getCurrentRiskLevel(int riskLevel){
-    if(25 >= riskLevel && riskLevel >= 20){
+  String _getCurrentRiskLevel(int riskLevel) {
+    if (25 >= riskLevel && riskLevel >= 20) {
       submitData['riskLevel'] = '1';
       return '重大风险';
-    }else if(20 > riskLevel && riskLevel >= 15){
+    } else if (20 > riskLevel && riskLevel >= 15) {
       submitData['riskLevel'] = '2';
       return '较大风险';
-    }else if(15 > riskLevel && riskLevel >= 9){
+    } else if (15 > riskLevel && riskLevel >= 9) {
       submitData['riskLevel'] = '3';
       return '一般风险';
-    }else if(8 >= riskLevel){
+    } else if (8 >= riskLevel) {
       submitData['riskLevel'] = '4';
       return '低风险';
-    }else{
+    } else {
       return '系统自动判断';
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +79,10 @@ class _AddRiskEventState extends State<AddRiskEvent> {
           style: TextStyle(fontSize: size.width * 32),
         ),
         child: GestureDetector(
-          onTap: (){
+          onTap: () {
             FocusScopeNode currentFocus = FocusScope.of(context);
-            if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+            if (!currentFocus.hasPrimaryFocus &&
+                currentFocus.focusedChild != null) {
               FocusManager.instance.primaryFocus.unfocus();
             }
           },
@@ -104,7 +90,8 @@ class _AddRiskEventState extends State<AddRiskEvent> {
             children: [
               Expanded(
                   child: ListView(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 30, vertical: size.width * 20),
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 30, vertical: size.width * 20),
                 children: [
                   Text(
                     '风险事件',
@@ -124,7 +111,8 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintStyle: TextStyle(
-                            fontSize: size.width * 28, color: Color(0xff7F8A9C)),
+                            fontSize: size.width * 28,
+                            color: Color(0xff7F8A9C)),
                         hintText: submitData['riskEventName'] == ''
                             ? '请输入风险事件'
                             : submitData['riskEventName']),
@@ -155,7 +143,8 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintStyle: TextStyle(
-                            fontSize: size.width * 28, color: Color(0xff7F8A9C)),
+                            fontSize: size.width * 28,
+                            color: Color(0xff7F8A9C)),
                         hintText: submitData['riskDescription'] == ''
                             ? '请输入风险描述'
                             : submitData['riskDescription']),
@@ -185,54 +174,67 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                             height: size.width * 16,
                           ),
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               showModalBottomSheet(
-                                    context: context,
-                                    isDismissible: true,
-                                    isScrollControlled: false,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(15),
-                                            topRight: Radius.circular(15))),
-                                    builder: (BuildContext context) {
-                                      return ListView.builder(
-                                        itemCount: levelChoice.length,
-                                        itemBuilder: (context, index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              submitData['initialRiskConsequences'] = levelChoice[index];
-                                              if(submitData['initialRiskPossibility'] != ''){
-                                                submitData['initialRiskDegree'] = submitData['initialRiskConsequences'] * submitData['initialRiskPossibility'];
-                                              }
-                                              setState(() {});
-                                              Navigator.pop(context);
-                                            },
-                                            child: ListTile(
-                                              title: Text(
-                                                  levelChoice[index].toString()),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    });
+                                  context: context,
+                                  isDismissible: true,
+                                  isScrollControlled: false,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15))),
+                                  builder: (BuildContext context) {
+                                    return ListView.builder(
+                                      itemCount: levelChoice.length,
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            submitData[
+                                                    'initialRiskConsequences'] =
+                                                levelChoice[index];
+                                            if (submitData[
+                                                    'initialRiskPossibility'] !=
+                                                '') {
+                                              submitData[
+                                                  'initialRiskDegree'] = submitData[
+                                                      'initialRiskConsequences'] *
+                                                  submitData[
+                                                      'initialRiskPossibility'];
+                                            }
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                          },
+                                          child: ListTile(
+                                            title: Text(
+                                                levelChoice[index].toString()),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  });
                             },
                             child: Container(
                               height: size.width * 72,
                               width: size.width * 310,
                               decoration: BoxDecoration(
-                                border: Border.all(width: size.width * 2, color: Color(0xffECECEC)),
-                                borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: size.width * 16),
+                                  border: Border.all(
+                                      width: size.width * 2,
+                                      color: Color(0xffECECEC)),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 8))),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 16),
                               child: Row(
                                 children: [
                                   Text(
-                                    submitData['initialRiskConsequences'] == '' ? "请选择" : submitData['initialRiskConsequences'].toString(),
+                                    submitData['initialRiskConsequences'] == ''
+                                        ? "请选择"
+                                        : submitData['initialRiskConsequences']
+                                            .toString(),
                                     style: TextStyle(
-                                      color: Color(0xff7F8A9C),
-                                      fontSize: size.width * 28,
-                                      fontWeight: FontWeight.w400
-                                    ),
+                                        color: Color(0xff7F8A9C),
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w400),
                                   ),
                                   Spacer(),
                                   Icon(
@@ -259,54 +261,65 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                             height: size.width * 16,
                           ),
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               showModalBottomSheet(
-                                    context: context,
-                                    isDismissible: true,
-                                    isScrollControlled: false,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(15),
-                                            topRight: Radius.circular(15))),
-                                    builder: (BuildContext context) {
-                                      return ListView.builder(
-                                        itemCount: levelChoice.length,
-                                        itemBuilder: (context, index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              submitData['riskConsequences'] = levelChoice[index];
-                                              if(submitData['riskPossibility'] != ''){
-                                                submitData['riskDegree'] = submitData['riskPossibility'] * submitData['riskConsequences'];
-                                              }
-                                              setState(() {});
-                                              Navigator.pop(context);
-                                            },
-                                            child: ListTile(
-                                              title: Text(
-                                                  levelChoice[index].toString()),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    });
+                                  context: context,
+                                  isDismissible: true,
+                                  isScrollControlled: false,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15))),
+                                  builder: (BuildContext context) {
+                                    return ListView.builder(
+                                      itemCount: levelChoice.length,
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            submitData['riskConsequences'] =
+                                                levelChoice[index];
+                                            if (submitData['riskPossibility'] !=
+                                                '') {
+                                              submitData['riskDegree'] =
+                                                  submitData[
+                                                          'riskPossibility'] *
+                                                      submitData[
+                                                          'riskConsequences'];
+                                            }
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                          },
+                                          child: ListTile(
+                                            title: Text(
+                                                levelChoice[index].toString()),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  });
                             },
                             child: Container(
                               height: size.width * 72,
                               width: size.width * 310,
                               decoration: BoxDecoration(
-                                border: Border.all(width: size.width * 2, color: Color(0xffECECEC)),
-                                borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: size.width * 16),
+                                  border: Border.all(
+                                      width: size.width * 2,
+                                      color: Color(0xffECECEC)),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 8))),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 16),
                               child: Row(
                                 children: [
                                   Text(
-                                    submitData['riskConsequences'] == '' ? "请选择" : submitData['riskConsequences'].toString(),
+                                    submitData['riskConsequences'] == ''
+                                        ? "请选择"
+                                        : submitData['riskConsequences']
+                                            .toString(),
                                     style: TextStyle(
-                                      color: Color(0xff7F8A9C),
-                                      fontSize: size.width * 28,
-                                      fontWeight: FontWeight.w400
-                                    ),
+                                        color: Color(0xff7F8A9C),
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w400),
                                   ),
                                   Spacer(),
                                   Icon(
@@ -341,54 +354,67 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                             height: size.width * 16,
                           ),
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               showModalBottomSheet(
-                                    context: context,
-                                    isDismissible: true,
-                                    isScrollControlled: false,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(15),
-                                            topRight: Radius.circular(15))),
-                                    builder: (BuildContext context) {
-                                      return ListView.builder(
-                                        itemCount: levelChoice.length,
-                                        itemBuilder: (context, index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              submitData['initialRiskPossibility'] = levelChoice[index];
-                                              if(submitData['initialRiskConsequences'] != ''){
-                                                submitData['initialRiskDegree'] = submitData['initialRiskConsequences'] * submitData['initialRiskPossibility'];
-                                              }
-                                              setState(() {});
-                                              Navigator.pop(context);
-                                            },
-                                            child: ListTile(
-                                              title: Text(
-                                                  levelChoice[index].toString()),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    });
+                                  context: context,
+                                  isDismissible: true,
+                                  isScrollControlled: false,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15))),
+                                  builder: (BuildContext context) {
+                                    return ListView.builder(
+                                      itemCount: levelChoice.length,
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            submitData[
+                                                    'initialRiskPossibility'] =
+                                                levelChoice[index];
+                                            if (submitData[
+                                                    'initialRiskConsequences'] !=
+                                                '') {
+                                              submitData[
+                                                  'initialRiskDegree'] = submitData[
+                                                      'initialRiskConsequences'] *
+                                                  submitData[
+                                                      'initialRiskPossibility'];
+                                            }
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                          },
+                                          child: ListTile(
+                                            title: Text(
+                                                levelChoice[index].toString()),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  });
                             },
                             child: Container(
                               height: size.width * 72,
                               width: size.width * 310,
                               decoration: BoxDecoration(
-                                border: Border.all(width: size.width * 2, color: Color(0xffECECEC)),
-                                borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: size.width * 16),
+                                  border: Border.all(
+                                      width: size.width * 2,
+                                      color: Color(0xffECECEC)),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 8))),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 16),
                               child: Row(
                                 children: [
                                   Text(
-                                    submitData['initialRiskPossibility'] == '' ? "请选择" : submitData['initialRiskPossibility'].toString(),
+                                    submitData['initialRiskPossibility'] == ''
+                                        ? "请选择"
+                                        : submitData['initialRiskPossibility']
+                                            .toString(),
                                     style: TextStyle(
-                                      color: Color(0xff7F8A9C),
-                                      fontSize: size.width * 28,
-                                      fontWeight: FontWeight.w400
-                                    ),
+                                        color: Color(0xff7F8A9C),
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w400),
                                   ),
                                   Spacer(),
                                   Icon(
@@ -415,54 +441,66 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                             height: size.width * 16,
                           ),
                           GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               showModalBottomSheet(
-                                    context: context,
-                                    isDismissible: true,
-                                    isScrollControlled: false,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(15),
-                                            topRight: Radius.circular(15))),
-                                    builder: (BuildContext context) {
-                                      return ListView.builder(
-                                        itemCount: levelChoice.length,
-                                        itemBuilder: (context, index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              submitData['riskPossibility'] = levelChoice[index];
-                                              if(submitData['riskConsequences'] != ''){
-                                                submitData['riskDegree'] = submitData['riskPossibility'] * submitData['riskConsequences'];
-                                              }
-                                              setState(() {});
-                                              Navigator.pop(context);
-                                            },
-                                            child: ListTile(
-                                              title: Text(
-                                                  levelChoice[index].toString()),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    });
+                                  context: context,
+                                  isDismissible: true,
+                                  isScrollControlled: false,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          topRight: Radius.circular(15))),
+                                  builder: (BuildContext context) {
+                                    return ListView.builder(
+                                      itemCount: levelChoice.length,
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            submitData['riskPossibility'] =
+                                                levelChoice[index];
+                                            if (submitData[
+                                                    'riskConsequences'] !=
+                                                '') {
+                                              submitData['riskDegree'] =
+                                                  submitData[
+                                                          'riskPossibility'] *
+                                                      submitData[
+                                                          'riskConsequences'];
+                                            }
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                          },
+                                          child: ListTile(
+                                            title: Text(
+                                                levelChoice[index].toString()),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  });
                             },
                             child: Container(
                               height: size.width * 72,
                               width: size.width * 310,
                               decoration: BoxDecoration(
-                                border: Border.all(width: size.width * 2, color: Color(0xffECECEC)),
-                                borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: size.width * 16),
+                                  border: Border.all(
+                                      width: size.width * 2,
+                                      color: Color(0xffECECEC)),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 8))),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 16),
                               child: Row(
                                 children: [
                                   Text(
-                                    submitData['riskPossibility'] == '' ? "请选择" : submitData['riskPossibility'].toString(),
+                                    submitData['riskPossibility'] == ''
+                                        ? "请选择"
+                                        : submitData['riskPossibility']
+                                            .toString(),
                                     style: TextStyle(
-                                      color: Color(0xff7F8A9C),
-                                      fontSize: size.width * 28,
-                                      fontWeight: FontWeight.w400
-                                    ),
+                                        color: Color(0xff7F8A9C),
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w400),
                                   ),
                                   Spacer(),
                                   Icon(
@@ -500,20 +538,21 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               height: size.width * 72,
                               width: size.width * 310,
                               decoration: BoxDecoration(
-                                color: Color(0xffECECEC),
-                                borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: size.width * 16),
+                                  color: Color(0xffECECEC),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 8))),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['initialRiskDegree'] != '' ? submitData['initialRiskDegree'].toString() : "系统自动判断",
+                                submitData['initialRiskDegree'] != ''
+                                    ? submitData['initialRiskDegree'].toString()
+                                    : "系统自动判断",
                                 style: TextStyle(
-                                  color: Color(0xff7F8A9C),
-                                  fontSize: size.width * 28,
-                                  fontWeight: FontWeight.w400
-                                ),
-                              )
-                            ),
+                                    color: Color(0xff7F8A9C),
+                                    fontSize: size.width * 28,
+                                    fontWeight: FontWeight.w400),
+                              )),
                         ],
                       ),
                       Column(
@@ -533,20 +572,21 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               height: size.width * 72,
                               width: size.width * 310,
                               decoration: BoxDecoration(
-                                color: Color(0xffECECEC),
-                                borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: size.width * 16),
+                                  color: Color(0xffECECEC),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 8))),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['riskDegree'] != '' ? submitData['riskDegree'].toString() : "系统自动判断",
+                                submitData['riskDegree'] != ''
+                                    ? submitData['riskDegree'].toString()
+                                    : "系统自动判断",
                                 style: TextStyle(
-                                  color: Color(0xff7F8A9C),
-                                  fontSize: size.width * 28,
-                                  fontWeight: FontWeight.w400
-                                ),
-                              )
-                            ),
+                                    color: Color(0xff7F8A9C),
+                                    fontSize: size.width * 28,
+                                    fontWeight: FontWeight.w400),
+                              )),
                         ],
                       ),
                     ],
@@ -574,20 +614,23 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               height: size.width * 72,
                               width: size.width * 310,
                               decoration: BoxDecoration(
-                                color: Color(0xffECECEC),
-                                borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: size.width * 16),
+                                  color: Color(0xffECECEC),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 8))),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['initialRiskDegree'] != 0 ? _getInitialRiskLevel(submitData['initialRiskDegree']) : '系统自动判断',
+                                submitData['initialRiskDegree'] != 0 &&
+                                        submitData['initialRiskDegree'] != null
+                                    ? _getInitialRiskLevel(
+                                        submitData['initialRiskDegree'])
+                                    : '系统自动判断',
                                 style: TextStyle(
-                                  color: Color(0xff7F8A9C),
-                                  fontSize: size.width * 28,
-                                  fontWeight: FontWeight.w400
-                                ),
-                              )
-                            ),
+                                    color: Color(0xff7F8A9C),
+                                    fontSize: size.width * 28,
+                                    fontWeight: FontWeight.w400),
+                              )),
                         ],
                       ),
                       Column(
@@ -607,20 +650,22 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                               height: size.width * 72,
                               width: size.width * 310,
                               decoration: BoxDecoration(
-                                color: Color(0xffECECEC),
-                                borderRadius: BorderRadius.all(Radius.circular(size.width * 8))
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: size.width * 16),
+                                  color: Color(0xffECECEC),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(size.width * 8))),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 16),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                submitData['riskDegree'] != ''? _getCurrentRiskLevel(submitData['riskDegree']) : '系统自动判断',
+                                submitData['riskDegree'] != 0
+                                    ? _getCurrentRiskLevel(
+                                        submitData['riskDegree'])
+                                    : '系统自动判断',
                                 style: TextStyle(
-                                  color: Color(0xff7F8A9C),
-                                  fontSize: size.width * 28,
-                                  fontWeight: FontWeight.w400
-                                ),
-                              )
-                            ),
+                                    color: Color(0xff7F8A9C),
+                                    fontSize: size.width * 28,
+                                    fontWeight: FontWeight.w400),
+                              )),
                         ],
                       ),
                     ],
@@ -629,27 +674,29 @@ class _AddRiskEventState extends State<AddRiskEvent> {
               )),
               GestureDetector(
                 onTap: () {
-                  if(submitData['riskEventName'] == ''){
+                  if (submitData['riskEventName'] == '') {
                     Fluttertoast.showToast(msg: "请填写风险事件");
-                  }else if(submitData['riskDescription'] == ''){
+                  } else if (submitData['riskDescription'] == '') {
                     Fluttertoast.showToast(msg: "请填写风险描述");
-                  }else if(submitData['initialRiskConsequences'] == 0){
+                  } else if (submitData['initialRiskConsequences'] == 0) {
                     Fluttertoast.showToast(msg: "请选择初始后果");
-                  }else if(submitData['riskConsequences'] == 0){
+                  } else if (submitData['riskConsequences'] == 0) {
                     Fluttertoast.showToast(msg: "请选择剩余后果");
-                  }else if(submitData['initialRiskPossibility'] == 0){
+                  } else if (submitData['initialRiskPossibility'] == 0) {
                     Fluttertoast.showToast(msg: "请选择初始可能性");
-                  }else if(submitData['riskPossibility'] == 0){
+                  } else if (submitData['riskPossibility'] == 0) {
                     Fluttertoast.showToast(msg: "请选择剩余可能性");
-                  }else{
+                  } else {
                     submitData['riskUnitId'] = widget.riskUnitId;
-                    myDio.request(
-                          type: 'post',
-                          url: Interface.postRiskTemplateThreeWarehouseAll,
-                          data: submitData).then((value) {
-                        successToast('新增风险事件成功');
-                        Navigator.pop(context);
-                      });
+                    myDio
+                        .request(
+                            type: 'post',
+                            url: Interface.postRiskTemplateThreeWarehouseAll,
+                            data: submitData)
+                        .then((value) {
+                      successToast('新增风险事件成功');
+                      Navigator.pop(context);
+                    });
                   }
                 },
                 child: Container(
@@ -672,7 +719,6 @@ class _AddRiskEventState extends State<AddRiskEvent> {
               )
             ],
           ),
-        )
-      );
+        ));
   }
 }

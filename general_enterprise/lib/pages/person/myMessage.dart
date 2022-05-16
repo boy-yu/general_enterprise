@@ -34,6 +34,15 @@ class _MyMessageState extends State<MyMessage> {
     selectSex = myprefs.getString('sex');
   }
 
+  // 大陆手机号码11位数，匹配格式：前三位固定格式+后8位任意数
+  // 此方法中前三位格式有：
+  // 13+任意数 * 15+除4的任意数 * 18+除1和4的任意数 * 17+除9的任意数 * 147
+  static bool isChinaPhoneLegal(String str) {
+    return RegExp(
+            r"^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$")
+        .hasMatch(str);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
@@ -467,12 +476,22 @@ class _MyMessageState extends State<MyMessage> {
                       nickname = myprefs.getString('nickname');
                     }
                   }
+                  print(mobile);
                   if (mobile == '') {
                     if (myprefs.getString('mobile') == '') {
                       Fluttertoast.showToast(msg: '请填写联系电话');
                       return;
+                    } else if (!isChinaPhoneLegal(
+                        myprefs.getString('mobile'))) {
+                      Fluttertoast.showToast(msg: '请输入正确手机号码');
+                      return;
                     } else {
                       mobile = myprefs.getString('mobile');
+                    }
+                  } else {
+                    if (!isChinaPhoneLegal(mobile)) {
+                      Fluttertoast.showToast(msg: '请输入正确手机号码');
+                      return;
                     }
                   }
                   if (email == '') {

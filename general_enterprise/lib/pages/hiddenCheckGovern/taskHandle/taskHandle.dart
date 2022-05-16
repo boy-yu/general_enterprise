@@ -8,11 +8,13 @@ import 'package:enterprise/pages/hiddenCheckGovern/taskHandle/_troubleshoot.dart
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TaskHandle extends StatefulWidget {
-  TaskHandle({this.dangerState, this.id});
+  TaskHandle({this.dangerState, this.id, this.checkMeans});
   final String dangerState;
   final String id;
+  final String checkMeans;
   @override
   State<TaskHandle> createState() => _TaskHandleState();
 }
@@ -21,16 +23,16 @@ class _TaskHandleState extends State<TaskHandle> {
   String _getTitle(String dangerState) {
     // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
     switch (dangerState) {
-      case '-1':
+      case 'check':
         return '排查';
         break;
-      case '0':
+      case '-1':
         return '确认隐患';
         break;
-      case '1':
+      case '0':
         return '整改完毕';
         break;
-      case '9':
+      case '1':
         return '整改审批';
         break;
       default:
@@ -48,8 +50,11 @@ class _TaskHandleState extends State<TaskHandle> {
       ),
       child: Stack(
         children: [
-          ScrollTop(id: widget.id),
-          BuildDragWidget(dangerState: widget.dangerState, id: widget.id),
+          ScrollTop(dangerState: widget.dangerState, id: widget.id),
+          BuildDragWidget(
+              dangerState: widget.dangerState,
+              id: widget.id,
+              checkMeans: widget.checkMeans),
         ],
       ),
     );
@@ -57,8 +62,8 @@ class _TaskHandleState extends State<TaskHandle> {
 }
 
 class ScrollTop extends StatefulWidget {
-  ScrollTop({this.id});
-  final String id;
+  ScrollTop({this.id, this.dangerState});
+  final String id, dangerState;
   @override
   State<ScrollTop> createState() => _ScrollTopState();
 }
@@ -71,24 +76,60 @@ class _ScrollTopState extends State<ScrollTop> {
   }
 
   _getDropData() {
-    myDio.request(
-        type: 'get',
-        url: Interface.getRiskControlDataById,
-        queryParameters: {'id': widget.id}).then((value) {
-      if (value is Map) {
-        value.forEach((key, value) {
-          dropData.forEach((element) {
-            if (element['bindKey'] == key) {
-              element['value'] = value ?? '';
-            }
+    if (widget.dangerState == 'check') {
+      myDio.request(
+          type: 'get',
+          url: Interface.getRiskControlDataById,
+          queryParameters: {'id': widget.id}).then((value) {
+        if (value is Map) {
+          value.forEach((key, value) {
+            dropData.forEach((element) {
+              if (element['bindKey'] == key) {
+                element['value'] = value ?? '';
+              }
+            });
           });
-        });
-      }
-      if (mounted) {
-        setState(() {});
-      }
-    });
+        }
+        if (mounted) {
+          setState(() {});
+        }
+      });
+    } else {
+      myDio.request(
+          type: 'get',
+          url: Interface.getHiddenDangereById,
+          queryParameters: {'id': widget.id}).then((value) {
+        if (value is Map) {
+          perData = value;
+          value.forEach((key, value) {
+            dropData.forEach((element) {
+              if (element['bindKey'] == key) {
+                element['value'] = value ?? '';
+              }
+            });
+          });
+        }
+        if (mounted) {
+          setState(() {});
+        }
+      });
+    }
   }
+
+  Map perData = {
+    "checkUser": "",
+    "checkUserTelephone": "",
+    "checkDepartment": "",
+    "registrant": "",
+    "registDepartment": "",
+    "registUserTelephone": "",
+    "liablePerson": "",
+    "liableUserTelephone": "",
+    "liableDepartment": "",
+    "checkAcceptPerson": "",
+    "checkAcceptUserTelephone": "",
+    "checkAcceptDepartment": "",
+  };
 
   List<Map> dropData = [
     {"name": "风险分析对象", "value": '', "bindKey": 'riskObjectName'},
@@ -136,29 +177,408 @@ class _ScrollTopState extends State<ScrollTop> {
         width: widghtSize.width,
         height: widghtSize.height,
         padding: EdgeInsets.only(bottom: size.width * 200),
-        color: Color(0xff3074FF),
-        child: ListView.builder(
-          itemCount: dropData.length,
-          itemBuilder: (context, index) {
-            return Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 32, vertical: size.width * 10),
-                child: Text(
-                  '${dropData[index]['name']}：${_getText(dropData[index]['name'].toString(), dropData[index]['value'].toString())}',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.width * 28,
-                      fontWeight: FontWeight.w500),
-                ));
-          },
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                  'assets/images/doubleRiskProjeck/bg_hidden_blue.png'),
+              fit: BoxFit.fitHeight),
+        ),
+        child: ListView(
+          children: [
+            Container(
+              margin: EdgeInsets.only(
+                  left: size.width * 32,
+                  right: size.width * 32,
+                  top: size.width * 32),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.08),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 20)),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.white.withOpacity(0.15),
+                      spreadRadius: size.width * 2,
+                      blurRadius: size.width * 16)
+                ],
+                border: Border.all(
+                    width: size.width * 2,
+                    color: Colors.white.withOpacity(0.1)),
+              ),
+              child: ListView.builder(
+                itemCount: dropData.length,
+                shrinkWrap: true,
+                physics: new NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(vertical: size.width * 22),
+                itemBuilder: (context, index) {
+                  return Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 24,
+                          vertical: size.width * 10),
+                      child: Text(
+                        '${dropData[index]['name']}：${_getText(dropData[index]['name'].toString(), dropData[index]['value'].toString())}',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w500),
+                      ));
+                },
+              ),
+            ),
+            perData['checkUser'] == '' || widget.dangerState == 'check'
+                ? Container()
+                : Container(
+                    margin: EdgeInsets.only(
+                        left: size.width * 32,
+                        right: size.width * 32,
+                        top: size.width * 32),
+                    padding: EdgeInsets.symmetric(
+                        vertical: size.width * 32, horizontal: size.width * 24),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.08),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 20)),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.white.withOpacity(0.15),
+                            spreadRadius: size.width * 2,
+                            blurRadius: size.width * 16)
+                      ],
+                      border: Border.all(
+                          width: size.width * 2,
+                          color: Colors.white.withOpacity(0.1)),
+                    ),
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: size.width * 300,
+                                  child: Text(
+                                    '隐患上报人：${perData['checkUser']}',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width * 250,
+                                  child: Text(
+                                    '部门：${perData['checkDepartment']}',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: size.width * 32,
+                            ),
+                            Text(
+                              '电话：${perData['checkUserTelephone']}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size.width * 28,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            launch('tel:${perData['checkUserTelephone']}');
+                          },
+                          child: Container(
+                            height: size.width * 64,
+                            width: size.width * 64,
+                            decoration: BoxDecoration(
+                                color: Color(0xff3074FF),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 20))),
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/doubleRiskProjeck/icon_dep_telephone.png',
+                              height: size.width * 35,
+                              width: size.width * 35,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+            perData['registrant'] == '' || widget.dangerState == 'check'
+                ? Container()
+                : Container(
+                    margin: EdgeInsets.only(
+                        left: size.width * 32,
+                        right: size.width * 32,
+                        top: size.width * 32),
+                    padding: EdgeInsets.symmetric(
+                        vertical: size.width * 32, horizontal: size.width * 24),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.08),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 20)),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.white.withOpacity(0.15),
+                            spreadRadius: size.width * 2,
+                            blurRadius: size.width * 16)
+                      ],
+                      border: Border.all(
+                          width: size.width * 2,
+                          color: Colors.white.withOpacity(0.1)),
+                    ),
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: size.width * 300,
+                                  child: Text(
+                                    '隐患确认人：${perData['registrant']}',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width * 250,
+                                  child: Text(
+                                    '部门：${perData['registDepartment']}',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: size.width * 32,
+                            ),
+                            Text(
+                              '电话：${perData['registUserTelephone']}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size.width * 28,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            launch('tel:${perData['registUserTelephone']}');
+                          },
+                          child: Container(
+                            height: size.width * 64,
+                            width: size.width * 64,
+                            decoration: BoxDecoration(
+                                color: Color(0xff3074FF),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 20))),
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/doubleRiskProjeck/icon_dep_telephone.png',
+                              height: size.width * 35,
+                              width: size.width * 35,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+            perData['liablePerson'] == '' || widget.dangerState == 'check'
+                ? Container()
+                : Container(
+                    margin: EdgeInsets.only(
+                        left: size.width * 32,
+                        right: size.width * 32,
+                        top: size.width * 32),
+                    padding: EdgeInsets.symmetric(
+                        vertical: size.width * 32, horizontal: size.width * 24),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.08),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 20)),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.white.withOpacity(0.15),
+                            spreadRadius: size.width * 2,
+                            blurRadius: size.width * 16)
+                      ],
+                      border: Border.all(
+                          width: size.width * 2,
+                          color: Colors.white.withOpacity(0.1)),
+                    ),
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: size.width * 300,
+                                  child: Text(
+                                    '整改责任人：${perData['liablePerson']}',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width * 250,
+                                  child: Text(
+                                    '部门：${perData['liableDepartment']}',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: size.width * 32,
+                            ),
+                            Text(
+                              '电话：${perData['liableUserTelephone']}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size.width * 28,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            launch('tel:${perData['liableUserTelephone']}');
+                          },
+                          child: Container(
+                            height: size.width * 64,
+                            width: size.width * 64,
+                            decoration: BoxDecoration(
+                                color: Color(0xff3074FF),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 20))),
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/doubleRiskProjeck/icon_dep_telephone.png',
+                              height: size.width * 35,
+                              width: size.width * 35,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+            perData['checkAcceptPerson'] == '' || widget.dangerState == 'check'
+                ? Container()
+                : Container(
+                    margin: EdgeInsets.only(
+                        left: size.width * 32,
+                        right: size.width * 32,
+                        top: size.width * 32),
+                    padding: EdgeInsets.symmetric(
+                        vertical: size.width * 32, horizontal: size.width * 24),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.08),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size.width * 20)),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.white.withOpacity(0.15),
+                            spreadRadius: size.width * 2,
+                            blurRadius: size.width * 16)
+                      ],
+                      border: Border.all(
+                          width: size.width * 2,
+                          color: Colors.white.withOpacity(0.1)),
+                    ),
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: size.width * 300,
+                                  child: Text(
+                                    '验收人：${perData['checkAcceptPerson']}',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width * 250,
+                                  child: Text(
+                                    '部门：${perData['checkAcceptDepartment']}',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size.width * 28,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: size.width * 32,
+                            ),
+                            Text(
+                              '电话：${perData['checkAcceptUserTelephone']}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size.width * 28,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            launch(
+                                'tel:${perData['checkAcceptUserTelephone']}');
+                          },
+                          child: Container(
+                            height: size.width * 64,
+                            width: size.width * 64,
+                            decoration: BoxDecoration(
+                                color: Color(0xff3074FF),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size.width * 20))),
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/doubleRiskProjeck/icon_dep_telephone.png',
+                              height: size.width * 35,
+                              width: size.width * 35,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+          ],
         ));
   }
 }
 
 class BuildDragWidget extends StatefulWidget {
-  BuildDragWidget({this.dangerState, this.id});
+  BuildDragWidget({this.dangerState, this.id, this.checkMeans});
   final String dangerState;
   final String id;
+  final String checkMeans;
   @override
   State<BuildDragWidget> createState() => _BuildDragWidgetState();
 }
@@ -168,19 +588,19 @@ class _BuildDragWidgetState extends State<BuildDragWidget> {
   DragController dragController = DragController();
 
   Widget _judgeWidget() {
-    // 隐患状态（排查：-1；确认隐患：0；整改完毕：1；整改审批：9）
+    // 隐患状态（排查：check；确认隐患：-1；整改完毕：0；整改审批：-1）
     switch (widget.dangerState) {
+      case 'check':
+        return Troubleshoot(id: widget.id, checkMeans: widget.checkMeans);
+        break;
       case '-1':
-        return Troubleshoot(id: widget.id);
+        return AffirmHidden(id: widget.id);
         break;
       case '0':
-        return AffirmHidden();
+        return ReformFinish(id: widget.id);
         break;
       case '1':
-        return ReformFinish();
-        break;
-      case '9':
-        return ReformAccept();
+        return ReformAccept(id: widget.id);
         break;
       default:
         return Container();

@@ -180,7 +180,8 @@ class _DepartmentTaskState extends State<DepartmentTask> {
       queryParameters = {
         "riskObjectId": null,
         "riskUnitId": null,
-        "riskEventId": null
+        "riskEventId": null,
+        "type": 1
       };
       print(queryParameters);
       _throwFunc.run(argument: queryParameters);
@@ -248,13 +249,13 @@ class _DepartmentTaskState extends State<DepartmentTask> {
       case '0':
         return '现场确认';
         break;
-      case '0':
+      case '1':
         return '拍照';
         break;
-      case '0':
+      case '2':
         return '热成像';
         break;
-      case '0':
+      case '3':
         return '震动';
         break;
       default:
@@ -279,8 +280,9 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                 onTap: () {
                   Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
                       arguments: {
-                        "dangerState": '-1',
-                        'id': list[index]['id']
+                        "dangerState": 'check',
+                        'id': list[index]['id'],
+                        'checkMeans': list[index]['checkMeans'],
                       }).then((value) {
                     _throwFunc.run();
                   });
@@ -413,28 +415,30 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 RichText(
-                                      text: TextSpan(
-                                          style: TextStyle(
-                                              fontSize: size.width * 24,
-                                              fontWeight: FontWeight.w400),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                                text: '管控手段：',
-                                                style: TextStyle(
-                                                    color: Color(0xff333333))),
-                                            TextSpan(
-                                                text: _getCheckMeans(list[index]['checkMeans']),
-                                                style: TextStyle(
-                                                    color: Color(0xff7F8A9C))),
-                                          ]),
-                                    ),
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '管控手段：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text: _getCheckMeans(
+                                                list[index]['checkMeans']),
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
                                 Spacer(),
                                 Container(
                                   height: size.width * 56,
                                   width: size.width * 140,
                                   decoration: BoxDecoration(
                                       color: Color(0xff3074FF),
-                                      borderRadius: BorderRadius.all(Radius.circular(size.width * 36))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(size.width * 36))),
                                   alignment: Alignment.center,
                                   child: Text(
                                     "排查",
@@ -455,7 +459,9 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                         color: Color(0xffF2F2F2),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.width * 32, vertical: size.width * 24),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.width * 32,
+                            vertical: size.width * 24),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -465,29 +471,30 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                   height: size.width * 40,
                                   width: size.width * 40,
                                   decoration: BoxDecoration(
-                                    color: Color(0xff3074FF).withOpacity(0.1),
-                                    borderRadius: BorderRadius.all(Radius.circular(50))
-                                  ),
+                                      color: Color(0xff3074FF).withOpacity(0.1),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(50))),
                                   alignment: Alignment.center,
                                   child: Text(
                                     '起',
                                     style: TextStyle(
-                                      fontSize: size.width * 20,
-                                      color: Color(0xff3074FF),
-                                      fontWeight: FontWeight.w400
-                                    ),
+                                        fontSize: size.width * 20,
+                                        color: Color(0xff3074FF),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ),
                                 SizedBox(
                                   width: size.width * 8,
                                 ),
                                 Text(
-                                  DateTime.fromMillisecondsSinceEpoch(list[index]['checkStartDate']).toString().substring(0, 19),
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                          list[index]['checkStartDate'])
+                                      .toString()
+                                      .substring(0, 19),
                                   style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 24,
-                                    fontWeight: FontWeight.w400
-                                  ),
+                                      color: Color(0xff7F8A9C),
+                                      fontSize: size.width * 24,
+                                      fontWeight: FontWeight.w400),
                                 )
                               ],
                             ),
@@ -497,29 +504,30 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                   height: size.width * 40,
                                   width: size.width * 40,
                                   decoration: BoxDecoration(
-                                    color: Color(0xff3074FF).withOpacity(0.1),
-                                    borderRadius: BorderRadius.all(Radius.circular(50))
-                                  ),
+                                      color: Color(0xff3074FF).withOpacity(0.1),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(50))),
                                   alignment: Alignment.center,
                                   child: Text(
                                     '止',
                                     style: TextStyle(
-                                      fontSize: size.width * 20,
-                                      color: Color(0xff3074FF),
-                                      fontWeight: FontWeight.w400
-                                    ),
+                                        fontSize: size.width * 20,
+                                        color: Color(0xff3074FF),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ),
                                 SizedBox(
                                   width: size.width * 8,
                                 ),
                                 Text(
-                                  DateTime.fromMillisecondsSinceEpoch(list[index]['checkEndDate']).toString().substring(0, 19),
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                          list[index]['checkEndDate'])
+                                      .toString()
+                                      .substring(0, 19),
                                   style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 24,
-                                    fontWeight: FontWeight.w400
-                                  ),
+                                      color: Color(0xff7F8A9C),
+                                      fontSize: size.width * 24,
+                                      fontWeight: FontWeight.w400),
                                 )
                               ],
                             ),
@@ -636,7 +644,8 @@ class _PersonalTaskState extends State<PersonalTask> {
       queryParameters = {
         "riskObjectId": null,
         "riskUnitId": null,
-        "riskEventId": null
+        "riskEventId": null,
+        "type": 2
       };
       print(queryParameters);
       _throwFunc.run(argument: queryParameters);
@@ -704,13 +713,13 @@ class _PersonalTaskState extends State<PersonalTask> {
       case '0':
         return '现场确认';
         break;
-      case '0':
+      case '1':
         return '拍照';
         break;
-      case '0':
+      case '2':
         return '热成像';
         break;
-      case '0':
+      case '3':
         return '震动';
         break;
       default:
@@ -735,8 +744,9 @@ class _PersonalTaskState extends State<PersonalTask> {
                 onTap: () {
                   Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
                       arguments: {
-                        "dangerState": '-1',
-                        'id': list[index]['id']
+                        "dangerState": 'check',
+                        'id': list[index]['id'],
+                        'checkMeans': list[index]['checkMeans'],
                       }).then((value) {
                     _throwFunc.run();
                   });
@@ -869,28 +879,30 @@ class _PersonalTaskState extends State<PersonalTask> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 RichText(
-                                      text: TextSpan(
-                                          style: TextStyle(
-                                              fontSize: size.width * 24,
-                                              fontWeight: FontWeight.w400),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                                text: '管控手段：',
-                                                style: TextStyle(
-                                                    color: Color(0xff333333))),
-                                            TextSpan(
-                                                text: _getCheckMeans(list[index]['checkMeans']),
-                                                style: TextStyle(
-                                                    color: Color(0xff7F8A9C))),
-                                          ]),
-                                    ),
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '管控手段：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text: _getCheckMeans(
+                                                list[index]['checkMeans']),
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
                                 Spacer(),
                                 Container(
                                   height: size.width * 56,
                                   width: size.width * 140,
                                   decoration: BoxDecoration(
                                       color: Color(0xff3074FF),
-                                      borderRadius: BorderRadius.all(Radius.circular(size.width * 36))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(size.width * 36))),
                                   alignment: Alignment.center,
                                   child: Text(
                                     "排查",
@@ -911,7 +923,9 @@ class _PersonalTaskState extends State<PersonalTask> {
                         color: Color(0xffF2F2F2),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.width * 32, vertical: size.width * 24),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.width * 32,
+                            vertical: size.width * 24),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -921,29 +935,30 @@ class _PersonalTaskState extends State<PersonalTask> {
                                   height: size.width * 40,
                                   width: size.width * 40,
                                   decoration: BoxDecoration(
-                                    color: Color(0xff3074FF).withOpacity(0.1),
-                                    borderRadius: BorderRadius.all(Radius.circular(50))
-                                  ),
+                                      color: Color(0xff3074FF).withOpacity(0.1),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(50))),
                                   alignment: Alignment.center,
                                   child: Text(
                                     '起',
                                     style: TextStyle(
-                                      fontSize: size.width * 20,
-                                      color: Color(0xff3074FF),
-                                      fontWeight: FontWeight.w400
-                                    ),
+                                        fontSize: size.width * 20,
+                                        color: Color(0xff3074FF),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ),
                                 SizedBox(
                                   width: size.width * 8,
                                 ),
                                 Text(
-                                  DateTime.fromMillisecondsSinceEpoch(list[index]['checkStartDate']).toString().substring(0, 19),
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                          list[index]['checkStartDate'])
+                                      .toString()
+                                      .substring(0, 19),
                                   style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 24,
-                                    fontWeight: FontWeight.w400
-                                  ),
+                                      color: Color(0xff7F8A9C),
+                                      fontSize: size.width * 24,
+                                      fontWeight: FontWeight.w400),
                                 )
                               ],
                             ),
@@ -953,29 +968,30 @@ class _PersonalTaskState extends State<PersonalTask> {
                                   height: size.width * 40,
                                   width: size.width * 40,
                                   decoration: BoxDecoration(
-                                    color: Color(0xff3074FF).withOpacity(0.1),
-                                    borderRadius: BorderRadius.all(Radius.circular(50))
-                                  ),
+                                      color: Color(0xff3074FF).withOpacity(0.1),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(50))),
                                   alignment: Alignment.center,
                                   child: Text(
                                     '止',
                                     style: TextStyle(
-                                      fontSize: size.width * 20,
-                                      color: Color(0xff3074FF),
-                                      fontWeight: FontWeight.w400
-                                    ),
+                                        fontSize: size.width * 20,
+                                        color: Color(0xff3074FF),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ),
                                 SizedBox(
                                   width: size.width * 8,
                                 ),
                                 Text(
-                                  DateTime.fromMillisecondsSinceEpoch(list[index]['checkEndDate']).toString().substring(0, 19),
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                          list[index]['checkEndDate'])
+                                      .toString()
+                                      .substring(0, 19),
                                   style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 24,
-                                    fontWeight: FontWeight.w400
-                                  ),
+                                      color: Color(0xff7F8A9C),
+                                      fontSize: size.width * 24,
+                                      fontWeight: FontWeight.w400),
                                 )
                               ],
                             ),

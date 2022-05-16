@@ -320,13 +320,13 @@ class _CheckHiddenState extends State<CheckHidden> {
                               onTap: () {
                                 stateSelect = indexState;
                                 // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-                                if(stateList[stateSelect] == '全部'){
+                                if (stateList[stateSelect] == '全部') {
                                   queryParameters['dangerState'] = null;
-                                }else if(stateList[stateSelect] == '待确认'){
+                                } else if (stateList[stateSelect] == '待确认') {
                                   queryParameters['dangerState'] = '-1';
-                                }else if(stateList[stateSelect] == '整改中'){
+                                } else if (stateList[stateSelect] == '整改中') {
                                   queryParameters['dangerState'] = '0';
-                                }else if(stateList[stateSelect] == '待验收'){
+                                } else if (stateList[stateSelect] == '待验收') {
                                   queryParameters['dangerState'] = '1';
                                 }
                                 _throwFunc.run(argument: queryParameters);
@@ -365,6 +365,7 @@ class _CheckHiddenState extends State<CheckHidden> {
                                 context, '/hiddenCheckGovern/taskHandle',
                                 arguments: {
                                   "dangerState": list[index]['dangerState'],
+                                  'id': list[index]['id']
                                 }).then((value) {
                               _throwFunc.run();
                             });
@@ -546,26 +547,41 @@ class _CheckHiddenState extends State<CheckHidden> {
                                               SizedBox(
                                                 height: size.width * 16,
                                               ),
-                                              list[index]['dangerManageDeadline'] != null && list[index]['dangerManageDeadline'] != ''? RichText(
-                                                text: TextSpan(
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            size.width * 24,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                    children: <InlineSpan>[
-                                                      TextSpan(
-                                                          text: '管控时限：',
+                                              list[index]['dangerManageDeadline'] !=
+                                                          null &&
+                                                      list[index][
+                                                              'dangerManageDeadline'] !=
+                                                          ''
+                                                  ? RichText(
+                                                      text: TextSpan(
                                                           style: TextStyle(
-                                                              color: Color(
-                                                                  0xff333333))),
-                                                      TextSpan(
-                                                          text: DateTime.fromMillisecondsSinceEpoch(list[index]['dangerManageDeadline']).toString().substring(0, 19),
-                                                          style: TextStyle(
-                                                              color: Color(
-                                                                  0xff7F8A9C))),
-                                                    ]),
-                                              ) : Container(),
+                                                              fontSize:
+                                                                  size.width *
+                                                                      24,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400),
+                                                          children: <
+                                                              InlineSpan>[
+                                                            TextSpan(
+                                                                text: '管控时限：',
+                                                                style: TextStyle(
+                                                                    color: Color(
+                                                                        0xff333333))),
+                                                            TextSpan(
+                                                                text: DateTime.fromMillisecondsSinceEpoch(
+                                                                        list[index]
+                                                                            [
+                                                                            'dangerManageDeadline'])
+                                                                    .toString()
+                                                                    .substring(
+                                                                        0, 19),
+                                                                style: TextStyle(
+                                                                    color: Color(
+                                                                        0xff7F8A9C))),
+                                                          ]),
+                                                    )
+                                                  : Container(),
                                             ],
                                           ),
                                           Spacer(),
@@ -667,10 +683,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
   _dropList({int index, String msg}) {
     if (dropTempData[index]['value'] == '查看全部') {
       _deleteIndex(index);
-      queryParameters = {
-        "riskObjectId": null,
-        "isFromCheck": 0
-      };
+      queryParameters = {"riskObjectId": null, "isFromCheck": 0};
       print(queryParameters);
       _throwFunc.run(argument: queryParameters);
       if (mounted) {
@@ -781,13 +794,13 @@ class _ReportedHiddenState extends State<ReportedHidden> {
                               onTap: () {
                                 stateSelect = indexState;
                                 // 隐患状态（待确认：-1；整改中：0；待验收：1；已验收：9）
-                                if(stateList[stateSelect] == '全部'){
+                                if (stateList[stateSelect] == '全部') {
                                   queryParameters['dangerState'] = null;
-                                }else if(stateList[stateSelect] == '待确认'){
+                                } else if (stateList[stateSelect] == '待确认') {
                                   queryParameters['dangerState'] = '-1';
-                                }else if(stateList[stateSelect] == '整改中'){
+                                } else if (stateList[stateSelect] == '整改中') {
                                   queryParameters['dangerState'] = '0';
-                                }else if(stateList[stateSelect] == '待验收'){
+                                } else if (stateList[stateSelect] == '待验收') {
                                   queryParameters['dangerState'] = '1';
                                 }
                                 _throwFunc.run(argument: queryParameters);
@@ -826,6 +839,7 @@ class _ReportedHiddenState extends State<ReportedHidden> {
                                 context, '/hiddenCheckGovern/taskHandle',
                                 arguments: {
                                   "dangerState": list[index]['dangerState'],
+                                  'id': list[index]['id']
                                 }).then((value) {
                               _throwFunc.run();
                             });
@@ -890,55 +904,56 @@ class _ReportedHiddenState extends State<ReportedHidden> {
                                           Container(
                                             width: size.width * 450,
                                             child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              RichText(
-                                                text: TextSpan(
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            size.width * 24,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                    children: <InlineSpan>[
-                                                      TextSpan(
-                                                          text: '地点：',
-                                                          style: TextStyle(
-                                                              color: Color(
-                                                                  0xff333333))),
-                                                      TextSpan(
-                                                          text: list[index]['address'],
-                                                          style: TextStyle(
-                                                              color: Color(
-                                                                  0xff7F8A9C))),
-                                                    ]),
-                                              ),
-                                              SizedBox(
-                                                height: size.width * 16,
-                                              ),
-                                              RichText(
-                                                text: TextSpan(
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            size.width * 24,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                    children: <InlineSpan>[
-                                                      TextSpan(
-                                                          text: '隐患描述：',
-                                                          style: TextStyle(
-                                                              color: Color(
-                                                                  0xff333333))),
-                                                      TextSpan(
-                                                          text: list[index]
-                                                              ['dangerDesc'],
-                                                          style: TextStyle(
-                                                              color: Color(
-                                                                  0xff7F8A9C))),
-                                                    ]),
-                                              ),
-                                            ],
-                                          ),
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                RichText(
+                                                  text: TextSpan(
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              size.width * 24,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                      children: <InlineSpan>[
+                                                        TextSpan(
+                                                            text: '地点：',
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xff333333))),
+                                                        TextSpan(
+                                                            text: list[index]
+                                                                ['address'],
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xff7F8A9C))),
+                                                      ]),
+                                                ),
+                                                SizedBox(
+                                                  height: size.width * 16,
+                                                ),
+                                                RichText(
+                                                  text: TextSpan(
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              size.width * 24,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                      children: <InlineSpan>[
+                                                        TextSpan(
+                                                            text: '隐患描述：',
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xff333333))),
+                                                        TextSpan(
+                                                            text: list[index]
+                                                                ['dangerDesc'],
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xff7F8A9C))),
+                                                      ]),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                           Spacer(),
                                           _getButton(

@@ -1,5 +1,6 @@
 import 'package:drag_container/drag/custom_recognizer.dart';
 import 'package:drag_container/drag/drag_controller.dart';
+import 'package:enterprise/service/context.dart';
 import 'package:flutter/material.dart';
 
 ///lib/code15/drag/drag_container.dart
@@ -166,28 +167,36 @@ class _DragContainerState extends State<DragContainer>
     offsetDistance = offsetDistance.clamp(initialChildSize / 4, maxChildSize);
 
     ///平移变换
-    return Transform.translate(
-      ///在y轴方向移动
-      offset: Offset(0.0, offsetDistance),
-
-      ///手势识别
-      child: RawGestureDetector(
-        ///自定义手势
-        // gestures: {CustomVerticalDragGestureRecognizer: getRecognizer()},
-        child: Stack(
-          children: <Widget>[
-            ///限定抽屉的显示的最大高度
-            Container(
-              ///构建抽屉的内容视图
-              child: buildChild(),
-              height: maxChildSize,
-            ),
-            Positioned(
-              child: buildHeader(),
-            )
-          ],
+    return Row(
+      children: [
+        SizedBox(
+          width: size.width * 20,
         ),
-      ),
+        Expanded(
+            child: Transform.translate(
+          ///在y轴方向移动
+          offset: Offset(0.0, offsetDistance),
+
+          ///手势识别
+          child: RawGestureDetector(
+            ///自定义手势
+            // gestures: {CustomVerticalDragGestureRecognizer: getRecognizer()},
+            child: Stack(
+              children: <Widget>[
+                ///限定抽屉的显示的最大高度
+                Container(
+                  ///构建抽屉的内容视图
+                  child: buildChild(),
+                  height: maxChildSize,
+                ),
+                Positioned(
+                  child: buildHeader(),
+                )
+              ],
+            ),
+          ),
+        ))
+      ],
     );
   }
 
@@ -195,18 +204,20 @@ class _DragContainerState extends State<DragContainer>
   Widget buildChild() {
     return Container(
       decoration: BoxDecoration(
-        ///背景颜色设置
-        color: widget.backGroundColor,
 
-        ///只上部分的圆角
-        borderRadius: BorderRadius.only(
-          ///左上角
-          topLeft: Radius.circular(widget.cornerRadius),
+          ///背景颜色设置
+          color: widget.backGroundColor,
 
-          ///右上角
-          topRight: Radius.circular(widget.cornerRadius),
-        ),
-      ),
+          ///只上部分的圆角
+          // borderRadius: BorderRadius.only(
+          //   ///左上角
+          //   topLeft: Radius.circular(widget.cornerRadius),
+
+          //   ///右上角
+          //   topRight: Radius.circular(widget.cornerRadius),
+          // ),
+          borderRadius:
+              BorderRadius.only(topLeft: Radius.circular(size.width * 80))),
 
       ///可滑动的Widget 这里构建的是一个
       child: Column(
@@ -386,19 +397,19 @@ class _DragContainerState extends State<DragContainer>
               }
             },
             child: Container(
-              width: 100,
-              height: 20,
+              width: size.width * 200,
+              height: size.width * 40,
               //设置背景图片
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/bg_drawer_arrow.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Icon(
-                isOpen ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
-                color: Colors.white,
-                size: 20,
+                  color: Color(0xffFF943D),
+                  borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(size.width * 20))),
+              child: Image.asset(
+                isOpen
+                    ? 'assets/images/doubleRiskProjeck/keyboard_arrow_down.png'
+                    : 'assets/images/doubleRiskProjeck/keyboard_arrow_up.png',
+                width: size.width * 40,
+                height: size.width * 40,
               ),
             ),
           )

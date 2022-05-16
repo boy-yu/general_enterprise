@@ -26,7 +26,6 @@ class MyDio {
     bool mounted = true,
   }) async {
     dios.options.headers = {"Authorization": myprefs.getString('token')};
-    // dios.options.headers = {"Authorization": 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzeXN0ZW1Vc2VyIjp7ImlkIjoiMjVkZGE5MTAtMGY5OC00NTgxLTlmNzgtMzhiZDk4NWVlOWQxIiwidXNlcm5hbWUiOiIxMjMiLCJuaWNrbmFtZSI6IuS4jeiDveWIoCIsIm90aGVyVWlkIjoiM0Y0NzM5OEQtQjk2RS00NTdELUEzM0EtQTE0NzA4MUQwQUIzIiwicGFzc3dvcmQiOiIkMmEkMTAkNVFhQVdVeHMvQUhUZW1YNC80cWZSdW82UWUucHBUa2hLbXJGOXVLZVRSVFJBcUhPM1R2djYiLCJlbWFpbCI6IiIsIm1vYmlsZSI6IjE3ODk4NzQ4OTg0Iiwic3RhdHVzIjoxLCJsYXN0TG9naW5UaW1lIjpudWxsLCJzZXgiOiIwIiwiYXZhdGFyIjoiIiwiaXNTeXN0ZW0iOjEsInNpZ24iOiIiLCJkZXNjcmlwdGlvbiI6IiIsImNvbXBhbnlDb2RlIjoiIiwidHlwZSI6MSwiZGVsZXRlZCI6bnVsbCwicm9sZUlkIjpudWxsLCJyb2xlTmFtZSI6bnVsbH0sImV4cCI6MTY1MTEwODg3MSwidXNlcl9uYW1lIjoiMTIzIiwianRpIjoiZDlhNTc2NzQtMWYxYi00ZGE5LWIxM2UtZTA0OTNkNjgyMjc5IiwiY2xpZW50X2lkIjoic3dhZ2dlciIsInNjb3BlIjpbImFsbCJdfQ.XF6IfolSDF8AosXfRVxlDOEYKQqB37kAb2z80JUy1LY'};
     Response res;
     dynamic hasValue = data ?? queryParameters;
 
@@ -63,7 +62,7 @@ class MyDio {
           return Future.error({"message": res.data['message']});
         }
       } catch (e) {
-        print('e------------------------------------------'+ e.toString());
+        print('e------------------------------------------' + e.toString());
         Interface().error({"message": '网络开小差了，请稍后重试'}, myContext);
         if (mounted) {
           _urls.remove(url + hasValue.toString());
