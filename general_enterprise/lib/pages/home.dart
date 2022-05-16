@@ -1363,7 +1363,7 @@ class _MyOverviewState extends State<MyOverview> {
   //构建待排查任务数据
   List<Widget> _buildWaitCheckChildren() {
     List<Widget> list = [];
-    for (int i = 0; i < waitCheckList.length; i++) {
+    for (int i = 0; i < (waitCheckList.length > 10 ? 10 : waitCheckList.length); i++) {
       list.add(
         Container(
           margin: EdgeInsets.symmetric(horizontal: size.width * 24),
@@ -1565,7 +1565,7 @@ class _MyOverviewState extends State<MyOverview> {
   //构建待治理任务数据
   List<Widget> _buildWaitGovernChildren() {
     List<Widget> list = [];
-    for (int i = 0; i < waitGovernList.length; i++) {
+    for (int i = 0; i < (waitGovernList.length > 10 ? 10 : waitGovernList.length); i++) {
       list.add(
         Container(
           margin: EdgeInsets.symmetric(horizontal: size.width * 24),
