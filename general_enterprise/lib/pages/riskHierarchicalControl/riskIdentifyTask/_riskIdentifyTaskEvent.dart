@@ -218,20 +218,20 @@ class _RiskIdentifyTaskEventState extends State<RiskIdentifyTaskEvent> {
                             SizedBox(
                               height: size.width * 16,
                             ),
-                            RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: size.width * 24,
-                                      fontWeight: FontWeight.w400),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                        text: '剩余风险等级：',
-                                        style: TextStyle(
-                                            color: Color(0xff333333))),
-                                    _getTextSpan(
-                                        list[index]['riskLevel'])
-                                  ]),
-                            ),
+                            // RichText(
+                            //   text: TextSpan(
+                            //       style: TextStyle(
+                            //           fontSize: size.width * 24,
+                            //           fontWeight: FontWeight.w400),
+                            //       children: <InlineSpan>[
+                            //         TextSpan(
+                            //             text: '剩余风险等级：',
+                            //             style: TextStyle(
+                            //                 color: Color(0xff333333))),
+                            //         _getTextSpan(
+                            //             list[index]['riskLevel'])
+                            //       ]),
+                            // ),
                           ],
                         ))
                   ],

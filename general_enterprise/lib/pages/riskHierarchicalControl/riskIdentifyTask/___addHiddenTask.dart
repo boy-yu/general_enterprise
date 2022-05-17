@@ -398,6 +398,82 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                     margin: EdgeInsets.only(bottom: size.width * 32),
                   ),
                   Text(
+                    '管控手段',
+                    style: TextStyle(
+                        color: Color(0xff333333),
+                        fontSize: size.width * 28,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: size.width * 16,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          isDismissible: true,
+                          isScrollControlled: false,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(15))),
+                          builder: (BuildContext context) {
+                            return ListView.builder(
+                              itemCount: controlMeansChoice.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    submitData['checkMeans'] =
+                                        controlMeansChoice[index].toString();
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
+                                  child: ListTile(
+                                    title: Text(
+                                        controlMeansChoice[index].toString()),
+                                  ),
+                                );
+                              },
+                            );
+                          });
+                    },
+                    child: Container(
+                      height: size.width * 72,
+                      width: size.width * 310,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: size.width * 2, color: Color(0xffECECEC)),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 8))),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 16),
+                      child: Row(
+                        children: [
+                          Text(
+                            submitData['checkMeans'] == ''
+                                ? "请选择管控手段"
+                                : submitData['checkMeans'].toString(),
+                            style: TextStyle(
+                                color: Color(0xff7F8A9C),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Color(0xff7F8A9C),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    color: Color(0xffECECEC),
+                    height: size.width * 2,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(bottom: size.width * 32),
+                  ),
+                  Text(
                     '巡检周期',
                     style: TextStyle(
                         color: Color(0xff333333),
@@ -501,76 +577,6 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                     height: size.width * 2,
                     width: double.infinity,
                     margin: EdgeInsets.only(bottom: size.width * 32),
-                  ),
-                  Text(
-                    '管控手段',
-                    style: TextStyle(
-                        color: Color(0xff333333),
-                        fontSize: size.width * 28,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          isDismissible: true,
-                          isScrollControlled: false,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15))),
-                          builder: (BuildContext context) {
-                            return ListView.builder(
-                              itemCount: controlMeansChoice.length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    submitData['checkMeans'] =
-                                        controlMeansChoice[index].toString();
-                                    setState(() {});
-                                    Navigator.pop(context);
-                                  },
-                                  child: ListTile(
-                                    title: Text(
-                                        controlMeansChoice[index].toString()),
-                                  ),
-                                );
-                              },
-                            );
-                          });
-                    },
-                    child: Container(
-                      height: size.width * 72,
-                      width: size.width * 310,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: size.width * 2, color: Color(0xffECECEC)),
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(size.width * 8))),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: size.width * 16),
-                      child: Row(
-                        children: [
-                          Text(
-                            submitData['checkMeans'] == ''
-                                ? "请选择管控手段"
-                                : submitData['checkMeans'].toString(),
-                            style: TextStyle(
-                                color: Color(0xff7F8A9C),
-                                fontSize: size.width * 28,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          Spacer(),
-                          Icon(
-                            Icons.keyboard_arrow_down,
-                            color: Color(0xff7F8A9C),
-                          )
-                        ],
-                      ),
-                    ),
                   ),
                   _getWidget()
                 ],
