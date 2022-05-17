@@ -2,6 +2,7 @@ import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddControlMeasure extends StatefulWidget {
@@ -14,21 +15,28 @@ class AddControlMeasure extends StatefulWidget {
 class _AddControlMeasureState extends State<AddControlMeasure> {
   TextEditingController _controllerMeasures = TextEditingController();
   TextEditingController _controllerClassify3 = TextEditingController();
-  TextEditingController _controllerTroubleshootContent = TextEditingController();
+  TextEditingController _controllerTroubleshootContent =
+      TextEditingController();
+  TextEditingController _controllerRonsequenceReduction =
+      TextEditingController();
+  TextEditingController _controllerProbabilityReduction =
+      TextEditingController();
 
   Map submitData = {
     'riskMeasureDesc': '',
     'classify1': '',
     'classify2': '',
     'classify3': '',
-    'troubleshootContent': ''
+    'troubleshootContent': '',
+    'consequenceReduction': '',
+    'probabilityReduction': ''
   };
 
   List classify1Choice = ["工程技术", "维护保养", "操作行为", "应急措施"];
 
   List classify2Choice = [];
-
-  _getClassify2Choice(String classify1){
+  // String regExp = "^(([1-5])|(([1-4])\\.[0-9][0-9]?)|(5\\.0{1,2}))$"
+  _getClassify2Choice(String classify1) {
     switch (classify1) {
       case "工程技术":
         classify2Choice = ["工艺控制", "关键设备/部件", "安全附件", "安全仪表", "其他"];
@@ -43,7 +51,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
         classify2Choice = ["应急设施", "个体防护", "消防设施", "应急预案", "其他"];
         break;
       default:
-       classify2Choice = [];
+        classify2Choice = [];
     }
   }
 
@@ -127,9 +135,11 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    submitData['classify1'] = classify1Choice[index].toString();
+                                    submitData['classify1'] =
+                                        classify1Choice[index].toString();
                                     submitData['classify2'] = '';
-                                    _getClassify2Choice(submitData['classify1']);
+                                    _getClassify2Choice(
+                                        submitData['classify1']);
                                     setState(() {});
                                     Navigator.pop(context);
                                   },
@@ -187,37 +197,37 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if(classify2Choice.isNotEmpty){
+                      if (classify2Choice.isNotEmpty) {
                         showModalBottomSheet(
-                          context: context,
-                          isDismissible: true,
-                          isScrollControlled: false,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15))),
-                          builder: (BuildContext context) {
-                            return ListView.builder(
-                              itemCount: classify2Choice.length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    submitData['classify2'] = classify2Choice[index].toString();
-                                    setState(() {});
-                                    Navigator.pop(context);
-                                  },
-                                  child: ListTile(
-                                    title:
-                                        Text(classify2Choice[index].toString()),
-                                  ),
-                                );
-                              },
-                            );
-                          });
-                      }else{
+                            context: context,
+                            isDismissible: true,
+                            isScrollControlled: false,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15))),
+                            builder: (BuildContext context) {
+                              return ListView.builder(
+                                itemCount: classify2Choice.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      submitData['classify2'] =
+                                          classify2Choice[index].toString();
+                                      setState(() {});
+                                      Navigator.pop(context);
+                                    },
+                                    child: ListTile(
+                                      title: Text(
+                                          classify2Choice[index].toString()),
+                                    ),
+                                  );
+                                },
+                              );
+                            });
+                      } else {
                         Fluttertoast.showToast(msg: "请先选择管控措施分类1");
                       }
-                      
                     },
                     child: Container(
                       height: size.width * 72,
@@ -316,29 +326,143 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                     width: double.infinity,
                     margin: EdgeInsets.only(bottom: size.width * 32),
                   ),
+                  // yz
+                  Text(
+                    '后果降低值',
+                    style: TextStyle(
+                        color: Color(0xff333333),
+                        fontSize: size.width * 28,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: size.width * 16,
+                  ),
+                  TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
+                    ],
+                    keyboardType: TextInputType.number,
+                    maxLength: 4,
+                    textInputAction: TextInputAction.next,
+                    controller: _controllerRonsequenceReduction,
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        double v = double.parse(value);
+                        if (v > 3.99) {
+                          Fluttertoast.showToast(msg: "输入值在0~4.00之间");
+                          _controllerRonsequenceReduction.text = '';
+                          _controllerRonsequenceReduction.selection =
+                              TextSelection.fromPosition(TextPosition(
+                                  offset: _controllerRonsequenceReduction
+                                      .text.length));
+                        } else {
+                          submitData['consequenceReduction'] = value;
+                          setState(() {});
+                        }
+                      } else {
+                        _controllerRonsequenceReduction.text = '';
+                      }
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(
+                            fontSize: size.width * 28,
+                            color: Color(0xff7F8A9C)),
+                        hintText: submitData['consequenceReduction'] == ''
+                            ? '请输入后果降低值'
+                            : submitData['consequenceReduction']),
+                    maxLines: 1,
+                    minLines: 1,
+                  ),
+                  Container(
+                    color: Color(0xffECECEC),
+                    height: size.width * 2,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(bottom: size.width * 32),
+                  ),
+                  Text(
+                    '可能性降低值',
+                    style: TextStyle(
+                        color: Color(0xff333333),
+                        fontSize: size.width * 28,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: size.width * 16,
+                  ),
+                  TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
+                    ],
+                    keyboardType: TextInputType.number,
+                    maxLength: 4,
+                    textInputAction: TextInputAction.next,
+                    controller: _controllerProbabilityReduction,
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        double v = double.parse(value);
+                        if (v > 3.99) {
+                          Fluttertoast.showToast(msg: "输入值在0~4.00之间");
+                          _controllerProbabilityReduction.text = '';
+                          _controllerProbabilityReduction.selection =
+                              TextSelection.fromPosition(TextPosition(
+                                  offset: _controllerProbabilityReduction
+                                      .text.length));
+                        } else {
+                          submitData['probabilityReduction'] = value;
+                          setState(() {});
+                        }
+                      } else {
+                        _controllerProbabilityReduction.text = '';
+                      }
+                      // setState(() {});
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(
+                            fontSize: size.width * 28,
+                            color: Color(0xff7F8A9C)),
+                        hintText: submitData['probabilityReduction'] == ''
+                            ? '请输入可能性降低值'
+                            : submitData['probabilityReduction']),
+                    maxLines: 1,
+                    minLines: 1,
+                  ),
+                  Container(
+                    color: Color(0xffECECEC),
+                    height: size.width * 2,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(bottom: size.width * 32),
+                  ),
                 ],
               )),
               GestureDetector(
                 onTap: () {
-                  if(submitData['riskMeasureDesc'] == ''){
+                  if (submitData['riskMeasureDesc'] == '') {
                     Fluttertoast.showToast(msg: "请填写管控措施");
-                  }else if(submitData['classify1'] == ''){
+                  } else if (submitData['classify1'] == '') {
                     Fluttertoast.showToast(msg: "请选择管控措施分类1");
-                  }else if(submitData['classify2'] == ''){
+                  } else if (submitData['classify2'] == '') {
                     Fluttertoast.showToast(msg: "请选择管控措施分类2");
-                  }else if(submitData['troubleshootContent'] == ''){
+                  } else if (submitData['troubleshootContent'] == '') {
                     Fluttertoast.showToast(msg: "请填写隐患排查内容");
-                  }else{
+                  } else if (submitData['consequenceReduction'] == '') {
+                    Fluttertoast.showToast(msg: "请填写后果降低值");
+                  } else if (submitData['probabilityReduction'] == '') {
+                    Fluttertoast.showToast(msg: "请填写可能性降低值");
+                  } else {
                     submitData['riskEventId'] = widget.riskEventId;
                     submitData['dataSrc'] = '2';
                     print(submitData);
-                    myDio.request(
-                          type: 'post',
-                          url: Interface.postRiskTemplateFourWarehouse,
-                          data: submitData).then((value) {
-                        successToast('新增风险管控措施成功');
-                        Navigator.pop(context);
-                      });
+                    myDio
+                        .request(
+                            type: 'post',
+                            url: Interface.postRiskTemplateFourWarehouse,
+                            data: submitData)
+                        .then((value) {
+                      successToast('新增风险管控措施成功');
+                      Navigator.pop(context);
+                    });
                   }
                 },
                 child: Container(

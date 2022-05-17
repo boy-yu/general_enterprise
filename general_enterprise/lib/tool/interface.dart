@@ -180,7 +180,7 @@ class Interface {
       baseUrl + '/riskTemplateThree/addRiskTemplateThreeWarehouse';
   // 风险管控措施列表
   static String getRiskTemplateFourWarehouseAll =
-      baseUrl + '/riskTemplateFour/RiskTemplateFourWarehouseAll';
+      baseUrl + '/riskTemplateFour/riskTemplateFourWarehouseAll';
   // 新增风险管控措施
   static String postRiskTemplateFourWarehouse =
       baseUrl + '/riskTemplateFour/addRiskTemplateFourWarehouse';

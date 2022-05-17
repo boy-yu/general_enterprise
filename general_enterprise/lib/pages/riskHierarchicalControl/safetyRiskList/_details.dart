@@ -174,7 +174,7 @@ class _DetailsState extends State<Details> {
     }
   }
 
-  String _getCheckMeans(String checkMeans){
+  String _getCheckMeans(String checkMeans) {
     //  0_现场确认；1_拍照；2_热成像；3_震动
     switch (checkMeans) {
       case '0':
@@ -409,207 +409,276 @@ class _DetailsState extends State<Details> {
                               SizedBox(
                                 height: size.width * 16,
                               ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: size.width * 270,
-                                    child: RichText(
-                                      text: TextSpan(
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: size.width * 24,
+                                        fontWeight: FontWeight.w400),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: '初始后果：',
                                           style: TextStyle(
-                                              fontSize: size.width * 24,
-                                              fontWeight: FontWeight.w400),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                                text: '初始后果：',
-                                                style: TextStyle(
-                                                    color: Color(0xff333333))),
-                                            TextSpan(
-                                                text: data[
-                                                        'initialRiskConsequences']
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: Color(0xff7F8A9C))),
-                                          ]),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: size.width * 16,
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        style: TextStyle(
-                                            fontSize: size.width * 24,
-                                            fontWeight: FontWeight.w400),
-                                        children: <InlineSpan>[
-                                          TextSpan(
-                                              text: '剩余后果：',
-                                              style: TextStyle(
-                                                  color: Color(0xff333333))),
-                                          TextSpan(
-                                              text: data['riskConsequences']
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  color: Color(0xff7F8A9C))),
-                                        ]),
-                                  ),
-                                  SizedBox(
-                                    height: size.width * 16,
-                                  ),
-                                ],
+                                              color: Color(0xff333333))),
+                                      TextSpan(
+                                          text: data['initialRiskConsequences']
+                                              .toString(),
+                                          style: TextStyle(
+                                              color: Color(0xff7F8A9C))),
+                                    ]),
                               ),
+                              // Row(
+                              //   children: [
+                              //     Container(
+                              //       width: size.width * 270,
+                              //       child: RichText(
+                              //         text: TextSpan(
+                              //             style: TextStyle(
+                              //                 fontSize: size.width * 24,
+                              //                 fontWeight: FontWeight.w400),
+                              //             children: <InlineSpan>[
+                              //               TextSpan(
+                              //                   text: '初始后果：',
+                              //                   style: TextStyle(
+                              //                       color: Color(0xff333333))),
+                              //               TextSpan(
+                              //                   text: data[
+                              //                           'initialRiskConsequences']
+                              //                       .toString(),
+                              //                   style: TextStyle(
+                              //                       color: Color(0xff7F8A9C))),
+                              //             ]),
+                              //       ),
+                              //     ),
+                              //     SizedBox(
+                              //       height: size.width * 16,
+                              //     ),
+                              //     RichText(
+                              //       text: TextSpan(
+                              //           style: TextStyle(
+                              //               fontSize: size.width * 24,
+                              //               fontWeight: FontWeight.w400),
+                              //           children: <InlineSpan>[
+                              //             TextSpan(
+                              //                 text: '剩余后果：',
+                              //                 style: TextStyle(
+                              //                     color: Color(0xff333333))),
+                              //             TextSpan(
+                              //                 text: data['riskConsequences']
+                              //                     .toString(),
+                              //                 style: TextStyle(
+                              //                     color: Color(0xff7F8A9C))),
+                              //           ]),
+                              //     ),
+                              //     SizedBox(
+                              //       height: size.width * 16,
+                              //     ),
+                              //   ],
+                              // ),
                               SizedBox(
                                 height: size.width * 16,
                               ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: size.width * 270,
-                                    child: RichText(
-                                      text: TextSpan(
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: size.width * 24,
+                                        fontWeight: FontWeight.w400),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: '初始可能性：',
                                           style: TextStyle(
-                                              fontSize: size.width * 24,
-                                              fontWeight: FontWeight.w400),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                                text: '初始可能性：',
-                                                style: TextStyle(
-                                                    color: Color(0xff333333))),
-                                            TextSpan(
-                                                text: data[
-                                                        'initialRiskPossibility']
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: Color(0xff7F8A9C))),
-                                          ]),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: size.width * 16,
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        style: TextStyle(
-                                            fontSize: size.width * 24,
-                                            fontWeight: FontWeight.w400),
-                                        children: <InlineSpan>[
-                                          TextSpan(
-                                              text: '剩余可能性：',
-                                              style: TextStyle(
-                                                  color: Color(0xff333333))),
-                                          TextSpan(
-                                              text: data['riskPossibility']
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  color: Color(0xff7F8A9C))),
-                                        ]),
-                                  ),
-                                  SizedBox(
-                                    height: size.width * 16,
-                                  ),
-                                ],
+                                              color: Color(0xff333333))),
+                                      TextSpan(
+                                          text: data['initialRiskPossibility']
+                                              .toString(),
+                                          style: TextStyle(
+                                              color: Color(0xff7F8A9C))),
+                                    ]),
                               ),
+                              // Row(
+                              //   children: [
+                              //     Container(
+                              //       width: size.width * 270,
+                              //       child: RichText(
+                              //         text: TextSpan(
+                              //             style: TextStyle(
+                              //                 fontSize: size.width * 24,
+                              //                 fontWeight: FontWeight.w400),
+                              //             children: <InlineSpan>[
+                              //               TextSpan(
+                              //                   text: '初始可能性：',
+                              //                   style: TextStyle(
+                              //                       color: Color(0xff333333))),
+                              //               TextSpan(
+                              //                   text: data[
+                              //                           'initialRiskPossibility']
+                              //                       .toString(),
+                              //                   style: TextStyle(
+                              //                       color: Color(0xff7F8A9C))),
+                              //             ]),
+                              //       ),
+                              //     ),
+                              //     SizedBox(
+                              //       height: size.width * 16,
+                              //     ),
+                              //     RichText(
+                              //       text: TextSpan(
+                              //           style: TextStyle(
+                              //               fontSize: size.width * 24,
+                              //               fontWeight: FontWeight.w400),
+                              //           children: <InlineSpan>[
+                              //             TextSpan(
+                              //                 text: '剩余可能性：',
+                              //                 style: TextStyle(
+                              //                     color: Color(0xff333333))),
+                              //             TextSpan(
+                              //                 text: data['riskPossibility']
+                              //                     .toString(),
+                              //                 style: TextStyle(
+                              //                     color: Color(0xff7F8A9C))),
+                              //           ]),
+                              //     ),
+                              //     SizedBox(
+                              //       height: size.width * 16,
+                              //     ),
+                              //   ],
+                              // ),
                               SizedBox(
                                 height: size.width * 16,
                               ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: size.width * 270,
-                                    child: RichText(
-                                      text: TextSpan(
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: size.width * 24,
+                                        fontWeight: FontWeight.w400),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: '初始风险度：',
                                           style: TextStyle(
-                                              fontSize: size.width * 24,
-                                              fontWeight: FontWeight.w400),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                                text: '初始风险度：',
-                                                style: TextStyle(
-                                                    color: Color(0xff333333))),
-                                            TextSpan(
-                                                text: data['initialRiskDegree']
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    color: Color(0xff7F8A9C))),
-                                          ]),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: size.width * 16,
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        style: TextStyle(
-                                            fontSize: size.width * 24,
-                                            fontWeight: FontWeight.w400),
-                                        children: <InlineSpan>[
-                                          TextSpan(
-                                              text: '剩余风险度：',
-                                              style: TextStyle(
-                                                  color: Color(0xff333333))),
-                                          TextSpan(
-                                              text:
-                                                  data['riskDegree'].toString(),
-                                              style: TextStyle(
-                                                  color: Color(0xff7F8A9C))),
-                                        ]),
-                                  ),
-                                  SizedBox(
-                                    height: size.width * 16,
-                                  ),
-                                ],
+                                              color: Color(0xff333333))),
+                                      TextSpan(
+                                          text: data['initialRiskDegree']
+                                              .toString(),
+                                          style: TextStyle(
+                                              color: Color(0xff7F8A9C))),
+                                    ]),
                               ),
+                              // Row(
+                              //   children: [
+                              //     Container(
+                              //       width: size.width * 270,
+                              //       child: RichText(
+                              //         text: TextSpan(
+                              //             style: TextStyle(
+                              //                 fontSize: size.width * 24,
+                              //                 fontWeight: FontWeight.w400),
+                              //             children: <InlineSpan>[
+                              //               TextSpan(
+                              //                   text: '初始风险度：',
+                              //                   style: TextStyle(
+                              //                       color: Color(0xff333333))),
+                              //               TextSpan(
+                              //                   text: data['initialRiskDegree']
+                              //                       .toString(),
+                              //                   style: TextStyle(
+                              //                       color: Color(0xff7F8A9C))),
+                              //             ]),
+                              //       ),
+                              //     ),
+                              //     SizedBox(
+                              //       height: size.width * 16,
+                              //     ),
+                              //     RichText(
+                              //       text: TextSpan(
+                              //           style: TextStyle(
+                              //               fontSize: size.width * 24,
+                              //               fontWeight: FontWeight.w400),
+                              //           children: <InlineSpan>[
+                              //             TextSpan(
+                              //                 text: '剩余风险度：',
+                              //                 style: TextStyle(
+                              //                     color: Color(0xff333333))),
+                              //             TextSpan(
+                              //                 text:
+                              //                     data['riskDegree'].toString(),
+                              //                 style: TextStyle(
+                              //                     color: Color(0xff7F8A9C))),
+                              //           ]),
+                              //     ),
+                              //     SizedBox(
+                              //       height: size.width * 16,
+                              //     ),
+                              //   ],
+                              // ),
                               SizedBox(
                                 height: size.width * 16,
                               ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: size.width * 270,
-                                    child: RichText(
-                                      text: TextSpan(
+                              RichText(
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: size.width * 24,
+                                        fontWeight: FontWeight.w400),
+                                    children: <InlineSpan>[
+                                      TextSpan(
+                                          text: '初始风险等级：',
                                           style: TextStyle(
-                                              fontSize: size.width * 24,
-                                              fontWeight: FontWeight.w400),
-                                          children: <InlineSpan>[
-                                            TextSpan(
-                                                text: '初始风险等级：',
-                                                style: TextStyle(
-                                                    color: Color(0xff333333))),
-                                            TextSpan(
-                                                text: _getRiskLevel(
-                                                    data['initialRiskLevel']),
-                                                style: TextStyle(
-                                                    color: _getColor(data[
-                                                        'initialRiskLevel']))),
-                                          ]),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: size.width * 16,
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        style: TextStyle(
-                                            fontSize: size.width * 24,
-                                            fontWeight: FontWeight.w400),
-                                        children: <InlineSpan>[
-                                          TextSpan(
-                                              text: '剩余风险等级：',
-                                              style: TextStyle(
-                                                  color: Color(0xff333333))),
-                                          TextSpan(
-                                              text: _getRiskLevel(
-                                                  data['riskLevel']),
-                                              style: TextStyle(
-                                                  color: _getColor(
-                                                      data['riskLevel']))),
-                                        ]),
-                                  ),
-                                  SizedBox(
-                                    height: size.width * 16,
-                                  ),
-                                ],
+                                              color: Color(0xff333333))),
+                                      TextSpan(
+                                          text: _getRiskLevel(
+                                              data['initialRiskLevel']),
+                                          style: TextStyle(
+                                              color: _getColor(
+                                                  data['initialRiskLevel']))),
+                                    ]),
                               ),
+                              // Row(
+                              //   children: [
+                              //     Container(
+                              //       width: size.width * 270,
+                              //       child: RichText(
+                              //         text: TextSpan(
+                              //             style: TextStyle(
+                              //                 fontSize: size.width * 24,
+                              //                 fontWeight: FontWeight.w400),
+                              //             children: <InlineSpan>[
+                              //               TextSpan(
+                              //                   text: '初始风险等级：',
+                              //                   style: TextStyle(
+                              //                       color: Color(0xff333333))),
+                              //               TextSpan(
+                              //                   text: _getRiskLevel(
+                              //                       data['initialRiskLevel']),
+                              //                   style: TextStyle(
+                              //                       color: _getColor(data[
+                              //                           'initialRiskLevel']))),
+                              //             ]),
+                              //       ),
+                              //     ),
+                              //     SizedBox(
+                              //       height: size.width * 16,
+                              //     ),
+                              //     RichText(
+                              //       text: TextSpan(
+                              //           style: TextStyle(
+                              //               fontSize: size.width * 24,
+                              //               fontWeight: FontWeight.w400),
+                              //           children: <InlineSpan>[
+                              //             TextSpan(
+                              //                 text: '剩余风险等级：',
+                              //                 style: TextStyle(
+                              //                     color: Color(0xff333333))),
+                              //             TextSpan(
+                              //                 text: _getRiskLevel(
+                              //                     data['riskLevel']),
+                              //                 style: TextStyle(
+                              //                     color: _getColor(
+                              //                         data['riskLevel']))),
+                              //           ]),
+                              //     ),
+                              //     SizedBox(
+                              //       height: size.width * 16,
+                              //     ),
+                              //   ],
+                              // ),
                               SizedBox(
                                 height: size.width * 16,
                               ),
@@ -766,6 +835,50 @@ class _DetailsState extends State<Details> {
                               SizedBox(
                                 height: size.width * 16,
                               ),
+                              Row(
+                                children: [
+                                  RichText(
+                                    text: TextSpan(
+                                        style: TextStyle(
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w400),
+                                        children: <InlineSpan>[
+                                          TextSpan(
+                                              text: '后果降低值：',
+                                              style: TextStyle(
+                                                  color: Color(0xff333333))),
+                                          TextSpan(
+                                              text:
+                                                  data['consequenceReduction'],
+                                              style: TextStyle(
+                                                  color: Color(0xff7F8A9C))),
+                                        ]),
+                                  ),
+                                  SizedBox(
+                                    height: size.width * 16,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                        style: TextStyle(
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w400),
+                                        children: <InlineSpan>[
+                                          TextSpan(
+                                              text: '可能性降低值：',
+                                              style: TextStyle(
+                                                  color: Color(0xff333333))),
+                                          TextSpan(
+                                              text:
+                                                  data['probabilityReduction'],
+                                              style: TextStyle(
+                                                  color: Color(0xff7F8A9C))),
+                                        ]),
+                                  ),
+                                  SizedBox(
+                                    height: size.width * 16,
+                                  ),
+                                ],
+                              ),
                             ],
                           ))
                     ],
@@ -907,7 +1020,8 @@ class _DetailsState extends State<Details> {
                                           bottom: size.width * 24),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        data['riskTemplateFiveList'][index]['troubleshootContent'],
+                                        data['riskTemplateFiveList'][index]
+                                            ['troubleshootContent'],
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C),
                                             fontSize: size.width * 24,
@@ -935,7 +1049,9 @@ class _DetailsState extends State<Details> {
                                           bottom: size.width * 24),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        _getCheckMeans(data['riskTemplateFiveList'][index]['checkMeans']),
+                                        _getCheckMeans(
+                                            data['riskTemplateFiveList'][index]
+                                                ['checkMeans']),
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C),
                                             fontSize: size.width * 24,
@@ -944,11 +1060,13 @@ class _DetailsState extends State<Details> {
                                     ),
                                   ],
                                 ),
-                                index != data['riskTemplateFiveList'].length -1 ? Container(
-                                  width: double.infinity,
-                                  color: Color(0xffF2F2F2),
-                                  height: size.width * 2,
-                                ) : Container(),
+                                index != data['riskTemplateFiveList'].length - 1
+                                    ? Container(
+                                        width: double.infinity,
+                                        color: Color(0xffF2F2F2),
+                                        height: size.width * 2,
+                                      )
+                                    : Container(),
                               ],
                             );
                           })
