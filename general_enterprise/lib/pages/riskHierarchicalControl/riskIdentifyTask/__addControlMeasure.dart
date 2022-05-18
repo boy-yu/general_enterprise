@@ -336,6 +336,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                   ),
                   TextField(
                     inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),//数字包括小数
                       LengthLimitingTextInputFormatter(4)
                     ],
                     keyboardType: TextInputType.number,
@@ -385,6 +386,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                   ),
                   TextField(
                     inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),//数字包括小数
                       LengthLimitingTextInputFormatter(4),
                     ],
                     keyboardType: TextInputType.number,
