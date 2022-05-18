@@ -53,23 +53,23 @@ class _AddRiskEventState extends State<AddRiskEvent> {
     }
   }
 
-  String _getCurrentRiskLevel(int riskLevel) {
-    if (25 >= riskLevel && riskLevel >= 20) {
-      submitData['riskLevel'] = '1';
-      return '重大风险';
-    } else if (20 > riskLevel && riskLevel >= 15) {
-      submitData['riskLevel'] = '2';
-      return '较大风险';
-    } else if (15 > riskLevel && riskLevel >= 9) {
-      submitData['riskLevel'] = '3';
-      return '一般风险';
-    } else if (8 >= riskLevel) {
-      submitData['riskLevel'] = '4';
-      return '低风险';
-    } else {
-      return '系统自动判断';
-    }
-  }
+  // String _getCurrentRiskLevel(int riskLevel) {
+  //   if (25 >= riskLevel && riskLevel >= 20) {
+  //     submitData['riskLevel'] = '1';
+  //     return '重大风险';
+  //   } else if (20 > riskLevel && riskLevel >= 15) {
+  //     submitData['riskLevel'] = '2';
+  //     return '较大风险';
+  //   } else if (15 > riskLevel && riskLevel >= 9) {
+  //     submitData['riskLevel'] = '3';
+  //     return '一般风险';
+  //   } else if (8 >= riskLevel) {
+  //     submitData['riskLevel'] = '4';
+  //     return '低风险';
+  //   } else {
+  //     return '系统自动判断';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -508,6 +508,9 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                         ),
                       )
                     ],
+                  ),
+                  SizedBox(
+                    height: size.width * 24,
                   ),
                   Text(
                     '初始风险度',

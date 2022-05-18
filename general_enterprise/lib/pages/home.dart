@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
-        title: Text('我的', style: TextStyle(fontSize: size.width * 32)),
+        title: Text('首页', style: TextStyle(fontSize: size.width * 32)),
         // Container(
         //   height: size.width * 72,
         //   width: size.width * 408,

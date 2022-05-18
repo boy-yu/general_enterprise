@@ -334,15 +334,11 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                         fontSize: size.width * 28,
                         fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
                   TextField(
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
+                      LengthLimitingTextInputFormatter(4)
                     ],
                     keyboardType: TextInputType.number,
-                    maxLength: 4,
                     textInputAction: TextInputAction.next,
                     controller: _controllerRonsequenceReduction,
                     onChanged: (value) {
@@ -351,10 +347,10 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                         if (v > 4.00) {
                           Fluttertoast.showToast(msg: "输入值在0~4.00之间");
                           _controllerRonsequenceReduction.text = '';
-                          _controllerRonsequenceReduction.selection =
-                              TextSelection.fromPosition(TextPosition(
-                                  offset: _controllerRonsequenceReduction
-                                      .text.length));
+                          // _controllerRonsequenceReduction.selection =
+                          //     TextSelection.fromPosition(TextPosition(
+                          //         offset: _controllerRonsequenceReduction
+                          //             .text.length));
                         } else {
                           submitData['consequenceReduction'] = value;
                           setState(() {});
@@ -387,15 +383,11 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                         fontSize: size.width * 28,
                         fontWeight: FontWeight.w500),
                   ),
-                  SizedBox(
-                    height: size.width * 16,
-                  ),
                   TextField(
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
+                      LengthLimitingTextInputFormatter(4),
                     ],
                     keyboardType: TextInputType.number,
-                    maxLength: 4,
                     textInputAction: TextInputAction.next,
                     controller: _controllerProbabilityReduction,
                     onChanged: (value) {
@@ -404,10 +396,6 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                         if (v > 4.00) {
                           Fluttertoast.showToast(msg: "输入值在0~4.00之间");
                           _controllerProbabilityReduction.text = '';
-                          _controllerProbabilityReduction.selection =
-                              TextSelection.fromPosition(TextPosition(
-                                  offset: _controllerProbabilityReduction
-                                      .text.length));
                         } else {
                           submitData['probabilityReduction'] = value;
                           setState(() {});
@@ -415,7 +403,6 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                       } else {
                         _controllerProbabilityReduction.text = '';
                       }
-                      // setState(() {});
                     },
                     decoration: InputDecoration(
                         border: InputBorder.none,
