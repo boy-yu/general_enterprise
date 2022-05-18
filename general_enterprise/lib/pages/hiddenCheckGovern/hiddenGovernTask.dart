@@ -839,7 +839,8 @@ class _ReportedHiddenState extends State<ReportedHidden> {
                                 context, '/hiddenCheckGovern/taskHandle',
                                 arguments: {
                                   "dangerState": list[index]['dangerState'],
-                                  'id': list[index]['id']
+                                  'id': list[index]['id'],
+                                  'type': '上报'
                                 }).then((value) {
                               _throwFunc.run();
                             });

@@ -59,8 +59,8 @@ class _MyDateSelectState extends State<MyDateSelect> {
         builder: (_) => Container(
             height: size.width * 550,
             child: DateTimePickerWidget(
-                initDateTime: DateTime.parse(
-                    DateTime.now().toLocal().toString().split(' ')[0]),
+                initDateTime: DateTime.parse(DateTime.now().toLocal().toString().split(' ')[0]),
+                minDateTime: DateTime.parse(DateTime.now().toLocal().toString().split(' ')[0]),
                 dateFormat: 'yyyy-MM-dd',
                 locale: DateTimePickerLocale.zh_cn,
                 onCancel: () {

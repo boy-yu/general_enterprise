@@ -11,10 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TaskHandle extends StatefulWidget {
-  TaskHandle({this.dangerState, this.id, this.checkMeans});
+  TaskHandle({this.dangerState, this.id, this.checkMeans, this.type});
   final String dangerState;
   final String id;
   final String checkMeans;
+  final String type;
   @override
   State<TaskHandle> createState() => _TaskHandleState();
 }
@@ -50,7 +51,7 @@ class _TaskHandleState extends State<TaskHandle> {
       ),
       child: Stack(
         children: [
-          ScrollTop(dangerState: widget.dangerState, id: widget.id),
+          ScrollTop(dangerState: widget.dangerState, id: widget.id, type: widget.type),
           BuildDragWidget(
               dangerState: widget.dangerState,
               id: widget.id,
@@ -62,8 +63,8 @@ class _TaskHandleState extends State<TaskHandle> {
 }
 
 class ScrollTop extends StatefulWidget {
-  ScrollTop({this.id, this.dangerState});
-  final String id, dangerState;
+  ScrollTop({this.id, this.dangerState, this.type});
+  final String id, dangerState, type;
   @override
   State<ScrollTop> createState() => _ScrollTopState();
 }
@@ -101,13 +102,25 @@ class _ScrollTopState extends State<ScrollTop> {
           queryParameters: {'id': widget.id}).then((value) {
         if (value is Map) {
           perData = value;
-          value.forEach((key, value) {
-            dropData.forEach((element) {
-              if (element['bindKey'] == key) {
-                element['value'] = value ?? '';
-              }
+          if(widget.type == '上报'){
+            dropData = [{"name": "风险分析对象", "value": '', "bindKey": 'riskObjectName'},];
+            value.forEach((key, value) {
+              dropData.forEach((element) {
+                if (element['bindKey'] == key) {
+                  element['value'] = value ?? '';
+                }
+              });
             });
-          });
+          }else{
+            value.forEach((key, value) {
+              dropData.forEach((element) {
+                if (element['bindKey'] == key) {
+                  element['value'] = value ?? '';
+                }
+              });
+            });
+          }
+          
         }
         if (mounted) {
           setState(() {});

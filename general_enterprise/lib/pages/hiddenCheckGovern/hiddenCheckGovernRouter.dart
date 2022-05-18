@@ -18,7 +18,8 @@ List<Map<String, Widget Function(BuildContext context, {dynamic arguments})>>
     '/hiddenCheckGovern/taskHandle': (context, {arguments}) => TaskHandle(
         dangerState: arguments['dangerState'],
         id: arguments['id'],
-        checkMeans: arguments['checkMeans'])
+        checkMeans: arguments['checkMeans'],
+        type: arguments['type'])
   },
   {
     '/hiddenCheckGovern/hiddenGovernTask': (context, {arguments}) =>
