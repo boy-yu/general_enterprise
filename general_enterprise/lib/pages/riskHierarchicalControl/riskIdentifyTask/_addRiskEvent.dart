@@ -509,6 +509,35 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                       )
                     ],
                   ),
+                  Text(
+                    '初始风险度',
+                    style: TextStyle(
+                        color: Color(0xff333333),
+                        fontSize: size.width * 28,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: size.width * 16,
+                  ),
+                  Container(
+                      height: size.width * 72,
+                      width: size.width * 310,
+                      decoration: BoxDecoration(
+                          color: Color(0xffECECEC),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 8))),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 16),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        submitData['initialRiskDegree'] != ''
+                            ? submitData['initialRiskDegree'].toString()
+                            : "系统自动判断",
+                        style: TextStyle(
+                            color: Color(0xff7F8A9C),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w400),
+                      )),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //   children: [
