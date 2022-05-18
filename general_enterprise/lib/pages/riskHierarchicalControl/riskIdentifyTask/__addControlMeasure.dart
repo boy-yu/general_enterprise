@@ -344,7 +344,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                     onChanged: (value) {
                       if (value.isNotEmpty) {
                         double v = double.parse(value);
-                        if (v > 4.00) {
+                        if (v < 0 || v > 4.00) {
                           Fluttertoast.showToast(msg: "输入值在0~4.00之间");
                           _controllerRonsequenceReduction.text = '';
                           // _controllerRonsequenceReduction.selection =
@@ -393,7 +393,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                     onChanged: (value) {
                       if (value.isNotEmpty) {
                         double v = double.parse(value);
-                        if (v > 4.00) {
+                        if (v < 0 || v > 4.00) {
                           Fluttertoast.showToast(msg: "输入值在0~4.00之间");
                           _controllerProbabilityReduction.text = '';
                         } else {

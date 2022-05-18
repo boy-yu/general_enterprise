@@ -1919,7 +1919,19 @@ class _MyOverviewState extends State<MyOverview> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: size.width * 250,
+                          width: size.width * 80,
+                          padding: EdgeInsets.only(bottom: size.width * 24),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '序号',
+                            style: TextStyle(
+                                color: Color(0xff7F8A9C),
+                                fontSize: size.width * 24,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        Container(
+                          width: size.width * 245,
                           padding: EdgeInsets.only(bottom: size.width * 24),
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -1936,18 +1948,6 @@ class _MyOverviewState extends State<MyOverview> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             '初始风险等级',
-                            style: TextStyle(
-                                color: Color(0xff7F8A9C),
-                                fontSize: size.width * 24,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 175,
-                          padding: EdgeInsets.only(bottom: size.width * 24),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '剩余风险等级',
                             style: TextStyle(
                                 color: Color(0xff7F8A9C),
                                 fontSize: size.width * 24,
@@ -1977,7 +1977,20 @@ class _MyOverviewState extends State<MyOverview> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      width: size.width * 250,
+                                      width: size.width * 80,
+                                      alignment: Alignment.centerLeft,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: size.width * 24),
+                                      child: Text(
+                                        (unitIndex + 1).toString(),
+                                        style: TextStyle(
+                                            color: Color(0xff7F8A9C),
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: size.width * 245,
                                       alignment: Alignment.centerLeft,
                                       padding: EdgeInsets.symmetric(
                                           vertical: size.width * 24),
@@ -1992,29 +2005,13 @@ class _MyOverviewState extends State<MyOverview> {
                                     ),
                                     Container(
                                       width: size.width * 175,
-                                      alignment: Alignment.centerLeft,
                                       padding: EdgeInsets.symmetric(
                                           vertical: size.width * 24),
+                                      alignment: Alignment.centerLeft,
                                       child: Text(
                                         _getRiskLevel(
                                           unitOperationEffect[unitIndex]
                                               ['initialRiskLevel'],
-                                        ),
-                                        style: TextStyle(
-                                            color: Color(0xff7F8A9C),
-                                            fontSize: size.width * 24,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: size.width * 175,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: size.width * 24),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        _getRiskLevel(
-                                          unitOperationEffect[unitIndex]
-                                              ['currentRiskLevel'],
                                         ),
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C),
