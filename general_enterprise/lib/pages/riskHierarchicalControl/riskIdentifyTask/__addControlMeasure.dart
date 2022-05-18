@@ -55,6 +55,114 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
     }
   }
 
+  String _getClassify1(String classify1) {
+    // 工程技术：1；维护保养：2；操作行为：3；应急措施：4
+    switch (classify1) {
+      case '工程技术':
+        return '1';
+        break;
+      case '维护保养':
+        return '2';
+        break;
+      case '操作行为':
+        return '3';
+        break;
+      case '应急措施':
+        return '4';
+        break;
+      default:
+        return '';
+    }
+  }
+
+  String _getClassify2(String classify1, String classify2) {
+    print(classify1);
+    print(classify2);
+    // 工艺控制:1-1；关键设备/部件：1-2；安全附件：1-3；安全仪表：1-4；其它：1-5；
+    // 动设备：2-1；静设备：2-2；其它：2-3；
+    // 人员资质：3-1；操作记录：3-2；交接班：3-3；其他：3-4；
+    // 应急设施:4-1；个体防护：4-2；消防设施：4-3；应急预案：4-4；其它：4-5；
+    switch (classify1) {
+      case '工程技术':
+        switch (classify2) {
+          case '工艺控制':
+            return '1-1';
+            break;
+          case '关键设备/部件':
+            return '1-2';
+            break;
+          case '安全附件':
+            return '1-3';
+            break;
+          case '安全仪表':
+            return '1-4';
+            break;
+          case '其它':
+            return '1-5';
+            break;
+          default:
+        return '';
+        }
+        break;
+      case '维护保养':
+        switch (classify2) {
+          case '动设备':
+            return '2-1';
+            break;
+          case '静设备':
+            return '2-2';
+            break;
+          case '其它':
+            return '2-3';
+            break;
+          default:
+        return '';
+        }
+        break;
+      case '操作行为':
+        switch (classify2) {
+          case '人员资质':
+            return '3-1';
+            break;
+          case '操作记录':
+            return '3-2';
+            break;
+          case '交接班':
+            return '3-3';
+            break;
+          case '其他':
+            return '3-4';
+            break;
+          default:
+        return '';
+        }
+        break;
+      case '应急措施':
+        switch (classify2) {
+          case '应急设施':
+            return '4-1';
+            break;
+          case '个体防护':
+            return '4-2';
+            break;
+          case '消防设施':
+            return '4-3';
+            break;
+          case '应急预案':
+            return '4-4';
+            break;
+          case '其它':
+            return '4-5';
+            break;
+          default:
+        return '';
+        }
+        break;
+      default:
+        return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
@@ -442,6 +550,8 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                   } else {
                     submitData['riskEventId'] = widget.riskEventId;
                     submitData['dataSrc'] = '2';
+                    submitData['classify2'] = _getClassify2(submitData['classify1'], submitData['classify2']);
+                    submitData['classify1'] = _getClassify1(submitData['classify1']);
                     print(submitData);
                     myDio
                         .request(

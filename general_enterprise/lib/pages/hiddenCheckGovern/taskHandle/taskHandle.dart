@@ -103,7 +103,13 @@ class _ScrollTopState extends State<ScrollTop> {
         if (value is Map) {
           perData = value;
           if(widget.type == '上报'){
-            dropData = [{"name": "风险分析对象", "value": '', "bindKey": 'riskObjectName'},];
+            dropData = [
+              {"name": "风险分析对象", "value": '', "bindKey": 'riskObjectName'},
+              {"name": "责任部门", "value": '', "bindKey": 'hazardDep'},
+              {"name": "责任人", "value": '', "bindKey": 'hazardLiablePerson'},
+              {"name": "当前风险等级", "value": '', "bindKey": 'currentRiskLevel'},
+              {"name": "地点", "value": '', "bindKey": 'address'},
+            ];
             value.forEach((key, value) {
               dropData.forEach((element) {
                 if (element['bindKey'] == key) {

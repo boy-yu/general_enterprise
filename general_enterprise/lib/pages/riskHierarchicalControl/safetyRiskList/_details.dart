@@ -194,6 +194,23 @@ class _DetailsState extends State<Details> {
     }
   }
 
+  String _getRefreshRule(String refreshRule){
+    // 1为工作日2为非工作日3为每天
+    switch (refreshRule) {
+      case '1':
+        return '工作日';
+        break;
+      case '2':
+        return '非工作日';
+        break;
+      case '3':
+        return '每天';
+        break;
+      default:
+        return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
@@ -959,7 +976,7 @@ class _DetailsState extends State<Details> {
                                                       color:
                                                           Color(0xff333333))),
                                               TextSpan(
-                                                  text: data['riskTemplateFiveList'][index]['refreshRule'],
+                                                  text: _getRefreshRule(data['riskTemplateFiveList'][index]['refreshRule']),
                                                   style: TextStyle(
                                                       color:
                                                           Color(0xff7F8A9C))),

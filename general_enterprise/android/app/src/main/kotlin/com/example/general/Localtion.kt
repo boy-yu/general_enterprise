@@ -1,4 +1,4 @@
-package com.example.enterprise
+package com.example.general
 
 import android.Manifest
 import android.content.Context

@@ -25,7 +25,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
     'checkCycleUnit': '小时',
     'startRefreshTime': '',
     'endRefreshTime': '',
-    'refreshRule': -1 // 1为工作日2为非工作日3为每天
+    'refreshRule': '' // 1为工作日2为非工作日3为每天
   };
 
   @override
@@ -205,7 +205,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      submitData['refreshRule'] = 1;
+                      submitData['refreshRule'] = '1';
                       setState(() {});
                     },
                     child: Container(
@@ -218,7 +218,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                             width: size.width * 32,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                border: submitData['refreshRule'] == 1
+                                border: submitData['refreshRule'] == '1'
                                     ? Border.all(
                                         color: Color(0xff3074FF),
                                         width: size.width * 10)
@@ -234,7 +234,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                           Text(
                             '工作日',
                             style: TextStyle(
-                                color: submitData['refreshRule'] == 1
+                                color: submitData['refreshRule'] == '1'
                                     ? Color(0xff262626)
                                     : Color(0xff8D95A3),
                                 fontSize: size.width * 28,
@@ -246,7 +246,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      submitData['refreshRule'] = 2;
+                      submitData['refreshRule'] = '2';
                       setState(() {});
                     },
                     child: Container(
@@ -259,7 +259,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                             width: size.width * 32,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                border: submitData['refreshRule'] == 2
+                                border: submitData['refreshRule'] == '2'
                                     ? Border.all(
                                         color: Color(0xff3074FF),
                                         width: size.width * 10)
@@ -275,7 +275,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                           Text(
                             '非工作日',
                             style: TextStyle(
-                                color: submitData['refreshRule'] == 2
+                                color: submitData['refreshRule'] == '2'
                                     ? Color(0xff262626)
                                     : Color(0xff8D95A3),
                                 fontSize: size.width * 28,
@@ -287,7 +287,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      submitData['refreshRule'] = 3;
+                      submitData['refreshRule'] = '3';
                       setState(() {});
                     },
                     child: Container(
@@ -300,7 +300,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                             width: size.width * 32,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                border: submitData['refreshRule'] == 3
+                                border: submitData['refreshRule'] == '3'
                                     ? Border.all(
                                         color: Color(0xff3074FF),
                                         width: size.width * 10)
@@ -316,7 +316,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                           Text(
                             '每天',
                             style: TextStyle(
-                                color: submitData['refreshRule'] == 3
+                                color: submitData['refreshRule'] == '3'
                                     ? Color(0xff262626)
                                     : Color(0xff8D95A3),
                                 fontSize: size.width * 28,
@@ -601,7 +601,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                       } else if (int.parse(submitData['checkCycle']) >
                           _getHour()) {
                         Fluttertoast.showToast(msg: "周期不能大于时间段");
-                      } else if (submitData['refreshRule'] == -1) {
+                      } else if (submitData['refreshRule'] == '') {
                         Fluttertoast.showToast(msg: "请选择刷新规则");
                       } else {
                         // 提交数据
