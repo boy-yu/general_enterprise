@@ -44,7 +44,11 @@ class _TroubleshootState extends State<Troubleshoot> {
 
   _sumbit() async {
     if (_textEditingController.text == '') {
-      Fluttertoast.showToast(msg: '请输入隐患描述');
+      if(isFull){
+        Fluttertoast.showToast(msg: '请输入排查人意见');
+      }else{
+        Fluttertoast.showToast(msg: '请输入隐患描述');
+      }
       return;
     }
     dynamic submitData = {
