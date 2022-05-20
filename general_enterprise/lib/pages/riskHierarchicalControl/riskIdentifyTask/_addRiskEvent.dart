@@ -53,23 +53,23 @@ class _AddRiskEventState extends State<AddRiskEvent> {
     }
   }
 
-  String _getCurrentRiskLevel(int riskLevel) {
-    if (25 >= riskLevel && riskLevel >= 20) {
-      submitData['riskLevel'] = '1';
-      return '重大风险';
-    } else if (20 > riskLevel && riskLevel >= 15) {
-      submitData['riskLevel'] = '2';
-      return '较大风险';
-    } else if (15 > riskLevel && riskLevel >= 9) {
-      submitData['riskLevel'] = '3';
-      return '一般风险';
-    } else if (8 >= riskLevel) {
-      submitData['riskLevel'] = '4';
-      return '低风险';
-    } else {
-      return '系统自动判断';
-    }
-  }
+  // String _getCurrentRiskLevel(int riskLevel) {
+  //   if (25 >= riskLevel && riskLevel >= 20) {
+  //     submitData['riskLevel'] = '1';
+  //     return '重大风险';
+  //   } else if (20 > riskLevel && riskLevel >= 15) {
+  //     submitData['riskLevel'] = '2';
+  //     return '较大风险';
+  //   } else if (15 > riskLevel && riskLevel >= 9) {
+  //     submitData['riskLevel'] = '3';
+  //     return '一般风险';
+  //   } else if (8 >= riskLevel) {
+  //     submitData['riskLevel'] = '4';
+  //     return '低风险';
+  //   } else {
+  //     return '系统自动判断';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -157,519 +157,759 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                     width: double.infinity,
                     margin: EdgeInsets.only(bottom: size.width * 32),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '初始后果',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: size.width * 28,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: size.width * 16,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  isDismissible: true,
-                                  isScrollControlled: false,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(15),
-                                          topRight: Radius.circular(15))),
-                                  builder: (BuildContext context) {
-                                    return ListView.builder(
-                                      itemCount: levelChoice.length,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            submitData[
-                                                    'initialRiskConsequences'] =
-                                                levelChoice[index];
-                                            if (submitData[
-                                                    'initialRiskPossibility'] !=
-                                                '') {
+                      Text(
+                        '初始后果',
+                        style: TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: size.width * 16,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              isDismissible: true,
+                              isScrollControlled: false,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15))),
+                              builder: (BuildContext context) {
+                                return ListView.builder(
+                                  itemCount: levelChoice.length,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        submitData['initialRiskConsequences'] =
+                                            levelChoice[index];
+                                        if (submitData[
+                                                'initialRiskPossibility'] !=
+                                            '') {
+                                          submitData[
+                                              'initialRiskDegree'] = submitData[
+                                                  'initialRiskConsequences'] *
                                               submitData[
-                                                  'initialRiskDegree'] = submitData[
-                                                      'initialRiskConsequences'] *
-                                                  submitData[
-                                                      'initialRiskPossibility'];
-                                            }
-                                            setState(() {});
-                                            Navigator.pop(context);
-                                          },
-                                          child: ListTile(
-                                            title: Text(
-                                                levelChoice[index].toString()),
-                                          ),
-                                        );
+                                                  'initialRiskPossibility'];
+                                        }
+                                        setState(() {});
+                                        Navigator.pop(context);
                                       },
+                                      child: ListTile(
+                                        title:
+                                            Text(levelChoice[index].toString()),
+                                      ),
                                     );
-                                  });
-                            },
-                            child: Container(
-                              height: size.width * 72,
-                              width: size.width * 310,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: size.width * 2,
-                                      color: Color(0xffECECEC)),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size.width * 8))),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 16),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    submitData['initialRiskConsequences'] == ''
-                                        ? "请选择"
-                                        : submitData['initialRiskConsequences']
-                                            .toString(),
-                                    style: TextStyle(
-                                        color: Color(0xff7F8A9C),
-                                        fontSize: size.width * 28,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.keyboard_arrow_down,
+                                  },
+                                );
+                              });
+                        },
+                        child: Container(
+                          height: size.width * 72,
+                          // width: size.width * 310,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: size.width * 2,
+                                  color: Color(0xffECECEC)),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(size.width * 8))),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: size.width * 16),
+                          child: Row(
+                            children: [
+                              Text(
+                                submitData['initialRiskConsequences'] == ''
+                                    ? "请选择"
+                                    : submitData['initialRiskConsequences']
+                                        .toString(),
+                                style: TextStyle(
                                     color: Color(0xff7F8A9C),
-                                  )
-                                ],
+                                    fontSize: size.width * 28,
+                                    fontWeight: FontWeight.w400),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '剩余后果',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: size.width * 28,
-                                fontWeight: FontWeight.w500),
+                              Spacer(),
+                              Icon(
+                                Icons.keyboard_arrow_down,
+                                color: Color(0xff7F8A9C),
+                              )
+                            ],
                           ),
-                          SizedBox(
-                            height: size.width * 16,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  isDismissible: true,
-                                  isScrollControlled: false,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(15),
-                                          topRight: Radius.circular(15))),
-                                  builder: (BuildContext context) {
-                                    return ListView.builder(
-                                      itemCount: levelChoice.length,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            submitData['riskConsequences'] =
-                                                levelChoice[index];
-                                            if (submitData['riskPossibility'] !=
-                                                '') {
-                                              submitData['riskDegree'] =
-                                                  submitData[
-                                                          'riskPossibility'] *
-                                                      submitData[
-                                                          'riskConsequences'];
-                                            }
-                                            setState(() {});
-                                            Navigator.pop(context);
-                                          },
-                                          child: ListTile(
-                                            title: Text(
-                                                levelChoice[index].toString()),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: size.width * 72,
-                              width: size.width * 310,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: size.width * 2,
-                                      color: Color(0xffECECEC)),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size.width * 8))),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 16),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    submitData['riskConsequences'] == ''
-                                        ? "请选择"
-                                        : submitData['riskConsequences']
-                                            .toString(),
-                                    style: TextStyle(
-                                        color: Color(0xff7F8A9C),
-                                        fontSize: size.width * 28,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Color(0xff7F8A9C),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                      )
                     ],
                   ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           '初始后果',
+                  //           style: TextStyle(
+                  //               color: Color(0xff333333),
+                  //               fontSize: size.width * 28,
+                  //               fontWeight: FontWeight.w500),
+                  //         ),
+                  //         SizedBox(
+                  //           height: size.width * 16,
+                  //         ),
+                  //         GestureDetector(
+                  //           onTap: () {
+                  //             showModalBottomSheet(
+                  //                 context: context,
+                  //                 isDismissible: true,
+                  //                 isScrollControlled: false,
+                  //                 shape: RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.only(
+                  //                         topLeft: Radius.circular(15),
+                  //                         topRight: Radius.circular(15))),
+                  //                 builder: (BuildContext context) {
+                  //                   return ListView.builder(
+                  //                     itemCount: levelChoice.length,
+                  //                     itemBuilder: (context, index) {
+                  //                       return InkWell(
+                  //                         onTap: () {
+                  //                           submitData[
+                  //                                   'initialRiskConsequences'] =
+                  //                               levelChoice[index];
+                  //                           if (submitData[
+                  //                                   'initialRiskPossibility'] !=
+                  //                               '') {
+                  //                             submitData[
+                  //                                 'initialRiskDegree'] = submitData[
+                  //                                     'initialRiskConsequences'] *
+                  //                                 submitData[
+                  //                                     'initialRiskPossibility'];
+                  //                           }
+                  //                           setState(() {});
+                  //                           Navigator.pop(context);
+                  //                         },
+                  //                         child: ListTile(
+                  //                           title: Text(
+                  //                               levelChoice[index].toString()),
+                  //                         ),
+                  //                       );
+                  //                     },
+                  //                   );
+                  //                 });
+                  //           },
+                  //           child: Container(
+                  //             height: size.width * 72,
+                  //             width: size.width * 310,
+                  //             decoration: BoxDecoration(
+                  //                 border: Border.all(
+                  //                     width: size.width * 2,
+                  //                     color: Color(0xffECECEC)),
+                  //                 borderRadius: BorderRadius.all(
+                  //                     Radius.circular(size.width * 8))),
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * 16),
+                  //             child: Row(
+                  //               children: [
+                  //                 Text(
+                  //                   submitData['initialRiskConsequences'] == ''
+                  //                       ? "请选择"
+                  //                       : submitData['initialRiskConsequences']
+                  //                           .toString(),
+                  //                   style: TextStyle(
+                  //                       color: Color(0xff7F8A9C),
+                  //                       fontSize: size.width * 28,
+                  //                       fontWeight: FontWeight.w400),
+                  //                 ),
+                  //                 Spacer(),
+                  //                 Icon(
+                  //                   Icons.keyboard_arrow_down,
+                  //                   color: Color(0xff7F8A9C),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         )
+                  //       ],
+                  //     ),
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           '剩余后果',
+                  //           style: TextStyle(
+                  //               color: Color(0xff333333),
+                  //               fontSize: size.width * 28,
+                  //               fontWeight: FontWeight.w500),
+                  //         ),
+                  //         SizedBox(
+                  //           height: size.width * 16,
+                  //         ),
+                  //         GestureDetector(
+                  //           onTap: () {
+                  //             showModalBottomSheet(
+                  //                 context: context,
+                  //                 isDismissible: true,
+                  //                 isScrollControlled: false,
+                  //                 shape: RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.only(
+                  //                         topLeft: Radius.circular(15),
+                  //                         topRight: Radius.circular(15))),
+                  //                 builder: (BuildContext context) {
+                  //                   return ListView.builder(
+                  //                     itemCount: levelChoice.length,
+                  //                     itemBuilder: (context, index) {
+                  //                       return InkWell(
+                  //                         onTap: () {
+                  //                           submitData['riskConsequences'] =
+                  //                               levelChoice[index];
+                  //                           if (submitData['riskPossibility'] !=
+                  //                               '') {
+                  //                             submitData['riskDegree'] =
+                  //                                 submitData[
+                  //                                         'riskPossibility'] *
+                  //                                     submitData[
+                  //                                         'riskConsequences'];
+                  //                           }
+                  //                           setState(() {});
+                  //                           Navigator.pop(context);
+                  //                         },
+                  //                         child: ListTile(
+                  //                           title: Text(
+                  //                               levelChoice[index].toString()),
+                  //                         ),
+                  //                       );
+                  //                     },
+                  //                   );
+                  //                 });
+                  //           },
+                  //           child: Container(
+                  //             height: size.width * 72,
+                  //             width: size.width * 310,
+                  //             decoration: BoxDecoration(
+                  //                 border: Border.all(
+                  //                     width: size.width * 2,
+                  //                     color: Color(0xffECECEC)),
+                  //                 borderRadius: BorderRadius.all(
+                  //                     Radius.circular(size.width * 8))),
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * 16),
+                  //             child: Row(
+                  //               children: [
+                  //                 Text(
+                  //                   submitData['riskConsequences'] == ''
+                  //                       ? "请选择"
+                  //                       : submitData['riskConsequences']
+                  //                           .toString(),
+                  //                   style: TextStyle(
+                  //                       color: Color(0xff7F8A9C),
+                  //                       fontSize: size.width * 28,
+                  //                       fontWeight: FontWeight.w400),
+                  //                 ),
+                  //                 Spacer(),
+                  //                 Icon(
+                  //                   Icons.keyboard_arrow_down,
+                  //                   color: Color(0xff7F8A9C),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: size.width * 24,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '初始可能性',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: size.width * 28,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: size.width * 16,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  isDismissible: true,
-                                  isScrollControlled: false,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(15),
-                                          topRight: Radius.circular(15))),
-                                  builder: (BuildContext context) {
-                                    return ListView.builder(
-                                      itemCount: levelChoice.length,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            submitData[
-                                                    'initialRiskPossibility'] =
-                                                levelChoice[index];
-                                            if (submitData[
-                                                    'initialRiskConsequences'] !=
-                                                '') {
+                      Text(
+                        '初始可能性',
+                        style: TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: size.width * 16,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              isDismissible: true,
+                              isScrollControlled: false,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15))),
+                              builder: (BuildContext context) {
+                                return ListView.builder(
+                                  itemCount: levelChoice.length,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        submitData['initialRiskPossibility'] =
+                                            levelChoice[index];
+                                        if (submitData[
+                                                'initialRiskConsequences'] !=
+                                            '') {
+                                          submitData[
+                                              'initialRiskDegree'] = submitData[
+                                                  'initialRiskConsequences'] *
                                               submitData[
-                                                  'initialRiskDegree'] = submitData[
-                                                      'initialRiskConsequences'] *
-                                                  submitData[
-                                                      'initialRiskPossibility'];
-                                            }
-                                            setState(() {});
-                                            Navigator.pop(context);
-                                          },
-                                          child: ListTile(
-                                            title: Text(
-                                                levelChoice[index].toString()),
-                                          ),
-                                        );
+                                                  'initialRiskPossibility'];
+                                        }
+                                        setState(() {});
+                                        Navigator.pop(context);
                                       },
+                                      child: ListTile(
+                                        title:
+                                            Text(levelChoice[index].toString()),
+                                      ),
                                     );
-                                  });
-                            },
-                            child: Container(
-                              height: size.width * 72,
-                              width: size.width * 310,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: size.width * 2,
-                                      color: Color(0xffECECEC)),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size.width * 8))),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 16),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    submitData['initialRiskPossibility'] == ''
-                                        ? "请选择"
-                                        : submitData['initialRiskPossibility']
-                                            .toString(),
-                                    style: TextStyle(
-                                        color: Color(0xff7F8A9C),
-                                        fontSize: size.width * 28,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.keyboard_arrow_down,
+                                  },
+                                );
+                              });
+                        },
+                        child: Container(
+                          height: size.width * 72,
+                          // width: size.width * 310,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: size.width * 2,
+                                  color: Color(0xffECECEC)),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(size.width * 8))),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: size.width * 16),
+                          child: Row(
+                            children: [
+                              Text(
+                                submitData['initialRiskPossibility'] == ''
+                                    ? "请选择"
+                                    : submitData['initialRiskPossibility']
+                                        .toString(),
+                                style: TextStyle(
                                     color: Color(0xff7F8A9C),
-                                  )
-                                ],
+                                    fontSize: size.width * 28,
+                                    fontWeight: FontWeight.w400),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '剩余可能性',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: size.width * 28,
-                                fontWeight: FontWeight.w500),
+                              Spacer(),
+                              Icon(
+                                Icons.keyboard_arrow_down,
+                                color: Color(0xff7F8A9C),
+                              )
+                            ],
                           ),
-                          SizedBox(
-                            height: size.width * 16,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  isDismissible: true,
-                                  isScrollControlled: false,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(15),
-                                          topRight: Radius.circular(15))),
-                                  builder: (BuildContext context) {
-                                    return ListView.builder(
-                                      itemCount: levelChoice.length,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            submitData['riskPossibility'] =
-                                                levelChoice[index];
-                                            if (submitData[
-                                                    'riskConsequences'] !=
-                                                '') {
-                                              submitData['riskDegree'] =
-                                                  submitData[
-                                                          'riskPossibility'] *
-                                                      submitData[
-                                                          'riskConsequences'];
-                                            }
-                                            setState(() {});
-                                            Navigator.pop(context);
-                                          },
-                                          child: ListTile(
-                                            title: Text(
-                                                levelChoice[index].toString()),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              height: size.width * 72,
-                              width: size.width * 310,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: size.width * 2,
-                                      color: Color(0xffECECEC)),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size.width * 8))),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 16),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    submitData['riskPossibility'] == ''
-                                        ? "请选择"
-                                        : submitData['riskPossibility']
-                                            .toString(),
-                                    style: TextStyle(
-                                        color: Color(0xff7F8A9C),
-                                        fontSize: size.width * 28,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.keyboard_arrow_down,
-                                    color: Color(0xff7F8A9C),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
                     height: size.width * 24,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '初始风险度',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: size.width * 28,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: size.width * 16,
-                          ),
-                          Container(
-                              height: size.width * 72,
-                              width: size.width * 310,
-                              decoration: BoxDecoration(
-                                  color: Color(0xffECECEC),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size.width * 8))),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 16),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                submitData['initialRiskDegree'] != ''
-                                    ? submitData['initialRiskDegree'].toString()
-                                    : "系统自动判断",
-                                style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 28,
-                                    fontWeight: FontWeight.w400),
-                              )),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '剩余风险度',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: size.width * 28,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: size.width * 16,
-                          ),
-                          Container(
-                              height: size.width * 72,
-                              width: size.width * 310,
-                              decoration: BoxDecoration(
-                                  color: Color(0xffECECEC),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size.width * 8))),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 16),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                submitData['riskDegree'] != ''
-                                    ? submitData['riskDegree'].toString()
-                                    : "系统自动判断",
-                                style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 28,
-                                    fontWeight: FontWeight.w400),
-                              )),
-                        ],
-                      ),
-                    ],
+                  Text(
+                    '初始风险度',
+                    style: TextStyle(
+                        color: Color(0xff333333),
+                        fontSize: size.width * 28,
+                        fontWeight: FontWeight.w500),
                   ),
+                  SizedBox(
+                    height: size.width * 16,
+                  ),
+                  Container(
+                      height: size.width * 72,
+                      width: size.width * 310,
+                      decoration: BoxDecoration(
+                          color: Color(0xffECECEC),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 8))),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 16),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        submitData['initialRiskDegree'] != ''
+                            ? submitData['initialRiskDegree'].toString()
+                            : "系统自动判断",
+                        style: TextStyle(
+                            color: Color(0xff7F8A9C),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w400),
+                      )),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           '初始可能性',
+                  //           style: TextStyle(
+                  //               color: Color(0xff333333),
+                  //               fontSize: size.width * 28,
+                  //               fontWeight: FontWeight.w500),
+                  //         ),
+                  //         SizedBox(
+                  //           height: size.width * 16,
+                  //         ),
+                  //         GestureDetector(
+                  //           onTap: () {
+                  //             showModalBottomSheet(
+                  //                 context: context,
+                  //                 isDismissible: true,
+                  //                 isScrollControlled: false,
+                  //                 shape: RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.only(
+                  //                         topLeft: Radius.circular(15),
+                  //                         topRight: Radius.circular(15))),
+                  //                 builder: (BuildContext context) {
+                  //                   return ListView.builder(
+                  //                     itemCount: levelChoice.length,
+                  //                     itemBuilder: (context, index) {
+                  //                       return InkWell(
+                  //                         onTap: () {
+                  //                           submitData[
+                  //                                   'initialRiskPossibility'] =
+                  //                               levelChoice[index];
+                  //                           if (submitData[
+                  //                                   'initialRiskConsequences'] !=
+                  //                               '') {
+                  //                             submitData[
+                  //                                 'initialRiskDegree'] = submitData[
+                  //                                     'initialRiskConsequences'] *
+                  //                                 submitData[
+                  //                                     'initialRiskPossibility'];
+                  //                           }
+                  //                           setState(() {});
+                  //                           Navigator.pop(context);
+                  //                         },
+                  //                         child: ListTile(
+                  //                           title: Text(
+                  //                               levelChoice[index].toString()),
+                  //                         ),
+                  //                       );
+                  //                     },
+                  //                   );
+                  //                 });
+                  //           },
+                  //           child: Container(
+                  //             height: size.width * 72,
+                  //             width: size.width * 310,
+                  //             decoration: BoxDecoration(
+                  //                 border: Border.all(
+                  //                     width: size.width * 2,
+                  //                     color: Color(0xffECECEC)),
+                  //                 borderRadius: BorderRadius.all(
+                  //                     Radius.circular(size.width * 8))),
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * 16),
+                  //             child: Row(
+                  //               children: [
+                  //                 Text(
+                  //                   submitData['initialRiskPossibility'] == ''
+                  //                       ? "请选择"
+                  //                       : submitData['initialRiskPossibility']
+                  //                           .toString(),
+                  //                   style: TextStyle(
+                  //                       color: Color(0xff7F8A9C),
+                  //                       fontSize: size.width * 28,
+                  //                       fontWeight: FontWeight.w400),
+                  //                 ),
+                  //                 Spacer(),
+                  //                 Icon(
+                  //                   Icons.keyboard_arrow_down,
+                  //                   color: Color(0xff7F8A9C),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         )
+                  //       ],
+                  //     ),
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           '剩余可能性',
+                  //           style: TextStyle(
+                  //               color: Color(0xff333333),
+                  //               fontSize: size.width * 28,
+                  //               fontWeight: FontWeight.w500),
+                  //         ),
+                  //         SizedBox(
+                  //           height: size.width * 16,
+                  //         ),
+                  //         GestureDetector(
+                  //           onTap: () {
+                  //             showModalBottomSheet(
+                  //                 context: context,
+                  //                 isDismissible: true,
+                  //                 isScrollControlled: false,
+                  //                 shape: RoundedRectangleBorder(
+                  //                     borderRadius: BorderRadius.only(
+                  //                         topLeft: Radius.circular(15),
+                  //                         topRight: Radius.circular(15))),
+                  //                 builder: (BuildContext context) {
+                  //                   return ListView.builder(
+                  //                     itemCount: levelChoice.length,
+                  //                     itemBuilder: (context, index) {
+                  //                       return InkWell(
+                  //                         onTap: () {
+                  //                           submitData['riskPossibility'] =
+                  //                               levelChoice[index];
+                  //                           if (submitData[
+                  //                                   'riskConsequences'] !=
+                  //                               '') {
+                  //                             submitData['riskDegree'] =
+                  //                                 submitData[
+                  //                                         'riskPossibility'] *
+                  //                                     submitData[
+                  //                                         'riskConsequences'];
+                  //                           }
+                  //                           setState(() {});
+                  //                           Navigator.pop(context);
+                  //                         },
+                  //                         child: ListTile(
+                  //                           title: Text(
+                  //                               levelChoice[index].toString()),
+                  //                         ),
+                  //                       );
+                  //                     },
+                  //                   );
+                  //                 });
+                  //           },
+                  //           child: Container(
+                  //             height: size.width * 72,
+                  //             width: size.width * 310,
+                  //             decoration: BoxDecoration(
+                  //                 border: Border.all(
+                  //                     width: size.width * 2,
+                  //                     color: Color(0xffECECEC)),
+                  //                 borderRadius: BorderRadius.all(
+                  //                     Radius.circular(size.width * 8))),
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * 16),
+                  //             child: Row(
+                  //               children: [
+                  //                 Text(
+                  //                   submitData['riskPossibility'] == ''
+                  //                       ? "请选择"
+                  //                       : submitData['riskPossibility']
+                  //                           .toString(),
+                  //                   style: TextStyle(
+                  //                       color: Color(0xff7F8A9C),
+                  //                       fontSize: size.width * 28,
+                  //                       fontWeight: FontWeight.w400),
+                  //                 ),
+                  //                 Spacer(),
+                  //                 Icon(
+                  //                   Icons.keyboard_arrow_down,
+                  //                   color: Color(0xff7F8A9C),
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: size.width * 24,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           '初始风险度',
+                  //           style: TextStyle(
+                  //               color: Color(0xff333333),
+                  //               fontSize: size.width * 28,
+                  //               fontWeight: FontWeight.w500),
+                  //         ),
+                  //         SizedBox(
+                  //           height: size.width * 16,
+                  //         ),
+                  //         Container(
+                  //             height: size.width * 72,
+                  //             width: size.width * 310,
+                  //             decoration: BoxDecoration(
+                  //                 color: Color(0xffECECEC),
+                  //                 borderRadius: BorderRadius.all(
+                  //                     Radius.circular(size.width * 8))),
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * 16),
+                  //             alignment: Alignment.centerLeft,
+                  //             child: Text(
+                  //               submitData['initialRiskDegree'] != ''
+                  //                   ? submitData['initialRiskDegree'].toString()
+                  //                   : "系统自动判断",
+                  //               style: TextStyle(
+                  //                   color: Color(0xff7F8A9C),
+                  //                   fontSize: size.width * 28,
+                  //                   fontWeight: FontWeight.w400),
+                  //             )),
+                  //       ],
+                  //     ),
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           '剩余风险度',
+                  //           style: TextStyle(
+                  //               color: Color(0xff333333),
+                  //               fontSize: size.width * 28,
+                  //               fontWeight: FontWeight.w500),
+                  //         ),
+                  //         SizedBox(
+                  //           height: size.width * 16,
+                  //         ),
+                  //         Container(
+                  //             height: size.width * 72,
+                  //             width: size.width * 310,
+                  //             decoration: BoxDecoration(
+                  //                 color: Color(0xffECECEC),
+                  //                 borderRadius: BorderRadius.all(
+                  //                     Radius.circular(size.width * 8))),
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * 16),
+                  //             alignment: Alignment.centerLeft,
+                  //             child: Text(
+                  //               submitData['riskDegree'] != ''
+                  //                   ? submitData['riskDegree'].toString()
+                  //                   : "系统自动判断",
+                  //               style: TextStyle(
+                  //                   color: Color(0xff7F8A9C),
+                  //                   fontSize: size.width * 28,
+                  //                   fontWeight: FontWeight.w400),
+                  //             )),
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: size.width * 24,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '初始风险等级',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: size.width * 28,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: size.width * 16,
-                          ),
-                          Container(
-                              height: size.width * 72,
-                              width: size.width * 310,
-                              decoration: BoxDecoration(
-                                  color: Color(0xffECECEC),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size.width * 8))),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 16),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                submitData['initialRiskDegree'] != 0 &&
-                                        submitData['initialRiskDegree'] != null
-                                    ? _getInitialRiskLevel(
-                                        submitData['initialRiskDegree'])
-                                    : '系统自动判断',
-                                style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 28,
-                                    fontWeight: FontWeight.w400),
-                              )),
-                        ],
+                      Text(
+                        '初始风险等级',
+                        style: TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w500),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '剩余风险等级',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: size.width * 28,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: size.width * 16,
-                          ),
-                          Container(
-                              height: size.width * 72,
-                              width: size.width * 310,
-                              decoration: BoxDecoration(
-                                  color: Color(0xffECECEC),
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size.width * 8))),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 16),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                submitData['riskDegree'] != 0
-                                    ? _getCurrentRiskLevel(
-                                        submitData['riskDegree'])
-                                    : '系统自动判断',
-                                style: TextStyle(
-                                    color: Color(0xff7F8A9C),
-                                    fontSize: size.width * 28,
-                                    fontWeight: FontWeight.w400),
-                              )),
-                        ],
+                      SizedBox(
+                        height: size.width * 16,
                       ),
+                      Container(
+                          height: size.width * 72,
+                          // width: size.width * 310,
+                          decoration: BoxDecoration(
+                              color: Color(0xffECECEC),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(size.width * 8))),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: size.width * 16),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            submitData['initialRiskDegree'] != 0 &&
+                                    submitData['initialRiskDegree'] != null
+                                ? _getInitialRiskLevel(
+                                    submitData['initialRiskDegree'])
+                                : '系统自动判断',
+                            style: TextStyle(
+                                color: Color(0xff7F8A9C),
+                                fontSize: size.width * 28,
+                                fontWeight: FontWeight.w400),
+                          )),
                     ],
                   ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           '初始风险等级',
+                  //           style: TextStyle(
+                  //               color: Color(0xff333333),
+                  //               fontSize: size.width * 28,
+                  //               fontWeight: FontWeight.w500),
+                  //         ),
+                  //         SizedBox(
+                  //           height: size.width * 16,
+                  //         ),
+                  //         Container(
+                  //             height: size.width * 72,
+                  //             width: size.width * 310,
+                  //             decoration: BoxDecoration(
+                  //                 color: Color(0xffECECEC),
+                  //                 borderRadius: BorderRadius.all(
+                  //                     Radius.circular(size.width * 8))),
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * 16),
+                  //             alignment: Alignment.centerLeft,
+                  //             child: Text(
+                  //               submitData['initialRiskDegree'] != 0 &&
+                  //                       submitData['initialRiskDegree'] != null
+                  //                   ? _getInitialRiskLevel(
+                  //                       submitData['initialRiskDegree'])
+                  //                   : '系统自动判断',
+                  //               style: TextStyle(
+                  //                   color: Color(0xff7F8A9C),
+                  //                   fontSize: size.width * 28,
+                  //                   fontWeight: FontWeight.w400),
+                  //             )),
+                  //       ],
+                  //     ),
+                  //     Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           '剩余风险等级',
+                  //           style: TextStyle(
+                  //               color: Color(0xff333333),
+                  //               fontSize: size.width * 28,
+                  //               fontWeight: FontWeight.w500),
+                  //         ),
+                  //         SizedBox(
+                  //           height: size.width * 16,
+                  //         ),
+                  //         Container(
+                  //             height: size.width * 72,
+                  //             width: size.width * 310,
+                  //             decoration: BoxDecoration(
+                  //                 color: Color(0xffECECEC),
+                  //                 borderRadius: BorderRadius.all(
+                  //                     Radius.circular(size.width * 8))),
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * 16),
+                  //             alignment: Alignment.centerLeft,
+                  //             child: Text(
+                  //               submitData['riskDegree'] != 0
+                  //                   ? _getCurrentRiskLevel(
+                  //                       submitData['riskDegree'])
+                  //                   : '系统自动判断',
+                  //               style: TextStyle(
+                  //                   color: Color(0xff7F8A9C),
+                  //                   fontSize: size.width * 28,
+                  //                   fontWeight: FontWeight.w400),
+                  //             )),
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               )),
               GestureDetector(
@@ -680,13 +920,17 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                     Fluttertoast.showToast(msg: "请填写风险描述");
                   } else if (submitData['initialRiskConsequences'] == 0) {
                     Fluttertoast.showToast(msg: "请选择初始后果");
-                  } else if (submitData['riskConsequences'] == 0) {
-                    Fluttertoast.showToast(msg: "请选择剩余后果");
-                  } else if (submitData['initialRiskPossibility'] == 0) {
+                  }
+                  // else if (submitData['riskConsequences'] == 0) {
+                  //   Fluttertoast.showToast(msg: "请选择剩余后果");
+                  // }
+                  else if (submitData['initialRiskPossibility'] == 0) {
                     Fluttertoast.showToast(msg: "请选择初始可能性");
-                  } else if (submitData['riskPossibility'] == 0) {
-                    Fluttertoast.showToast(msg: "请选择剩余可能性");
-                  } else {
+                  }
+                  // else if (submitData['riskPossibility'] == 0) {
+                  //   Fluttertoast.showToast(msg: "请选择剩余可能性");
+                  // }
+                  else {
                     submitData['riskUnitId'] = widget.riskUnitId;
                     myDio
                         .request(

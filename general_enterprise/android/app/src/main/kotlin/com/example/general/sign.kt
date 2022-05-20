@@ -1,4 +1,4 @@
-package com.example.asdf
+package com.example.general
 
 import android.text.TextUtils
 import android.util.Base64
@@ -8,7 +8,6 @@ import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException
-import java.util.*
 import java.util.zip.Deflater
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec

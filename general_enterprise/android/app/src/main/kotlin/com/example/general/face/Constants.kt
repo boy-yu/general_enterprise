@@ -1,4 +1,4 @@
-package com.example.enterprise.face
+package com.example.general.face
 
 class Constants {
     val APP_ID:String = "4vUGW3CJXvSQRjLMCTELsDWeaJXGQ5Gkt7zb2fD23EwV"

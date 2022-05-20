@@ -1,4 +1,4 @@
-package com.example.enterprise
+package com.example.general
 
 import com.baidu.mapapi.base.BmfMapApplication
 

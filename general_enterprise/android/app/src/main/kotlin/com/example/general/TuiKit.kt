@@ -1,8 +1,7 @@
-package com.example.enterprise
+package com.example.general
 
 import android.content.Context
 import android.util.Log
-import com.example.asdf.GenerateTestUserSig
 import com.tencent.imsdk.v2.*
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.BasicMessageChannel
