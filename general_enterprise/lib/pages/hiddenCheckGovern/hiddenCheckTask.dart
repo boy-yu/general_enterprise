@@ -278,14 +278,18 @@ class _DepartmentTaskState extends State<DepartmentTask> {
           child: MyRefres(
             child: (index, list) => GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
-                      arguments: {
-                        "dangerState": 'check',
-                        'id': list[index]['id'],
-                        'checkMeans': list[index]['checkMeans'],
-                      }).then((value) {
-                    _throwFunc.run();
-                  });
+                  if(DateTime.now().millisecondsSinceEpoch < list[index]['checkStartDate']){
+                    Fluttertoast.showToast(msg: '未到排查开始时间');
+                  }else{
+                    Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
+                        arguments: {
+                          "dangerState": 'check',
+                          'id': list[index]['id'],
+                          'checkMeans': list[index]['checkMeans'],
+                        }).then((value) {
+                      _throwFunc.run();
+                    });
+                  }
                 },
                 child: Container(
                   margin: EdgeInsets.only(top: size.width * 32),
@@ -436,12 +440,12 @@ class _DepartmentTaskState extends State<DepartmentTask> {
                                   height: size.width * 56,
                                   width: size.width * 140,
                                   decoration: BoxDecoration(
-                                      color: Color(0xff3074FF),
+                                      color: DateTime.now().millisecondsSinceEpoch < list[index]['checkStartDate'] ? Color(0xff7F8A9C) : Color(0xff3074FF),
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(size.width * 36))),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "排查",
+                                    DateTime.now().millisecondsSinceEpoch < list[index]['checkStartDate'] ? "待排查": "排查",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: size.width * 28,
@@ -742,14 +746,18 @@ class _PersonalTaskState extends State<PersonalTask> {
           child: MyRefres(
             child: (index, list) => GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
-                      arguments: {
-                        "dangerState": 'check',
-                        'id': list[index]['id'],
-                        'checkMeans': list[index]['checkMeans'],
-                      }).then((value) {
-                    _throwFunc.run();
-                  });
+                  if(DateTime.now().millisecondsSinceEpoch < list[index]['checkStartDate']){
+                    Fluttertoast.showToast(msg: '未到排查开始时间');
+                  }else{
+                    Navigator.pushNamed(context, '/hiddenCheckGovern/taskHandle',
+                        arguments: {
+                          "dangerState": 'check',
+                          'id': list[index]['id'],
+                          'checkMeans': list[index]['checkMeans'],
+                        }).then((value) {
+                      _throwFunc.run();
+                    });
+                  }
                 },
                 child: Container(
                   margin: EdgeInsets.only(top: size.width * 32),
@@ -900,12 +908,12 @@ class _PersonalTaskState extends State<PersonalTask> {
                                   height: size.width * 56,
                                   width: size.width * 140,
                                   decoration: BoxDecoration(
-                                      color: Color(0xff3074FF),
+                                      color: DateTime.now().millisecondsSinceEpoch < list[index]['checkStartDate'] ? Color(0xff7F8A9C) : Color(0xff3074FF),
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(size.width * 36))),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "排查",
+                                    DateTime.now().millisecondsSinceEpoch < list[index]['checkStartDate'] ? "待排查" : "排查",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: size.width * 28,
