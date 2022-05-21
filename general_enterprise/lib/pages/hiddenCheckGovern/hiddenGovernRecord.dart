@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:enterprise/common/myAppbar.dart';
 import 'package:enterprise/common/myCustomColor.dart';
-import 'package:enterprise/common/myDateSelect.dart';
 import 'package:enterprise/common/refreshList.dart';
+import 'package:enterprise/myView/myHiddenCheckDateSelect.dart';
 import 'package:enterprise/pages/hiddenCheckGovern/hiddenCheckTask.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
@@ -557,7 +557,7 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      MyDateSelect(
+                      MyHiddenCheckDateSelect(
                         title: 'startDate',
                         purview: 'startDate',
                         hintText: '开始时间',
@@ -571,7 +571,7 @@ class _CheckHiddenRecordState extends State<CheckHiddenRecord> {
                           width: size.width * 28,
                         ),
                       ),
-                      MyDateSelect(
+                      MyHiddenCheckDateSelect(
                         title: 'endDate',
                         purview: 'endDate',
                         hintText: '结束时间',
@@ -1184,7 +1184,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      MyDateSelect(
+                      MyHiddenCheckDateSelect(
                         title: 'startDate',
                         purview: 'startDate',
                         hintText: '开始时间',
@@ -1198,7 +1198,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                           width: size.width * 28,
                         ),
                       ),
-                      MyDateSelect(
+                      MyHiddenCheckDateSelect(
                         title: 'endDate',
                         purview: 'endDate',
                         hintText: '结束时间',
