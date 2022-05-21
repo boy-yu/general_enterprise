@@ -96,13 +96,13 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
       case '0':
         return '现场确认';
         break;
-      case '0':
+      case '1':
         return '拍照';
         break;
-      case '0':
+      case '2':
         return '热成像';
         break;
-      case '0':
+      case '3':
         return '震动';
         break;
       default:
