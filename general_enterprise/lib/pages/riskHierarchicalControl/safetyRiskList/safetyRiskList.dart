@@ -228,8 +228,8 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     list[index]['isControl'] == 0
-                                        ? '未管控'
-                                        : '已管控',
+                                        ? '异常'
+                                        : '正常',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: size.width * 24,

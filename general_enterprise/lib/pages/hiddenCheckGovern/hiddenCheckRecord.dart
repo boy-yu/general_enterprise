@@ -429,6 +429,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                     child: MyRefres(
                   child: (index, list) => GestureDetector(
                     onTap: () {
+                      print(list[index]['id']);
                       Navigator.pushNamed(context, '/hiddenCheckGovern/hiddenCheckRecordDetails', arguments: {'id': list[index]['id']});
                     },
                     child: Container(
