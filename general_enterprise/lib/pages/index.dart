@@ -134,18 +134,10 @@ class _IndexState extends State<Index> {
   // }
 
   _getUrl() {
-    print(Interface.webUrl);
-    myDio.request(type: 'get', url: Interface.webUrl).then((value) async {
+    myDio.request(type: 'get', url: Interface.getAkyCompAppApiConfig).then((value) async {
       // print(mainBaseUrl);
       // print(value);
       if (value is Map) {
-        if (myprefs.getString('webUrl') == null ||
-            myprefs.getString('webUrl') == '') {
-          await myprefs.setString('webUrl', value['ticketUrl'] ?? '');
-          webUrl = value['ticketUrl'] ?? '';
-        } else {
-          webUrl = myprefs.getString('webUrl');
-        }
         if (myprefs.getString('fileUrl') == null ||
             myprefs.getString('fileUrl') == '') {
           await myprefs.setString('fileUrl', value['fileViewPath'] ?? '');

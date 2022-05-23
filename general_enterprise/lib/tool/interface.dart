@@ -29,9 +29,9 @@ class Interface {
   static String getAlldeparment =
       baseUrl + '/tUser/departmentAndPositionListAll'; // funcType 首页通讯录部门职位集合
   // 首页 person 我的页面修改签名使用 sign签名页面使用
-  static String amendSign = baseUrl + '/tUser/updateSign';
+  // static String amendSign = baseUrl + '/tUser/updateSign';
   // 获取服务器当前配置 包括文件路径前缀 票路径前缀 webview路径前缀等 facelogin login index
-  static String webUrl = baseAliUrl + '/akyCompAppApiConfig';
+  // static String webUrl = baseAliUrl + '/akyCompAppApiConfig';
   // 获取版本信息及最新版本下载更新地址 index login person update down
   static String cheakUpdate = baseAliUrl + '/appVersionConfig/aky';
   // 登陆接口 login
@@ -50,6 +50,10 @@ class Interface {
   static String uploadUrl = baseUrl + '/upload';
   // amendPsd 首页我的修改密码
   static String putAmendPsd = baseUrl + '/tUser/updatePassword';
+
+  // app初始设置签名修改默认密码
+  static String putUpdatePasswordAndSign = baseUrl + '/tUser/updatePasswordAndSign';
+  
 
   // 风险一级项下拉 hiddenSpecificItem inspecion risklist worklist controlIndex
   static String getRiskObjectByDepartmentId =

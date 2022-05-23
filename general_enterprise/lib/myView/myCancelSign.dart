@@ -74,7 +74,7 @@ class _CancelSignState extends State<CancelSign> {
                 ? Expanded(
                     child: Text(
                     '签字',
-                    style: TextStyle(fontSize: size.width * 30),
+                    style: TextStyle(fontSize: size.width * 28, fontWeight: FontWeight.w500),
                   ))
                 : Container(),
             widget.widget == null
@@ -82,7 +82,7 @@ class _CancelSignState extends State<CancelSign> {
                     DateTime.now()
                         .toString()
                         .substring(0, DateTime.now().toString().length - 10),
-                    style: TextStyle(fontSize: size.width * 24),
+                    style: TextStyle(fontSize: size.width * 28, fontWeight: FontWeight.w400, color: Color(0xff7F8A9C)),
                   )
                 : Container(),
           ],
@@ -100,10 +100,11 @@ class _CancelSignState extends State<CancelSign> {
               },
               child: Container(
                 margin: EdgeInsets.only(top: size.width * 20),
-                constraints: BoxConstraints(minHeight: size.width * 160),
+                constraints: BoxConstraints(minHeight: size.width * 240),
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(size.width * 8)),
                     border: widget.widget == null
-                        ? Border.all(width: 1, color: underColor)
+                        ? Border.all(width: size.width * 2, color: Color(0xffF2F2F2))
                         : Border.all(width: 0, color: Colors.transparent)),
                 width: double.infinity,
                 child: _judgeWidge(),
@@ -114,11 +115,11 @@ class _CancelSignState extends State<CancelSign> {
                   ? Icon(
                       Icons.create,
                       color: placeHolder,
-                      size: size.width * 30,
+                      size: size.width * 24,
                     )
                   : widget.widget,
-              bottom: widget.widget == null ? 20 : 0,
-              right: widget.widget == null ? 20 : size.width * 20,
+              bottom: widget.widget == null ? size.width * 24 : 0,
+              right: widget.widget == null ? size.width * 24 : size.width * 20,
             ),
           ],
         ),
