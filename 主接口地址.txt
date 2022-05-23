@@ -1,0 +1,4 @@
+测试服
+String baseAliUrl = "http://61.157.13.136:32010";
+正式服
+String baseAliUrl = "https://sc.api.eapp.tshzsafe.com";

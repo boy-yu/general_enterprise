@@ -1,1 +1,1 @@
-String baseAliUrl = "https://sc.api.eapp.tshzsafe.com";
+String baseAliUrl = "http://61.157.13.136:32010";
