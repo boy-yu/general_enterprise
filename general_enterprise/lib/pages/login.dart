@@ -187,7 +187,6 @@ class _LoginFormState extends State<LoginForm> {
       "username": _username.text,
       "password": _password.text
     }).then((value) async {
-      print(value);
       if (value is Map) {
         String token = value['token_type'] + ' ' + value['access_token'];
         await myprefs.setString('token', token ?? '');
