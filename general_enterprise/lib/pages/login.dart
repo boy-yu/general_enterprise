@@ -3,6 +3,7 @@ import 'package:enterprise/common/myUpdateDialog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/down.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../tool/interface.dart';
 
@@ -157,16 +158,17 @@ class _LoginFormState extends State<LoginForm> {
   TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
 
+  String webAddress = '';
+
   _getUrl() {
     myDio.request(
         type: 'get',
-        url: Interface.webUrl,
+        url: Interface.getAkyCompAppApiConfig,
         queryParameters: {"url": Interface.mainBaseUrl}).then((value) {
       if (value is Map) {
-        myprefs.setString('webUrl', value['ticketUrl'] ?? '');
-        webUrl = value['ticketUrl'] ?? '';
         myprefs.setString('fileUrl', value['fileViewPath'] ?? '');
         fileUrl = value['fileViewPath'] ?? '';
+        webAddress = value['webAddress'] ?? '';
       }
     });
   }
@@ -213,7 +215,6 @@ class _LoginFormState extends State<LoginForm> {
             'departmentId', value['systemUser']['departmentId'] ?? '');
         isLogin = false;
         Navigator.pop(context);
-        _getUrl();
         if (value['systemUser']['sign'] == '' ||
             value['systemUser']['sign'] == null && Contexts.mobile) {
           Fluttertoast.showToast(msg: '检测到您的账号暂时未进行签字，请先设置签名');
@@ -232,6 +233,7 @@ class _LoginFormState extends State<LoginForm> {
   void initState() {
     super.initState();
     Mysize().init();
+    _getUrl();
   }
 
   @override
@@ -341,6 +343,56 @@ class _LoginFormState extends State<LoginForm> {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: size.width * 40,
+              ),
+              Row(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '电脑端网址：',
+                            style: TextStyle(
+                                color: Color(0xff3074FF),
+                                fontSize: size.width * 24,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(
+                            width: size.width * 16,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Clipboard.setData(
+                                  ClipboardData(text: webAddress));
+                              Fluttertoast.showToast(msg: "复制成功");
+                            },
+                            child: Image.asset(
+                              'assets/images/doubleRiskProjeck/icon_login_copy.png',
+                              height: size.width * 40,
+                              width: size.width * 40,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: size.width * 16,
+                      ),
+                      Text(
+                        "  " + webAddress,
+                        style: TextStyle(
+                            color: Color(0xff3074FF),
+                            fontSize: size.width * 28,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  )
+                ],
               )
             ],
           ),

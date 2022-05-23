@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:enterprise/common/myAppbar.dart';
-import 'package:enterprise/common/myDateSelect.dart';
 import 'package:enterprise/common/refreshList.dart';
+import 'package:enterprise/myView/myHiddenCheckDateSelect.dart';
 import 'package:enterprise/pages/hiddenCheckGovern/hiddenCheckTask.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/funcType.dart';
@@ -18,21 +18,24 @@ class HiddenCheckRecord extends StatefulWidget {
 class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
   Map queryParameters = {};
   ThrowFunc _throwFunc = ThrowFunc();
-  String startDate;
-  String endDate;
+  String startDate = '';
+  String endDate = '';
 
   @override
   void initState() {
     super.initState();
+    _getDropList();
+    DateTime dateTime = DateTime.now();
+    startDate = DateTime(dateTime.year, dateTime.month - 1, dateTime.day).toString().substring(0, 10);
+    endDate = dateTime.toString().substring(0, 10);
+
     queryParameters = {
       "riskObjectId": null,
       "riskUnitId": null,
-      "riskEventId": null
+      "riskEventId": null,
+      "startDate": DateTime(dateTime.year, dateTime.month - 1, dateTime.day).millisecondsSinceEpoch,
+      "endDate": dateTime.millisecondsSinceEpoch
     };
-    _getDropList();
-    DateTime dateTime = DateTime.now();
-    startDate = dateTime.toString().substring(0, 10);
-    endDate = dateTime.toString().substring(0, 10);
   }
 
   List dropTempData = [
@@ -167,6 +170,26 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
   // 0_现场确认；1_拍照；2_热成像；3_震动
   List checkMeansList = ['全部', '拍照', '现场确认', '热成像', '震动'];
   String checkMeansStr = '';
+
+  String _getCheckMeans(String checkMeans) {
+    // 0_现场确认；1_拍照；2_热成像；3_震动
+    switch (checkMeans) {
+      case '0':
+        return '现场确认';
+        break;
+      case '1':
+        return '拍照';
+        break;
+      case '2':
+        return '热成像';
+        break;
+      case '3':
+        return '震动';
+        break;
+      default:
+        return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -356,13 +379,16 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          MyDateSelect(
+                          MyHiddenCheckDateSelect(
                             title: 'startDate',
                             purview: 'startDate',
-                            hintText: '开始时间',
+                            hintText: startDate,
                             callback: (value) {
+                              print(DateTime.parse(value));
                               startDate = value;
-                              queryParameters['startDate'] = startDate;
+                              queryParameters['startDate'] = DateTime.parse(startDate).millisecondsSinceEpoch;
+                              endDate = '结束时间';
+                              setState(() {});
                             },
                             icon: Image.asset(
                               'assets/images/doubleRiskProjeck/icon_calendar.png',
@@ -370,16 +396,19 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                               width: size.width * 28,
                             ),
                           ),
-                          MyDateSelect(
+                          MyHiddenCheckDateSelect(
                             title: 'endDate',
                             purview: 'endDate',
-                            hintText: '结束时间',
+                            hintText: endDate,
+                            minDateTime: queryParameters['startDate'] != null ? DateTime.parse(startDate) : null,
+                            maxDateTime: queryParameters['startDate'] != null ? DateTime(DateTime.parse(startDate).year, DateTime.parse(startDate).month + 1, DateTime.parse(startDate).day) : null,
                             callback: (value) {
                               endDate = value;
-                              if(queryParameters['startDate'] == null){
+                              if(startDate == ''){
                                 Fluttertoast.showToast(msg: '请先选择开始时间');
+                                return;
                               }else{
-                                queryParameters['startDate'] = DateTime.parse(queryParameters['startDate']).millisecondsSinceEpoch;
+                                queryParameters['startDate'] = DateTime.parse(startDate).millisecondsSinceEpoch;
                                 queryParameters['endDate'] = DateTime.parse(endDate).millisecondsSinceEpoch;
                               }
                               _throwFunc.run(argument: queryParameters);
@@ -400,6 +429,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                     child: MyRefres(
                   child: (index, list) => GestureDetector(
                     onTap: () {
+                      print(list[index]['id']);
                       Navigator.pushNamed(context, '/hiddenCheckGovern/hiddenCheckRecordDetails', arguments: {'id': list[index]['id']});
                     },
                     child: Container(
@@ -565,7 +595,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                             style: TextStyle(
                                                 color: Color(0xff333333))),
                                         TextSpan(
-                                            text: list[index]['checkMeans'],
+                                            text: _getCheckMeans(list[index]['checkMeans']),
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C))),
                                       ]),
@@ -580,13 +610,12 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                       ),
                     ),
                   ),
-                  page: true,
+                  // page: true,
                   url: Interface.getCheckRecordList,
-                  listParam: "records",
+                  // listParam: "records",
                   queryParameters: queryParameters,
                   method: 'get',
                   throwFunc: _throwFunc,
-                  // data: data,
                 ))
               ],
             ),

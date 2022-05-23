@@ -17,7 +17,6 @@ Size size = Size(0.5, 0.5);
 // BasicMessageChannel glomessageChannel =
 //     BasicMessageChannel('chat', StandardMessageCodec());
 SharedPreferences myprefs;
-String webUrl = '';
 String fileUrl = '';
 MyDio myDio;
 LoginDio loginDio;
