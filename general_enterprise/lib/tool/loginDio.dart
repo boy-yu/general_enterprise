@@ -64,7 +64,7 @@ class LoginDio {
         }
       } catch (e) {
         print('e------------------------------------------'+ e.toString());
-        Interface().error({"message": '网络开小差了，请稍后重试'}, myContext);
+        Interface().error({"message": "用户名或密码错误"}, myContext);
         if (mounted) {
           _urls.remove(url + hasValue.toString());
           // ProgressDialog.dismiss(myContext);

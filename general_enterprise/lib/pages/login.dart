@@ -15,13 +15,28 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   DateTime _lastPressedAt;
   String _version;
+  String webAddress = '';
 
   @override
   void initState() {
     super.initState();
     if (Contexts.mobile) {
+      _getUrl();
       _getVersion();
     }
+  }
+
+  _getUrl() {
+    myDio.request(
+        type: 'get',
+        url: Interface.getAkyCompAppApiConfig,
+        queryParameters: {"url": Interface.mainBaseUrl}).then((value) {
+      if (value is Map) {
+        myprefs.setString('fileUrl', value['fileViewPath'] ?? '');
+        fileUrl = value['fileViewPath'] ?? '';
+        webAddress = value['webAddress'] ?? '';
+      }
+    });
   }
 
   _getVersion() async {
@@ -70,7 +85,7 @@ class _LoginState extends State<Login> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    LoginForm(),
+                    LoginForm(webAddress: webAddress),
                     Expanded(
                         child: Container(
                       margin: EdgeInsets.only(bottom: size.width * 20),
@@ -150,6 +165,8 @@ class _LoginState extends State<Login> {
 }
 
 class LoginForm extends StatefulWidget {
+  LoginForm({this.webAddress});
+  final String webAddress;
   @override
   _LoginFormState createState() => _LoginFormState();
 }
@@ -158,20 +175,9 @@ class _LoginFormState extends State<LoginForm> {
   TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
 
-  String webAddress = '';
+  
 
-  _getUrl() {
-    myDio.request(
-        type: 'get',
-        url: Interface.getAkyCompAppApiConfig,
-        queryParameters: {"url": Interface.mainBaseUrl}).then((value) {
-      if (value is Map) {
-        myprefs.setString('fileUrl', value['fileViewPath'] ?? '');
-        fileUrl = value['fileViewPath'] ?? '';
-        webAddress = value['webAddress'] ?? '';
-      }
-    });
-  }
+  
 
   _login() {
     if (_username.text.length == 0) {
@@ -232,7 +238,7 @@ class _LoginFormState extends State<LoginForm> {
   void initState() {
     super.initState();
     Mysize().init();
-    _getUrl();
+    
   }
 
   @override
@@ -368,7 +374,7 @@ class _LoginFormState extends State<LoginForm> {
                           GestureDetector(
                             onTap: () {
                               Clipboard.setData(
-                                  ClipboardData(text: webAddress));
+                                  ClipboardData(text: widget.webAddress));
                               Fluttertoast.showToast(msg: "复制成功");
                             },
                             child: Image.asset(
@@ -383,7 +389,7 @@ class _LoginFormState extends State<LoginForm> {
                         height: size.width * 16,
                       ),
                       Text(
-                        "  " + webAddress,
+                        "  " + widget.webAddress,
                         style: TextStyle(
                             color: Color(0xff3074FF),
                             fontSize: size.width * 28,
