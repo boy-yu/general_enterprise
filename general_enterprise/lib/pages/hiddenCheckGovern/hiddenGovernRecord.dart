@@ -1391,7 +1391,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                                                 height: size.width * 128,
                                                 width: size.width * 200,
                                                 decoration: BoxDecoration(
-                                                  color: Colors.white,
+                                                  color: Color(0xffEDF0F6),
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(
@@ -1402,7 +1402,7 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                                                                   ['checkUrl']
                                                               .toString()
                                                               .split('|')[0]),
-                                                      fit: BoxFit.fill),
+                                                      fit: BoxFit.contain),
                                                 ),
                                               )
                                             : Container()

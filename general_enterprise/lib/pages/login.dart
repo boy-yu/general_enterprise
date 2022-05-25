@@ -212,7 +212,7 @@ class _LoginFormState extends State<LoginForm> {
         await myprefs.setString(
             'nickname', value['systemUser']['nickname'] ?? '');
         // 性别
-        await myprefs.setString('sex', value['systemUser']['sex'] ?? -1);
+        await myprefs.setInt('sex', int.parse(value['systemUser']['sex']) ?? -1);
         // 用户id
         await myprefs.setString('userId', value['systemUser']['id'] ?? '');
         // 用户部门id

@@ -413,7 +413,7 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                             height: size.width * 320,
                                             width: size.width * 574,
                                             decoration: BoxDecoration(
-                                              color: Colors.white,
+                                              color: Color(0xffEDF0F6),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(
                                                       size.width * 20)),
@@ -422,7 +422,7 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                                       data['checkUrl']
                                                           .toString()
                                                           .split('|')[0]),
-                                                  fit: BoxFit.fill),
+                                                  fit: BoxFit.contain),
                                             ),
                                           )
                                         : Container(

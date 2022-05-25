@@ -484,8 +484,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         574,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: Color(0xffEDF0F6),
                                                                   borderRadius: BorderRadius.all(
                                                                       Radius.circular(
                                                                           size.width *
@@ -496,7 +495,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                           .toString()
                                                                           .split(
                                                                               '|')[0]),
-                                                                      fit: BoxFit.fill),
+                                                                      fit: BoxFit.contain),
                                                                 ),
                                                               )
                                                             : Container(
@@ -528,6 +527,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                               32),
                                                                 ),
                                                               )
+                                                      
                                                       ],
                                                     ),
                                                   )
@@ -743,8 +743,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         574,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Colors
-                                                                      .white,
+                                                                  color: Color(0xffEDF0F6),
                                                                   borderRadius: BorderRadius.all(
                                                                       Radius.circular(
                                                                           size.width *
@@ -755,7 +754,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                           .toString()
                                                                           .split(
                                                                               '|')[0]),
-                                                                      fit: BoxFit.fill),
+                                                                      fit: BoxFit.contain),
                                                                 ),
                                                               )
                                                             : Container(
@@ -1442,8 +1441,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                           574,
                                                                   decoration:
                                                                       BoxDecoration(
-                                                                    color: Colors
-                                                                        .white,
+                                                                    color: Color(0xffEDF0F6),
                                                                     borderRadius:
                                                                         BorderRadius.all(Radius.circular(size.width *
                                                                             20)),
@@ -1451,7 +1449,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         image: NetworkImage(data['registUrl']
                                                                             .toString()
                                                                             .split('|')[0]),
-                                                                        fit: BoxFit.fill),
+                                                                        fit: BoxFit.contain),
                                                                   ),
                                                                 )
                                                               : Container(
@@ -1634,8 +1632,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                       574,
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
+                                                                color: Color(0xffEDF0F6),
                                                                 borderRadius: BorderRadius.all(
                                                                     Radius.circular(
                                                                         size.width *
@@ -1645,7 +1642,7 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         data[
                                                                             'liableUrl']),
                                                                     fit: BoxFit
-                                                                        .fill),
+                                                                        .contain),
                                                               ),
                                                             )
                                                           : Container(

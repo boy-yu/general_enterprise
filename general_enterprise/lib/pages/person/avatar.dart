@@ -49,8 +49,8 @@ class _PersonAvatarState extends State<PersonAvatar> {
     _initMsg();
   }
 
-  _initMsg() async {
-    _photoUrl = myprefs.getString('photoUrl');
+  _initMsg() {
+    _photoUrl = myprefs.getString('avatar');
     if (mounted) {
       setState(() {});
     }
@@ -73,7 +73,7 @@ class _PersonAvatarState extends State<PersonAvatar> {
         "email": myprefs.getString('email'),
         "mobile": myprefs.getString('mobile'),
         "nickname": myprefs.getString('nickname'),
-        "sex": myprefs.getString('sex'),
+        "sex": myprefs.getInt('sex'),
         "sign": myprefs.getString('sign'),
       }).then((value) async {
         await myprefs.setString('avatar', _photoUrl);

@@ -26,12 +26,12 @@ class _MyMessageState extends State<MyMessage> {
     '保密',
   ];
 
-  String selectSex = '0';
+  int selectSex = 0;
 
   @override
   void initState() {
     super.initState();
-    selectSex = myprefs.getString('sex');
+    selectSex = myprefs.getInt('sex');
   }
 
   // 大陆手机号码11位数，匹配格式：前三位固定格式+后8位任意数
@@ -294,7 +294,7 @@ class _MyMessageState extends State<MyMessage> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      selectSex = '0';
+                                      selectSex = 0;
                                       setState(() {});
                                     },
                                     child: Container(
@@ -307,7 +307,7 @@ class _MyMessageState extends State<MyMessage> {
                                             width: size.width * 32,
                                             decoration: BoxDecoration(
                                                 color: Colors.white,
-                                                border: selectSex == '0'
+                                                border: selectSex == 0
                                                     ? Border.all(
                                                         color:
                                                             Color(0xff3074FF),
@@ -326,7 +326,7 @@ class _MyMessageState extends State<MyMessage> {
                                           Text(
                                             '男',
                                             style: TextStyle(
-                                                color: selectSex == '0'
+                                                color: selectSex == 0
                                                     ? Color(0xff262626)
                                                     : Color(0xff8D95A3),
                                                 fontSize: size.width * 28,
@@ -338,7 +338,7 @@ class _MyMessageState extends State<MyMessage> {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      selectSex = '1';
+                                      selectSex = 1;
                                       setState(() {});
                                     },
                                     child: Container(
@@ -351,7 +351,7 @@ class _MyMessageState extends State<MyMessage> {
                                             width: size.width * 32,
                                             decoration: BoxDecoration(
                                                 color: Colors.white,
-                                                border: selectSex == '1'
+                                                border: selectSex == 1
                                                     ? Border.all(
                                                         color:
                                                             Color(0xff3074FF),
@@ -370,7 +370,7 @@ class _MyMessageState extends State<MyMessage> {
                                           Text(
                                             '女',
                                             style: TextStyle(
-                                                color: selectSex == '1'
+                                                color: selectSex == 1
                                                     ? Color(0xff262626)
                                                     : Color(0xff8D95A3),
                                                 fontSize: size.width * 28,
@@ -382,7 +382,7 @@ class _MyMessageState extends State<MyMessage> {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      selectSex = '2';
+                                      selectSex = 2;
                                       setState(() {});
                                     },
                                     child: Container(
@@ -395,7 +395,7 @@ class _MyMessageState extends State<MyMessage> {
                                             width: size.width * 32,
                                             decoration: BoxDecoration(
                                                 color: Colors.white,
-                                                border: selectSex == '2'
+                                                border: selectSex == 2
                                                     ? Border.all(
                                                         color:
                                                             Color(0xff3074FF),
@@ -414,7 +414,7 @@ class _MyMessageState extends State<MyMessage> {
                                           Text(
                                             '保密',
                                             style: TextStyle(
-                                                color: selectSex == '2'
+                                                color: selectSex == 2
                                                     ? Color(0xff262626)
                                                     : Color(0xff8D95A3),
                                                 fontSize: size.width * 28,
@@ -516,7 +516,7 @@ class _MyMessageState extends State<MyMessage> {
                     await myprefs.setString('email', email);
                     await myprefs.setString('mobile', mobile);
                     await myprefs.setString('nickname', nickname);
-                    await myprefs.setString('sex', selectSex);
+                    await myprefs.setInt('sex', selectSex);
                     successToast('保存成功');
                     Navigator.pop(context);
                   });
