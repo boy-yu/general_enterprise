@@ -62,7 +62,7 @@ class _MineState extends State<Mine> with TickerProviderStateMixin {
   _getVersion() async {
     // own app version
     String _version = await Version().getSever();
-    myDio.request(type: 'get', url: Interface.cheakUpdate).then((value) async {
+    mainDio.request(type: 'get', url: Interface.cheakUpdate).then((value) async {
       await myprefs.setBool('isForcedUpgrade', false);
       // value['version'] serve version
       if (_version != value['version']) {

@@ -27,7 +27,7 @@ class _LoginState extends State<Login> {
   }
 
   _getUrl() {
-    myDio.request(
+    mainDio.request(
         type: 'get',
         url: Interface.getAkyCompAppApiConfig,
         queryParameters: {"url": Interface.mainBaseUrl}).then((value) {
@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
 
   _getVersion() async {
     _version = await Version().getSever();
-    myDio.request(type: 'get', url: Interface.cheakUpdate).then((value) async {
+    mainDio.request(type: 'get', url: Interface.cheakUpdate).then((value) async {
       await myprefs.setBool('isForcedUpgrade', false);
       // value['version'] serve version
       if (_version != value['version']) {

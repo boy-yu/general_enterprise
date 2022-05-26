@@ -61,7 +61,7 @@ class _MyContextState extends State<MyContext> {
 
   _init() async {
     await Contexts.init(context);
-    myDio
+    mainDio
         .request(type: 'get', url: Interface.getAkyCompAppApiConfig)
         .then((value) async {
       if (value is Map) {

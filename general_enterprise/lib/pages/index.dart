@@ -68,7 +68,7 @@ class _IndexState extends State<Index> {
   _getVersion() async {
     // own app version
     String _version = await Version().getSever();
-    myDio.request(type: 'get', url: Interface.cheakUpdate).then((value) async {
+    mainDio.request(type: 'get', url: Interface.cheakUpdate).then((value) async {
       await myprefs.setBool('isForcedUpgrade', false);
       // value['version'] serve version
       if (_version != value['version']) {
@@ -134,7 +134,7 @@ class _IndexState extends State<Index> {
   // }
 
   _getUrl() {
-    myDio.request(type: 'get', url: Interface.getAkyCompAppApiConfig).then((value) async {
+    mainDio.request(type: 'get', url: Interface.getAkyCompAppApiConfig).then((value) async {
       // print(mainBaseUrl);
       // print(value);
       if (value is Map) {

@@ -5,6 +5,7 @@ import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/tool/dio.dart';
 import 'package:enterprise/tool/funcType.dart';
 import 'package:enterprise/tool/loginDio.dart';
+import 'package:enterprise/tool/mainDio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +21,7 @@ SharedPreferences myprefs;
 String fileUrl = '';
 MyDio myDio;
 LoginDio loginDio;
+MainDio mainDio;
 bool isLogin = false;
 // CacheData cacheData = CacheData();
 // MethodChannel platform = const MethodChannel('getLocal');
@@ -78,6 +80,7 @@ class Contexts {
     }
     myDio = MyDio();
     loginDio = LoginDio();
+    mainDio = MainDio();
   }
 }
 

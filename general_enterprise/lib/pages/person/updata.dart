@@ -82,7 +82,7 @@ class _UpdataState extends State<Updata> with TickerProviderStateMixin {
     _updateMsg = [];
     currenVersion =
         await DownSever(context, _onReceiveProgress, _judgeShow).getSever();
-    myDio.request(type: 'get', url: Interface.cheakUpdate).then((value) {
+    mainDio.request(type: 'get', url: Interface.cheakUpdate).then((value) {
       if (value is Map) {
         isInstall = value['isReload'] == 0 ? false : true;
         _updateMsg.add(value['upgradeDescription']);

@@ -124,12 +124,13 @@ class _MyImageCarmaState extends State<MyImageCarma> {
 
   _generateDate(index) {
     List<Widget> data = [];
+    print('images' + images.length.toString());
     for (var i = index * widget.score; i < (index + 1) * widget.score; i++) {
       if (i >= images.length) return data;
       data.add(Stack(
         children: [
           images[i] == 0
-              ? InkWell(
+              ? images.length == 1 ? InkWell(
                   onTap: () {
                     getImage(_counter);
                   },
@@ -144,7 +145,7 @@ class _MyImageCarmaState extends State<MyImageCarma> {
                     ),
                     margin: EdgeInsets.all(size.width * 30),
                   ),
-                )
+                ) : Container()
               : ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white)),
