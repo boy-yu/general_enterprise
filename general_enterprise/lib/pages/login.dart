@@ -35,13 +35,16 @@ class _LoginState extends State<Login> {
         myprefs.setString('fileUrl', value['fileViewPath'] ?? '');
         fileUrl = value['fileViewPath'] ?? '';
         webAddress = value['webAddress'] ?? '';
+        setState(() {});
       }
     });
   }
 
   _getVersion() async {
     _version = await Version().getSever();
-    mainDio.request(type: 'get', url: Interface.cheakUpdate).then((value) async {
+    mainDio
+        .request(type: 'get', url: Interface.cheakUpdate)
+        .then((value) async {
       await myprefs.setBool('isForcedUpgrade', false);
       // value['version'] serve version
       if (_version != value['version']) {
@@ -70,6 +73,7 @@ class _LoginState extends State<Login> {
             backgroundColor: Colors.white,
             body: InkWell(
               onTap: () {
+                // 解除屏幕键盘
                 FocusScope.of(context).unfocus();
               },
               child: SingleChildScrollView(
@@ -175,10 +179,6 @@ class _LoginFormState extends State<LoginForm> {
   TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
 
-  
-
-  
-
   _login() {
     if (_username.text.length == 0) {
       Fluttertoast.showToast(msg: '请输入用户名');
@@ -212,14 +212,15 @@ class _LoginFormState extends State<LoginForm> {
         await myprefs.setString(
             'nickname', value['systemUser']['nickname'] ?? '');
         // 性别
-        await myprefs.setInt('sex', int.parse(value['systemUser']['sex']) ?? -1);
+        await myprefs.setInt(
+            'sex', int.parse(value['systemUser']['sex']) ?? -1);
         // 用户id
         await myprefs.setString('userId', value['systemUser']['id'] ?? '');
         // 用户部门id
         await myprefs.setString(
             'departmentId', value['systemUser']['departmentId'] ?? '');
         isLogin = false;
-        Navigator.pop(context);
+        Navigator.pop(context); //关闭页面
         if (value['systemUser']['sign'] == '' ||
             value['systemUser']['sign'] == null && Contexts.mobile) {
           Fluttertoast.showToast(msg: '检测到您的账号暂时未进行签字，请先设置签名');
@@ -238,7 +239,6 @@ class _LoginFormState extends State<LoginForm> {
   void initState() {
     super.initState();
     Mysize().init();
-    
   }
 
   @override
