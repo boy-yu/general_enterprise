@@ -194,7 +194,7 @@ class _DetailsState extends State<Details> {
     }
   }
 
-  String _getRefreshRule(String refreshRule){
+  String _getRefreshRule(String refreshRule) {
     // 1为工作日2为非工作日3为每天
     switch (refreshRule) {
       case '1':
@@ -843,7 +843,12 @@ class _DetailsState extends State<Details> {
                                   size.width * 20, size.width * 20, 0),
                               decoration: BoxDecoration(
                                 color: Color(0xffF8FAFF),
-                                borderRadius: BorderRadius.only(topRight: Radius.circular(size.width * 20), bottomLeft: Radius.circular(size.width * 20), bottomRight: Radius.circular(size.width * 20)),
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(size.width * 20),
+                                    bottomLeft:
+                                        Radius.circular(size.width * 20),
+                                    bottomRight:
+                                        Radius.circular(size.width * 20)),
                                 border: Border.all(
                                     width: size.width * 2,
                                     color: Color(0xffECECEC)),
@@ -881,17 +886,20 @@ class _DetailsState extends State<Details> {
                                         height: size.width * 48,
                                         width: size.width * 80,
                                         decoration: BoxDecoration(
-                                          color: Color(0xff3074FF),
-                                          borderRadius: BorderRadius.horizontal(left: Radius.circular(size.width * 40))
-                                        ),
+                                            color: Color(0xff3074FF),
+                                            borderRadius:
+                                                BorderRadius.horizontal(
+                                                    left: Radius.circular(
+                                                        size.width * 40))),
                                         alignment: Alignment.center,
                                         child: Text(
-                                          (index + 1) < 10 ? '0' + (index + 1).toString() : (index + 1).toString(),
+                                          (index + 1) < 10
+                                              ? '0' + (index + 1).toString()
+                                              : (index + 1).toString(),
                                           style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: size.width * 32
-                                          ),
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: size.width * 32),
                                         ),
                                       )
                                     ],
@@ -900,91 +908,114 @@ class _DetailsState extends State<Details> {
                                     height: size.width * 6,
                                   ),
                                   RichText(
-                                        text: TextSpan(
-                                            style: TextStyle(
-                                                fontSize: size.width * 24,
-                                                fontWeight: FontWeight.w400),
-                                            children: <InlineSpan>[
-                                              TextSpan(
-                                                  text: '管控手段：',
-                                                  style: TextStyle(
-                                                      color:
-                                                          Color(0xff333333))),
-                                              TextSpan(
-                                                  text: _getCheckMeans(data['riskTemplateFiveList'][index]['checkMeans']),
-                                                  style: TextStyle(
-                                                      color:
-                                                          Color(0xff7F8A9C))),
-                                            ]),
-                                      ),
+                                    text: TextSpan(
+                                        style: TextStyle(
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w400),
+                                        children: <InlineSpan>[
+                                          TextSpan(
+                                              text: '管控手段：',
+                                              style: TextStyle(
+                                                  color: Color(0xff333333))),
+                                          TextSpan(
+                                              text: _getCheckMeans(
+                                                  data['riskTemplateFiveList']
+                                                      [index]['checkMeans']),
+                                              style: TextStyle(
+                                                  color: Color(0xff7F8A9C))),
+                                        ]),
+                                  ),
                                   SizedBox(
                                     height: size.width * 16,
                                   ),
                                   RichText(
-                                        text: TextSpan(
-                                            style: TextStyle(
-                                                fontSize: size.width * 24,
-                                                fontWeight: FontWeight.w400),
-                                            children: <InlineSpan>[
-                                              TextSpan(
-                                                  text: '隐患排查任务：',
-                                                  style: TextStyle(
-                                                      color:
-                                                          Color(0xff333333))),
-                                              TextSpan(
-                                                  text: data['riskTemplateFiveList'][index]['troubleshootContent'],
-                                                  style: TextStyle(
-                                                      color:
-                                                          Color(0xff7F8A9C))),
-                                            ]),
-                                      ),
-                                  data['riskTemplateFiveList'][index]['checkCycleUnit'] == '小时' ? SizedBox(
-                                    height: size.width * 16,
-                                  ) : SizedBox(
-                                    height: size.width * 32,
+                                    text: TextSpan(
+                                        style: TextStyle(
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w400),
+                                        children: <InlineSpan>[
+                                          TextSpan(
+                                              text: '隐患排查任务：',
+                                              style: TextStyle(
+                                                  color: Color(0xff333333))),
+                                          TextSpan(
+                                              text: data['riskTemplateFiveList']
+                                                      [index]
+                                                  ['troubleshootContent'],
+                                              style: TextStyle(
+                                                  color: Color(0xff7F8A9C))),
+                                        ]),
                                   ),
-                                  data['riskTemplateFiveList'][index]['checkCycleUnit'] == '小时' ? RichText(
-                                        text: TextSpan(
-                                            style: TextStyle(
-                                                fontSize: size.width * 24,
-                                                fontWeight: FontWeight.w400),
-                                            children: <InlineSpan>[
-                                              TextSpan(
-                                                  text: '任务执行时段：',
-                                                  style: TextStyle(
-                                                      color:
-                                                          Color(0xff333333))),
-                                              TextSpan(
-                                                  text: '${data['riskTemplateFiveList'][index]['startRefreshTime']}-${data['riskTemplateFiveList'][index]['endRefreshTime']}',
-                                                  style: TextStyle(
-                                                      color:
-                                                          Color(0xff7F8A9C))),
-                                            ]),
-                                      ): Container(),
-                                  data['riskTemplateFiveList'][index]['checkCycleUnit'] == '小时' ? SizedBox(
-                                    height: size.width * 16,
-                                  ) : Container(),
-                                  data['riskTemplateFiveList'][index]['checkCycleUnit'] == '小时' ? RichText(
-                                        text: TextSpan(
-                                            style: TextStyle(
-                                                fontSize: size.width * 24,
-                                                fontWeight: FontWeight.w400),
-                                            children: <InlineSpan>[
-                                              TextSpan(
-                                                  text: '任务执行类型：',
-                                                  style: TextStyle(
-                                                      color:
-                                                          Color(0xff333333))),
-                                              TextSpan(
-                                                  text: _getRefreshRule(data['riskTemplateFiveList'][index]['refreshRule']),
-                                                  style: TextStyle(
-                                                      color:
-                                                          Color(0xff7F8A9C))),
-                                            ]),
-                                      ): Container(),
-                                  data['riskTemplateFiveList'][index]['checkCycleUnit'] == '小时' ? SizedBox(
-                                    height: size.width * 32,
-                                  ) : Container()
+                                  data['riskTemplateFiveList'][index]
+                                              ['checkCycleUnit'] ==
+                                          '小时'
+                                      ? SizedBox(
+                                          height: size.width * 16,
+                                        )
+                                      : SizedBox(
+                                          height: size.width * 32,
+                                        ),
+                                  data['riskTemplateFiveList'][index]
+                                              ['checkCycleUnit'] ==
+                                          '小时'
+                                      ? RichText(
+                                          text: TextSpan(
+                                              style: TextStyle(
+                                                  fontSize: size.width * 24,
+                                                  fontWeight: FontWeight.w400),
+                                              children: <InlineSpan>[
+                                                TextSpan(
+                                                    text: '任务执行时段：',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff333333))),
+                                                TextSpan(
+                                                    text:
+                                                        '${data['riskTemplateFiveList'][index]['startRefreshTime']}-${data['riskTemplateFiveList'][index]['endRefreshTime']}',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff7F8A9C))),
+                                              ]),
+                                        )
+                                      : Container(),
+                                  data['riskTemplateFiveList'][index]
+                                              ['checkCycleUnit'] ==
+                                          '小时'
+                                      ? SizedBox(
+                                          height: size.width * 16,
+                                        )
+                                      : Container(),
+                                  data['riskTemplateFiveList'][index]
+                                              ['checkCycleUnit'] ==
+                                          '小时'
+                                      ? RichText(
+                                          text: TextSpan(
+                                              style: TextStyle(
+                                                  fontSize: size.width * 24,
+                                                  fontWeight: FontWeight.w400),
+                                              children: <InlineSpan>[
+                                                TextSpan(
+                                                    text: '任务执行类型：',
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff333333))),
+                                                TextSpan(
+                                                    text: _getRefreshRule(data[
+                                                            'riskTemplateFiveList']
+                                                        [index]['refreshRule']),
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff7F8A9C))),
+                                              ]),
+                                        )
+                                      : Container(),
+                                  data['riskTemplateFiveList'][index]
+                                              ['checkCycleUnit'] ==
+                                          '小时'
+                                      ? SizedBox(
+                                          height: size.width * 32,
+                                        )
+                                      : Container()
                                 ],
                               ),
                             );
