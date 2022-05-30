@@ -555,7 +555,7 @@ class _ReformAcceptState extends State<ReformAccept> {
                                       padding: EdgeInsets.only(
                                           left: size.width * 16),
                                       child: Text(
-                                        data['dangerManageDeadline'].toString(),
+                                        DateTime.fromMillisecondsSinceEpoch( data['dangerManageDeadline']).toString().substring(0, 19),
                                         style: TextStyle(
                                             fontSize: size.width * 28,
                                             fontWeight: FontWeight.w400,

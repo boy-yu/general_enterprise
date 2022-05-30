@@ -35,6 +35,7 @@ class _LoginState extends State<Login> {
         myprefs.setString('fileUrl', value['fileViewPath'] ?? '');
         fileUrl = value['fileViewPath'] ?? '';
         webAddress = value['webAddress'] ?? '';
+        setState(() {});
       }
     });
   }

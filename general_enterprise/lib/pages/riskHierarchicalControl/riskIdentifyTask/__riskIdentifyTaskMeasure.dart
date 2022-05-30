@@ -27,6 +27,88 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
     _queryParameters = {'riskEventId': widget.leftBarList[leftBarIndex]['id']};
   }
 
+  String _getClassify1(String classify1) {
+    // 工程技术：1；维护保养：2；操作行为：3；应急措施：4
+    switch (classify1) {
+      case '1':
+        return '工程技术';
+        break;
+      case '2':
+        return '维护保养';
+        break;
+      case '3':
+        return '操作行为';
+        break;
+      case '4':
+        return '应急措施';
+        break;
+      default:
+        return '';
+    }
+  }
+
+  String _getClassify2(String classify2) {
+    // 工艺控制:1-1；关键设备/部件：1-2；安全附件：1-3；安全仪表：1-4；其它：1-5；
+    // 动设备：2-1；静设备：2-2；其它：2-3；
+    // 人员资质：3-1；操作记录：3-2；交接班：3-3；其他：3-4；
+    // 应急设施:4-1；个体防护：4-2；消防设施：4-3；应急预案：4-4；其它：4-5；
+    switch (classify2) {
+      case '1-1':
+        return '工艺控制';
+        break;
+      case '1-2':
+        return '关键设备/部件';
+        break;
+      case '1-3':
+        return '安全附件';
+        break;
+      case '1-4':
+        return '安全仪表';
+        break;
+      case '1-5':
+        return '其它';
+        break;
+      case '2-1':
+        return '动设备';
+        break;
+      case '2-2':
+        return '静设备';
+        break;
+      case '2-3':
+        return '其它';
+        break;
+      case '3-1':
+        return '人员资质';
+        break;
+      case '3-2':
+        return '操作记录';
+        break;
+      case '3-3':
+        return '交接班';
+        break;
+      case '3-4':
+        return '其他';
+        break;
+      case '4-1':
+        return '应急设施';
+        break;
+      case '4-2':
+        return '个体防护';
+        break;
+      case '4-3':
+        return '消防设施';
+        break;
+      case '4-4':
+        return '应急预案';
+        break;
+      case '4-5':
+        return '其它';
+        break;
+      default:
+        return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MyAppbar(
@@ -191,7 +273,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['classify1'],
+                                        text:  _getClassify1(list[index]['classify1']),
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -210,7 +292,7 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: list[index]['classify2'],
+                                        text: _getClassify2(list[index]['classify2']),
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
