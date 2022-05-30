@@ -39,7 +39,7 @@ class Routers {
 
   final Map<String, Widget Function(BuildContext context, {dynamic arguments})>
       _routers = {
-    '/login': (context, {arguments}) => Login(), // 登陆页面
+    '/login': (context, {arguments}) => Login(isYindao: arguments['isYindao'],), // 登陆页面
     '/index': (context, {arguments}) => Index(), // 主页
     '/person/updata': (context, {arguments}) => Updata(), //更新页面
     '/person/psd': (context, {arguments}) => AmendPsd(), //密码

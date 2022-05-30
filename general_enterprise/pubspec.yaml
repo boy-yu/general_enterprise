@@ -73,6 +73,9 @@ dependencies:
   # 选择时间
   flutter_datetime_picker: ^1.5.1
 
+  # 引导蒙层效果
+  flutter_intro: ^3.0.2
+
   # MD5
   camera: ^0.5.8+11
   # need ios setting
