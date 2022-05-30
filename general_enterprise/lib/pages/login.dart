@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:enterprise/common/myUpdateDialog.dart';
+import 'package:enterprise/common/myVideoPlay.dart';
+import 'package:enterprise/myDialog/videoDialog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/down.dart';
 import 'package:flutter/material.dart';
@@ -26,15 +28,21 @@ class _LoginState extends State<Login> {
     }
   }
 
+  String studyVideoUrl = '';
+
   _getUrl() {
-    mainDio.request(
-        type: 'get',
-        url: Interface.getAkyCompAppApiConfig,
-        queryParameters: {"url": Interface.mainBaseUrl}).then((value) {
+    mainDio
+        .request(
+      type: 'get',
+      url: Interface.getAkyCompAppApiConfig,
+    )
+        .then((value) {
       if (value is Map) {
         myprefs.setString('fileUrl', value['fileViewPath'] ?? '');
         fileUrl = value['fileViewPath'] ?? '';
         webAddress = value['webAddress'] ?? '';
+        studyVideoUrl = value['studyVideoUrl'] ?? '';
+        print(studyVideoUrl);
         setState(() {});
       }
     });
@@ -89,7 +97,9 @@ class _LoginState extends State<Login> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    LoginForm(webAddress: webAddress),
+                    LoginForm(
+                        webAddress: webAddress, studyVideoUrl: studyVideoUrl),
+                    // studyVideoUrl != '' ? Expanded(child: MyVideoPlay(url: studyVideoUrl),) : Container(),
                     Expanded(
                         child: Container(
                       margin: EdgeInsets.only(bottom: size.width * 20),
@@ -169,8 +179,8 @@ class _LoginState extends State<Login> {
 }
 
 class LoginForm extends StatefulWidget {
-  LoginForm({this.webAddress});
-  final String webAddress;
+  LoginForm({this.webAddress, this.studyVideoUrl});
+  final String webAddress, studyVideoUrl;
   @override
   _LoginFormState createState() => _LoginFormState();
 }
@@ -256,6 +266,25 @@ class _LoginFormState extends State<LoginForm> {
               height: size.width * 140,
               width: size.width * 462,
             )),
+        GestureDetector(
+          onTap: (){
+            // if(widget.studyVideoUrl != ''){
+            //   VideoDialog.myVideoDialog(
+            //         context,
+            //         widget.studyVideoUrl
+            //       );
+            // }else{
+            //   Fluttertoast.showToast(msg: "暂无操作指南");
+            // }
+            
+          },
+          child: Container(
+            height: size.width * 50,
+            width: size.width * 200,
+            color: Colors.red,
+            child: Text("教学视频"),
+          ),
+        ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: size.width * 60),
           child: Column(
@@ -337,7 +366,7 @@ class _LoginFormState extends State<LoginForm> {
                     borderRadius:
                         BorderRadius.all(Radius.circular(size.width * 20)),
                   ),
-                  height: size.height * 100,
+                  height: size.height * 80,
                   width: size.height * 630,
                   alignment: Alignment.center,
                   child: Text(
