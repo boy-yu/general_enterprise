@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:enterprise/common/myUpdateDialog.dart';
-import 'package:enterprise/common/myVideoPlay.dart';
 import 'package:enterprise/myDialog/videoDialog.dart';
 import 'package:enterprise/service/context.dart';
 import 'package:enterprise/tool/down.dart';
@@ -261,30 +260,49 @@ class _LoginFormState extends State<LoginForm> {
                 left: size.width * 60,
                 bottom: size.height * 160,
                 top: size.height * 224),
-            child: Image.asset(
-              "assets/images/doubleRiskProjeck/text_login_title.png",
-              height: size.width * 140,
-              width: size.width * 462,
+            child: Row(
+              children: [
+                Image.asset(
+                  "assets/images/doubleRiskProjeck/text_login_title.png",
+                  height: size.width * 140,
+                  width: size.width * 462,
+                ),
+                SizedBox(
+                  width: size.width * 80,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (widget.studyVideoUrl != '') {
+                      VideoDialog.myVideoDialog(context, widget.studyVideoUrl);
+                    } else {
+                      Fluttertoast.showToast(msg: "暂无操作指南");
+                    }
+                  },
+                  child: Container(
+                    width: size.width * 80,
+                    height: size.width * 80,
+                    padding: EdgeInsets.all(size.width * 16),
+                    decoration: BoxDecoration(
+                        color: Color(0xff3074FF),
+                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    child: Image.asset(
+                      "assets/images/doubleRiskProjeck/icon_login_video.png",
+                    ),
+                  ),
+                )
+              ],
             )),
-        GestureDetector(
-          onTap: (){
-            // if(widget.studyVideoUrl != ''){
-            //   VideoDialog.myVideoDialog(
-            //         context,
-            //         widget.studyVideoUrl
-            //       );
-            // }else{
-            //   Fluttertoast.showToast(msg: "暂无操作指南");
-            // }
-            
-          },
-          child: Container(
-            height: size.width * 50,
-            width: size.width * 200,
-            color: Colors.red,
-            child: Text("教学视频"),
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: () {
+
+        //   },
+        //   child: Container(
+        //     height: size.width * 50,
+        //     width: size.width * 200,
+        //     color: Colors.red,
+        //     child: Text("教学视频"),
+        //   ),
+        // ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: size.width * 60),
           child: Column(
