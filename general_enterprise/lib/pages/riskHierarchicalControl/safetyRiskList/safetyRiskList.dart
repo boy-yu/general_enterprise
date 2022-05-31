@@ -172,20 +172,17 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
                           right: size.width * 32,
                           top: size.width * 32),
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
                               topRight: Radius.circular(size.width * 20),
                               bottomLeft: Radius.circular(size.width * 20),
-                              bottomRight: Radius.circular(size.width * 20)
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0xff7F8A9C).withOpacity(0.05),
-                            blurRadius: size.width * 8,
-                            spreadRadius: size.width * 2
-                          )
-                        ]
-                      ),
+                              bottomRight: Radius.circular(size.width * 20)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xff7F8A9C).withOpacity(0.05),
+                                blurRadius: size.width * 8,
+                                spreadRadius: size.width * 2)
+                          ]),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -196,7 +193,7 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(size.width * 16)),
+                                  topRight: Radius.circular(size.width * 16)),
                               gradient: LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
@@ -227,9 +224,7 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
                                           Radius.circular(size.width * 8))),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    list[index]['isControl'] == 0
-                                        ? '异常'
-                                        : '正常',
+                                    list[index]['isControl'] == 0 ? '异常' : '正常',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: size.width * 24,
@@ -295,7 +290,8 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
                                             style: TextStyle(
                                                 color: Color(0xff333333))),
                                         TextSpan(
-                                            text: list[index]['riskMeasureDesc'],
+                                            text: list[index]
+                                                ['riskMeasureDesc'],
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C))),
                                       ]),
@@ -312,56 +308,59 @@ class _SafetyRiskListState extends State<SafetyRiskList> {
                             color: Color(0xffECECEC),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: size.width * 24, bottom: size.width * 32),
+                            padding: EdgeInsets.only(
+                                top: size.width * 24, bottom: size.width * 32),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 GestureDetector(
-                                  onTap: (){
-                                    Navigator.pushNamed(context, '/safetyRiskList/details', arguments: {
-                                      'id': list[index]['id']
-                                    });
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/safetyRiskList/details',
+                                        arguments: {'id': list[index]['id']});
                                   },
                                   child: Container(
                                     height: size.width * 64,
                                     width: size.width * 200,
                                     decoration: BoxDecoration(
                                       color: Color(0xff3074FF).withOpacity(0.1),
-                                      borderRadius: BorderRadius.all(Radius.circular(size.width * 32)),
-                                      border: Border.all(width: size.width * 2, color: Color(0xff3074FF)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(size.width * 32)),
+                                      border: Border.all(
+                                          width: size.width * 2,
+                                          color: Color(0xff3074FF)),
                                     ),
                                     alignment: Alignment.center,
                                     child: Text(
                                       '详情',
                                       style: TextStyle(
-                                        color: Color(0xff3074FF),
-                                        fontSize: size.width * 28,
-                                        fontWeight: FontWeight.w400
-                                      ),
+                                          color: Color(0xff3074FF),
+                                          fontSize: size.width * 28,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: (){
-                                    Navigator.pushNamed(context, '/safetyRiskList/controlSituation', arguments: {
-                                      'id': list[index]['id']
-                                    });
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        '/safetyRiskList/controlSituation',
+                                        arguments: {'id': list[index]['id']});
                                   },
                                   child: Container(
                                     height: size.width * 64,
                                     width: size.width * 200,
                                     decoration: BoxDecoration(
                                       color: Color(0xff3074FF),
-                                      borderRadius: BorderRadius.all(Radius.circular(size.width * 32)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(size.width * 32)),
                                     ),
                                     alignment: Alignment.center,
                                     child: Text(
                                       '管控情况',
                                       style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: size.width * 28,
-                                        fontWeight: FontWeight.w400
-                                      ),
+                                          color: Colors.white,
+                                          fontSize: size.width * 28,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ),
                                 ),
