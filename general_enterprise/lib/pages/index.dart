@@ -68,7 +68,9 @@ class _IndexState extends State<Index> {
   _getVersion() async {
     // own app version
     String _version = await Version().getSever();
-    mainDio.request(type: 'get', url: Interface.cheakUpdate).then((value) async {
+    mainDio
+        .request(type: 'get', url: Interface.cheakUpdate)
+        .then((value) async {
       await myprefs.setBool('isForcedUpgrade', false);
       // value['version'] serve version
       if (_version != value['version']) {
@@ -91,7 +93,22 @@ class _IndexState extends State<Index> {
     if (myprefs.getString('token') == null ||
         myprefs.getString('token') == '') {
       Future.delayed(Duration(milliseconds: 300), () {
-        Navigator.pushNamed(myContext, '/login').then((value) {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (BuildContext context) => Intro(
+        //       padding: EdgeInsets.zero,
+        //       borderRadius: const BorderRadius.all(Radius.circular(4)),
+        //       maskColor: const Color.fromRGBO(0, 0, 0, .6),
+        //       child: Login(),
+        //     ),
+        //   ),
+        // ).then((value) {
+        //   if (mounted) {
+        //     setState(() {});
+        //   }
+        // });
+        Navigator.pushNamed(myContext, '/login', arguments: {"isYindao": true}).then((value) {
           // if (Contexts.mobile) _initMessageChannel();
           if (mounted) {
             setState(() {});
@@ -134,7 +151,9 @@ class _IndexState extends State<Index> {
   // }
 
   _getUrl() {
-    mainDio.request(type: 'get', url: Interface.getAkyCompAppApiConfig).then((value) async {
+    mainDio
+        .request(type: 'get', url: Interface.getAkyCompAppApiConfig)
+        .then((value) async {
       // print(mainBaseUrl);
       // print(value);
       if (value is Map) {

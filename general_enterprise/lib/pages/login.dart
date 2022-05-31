@@ -9,6 +9,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../tool/interface.dart';
 
 class Login extends StatefulWidget {
+  Login({this.isYindao});
+  final bool isYindao;
   @override
   _LoginState createState() => _LoginState();
 }
@@ -24,6 +26,9 @@ class _LoginState extends State<Login> {
     if (Contexts.mobile) {
       _getUrl();
       _getVersion();
+      if(widget.isYindao != null){
+        isYindao = widget.isYindao;
+      }
     }
   }
 
@@ -41,7 +46,6 @@ class _LoginState extends State<Login> {
         fileUrl = value['fileViewPath'] ?? '';
         webAddress = value['webAddress'] ?? '';
         studyVideoUrl = value['studyVideoUrl'] ?? '';
-        print(studyVideoUrl);
         setState(() {});
       }
     });
@@ -72,91 +76,115 @@ class _LoginState extends State<Login> {
     });
   }
 
+  OverlayEntry overlayEntry;
+
+  bool isYindao = false;
+
   @override
   Widget build(BuildContext context) {
     Size currenWidow = MediaQuery.of(context).size;
     return WillPopScope(
         child: Scaffold(
             backgroundColor: Colors.white,
-            body: InkWell(
-              onTap: () {
-                // 解除屏幕键盘
-                FocusScope.of(context).unfocus();
-              },
-              child: SingleChildScrollView(
-                  child: Container(
-                height: currenWidow.height,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                        "assets/images/doubleRiskProjeck/bg_login.png"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    LoginForm(
-                        webAddress: webAddress, studyVideoUrl: studyVideoUrl),
-                    // studyVideoUrl != '' ? Expanded(child: MyVideoPlay(url: studyVideoUrl),) : Container(),
-                    Expanded(
-                        child: Container(
-                      margin: EdgeInsets.only(bottom: size.width * 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            child: Text(
-                              '四川省天顺慧智安全科技有限公司',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Color(0xff7F8A9C),
-                                  fontSize: size.width * 24,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            width: double.infinity,
-                          ),
-                          Container(
-                              width: double.infinity,
-                              margin: EdgeInsets.only(
-                                  top: size.width * 12,
-                                  bottom: size.width * 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/login_left.png',
-                                    height: size.width * 2,
-                                    width: size.width * 72,
-                                  ),
-                                  SizedBox(
-                                    width: size.width * 10,
-                                  ),
-                                  Text(
-                                    _version != null
-                                        ? 'V' + _version.toString()
-                                        : '',
-                                    style: TextStyle(
-                                        color: Color(0xff7F8A9C),
-                                        fontSize: size.width * 24,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  SizedBox(
-                                    width: size.width * 10,
-                                  ),
-                                  Image.asset(
-                                    'assets/images/login_right.png',
-                                    height: size.width * 2,
-                                    width: size.width * 72,
-                                  ),
-                                ],
-                              ))
-                        ],
+            body: Stack(
+              children: [
+                InkWell(
+                  onTap: () {
+                    // 解除屏幕键盘
+                    FocusScope.of(context).unfocus();
+                  },
+                  child: SingleChildScrollView(
+                      child: Container(
+                    height: currenWidow.height,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                            "assets/images/doubleRiskProjeck/bg_login.png"),
+                        fit: BoxFit.cover,
                       ),
-                    ))
-                  ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        LoginForm(
+                            webAddress: webAddress,
+                            studyVideoUrl: studyVideoUrl),
+                        // studyVideoUrl != '' ? Expanded(child: MyVideoPlay(url: studyVideoUrl),) : Container(),
+                        Expanded(
+                            child: Container(
+                          margin: EdgeInsets.only(bottom: size.width * 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                child: Text(
+                                  '四川省天顺慧智安全科技有限公司',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Color(0xff7F8A9C),
+                                      fontSize: size.width * 24,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                width: double.infinity,
+                              ),
+                              Container(
+                                  width: double.infinity,
+                                  margin: EdgeInsets.only(
+                                      top: size.width * 12,
+                                      bottom: size.width * 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/login_left.png',
+                                        height: size.width * 2,
+                                        width: size.width * 72,
+                                      ),
+                                      SizedBox(
+                                        width: size.width * 10,
+                                      ),
+                                      Text(
+                                        _version != null
+                                            ? 'V' + _version.toString()
+                                            : '',
+                                        style: TextStyle(
+                                            color: Color(0xff7F8A9C),
+                                            fontSize: size.width * 24,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      SizedBox(
+                                        width: size.width * 10,
+                                      ),
+                                      Image.asset(
+                                        'assets/images/login_right.png',
+                                        height: size.width * 2,
+                                        width: size.width * 72,
+                                      ),
+                                    ],
+                                  ))
+                            ],
+                          ),
+                        ))
+                      ],
+                    ),
+                  )),
                 ),
-              )),
+                GestureDetector(
+                  onTap: () {
+                    isYindao = false;
+                    setState(() {});
+                  },
+                  child: isYindao
+                      ? Container(
+                          height: currenWidow.height,
+                          child: Image.asset(
+                            "assets/images/doubleRiskProjeck/bg_login_yindao.png",
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Container(),
+                )
+              ],
             )),
         onWillPop: () async {
           if (Contexts.mobile) {
