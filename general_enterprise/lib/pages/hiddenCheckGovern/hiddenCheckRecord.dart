@@ -26,15 +26,17 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
     super.initState();
     _getDropList();
     DateTime dateTime = DateTime.now();
-    startDate = DateTime(dateTime.year, dateTime.month - 1, dateTime.day).toString().substring(0, 10);
+    startDate = DateTime(dateTime.year, dateTime.month - 1, dateTime.day)
+        .toString()
+        .substring(0, 10);
     endDate = dateTime.toString().substring(0, 10);
 
     queryParameters = {
       "riskObjectId": null,
       "riskUnitId": null,
       "riskEventId": null,
-      "startDate": DateTime(dateTime.year, dateTime.month - 1, dateTime.day).millisecondsSinceEpoch,
-      "endDate": dateTime.millisecondsSinceEpoch
+      "startDate": DateTime.parse(startDate).millisecondsSinceEpoch,
+      "endDate": DateTime.parse(endDate).millisecondsSinceEpoch
     };
   }
 
@@ -110,7 +112,9 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
       queryParameters = {
         "riskObjectId": null,
         "riskUnitId": null,
-        "riskEventId": null
+        "riskEventId": null,
+        "startDate": DateTime.parse(startDate).millisecondsSinceEpoch,
+        "endDate": DateTime.parse(endDate).millisecondsSinceEpoch
       };
       print(queryParameters);
       _throwFunc.run(argument: queryParameters);
@@ -193,6 +197,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
 
   @override
   Widget build(BuildContext context) {
+    print(endDate);
     return MyAppbar(
         title: Text('隐患排查记录', style: TextStyle(fontSize: size.width * 32)),
         child: GestureDetector(
@@ -240,15 +245,20 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
-                                            stateStr = stateList[index].toString();
-                                            if(stateStr == '全部'){
-                                              queryParameters['checkStatus'] = '';
-                                            }else if(stateStr == '逾期'){
-                                              queryParameters['checkStatus'] = '2';
-                                            }else if(stateStr == '已完成'){
-                                              queryParameters['checkStatus'] = '0';
+                                            stateStr =
+                                                stateList[index].toString();
+                                            if (stateStr == '全部') {
+                                              queryParameters['checkStatus'] =
+                                                  '';
+                                            } else if (stateStr == '逾期') {
+                                              queryParameters['checkStatus'] =
+                                                  '2';
+                                            } else if (stateStr == '已完成') {
+                                              queryParameters['checkStatus'] =
+                                                  '0';
                                             }
-                                            _throwFunc.run(argument: queryParameters);
+                                            _throwFunc.run(
+                                                argument: queryParameters);
                                             setState(() {});
                                             Navigator.pop(context);
                                           },
@@ -311,20 +321,29 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
-                                            checkMeansStr = checkMeansList[index].toString();
+                                            checkMeansStr =
+                                                checkMeansList[index]
+                                                    .toString();
                                             // 0_现场确认；1_拍照；2_热成像；3_震动
-                                            if(checkMeansStr == '全部'){
-                                              queryParameters['checkMeans'] = '';
-                                            }else if(checkMeansStr == '现场确认'){
-                                              queryParameters['checkMeans'] = '0';
-                                            }else if(checkMeansStr == '拍照'){
-                                              queryParameters['checkMeans'] = '1';
-                                            }else if(checkMeansStr == '热成像'){
-                                              queryParameters['checkMeans'] = '2';
-                                            }else if(checkMeansStr == '震动'){
-                                              queryParameters['checkMeans'] = '3';
+                                            if (checkMeansStr == '全部') {
+                                              queryParameters['checkMeans'] =
+                                                  '';
+                                            } else if (checkMeansStr ==
+                                                '现场确认') {
+                                              queryParameters['checkMeans'] =
+                                                  '0';
+                                            } else if (checkMeansStr == '拍照') {
+                                              queryParameters['checkMeans'] =
+                                                  '1';
+                                            } else if (checkMeansStr == '热成像') {
+                                              queryParameters['checkMeans'] =
+                                                  '2';
+                                            } else if (checkMeansStr == '震动') {
+                                              queryParameters['checkMeans'] =
+                                                  '3';
                                             }
-                                            _throwFunc.run(argument: queryParameters);
+                                            _throwFunc.run(
+                                                argument: queryParameters);
                                             setState(() {});
                                             Navigator.pop(context);
                                           },
@@ -386,8 +405,15 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                             callback: (value) {
                               print(DateTime.parse(value));
                               startDate = value;
-                              queryParameters['startDate'] = DateTime.parse(startDate).millisecondsSinceEpoch;
-                              endDate = '结束时间';
+                              queryParameters['startDate'] =
+                                  DateTime.parse(startDate)
+                                      .millisecondsSinceEpoch;
+                              endDate = DateTime(
+                                      DateTime.parse(startDate).year,
+                                      DateTime.parse(startDate).month + 1,
+                                      DateTime.parse(startDate).day)
+                                  .toString()
+                                  .substring(0, 10);
                               setState(() {});
                             },
                             icon: Image.asset(
@@ -400,16 +426,27 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                             title: 'endDate',
                             purview: 'endDate',
                             hintText: endDate,
-                            minDateTime: queryParameters['startDate'] != null ? DateTime.parse(startDate) : null,
-                            maxDateTime: queryParameters['startDate'] != null ? DateTime(DateTime.parse(startDate).year, DateTime.parse(startDate).month + 1, DateTime.parse(startDate).day) : null,
+                            minDateTime: queryParameters['startDate'] != null
+                                ? DateTime.parse(startDate)
+                                : null,
+                            maxDateTime: queryParameters['startDate'] != null
+                                ? DateTime(
+                                    DateTime.parse(startDate).year,
+                                    DateTime.parse(startDate).month + 1,
+                                    DateTime.parse(startDate).day)
+                                : null,
                             callback: (value) {
                               endDate = value;
-                              if(startDate == ''){
+                              if (startDate == '') {
                                 Fluttertoast.showToast(msg: '请先选择开始时间');
                                 return;
-                              }else{
-                                queryParameters['startDate'] = DateTime.parse(startDate).millisecondsSinceEpoch;
-                                queryParameters['endDate'] = DateTime.parse(endDate).millisecondsSinceEpoch;
+                              } else {
+                                queryParameters['startDate'] =
+                                    DateTime.parse(startDate)
+                                        .millisecondsSinceEpoch;
+                                queryParameters['endDate'] =
+                                    DateTime.parse(endDate)
+                                        .millisecondsSinceEpoch;
                               }
                               _throwFunc.run(argument: queryParameters);
                               setState(() {});
@@ -430,7 +467,9 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                   child: (index, list) => GestureDetector(
                     onTap: () {
                       print(list[index]['id']);
-                      Navigator.pushNamed(context, '/hiddenCheckGovern/hiddenCheckRecordDetails', arguments: {'id': list[index]['id']});
+                      Navigator.pushNamed(context,
+                          '/hiddenCheckGovern/hiddenCheckRecordDetails',
+                          arguments: {'id': list[index]['id']});
                     },
                     child: Container(
                       margin: EdgeInsets.only(
@@ -464,20 +503,21 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(size.width * 8))),
                                     child: Text(
-                                      list[index]['checkStatus'] == '2' ? '逾期' : '已完成',
+                                      list[index]['checkStatus'] == '2'
+                                          ? '逾期'
+                                          : '已完成',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: size.width * 24,
                                           fontWeight: FontWeight.w500),
                                     )),
-                                  Spacer(),
+                                Spacer(),
                                 Text(
                                   '详情 >',
                                   style: TextStyle(
-                                    color: Color(0xff3074FF),
-                                    fontSize: size.width * 24,
-                                    fontWeight: FontWeight.w500
-                                  ),
+                                      color: Color(0xff3074FF),
+                                      fontSize: size.width * 24,
+                                      fontWeight: FontWeight.w500),
                                 )
                               ],
                             ),
@@ -576,7 +616,12 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                             style: TextStyle(
                                                 color: Color(0xff333333))),
                                         TextSpan(
-                                            text: DateTime.fromMillisecondsSinceEpoch(list[index]['checkTime']).toString().substring(0, 19),
+                                            text: DateTime
+                                                    .fromMillisecondsSinceEpoch(
+                                                        list[index]
+                                                            ['checkTime'])
+                                                .toString()
+                                                .substring(0, 19),
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C))),
                                       ]),
@@ -595,7 +640,8 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
                                             style: TextStyle(
                                                 color: Color(0xff333333))),
                                         TextSpan(
-                                            text: _getCheckMeans(list[index]['checkMeans']),
+                                            text: _getCheckMeans(
+                                                list[index]['checkMeans']),
                                             style: TextStyle(
                                                 color: Color(0xff7F8A9C))),
                                       ]),
