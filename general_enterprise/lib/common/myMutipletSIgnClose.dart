@@ -1,5 +1,6 @@
 import 'package:enterprise/common/myInput.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:enterprise/common/myCount.dart';
 import 'package:provider/provider.dart';
@@ -59,9 +60,14 @@ class _MyMutipleSignCloseState extends State<MyMutipleSignClose> {
             }
           }
         }
-        _widget = signSplit[mutipleIndex].toString().indexOf('http') > -1
+        _widget = signSplit[mutipleIndex] == '' ||
+                signSplit[mutipleIndex] == null
             ? Image(
-                image: NetworkImage(signSplit[mutipleIndex].toString()),
+                image: NetworkImage(
+                  signSplit[mutipleIndex].toString().indexOf('http:') > -1
+                      ? Interface.fileUrl + signSplit[mutipleIndex].toString()
+                      : signSplit[mutipleIndex].toString(),
+                ),
                 height: width * 160,
               )
             : Container();
@@ -71,7 +77,11 @@ class _MyMutipleSignCloseState extends State<MyMutipleSignClose> {
     } else {
       _widget = Expanded(
           child: Image(
-              image: NetworkImage(widget.placeHolder.toString()),
+              image: NetworkImage(
+                widget.placeHolder.toString().indexOf('http:') > -1
+                    ? Interface.fileUrl + widget.placeHolder.toString()
+                    : widget.placeHolder.toString(),
+              ),
               height: width * 160,
               width: width * 300));
     }

@@ -353,7 +353,10 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                           padding: EdgeInsets.only(right: size.width * 10),
                           child: imageList[index].isNotEmpty
                               ? Image.network(
-                                  imageList[index],
+                                  imageList[index].toString().indexOf('http:') >
+                                          -1
+                                      ? Interface.fileUrl + imageList[index]
+                                      : imageList[index],
                                   width: size.width * 144,
                                   height: size.width * 144,
                                 )

@@ -1,5 +1,6 @@
 import 'package:enterprise/common/myCount.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'myCustomColor.dart';
@@ -80,7 +81,9 @@ class _MyTextState extends State<MyText> {
                       children: value.toString().split('|').map((__ele) {
                         return __ele != ''
                             ? Image.network(
-                                __ele,
+                                __ele.toString().indexOf('http:') > -1
+                                    ? Interface.fileUrl + __ele
+                                    : __ele,
                                 height: size.width * 160,
                               )
                             : Container();
@@ -104,9 +107,11 @@ class _MyTextState extends State<MyText> {
           children: values.map((ele) {
             return Padding(
               padding: EdgeInsets.all(10),
-              child: ele.indexOf('http') > -1
+              child: ele.indexOf('http') == '' || ele.indexOf('http') == null
                   ? Image.network(
-                      ele,
+                      ele.toString().indexOf('http:') > -1
+                          ? Interface.fileUrl + ele
+                          : ele,
                       width: size.width * 200,
                     )
                   : Container(),
@@ -146,7 +151,12 @@ class _MyTextState extends State<MyText> {
                             vertical: size.width * 10),
                       ),
                       ele['valueType'] == 'sign'
-                          ? Expanded(child: Image.network(assginValue))
+                          ? Expanded(
+                              child: Image.network(
+                              assginValue.toString().indexOf('http:') > -1
+                                  ? Interface.fileUrl + assginValue
+                                  : assginValue,
+                            ))
                           : Padding(
                               padding: EdgeInsets.only(right: size.width * 40),
                               child: Text(assginValue)),

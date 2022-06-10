@@ -12,7 +12,8 @@ class Interface {
 
   // 封闭化管理地址
   // static String closeBaseUrl = '';
-
+  // 文件前缀名地址
+  static String fileUrl = '';
   static String getAkyCompAppApiConfig = baseAliUrl + "/akyCompAppApiConfig";
 
   static String online(String url) {
@@ -52,8 +53,8 @@ class Interface {
   static String putAmendPsd = baseUrl + '/tUser/updatePassword';
 
   // app初始设置签名修改默认密码
-  static String putUpdatePasswordAndSign = baseUrl + '/tUser/updatePasswordAndSign';
-  
+  static String putUpdatePasswordAndSign =
+      baseUrl + '/tUser/updatePasswordAndSign';
 
   // 风险一级项下拉 hiddenSpecificItem inspecion risklist worklist controlIndex
   static String getRiskObjectByDepartmentId =

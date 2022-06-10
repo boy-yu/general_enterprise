@@ -419,9 +419,21 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                                       size.width * 20)),
                                               image: DecorationImage(
                                                   image: NetworkImage(
-                                                      data['checkUrl']
-                                                          .toString()
-                                                          .split('|')[0]),
+                                                    data['checkUrl']
+                                                                .toString()
+                                                                .split('|')[0]
+                                                                .toString()
+                                                                .indexOf(
+                                                                    'http:') >
+                                                            -1
+                                                        ? Interface.fileUrl +
+                                                            data['checkUrl']
+                                                                .toString()
+                                                                .split('|')[0]
+                                                        : data['checkUrl']
+                                                            .toString()
+                                                            .split('|')[0],
+                                                  ),
                                                   fit: BoxFit.contain),
                                             ),
                                           )

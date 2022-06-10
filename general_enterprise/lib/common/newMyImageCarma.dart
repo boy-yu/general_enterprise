@@ -141,10 +141,13 @@ class _NewMyImageCarmaState extends State<NewMyImageCarma> {
                       ),
                     );
                   },
-                  child: images[i].toString().indexOf('http') > -1
+                  child: images[i].toString().indexOf('http') == '' ||
+                          images[i].toString().indexOf('http') == null
                       ? Container(
                           child: Image.network(
-                            images[i],
+                            images[i].toString().indexOf('http:') > -1
+                                ? Interface.fileUrl + images[i]
+                                : images[i],
                             width: size.width * 150,
                             height: size.width * 150,
                             fit: BoxFit.fill,

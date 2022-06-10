@@ -62,7 +62,9 @@ class _MineState extends State<Mine> with TickerProviderStateMixin {
   _getVersion() async {
     // own app version
     String _version = await Version().getSever();
-    mainDio.request(type: 'get', url: Interface.cheakUpdate).then((value) async {
+    mainDio
+        .request(type: 'get', url: Interface.cheakUpdate)
+        .then((value) async {
       await myprefs.setBool('isForcedUpgrade', false);
       // value['version'] serve version
       if (_version != value['version']) {
@@ -116,7 +118,16 @@ class _MineState extends State<Mine> with TickerProviderStateMixin {
                                         myprefs.getString('avatar') == null
                                     ? AssetImage(
                                         'assets/images/doubleRiskProjeck/image_avatar_default.png')
-                                    : NetworkImage(myprefs.getString('avatar')),
+                                    : NetworkImage(
+                                        myprefs
+                                                    .getString('avatar')
+                                                    .toString()
+                                                    .indexOf('http:') >
+                                                -1
+                                            ? Interface.fileUrl +
+                                                myprefs.getString('avatar')
+                                            : myprefs.getString('avatar'),
+                                      ),
                                 fit: BoxFit.fill, // 完全填充
                               ),
                             ),
@@ -236,8 +247,8 @@ class _MineState extends State<Mine> with TickerProviderStateMixin {
                             setState(() {
                               show = false;
                             });
-                            Navigator.pushNamed(context, '/login', arguments: {"isYindao": false})
-                                .then((value) {
+                            Navigator.pushNamed(context, '/login',
+                                arguments: {"isYindao": false}).then((value) {
                               setState(() {
                                 show = true;
                               });
@@ -392,7 +403,11 @@ class _CancelSignState extends State<CancelSign> {
           padding: EdgeInsets.symmetric(vertical: size.width * 10),
           child: FadeInImage(
             placeholder: AssetImage('assets/images/image_recent_control.jpg'),
-            image: NetworkImage(url),
+            image: NetworkImage(
+              url.toString().indexOf('http:') > -1
+                  ? Interface.fileUrl + url
+                  : url,
+            ),
             height: size.width * 100,
           ));
     } else {
@@ -401,7 +416,11 @@ class _CancelSignState extends State<CancelSign> {
             padding: EdgeInsets.symmetric(vertical: size.width * 10),
             child: FadeInImage(
               placeholder: AssetImage('assets/images/image_recent_control.jpg'),
-              image: NetworkImage(widget.url),
+              image: NetworkImage(
+                widget.url.toString().indexOf('http:') > -1
+                    ? Interface.fileUrl + widget.url
+                    : widget.url,
+              ),
               height: size.width * 100,
             ));
       }

@@ -75,7 +75,16 @@ class _MyMessageState extends State<MyMessage> {
                               image: myprefs.getString('avatar') == ''
                                   ? AssetImage(
                                       'assets/images/doubleRiskProjeck/image_avatar_default.png')
-                                  : NetworkImage(myprefs.getString('avatar'))),
+                                  : NetworkImage(
+                                      myprefs
+                                                  .getString('avatar')
+                                                  .toString()
+                                                  .indexOf('http:') >
+                                              -1
+                                          ? Interface.fileUrl +
+                                              myprefs.getString('avatar')
+                                          : myprefs.getString('avatar'),
+                                    )),
                         ),
                         Positioned(
                             right: 0,

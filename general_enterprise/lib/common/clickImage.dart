@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:animations/animations.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 
 class ClickImage extends StatefulWidget {
@@ -79,7 +80,12 @@ class _ClickImageState extends State<ClickImage> {
                                 image: imageType
                                     ? AssetImage(widget.path)
                                     : NetworkImage(
-                                        widget.path,
+                                        widget.path
+                                                    .toString()
+                                                    .indexOf('http:') >
+                                                -1
+                                            ? Interface.fileUrl + widget.path
+                                            : widget.path,
                                       ))),
                       )),
                       GestureDetector(
@@ -152,8 +158,12 @@ class _JudgeNetImageState extends State<JudgeNetImage> {
   Widget _judegtState() {
     switch (isNet) {
       case IsRight.http:
-        return Image.network(widget.path,
-            width: widget.width, height: widget.height);
+        return Image.network(
+            widget.path.toString().indexOf('http:') > -1
+                ? Interface.fileUrl + widget.path
+                : widget.path,
+            width: widget.width,
+            height: widget.height);
       case IsRight.error:
         return Image.asset(widget.errorImg,
             width: widget.width, height: widget.height);

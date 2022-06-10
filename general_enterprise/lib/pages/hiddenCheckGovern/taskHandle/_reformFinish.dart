@@ -176,15 +176,24 @@ class _ReformFinishState extends State<ReformFinish> {
                                         return Padding(
                                           padding: EdgeInsets.only(
                                               right: size.width * 10),
-                                          child:
-                                              ele.toString().indexOf('http') >
-                                                      -1
-                                                  ? Image.network(
-                                                      ele,
-                                                      width: size.width * 167,
-                                                      height: size.width * 125,
-                                                    )
-                                                  : Container(),
+                                          child: ele
+                                                          .toString()
+                                                          .indexOf('http') ==
+                                                      '' ||
+                                                  ele
+                                                          .toString()
+                                                          .indexOf('http') ==
+                                                      null
+                                              ? Image.network(
+                                                  ele.toString().indexOf(
+                                                              'http:') >
+                                                          -1
+                                                      ? Interface.fileUrl + ele
+                                                      : ele,
+                                                  width: size.width * 167,
+                                                  height: size.width * 125,
+                                                )
+                                              : Container(),
                                         );
                                       }).toList())
                                     : Container(),

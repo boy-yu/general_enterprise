@@ -1,6 +1,7 @@
 import 'package:enterprise/common/myCount.dart';
 import 'package:enterprise/common/myCustomColor.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +47,11 @@ class _CancelSignState extends State<CancelSign> {
           padding: EdgeInsets.symmetric(vertical: size.width * 10),
           child: FadeInImage(
             placeholder: AssetImage('assets/images/image_recent_control.jpg'),
-            image: NetworkImage(url),
+            image: NetworkImage(
+              url.toString().indexOf('http:') > -1
+                  ? Interface.fileUrl + url
+                  : url,
+            ),
             height: size.width * 100,
           ));
     } else {
@@ -55,7 +60,11 @@ class _CancelSignState extends State<CancelSign> {
             padding: EdgeInsets.symmetric(vertical: size.width * 10),
             child: FadeInImage(
               placeholder: AssetImage('assets/images/image_recent_control.jpg'),
-              image: NetworkImage(widget.url),
+              image: NetworkImage(
+                widget.url.toString().indexOf('http:') > -1
+                    ? Interface.fileUrl + widget.url
+                    : widget.url,
+              ),
               height: size.width * 100,
             ));
       }
@@ -74,7 +83,8 @@ class _CancelSignState extends State<CancelSign> {
                 ? Expanded(
                     child: Text(
                     '签字',
-                    style: TextStyle(fontSize: size.width * 28, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: size.width * 28, fontWeight: FontWeight.w500),
                   ))
                 : Container(),
             widget.widget == null
@@ -82,7 +92,10 @@ class _CancelSignState extends State<CancelSign> {
                     DateTime.now()
                         .toString()
                         .substring(0, DateTime.now().toString().length - 10),
-                    style: TextStyle(fontSize: size.width * 28, fontWeight: FontWeight.w400, color: Color(0xff7F8A9C)),
+                    style: TextStyle(
+                        fontSize: size.width * 28,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff7F8A9C)),
                   )
                 : Container(),
           ],
@@ -102,9 +115,11 @@ class _CancelSignState extends State<CancelSign> {
                 margin: EdgeInsets.only(top: size.width * 20),
                 constraints: BoxConstraints(minHeight: size.width * 240),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(size.width * 8)),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(size.width * 8)),
                     border: widget.widget == null
-                        ? Border.all(width: size.width * 2, color: Color(0xffF2F2F2))
+                        ? Border.all(
+                            width: size.width * 2, color: Color(0xffF2F2F2))
                         : Border.all(width: 0, color: Colors.transparent)),
                 width: double.infinity,
                 child: _judgeWidge(),

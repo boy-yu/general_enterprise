@@ -1,5 +1,6 @@
 import 'package:enterprise/common/myCount.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'myCustomColor.dart';
@@ -28,7 +29,12 @@ class _MySignState extends State<MySign> {
     } else {
       // print(widget.placeHolder);
       _widget = Image(
-          image: NetworkImage(widget.placeHolder), height: size.width * 160);
+          image: NetworkImage(
+            widget.placeHolder.toString().indexOf('http:') > -1
+                ? Interface.fileUrl + widget.placeHolder
+                : widget.placeHolder,
+          ),
+          height: size.width * 160);
     }
     return _widget;
   }

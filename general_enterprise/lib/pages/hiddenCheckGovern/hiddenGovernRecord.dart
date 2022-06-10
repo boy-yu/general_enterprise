@@ -1398,10 +1398,26 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                                                               size.width * 8)),
                                                   image: DecorationImage(
                                                       image: NetworkImage(
-                                                          list[index]
-                                                                  ['checkUrl']
-                                                              .toString()
-                                                              .split('|')[0]),
+                                                        list[index]['checkUrl']
+                                                                    .toString()
+                                                                    .split(
+                                                                        '|')[0]
+                                                                    .toString()
+                                                                    .indexOf(
+                                                                        'http:') >
+                                                                -1
+                                                            ? Interface
+                                                                    .fileUrl +
+                                                                list[index][
+                                                                        'checkUrl']
+                                                                    .toString()
+                                                                    .split(
+                                                                        '|')[0]
+                                                            : list[index]
+                                                                    ['checkUrl']
+                                                                .toString()
+                                                                .split('|')[0],
+                                                      ),
                                                       fit: BoxFit.contain),
                                                 ),
                                               )

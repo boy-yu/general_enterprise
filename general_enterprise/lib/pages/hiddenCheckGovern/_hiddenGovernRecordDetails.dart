@@ -484,17 +484,20 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         574,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Color(0xffEDF0F6),
+                                                                  color: Color(
+                                                                      0xffEDF0F6),
                                                                   borderRadius: BorderRadius.all(
                                                                       Radius.circular(
                                                                           size.width *
                                                                               20)),
                                                                   image: DecorationImage(
-                                                                      image: NetworkImage(data[
-                                                                              'checkUrl']
-                                                                          .toString()
-                                                                          .split(
-                                                                              '|')[0]),
+                                                                      image: NetworkImage(
+                                                                        data['checkUrl'].toString().split('|')[0].toString().indexOf('http:') >
+                                                                                -1
+                                                                            ? Interface.fileUrl +
+                                                                                data['checkUrl'].toString().split('|')[0]
+                                                                            : data['checkUrl'].toString().split('|')[0],
+                                                                      ),
                                                                       fit: BoxFit.contain),
                                                                 ),
                                                               )
@@ -527,7 +530,6 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                               32),
                                                                 ),
                                                               )
-                                                      
                                                       ],
                                                     ),
                                                   )
@@ -743,17 +745,20 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         574,
                                                                 decoration:
                                                                     BoxDecoration(
-                                                                  color: Color(0xffEDF0F6),
+                                                                  color: Color(
+                                                                      0xffEDF0F6),
                                                                   borderRadius: BorderRadius.all(
                                                                       Radius.circular(
                                                                           size.width *
                                                                               20)),
                                                                   image: DecorationImage(
-                                                                      image: NetworkImage(data[
-                                                                              'checkUrl']
-                                                                          .toString()
-                                                                          .split(
-                                                                              '|')[0]),
+                                                                      image: NetworkImage(
+                                                                        data['checkUrl'].toString().split('|')[0].toString().indexOf('http:') >
+                                                                                -1
+                                                                            ? Interface.fileUrl +
+                                                                                data['checkUrl'].toString().split('|')[0]
+                                                                            : data['checkUrl'].toString().split('|')[0],
+                                                                      ),
                                                                       fit: BoxFit.contain),
                                                                 ),
                                                               )
@@ -1441,14 +1446,17 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                           574,
                                                                   decoration:
                                                                       BoxDecoration(
-                                                                    color: Color(0xffEDF0F6),
+                                                                    color: Color(
+                                                                        0xffEDF0F6),
                                                                     borderRadius:
                                                                         BorderRadius.all(Radius.circular(size.width *
                                                                             20)),
                                                                     image: DecorationImage(
-                                                                        image: NetworkImage(data['registUrl']
-                                                                            .toString()
-                                                                            .split('|')[0]),
+                                                                        image: NetworkImage(
+                                                                          data['registUrl'].toString().split('|')[0].toString().indexOf('http:') > -1
+                                                                              ? Interface.fileUrl + data['registUrl'].toString().split('|')[0]
+                                                                              : data['registUrl'].toString().split('|')[0],
+                                                                        ),
                                                                         fit: BoxFit.contain),
                                                                   ),
                                                                 )
@@ -1632,17 +1640,22 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                       574,
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color: Color(0xffEDF0F6),
+                                                                color: Color(
+                                                                    0xffEDF0F6),
                                                                 borderRadius: BorderRadius.all(
                                                                     Radius.circular(
                                                                         size.width *
                                                                             20)),
-                                                                image: DecorationImage(
-                                                                    image: NetworkImage(
-                                                                        data[
-                                                                            'liableUrl']),
-                                                                    fit: BoxFit
-                                                                        .contain),
+                                                                image:
+                                                                    DecorationImage(
+                                                                        image:
+                                                                            NetworkImage(
+                                                                          data['liableUrl'].toString().indexOf('http:') > -1
+                                                                              ? Interface.fileUrl + data['liableUrl']
+                                                                              : data['liableUrl'],
+                                                                        ),
+                                                                        fit: BoxFit
+                                                                            .contain),
                                                               ),
                                                             )
                                                           : Container(

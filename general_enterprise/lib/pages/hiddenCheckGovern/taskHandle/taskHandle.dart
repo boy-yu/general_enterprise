@@ -51,7 +51,10 @@ class _TaskHandleState extends State<TaskHandle> {
       ),
       child: Stack(
         children: [
-          ScrollTop(dangerState: widget.dangerState, id: widget.id, type: widget.type),
+          ScrollTop(
+              dangerState: widget.dangerState,
+              id: widget.id,
+              type: widget.type),
           BuildDragWidget(
               dangerState: widget.dangerState,
               id: widget.id,
@@ -102,7 +105,7 @@ class _ScrollTopState extends State<ScrollTop> {
           queryParameters: {'id': widget.id}).then((value) {
         if (value is Map) {
           perData = value;
-          if(widget.type == '上报'){
+          if (widget.type == '上报') {
             dropData = [
               {"name": "风险分析对象", "value": '', "bindKey": 'riskObjectName'},
               {"name": "责任部门", "value": '', "bindKey": 'hazardDep'},
@@ -116,7 +119,7 @@ class _ScrollTopState extends State<ScrollTop> {
                 }
               });
             });
-          }else{
+          } else {
             value.forEach((key, value) {
               dropData.forEach((element) {
                 if (element['bindKey'] == key) {
@@ -125,7 +128,6 @@ class _ScrollTopState extends State<ScrollTop> {
               });
             });
           }
-          
         }
         if (mounted) {
           setState(() {});

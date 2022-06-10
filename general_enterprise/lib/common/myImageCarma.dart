@@ -60,18 +60,18 @@ class _MyImageCarmaState extends State<MyImageCarma> {
     setState(() {
       images.add(File(path));
     });
-    if(network){
+    if (network) {
       showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) {
-          return NetLoadingDialog(
-            requestCallBack: uploadImg(path),
-            outsideDismiss: false,
-            loadingText: '等待网络上传',
-          );
-        });
-    }else{
+          context: context,
+          barrierDismissible: false,
+          builder: (_) {
+            return NetLoadingDialog(
+              requestCallBack: uploadImg(path),
+              outsideDismiss: false,
+              loadingText: '等待网络上传',
+            );
+          });
+    } else {
       submitImage.add(path);
       if (widget.index != null) {
         _counter.changeSmallTicket(widget.index, path,
@@ -130,22 +130,24 @@ class _MyImageCarmaState extends State<MyImageCarma> {
       data.add(Stack(
         children: [
           images[i] == 0
-              ? images.length == 1 ? InkWell(
-                  onTap: () {
-                    getImage(_counter);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: textBgColor,
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Icon(
-                      Icons.add,
-                      size: size.width * 100,
-                      color: Colors.white,
-                    ),
-                    margin: EdgeInsets.all(size.width * 30),
-                  ),
-                ) : Container()
+              ? images.length == 1
+                  ? InkWell(
+                      onTap: () {
+                        getImage(_counter);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: textBgColor,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Icon(
+                          Icons.add,
+                          size: size.width * 100,
+                          color: Colors.white,
+                        ),
+                        margin: EdgeInsets.all(size.width * 30),
+                      ),
+                    )
+                  : Container()
               : ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white)),
@@ -176,10 +178,13 @@ class _MyImageCarmaState extends State<MyImageCarma> {
                       ),
                     );
                   },
-                  child: images[i].toString().indexOf('http') > -1
+                  child: images[i].toString().indexOf('http') == '' ||
+                          images[i].toString().indexOf('http') == null
                       ? Container(
                           child: Image.network(
-                            images[i],
+                            images[i].toString().indexOf('http:') > -1
+                                ? Interface.fileUrl + images[i]
+                                : images[i],
                             width: size.width * 150,
                             height: size.width * 150,
                             fit: BoxFit.fill,
@@ -267,7 +272,8 @@ class _MyImageCarmaState extends State<MyImageCarma> {
     super.initState();
     // 检测网络
     initConnectivity();
-    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     _init();
     if (widget.placeHolder != null && widget.placeHolder != '') {
       widget.placeHolder.split('|').forEach((element) {

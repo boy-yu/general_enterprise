@@ -1,6 +1,7 @@
 import 'package:enterprise/common/MychooseTime.dart';
 import 'package:enterprise/common/myDrop.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -134,7 +135,11 @@ class _MyCustomState extends State<MyCustom> {
       }
       _widget = imgValueArr[select].toString().indexOf('http') > -1
           ? Image(
-              image: NetworkImage(imgValueArr[select]),
+              image: NetworkImage(
+                imgValueArr[select].toString().indexOf('http:') > -1
+                    ? Interface.fileUrl + imgValueArr[select]
+                    : imgValueArr[select],
+              ),
               height: width * 160,
             )
           : Container();

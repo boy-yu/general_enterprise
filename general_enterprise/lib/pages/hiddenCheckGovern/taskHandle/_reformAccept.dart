@@ -172,15 +172,25 @@ class _ReformAcceptState extends State<ReformAccept> {
                                         return Padding(
                                           padding: EdgeInsets.only(
                                               right: size.width * 10),
-                                          child:
-                                              ele.toString().indexOf('http') >
-                                                      -1
-                                                  ? Image.network(
-                                                      ele,
-                                                      width: size.width * 167,
-                                                      height: size.width * 125,
-                                                    )
-                                                  : Container(),
+                                          // ignore: unrelated_type_equality_checks
+                                          child: ele
+                                                          .toString()
+                                                          .indexOf('http') ==
+                                                      '' ||
+                                                  ele
+                                                          .toString()
+                                                          .indexOf('http') ==
+                                                      null
+                                              ? Image.network(
+                                                  ele.toString().indexOf(
+                                                              'http:') >
+                                                          -1
+                                                      ? Interface.fileUrl + ele
+                                                      : ele,
+                                                  width: size.width * 167,
+                                                  height: size.width * 125,
+                                                )
+                                              : Container(),
                                         );
                                       }).toList())
                                     : Container(),
@@ -555,7 +565,10 @@ class _ReformAcceptState extends State<ReformAccept> {
                                       padding: EdgeInsets.only(
                                           left: size.width * 16),
                                       child: Text(
-                                        DateTime.fromMillisecondsSinceEpoch( data['dangerManageDeadline']).toString().substring(0, 19),
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                                data['dangerManageDeadline'])
+                                            .toString()
+                                            .substring(0, 19),
                                         style: TextStyle(
                                             fontSize: size.width * 28,
                                             fontWeight: FontWeight.w400,
@@ -628,10 +641,19 @@ class _ReformAcceptState extends State<ReformAccept> {
                                           padding: EdgeInsets.only(
                                               right: size.width * 10),
                                           child:
-                                              ele.toString().indexOf('http') >
-                                                      -1
+                                              // ignore: unrelated_type_equality_checks
+                                              ele.toString().indexOf('http') ==
+                                                          '' ||
+                                                      ele.toString().indexOf(
+                                                              'http') ==
+                                                          null
                                                   ? Image.network(
-                                                      ele,
+                                                      ele.toString().indexOf(
+                                                                  'http:') >
+                                                              -1
+                                                          ? Interface.fileUrl +
+                                                              ele
+                                                          : ele,
                                                       width: size.width * 167,
                                                       height: size.width * 125,
                                                     )

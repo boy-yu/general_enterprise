@@ -65,6 +65,7 @@ class _MyContextState extends State<MyContext> {
         .request(type: 'get', url: Interface.getAkyCompAppApiConfig)
         .then((value) async {
       if (value is Map) {
+        Interface.fileUrl = value['fileUrl'];
         Interface.mainBaseUrl = value["mainApiUrl"];
       }
       Mysize().init();

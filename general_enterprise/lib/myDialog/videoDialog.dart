@@ -1,5 +1,6 @@
 import 'package:enterprise/common/myVideoPlay.dart';
 import 'package:enterprise/service/context.dart';
+import 'package:enterprise/tool/interface.dart';
 import 'package:flutter/material.dart';
 
 class VideoDialog {
@@ -40,7 +41,10 @@ class VideoDialog {
                       width: size.width * 576,
                       height: size.width * 500,
                       // margin: EdgeInsets.all(size.width * 32),
-                      child: MyVideoPlay(url: studyVideoUrl),
+                      child: MyVideoPlay(
+                          url: studyVideoUrl.toString().indexOf('http:') > -1
+                              ? Interface.fileUrl + studyVideoUrl
+                              : studyVideoUrl),
                     )
                   ],
                 ),
