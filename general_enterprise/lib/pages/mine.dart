@@ -247,8 +247,13 @@ class _MineState extends State<Mine> with TickerProviderStateMixin {
                             setState(() {
                               show = false;
                             });
+<<<<<<< HEAD
                             Navigator.pushNamed(context, '/login',
                                 arguments: {"isYindao": false}).then((value) {
+=======
+                            Navigator.pushNamed(context, '/login')
+                                .then((value) {
+>>>>>>> 0fe33a7d2c86254b1741117fcc5f7d9dc3be4bcf
                               setState(() {
                                 show = true;
                               });

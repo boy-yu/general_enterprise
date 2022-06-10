@@ -93,22 +93,7 @@ class _IndexState extends State<Index> {
     if (myprefs.getString('token') == null ||
         myprefs.getString('token') == '') {
       Future.delayed(Duration(milliseconds: 300), () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (BuildContext context) => Intro(
-        //       padding: EdgeInsets.zero,
-        //       borderRadius: const BorderRadius.all(Radius.circular(4)),
-        //       maskColor: const Color.fromRGBO(0, 0, 0, .6),
-        //       child: Login(),
-        //     ),
-        //   ),
-        // ).then((value) {
-        //   if (mounted) {
-        //     setState(() {});
-        //   }
-        // });
-        Navigator.pushNamed(myContext, '/login', arguments: {"isYindao": true}).then((value) {
+        Navigator.pushNamed(myContext, '/login').then((value) {
           // if (Contexts.mobile) _initMessageChannel();
           if (mounted) {
             setState(() {});
@@ -206,14 +191,15 @@ class _IndexState extends State<Index> {
             width: width * 96,
             height: width * 96,
           ),
+          label: '',
           // ignore: deprecated_member_use
-          title: Text(
-            '',
-            style: TextStyle(
-              fontSize: width * 20,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          // title: Text(
+          //   '',
+          //   style: TextStyle(
+          //     fontSize: width * 20,
+          //     fontWeight: FontWeight.w500,
+          //   ),
+          // ),
         ));
       } else {
         bottomRoute.add(BottomNavigationBarItem(
@@ -227,14 +213,14 @@ class _IndexState extends State<Index> {
             width: width * 40,
             height: width * 40,
           ),
-          // ignore: deprecated_member_use
-          title: Text(
-            item['name'],
-            style: TextStyle(
-              fontSize: width * 20,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          label: item['name'],
+          // title: Text(
+          //   item['name'],
+          //   style: TextStyle(
+          //     fontSize: width * 20,
+          //     fontWeight: FontWeight.w500,
+          //   ),
+          // ),
         ));
       }
     }
