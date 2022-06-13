@@ -177,7 +177,7 @@ class _ReformFinishState extends State<ReformFinish> {
                                           padding: EdgeInsets.only(
                                               right: size.width * 10),
                                           child: ele.toString() == '' ||
-                                                  ele.toString() == null
+                                                  ele == null
                                               ? Image.network(
                                                   ele.toString().indexOf(
                                                               'http:') >
