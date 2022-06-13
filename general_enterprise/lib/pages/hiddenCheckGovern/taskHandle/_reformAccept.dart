@@ -185,8 +185,8 @@ class _ReformAcceptState extends State<ReformAccept> {
                                                   ele.toString().indexOf(
                                                               'http:') >
                                                           -1
-                                                      ? Interface.fileUrl + ele
-                                                      : ele,
+                                                      ? ele
+                                                      : Interface.fileUrl + ele,
                                                   width: size.width * 167,
                                                   height: size.width * 125,
                                                 )
@@ -651,9 +651,9 @@ class _ReformAcceptState extends State<ReformAccept> {
                                                       ele.toString().indexOf(
                                                                   'http:') >
                                                               -1
-                                                          ? Interface.fileUrl +
-                                                              ele
-                                                          : ele,
+                                                          ? ele
+                                                          : Interface.fileUrl +
+                                                              ele,
                                                       width: size.width * 167,
                                                       height: size.width * 125,
                                                     )

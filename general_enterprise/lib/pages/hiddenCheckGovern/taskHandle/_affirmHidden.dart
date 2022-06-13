@@ -355,8 +355,8 @@ class _AffirmHiddenState extends State<AffirmHidden> {
                               ? Image.network(
                                   imageList[index].toString().indexOf('http:') >
                                           -1
-                                      ? Interface.fileUrl + imageList[index]
-                                      : imageList[index],
+                                      ? imageList[index]
+                                      : Interface.fileUrl + imageList[index],
                                   width: size.width * 144,
                                   height: size.width * 144,
                                 )

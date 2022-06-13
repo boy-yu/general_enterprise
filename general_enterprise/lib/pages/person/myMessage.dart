@@ -81,9 +81,9 @@ class _MyMessageState extends State<MyMessage> {
                                                   .toString()
                                                   .indexOf('http:') >
                                               -1
-                                          ? Interface.fileUrl +
-                                              myprefs.getString('avatar')
-                                          : myprefs.getString('avatar'),
+                                          ? myprefs.getString('avatar')
+                                          : Interface.fileUrl +
+                                              myprefs.getString('avatar'),
                                     )),
                         ),
                         Positioned(

@@ -133,12 +133,13 @@ class _MyCustomState extends State<MyCustom> {
           }
         }
       }
-      _widget = imgValueArr[select].toString().indexOf('http') > -1
+      _widget = imgValueArr[select].toString() == '' ||
+              imgValueArr[select].toString() == null
           ? Image(
               image: NetworkImage(
                 imgValueArr[select].toString().indexOf('http:') > -1
-                    ? Interface.fileUrl + imgValueArr[select]
-                    : imgValueArr[select],
+                    ? imgValueArr[select]
+                    : Interface.fileUrl + imgValueArr[select],
               ),
               height: width * 160,
             )

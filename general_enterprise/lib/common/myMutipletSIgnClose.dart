@@ -65,8 +65,8 @@ class _MyMutipleSignCloseState extends State<MyMutipleSignClose> {
             ? Image(
                 image: NetworkImage(
                   signSplit[mutipleIndex].toString().indexOf('http:') > -1
-                      ? Interface.fileUrl + signSplit[mutipleIndex].toString()
-                      : signSplit[mutipleIndex].toString(),
+                      ? signSplit[mutipleIndex].toString()
+                      : Interface.fileUrl + signSplit[mutipleIndex].toString(),
                 ),
                 height: width * 160,
               )
@@ -79,8 +79,8 @@ class _MyMutipleSignCloseState extends State<MyMutipleSignClose> {
           child: Image(
               image: NetworkImage(
                 widget.placeHolder.toString().indexOf('http:') > -1
-                    ? Interface.fileUrl + widget.placeHolder.toString()
-                    : widget.placeHolder.toString(),
+                    ? widget.placeHolder.toString()
+                    : Interface.fileUrl + widget.placeHolder.toString(),
               ),
               height: width * 160,
               width: width * 300));

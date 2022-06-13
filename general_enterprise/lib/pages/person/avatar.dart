@@ -151,8 +151,8 @@ class _PersonAvatarState extends State<PersonAvatar> {
                   width: width,
                   child: Image.network(
                     _photoUrl.toString().indexOf('http:') > -1
-                        ? Interface.fileUrl + _photoUrl
-                        : _photoUrl,
+                        ? _photoUrl
+                        : Interface.fileUrl + _photoUrl,
                     fit: BoxFit.cover,
                   ),
                 )

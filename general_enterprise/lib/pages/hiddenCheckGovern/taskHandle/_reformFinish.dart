@@ -182,8 +182,8 @@ class _ReformFinishState extends State<ReformFinish> {
                                                   ele.toString().indexOf(
                                                               'http:') >
                                                           -1
-                                                      ? Interface.fileUrl + ele
-                                                      : ele,
+                                                      ? ele
+                                                      : Interface.fileUrl + ele,
                                                   width: size.width * 167,
                                                   height: size.width * 125,
                                                 )

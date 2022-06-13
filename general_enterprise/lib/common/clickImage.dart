@@ -84,8 +84,8 @@ class _ClickImageState extends State<ClickImage> {
                                                     .toString()
                                                     .indexOf('http:') >
                                                 -1
-                                            ? Interface.fileUrl + widget.path
-                                            : widget.path,
+                                            ? widget.path
+                                            : Interface.fileUrl + widget.path,
                                       ))),
                       )),
                       GestureDetector(
@@ -160,8 +160,8 @@ class _JudgeNetImageState extends State<JudgeNetImage> {
       case IsRight.http:
         return Image.network(
             widget.path.toString().indexOf('http:') > -1
-                ? Interface.fileUrl + widget.path
-                : widget.path,
+                ? widget.path
+                : Interface.fileUrl + widget.path,
             width: widget.width,
             height: widget.height);
       case IsRight.error:

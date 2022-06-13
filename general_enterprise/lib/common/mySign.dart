@@ -31,8 +31,8 @@ class _MySignState extends State<MySign> {
       _widget = Image(
           image: NetworkImage(
             widget.placeHolder.toString().indexOf('http:') > -1
-                ? Interface.fileUrl + widget.placeHolder
-                : widget.placeHolder,
+                ? widget.placeHolder
+                : Interface.fileUrl + widget.placeHolder,
           ),
           height: size.width * 160);
     }

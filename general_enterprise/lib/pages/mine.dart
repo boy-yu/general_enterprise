@@ -124,9 +124,9 @@ class _MineState extends State<Mine> with TickerProviderStateMixin {
                                                     .toString()
                                                     .indexOf('http:') >
                                                 -1
-                                            ? Interface.fileUrl +
-                                                myprefs.getString('avatar')
-                                            : myprefs.getString('avatar'),
+                                            ? myprefs.getString('avatar')
+                                            : Interface.fileUrl +
+                                                myprefs.getString('avatar'),
                                       ),
                                 fit: BoxFit.fill, // 完全填充
                               ),
@@ -405,8 +405,8 @@ class _CancelSignState extends State<CancelSign> {
             placeholder: AssetImage('assets/images/image_recent_control.jpg'),
             image: NetworkImage(
               url.toString().indexOf('http:') > -1
-                  ? Interface.fileUrl + url
-                  : url,
+                  ? url
+                  : Interface.fileUrl + url,
             ),
             height: size.width * 100,
           ));

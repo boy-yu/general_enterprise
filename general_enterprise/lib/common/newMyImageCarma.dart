@@ -146,8 +146,8 @@ class _NewMyImageCarmaState extends State<NewMyImageCarma> {
                       ? Container(
                           child: Image.network(
                             images[i].toString().indexOf('http:') > -1
-                                ? Interface.fileUrl + images[i]
-                                : images[i],
+                                ? images[i]
+                                : Interface.fileUrl + images[i],
                             width: size.width * 150,
                             height: size.width * 150,
                             fit: BoxFit.fill,

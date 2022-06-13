@@ -1406,17 +1406,17 @@ class _ReportedHiddenRecordState extends State<ReportedHiddenRecord> {
                                                                     .indexOf(
                                                                         'http:') >
                                                                 -1
-                                                            ? Interface
+                                                            ? list[index]
+                                                                    ['checkUrl']
+                                                                .toString()
+                                                                .split('|')[0]
+                                                            : Interface
                                                                     .fileUrl +
                                                                 list[index][
                                                                         'checkUrl']
                                                                     .toString()
                                                                     .split(
-                                                                        '|')[0]
-                                                            : list[index]
-                                                                    ['checkUrl']
-                                                                .toString()
-                                                                .split('|')[0],
+                                                                        '|')[0],
                                                       ),
                                                       fit: BoxFit.contain),
                                                 ),

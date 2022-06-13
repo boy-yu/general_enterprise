@@ -82,8 +82,8 @@ class _MyTextState extends State<MyText> {
                         return __ele != ''
                             ? Image.network(
                                 __ele.toString().indexOf('http:') > -1
-                                    ? Interface.fileUrl + __ele
-                                    : __ele,
+                                    ? __ele
+                                    : Interface.fileUrl + __ele,
                                 height: size.width * 160,
                               )
                             : Container();
@@ -110,8 +110,8 @@ class _MyTextState extends State<MyText> {
               child: ele == '' || ele == null
                   ? Image.network(
                       ele.toString().indexOf('http:') > -1
-                          ? Interface.fileUrl + ele
-                          : ele,
+                          ? ele
+                          : Interface.fileUrl + ele,
                       width: size.width * 200,
                     )
                   : Container(),
@@ -154,8 +154,8 @@ class _MyTextState extends State<MyText> {
                           ? Expanded(
                               child: Image.network(
                               assginValue.toString().indexOf('http:') > -1
-                                  ? Interface.fileUrl + assginValue
-                                  : assginValue,
+                                  ? assginValue
+                                  : Interface.fileUrl + assginValue,
                             ))
                           : Padding(
                               padding: EdgeInsets.only(right: size.width * 40),

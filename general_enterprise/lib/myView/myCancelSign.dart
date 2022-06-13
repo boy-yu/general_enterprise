@@ -49,8 +49,8 @@ class _CancelSignState extends State<CancelSign> {
             placeholder: AssetImage('assets/images/image_recent_control.jpg'),
             image: NetworkImage(
               url.toString().indexOf('http:') > -1
-                  ? Interface.fileUrl + url
-                  : url,
+                  ? url
+                  : Interface.fileUrl + url,
             ),
             height: size.width * 100,
           ));
@@ -62,8 +62,8 @@ class _CancelSignState extends State<CancelSign> {
               placeholder: AssetImage('assets/images/image_recent_control.jpg'),
               image: NetworkImage(
                 widget.url.toString().indexOf('http:') > -1
-                    ? Interface.fileUrl + widget.url
-                    : widget.url,
+                    ? widget.url
+                    : Interface.fileUrl + widget.url,
               ),
               height: size.width * 100,
             ));

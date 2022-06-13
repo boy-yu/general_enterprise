@@ -426,13 +426,13 @@ class _HiddenCheckRecordDetailsState extends State<HiddenCheckRecordDetails> {
                                                                 .indexOf(
                                                                     'http:') >
                                                             -1
-                                                        ? Interface.fileUrl +
+                                                        ? data['checkUrl']
+                                                            .toString()
+                                                            .split('|')[0]
+                                                        : Interface.fileUrl +
                                                             data['checkUrl']
                                                                 .toString()
-                                                                .split('|')[0]
-                                                        : data['checkUrl']
-                                                            .toString()
-                                                            .split('|')[0],
+                                                                .split('|')[0],
                                                   ),
                                                   fit: BoxFit.contain),
                                             ),

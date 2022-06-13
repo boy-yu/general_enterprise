@@ -494,9 +494,10 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                       image: NetworkImage(
                                                                         data['checkUrl'].toString().split('|')[0].toString().indexOf('http:') >
                                                                                 -1
-                                                                            ? Interface.fileUrl +
-                                                                                data['checkUrl'].toString().split('|')[0]
-                                                                            : data['checkUrl'].toString().split('|')[0],
+                                                                            ? data['checkUrl'].toString().split('|')[
+                                                                                0]
+                                                                            : Interface.fileUrl +
+                                                                                data['checkUrl'].toString().split('|')[0],
                                                                       ),
                                                                       fit: BoxFit.contain),
                                                                 ),
@@ -755,9 +756,10 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                       image: NetworkImage(
                                                                         data['checkUrl'].toString().split('|')[0].toString().indexOf('http:') >
                                                                                 -1
-                                                                            ? Interface.fileUrl +
-                                                                                data['checkUrl'].toString().split('|')[0]
-                                                                            : data['checkUrl'].toString().split('|')[0],
+                                                                            ? data['checkUrl'].toString().split('|')[
+                                                                                0]
+                                                                            : Interface.fileUrl +
+                                                                                data['checkUrl'].toString().split('|')[0],
                                                                       ),
                                                                       fit: BoxFit.contain),
                                                                 ),
@@ -1454,8 +1456,8 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                     image: DecorationImage(
                                                                         image: NetworkImage(
                                                                           data['registUrl'].toString().split('|')[0].toString().indexOf('http:') > -1
-                                                                              ? Interface.fileUrl + data['registUrl'].toString().split('|')[0]
-                                                                              : data['registUrl'].toString().split('|')[0],
+                                                                              ? data['registUrl'].toString().split('|')[0]
+                                                                              : Interface.fileUrl + data['registUrl'].toString().split('|')[0],
                                                                         ),
                                                                         fit: BoxFit.contain),
                                                                   ),
@@ -1651,8 +1653,8 @@ class _HiddenGovernRecordDetailsState extends State<HiddenGovernRecordDetails> {
                                                                         image:
                                                                             NetworkImage(
                                                                           data['liableUrl'].toString().indexOf('http:') > -1
-                                                                              ? Interface.fileUrl + data['liableUrl']
-                                                                              : data['liableUrl'],
+                                                                              ? data['liableUrl']
+                                                                              : Interface.fileUrl + data['liableUrl'],
                                                                         ),
                                                                         fit: BoxFit
                                                                             .contain),
