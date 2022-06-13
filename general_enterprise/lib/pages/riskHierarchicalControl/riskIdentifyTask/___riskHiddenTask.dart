@@ -198,22 +198,52 @@ class _RiskHiddenTaskState extends State<RiskHiddenTask> {
                             SizedBox(
                               height: size.width * 16,
                             ),
-                            RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: size.width * 24,
-                                      fontWeight: FontWeight.w400),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                        text: '管控手段：',
-                                        style: TextStyle(
-                                            color: Color(0xff333333))),
-                                    TextSpan(
-                                        text: _getCheckMeans(
-                                            list[index]['checkMeans']),
-                                        style: TextStyle(
-                                            color: Color(0xff7F8A9C))),
-                                  ]),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '管控手段：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text: _getCheckMeans(
+                                                list[index]['checkMeans']),
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        '/riskIdentifyTask/addHiddenTask',
+                                        arguments: {
+                                          'eventMap': list[index],
+                                          'type': '修改'
+                                        }).then((value) => {_throwFunc.run()});
+                                  },
+                                  child: Container(
+                                    width: size.width * 40,
+                                    height: size.width * 40,
+                                    padding: EdgeInsets.all(size.width * 8),
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Color(0xff3074FF).withOpacity(0.15),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(50))),
+                                    child: Image.asset(
+                                      'assets/images/doubleRiskProjeck/icon_risk_put.png',
+                                      width: size.width * 24,
+                                      height: size.width * 24,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                             SizedBox(
                               height: size.width * 16,

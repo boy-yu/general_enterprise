@@ -6,8 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddControlMeasure extends StatefulWidget {
-  AddControlMeasure({this.riskEventId});
+  AddControlMeasure({this.riskEventId, this.eventMap, this.type});
   final String riskEventId;
+  final Map eventMap;
+  final String type;
   @override
   State<AddControlMeasure> createState() => _AddControlMeasureState();
 }
@@ -21,6 +23,23 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
       TextEditingController();
   TextEditingController _controllerProbabilityReduction =
       TextEditingController();
+  void initState() {
+    super.initState();
+
+    if (widget.type == '修改') {
+      submitData['riskMeasureDesc'] = widget.eventMap['riskMeasureDesc'];
+      _init(widget.eventMap['classify1']);
+      _init(widget.eventMap['classify2']);
+      submitData['classify3'] = widget.eventMap['classify3'];
+      submitData['troubleshootContent'] =
+          widget.eventMap['troubleshootContent'];
+      submitData['consequenceReduction'] =
+          widget.eventMap['consequenceReduction'];
+      submitData['probabilityReduction'] =
+          widget.eventMap['probabilityReduction'];
+      submitData['id'] = widget.eventMap['id'];
+    }
+  }
 
   Map submitData = {
     'riskMeasureDesc': '',
@@ -29,12 +48,85 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
     'classify3': '',
     'troubleshootContent': '',
     'consequenceReduction': '',
-    'probabilityReduction': ''
+    'probabilityReduction': '',
+    'id': ''
   };
 
   List classify1Choice = ["工程技术", "维护保养", "操作行为", "应急措施"];
 
   List classify2Choice = [];
+
+  _init(String classify) {
+    switch (classify) {
+      case '1':
+        submitData['classify1'] = '工程技术';
+        break;
+      case '2':
+        submitData['classify1'] = '维护保养';
+        break;
+      case '3':
+        submitData['classify1'] = '操作行为';
+        break;
+      case '4':
+        submitData['classify1'] = '应急措施';
+        break;
+      // case '4':
+      //   submitData['classify1'] = '应急措施';
+      //   break;
+      case '1-1':
+        submitData['classify2'] = '工艺控制';
+        break;
+      case '1-2':
+        submitData['classify2'] = '关键设备/部件';
+        break;
+      case '1-3':
+        submitData['classify2'] = '安全附件';
+        break;
+      case '1-4':
+        submitData['classify2'] = '安全仪表';
+        break;
+      case '1-5':
+        submitData['classify2'] = '其它';
+        break;
+      case '2-1':
+        submitData['classify2'] = '动设备';
+        break;
+      case '2-2':
+        submitData['classify2'] = '静设备';
+        break;
+      case '2-3':
+        submitData['classify2'] = '其它';
+        break;
+      case '3-1':
+        submitData['classify2'] = '人员资质';
+        break;
+      case '3-2':
+        submitData['classify2'] = '操作记录';
+        break;
+      case '3-3':
+        submitData['classify2'] = '交接班';
+        break;
+      case '3-4':
+        submitData['classify2'] = '其他';
+        break;
+      case '4-1':
+        submitData['classify2'] = '应急设施';
+        break;
+      case '4-2':
+        submitData['classify2'] = '个体防护';
+        break;
+      case '4-3':
+        submitData['classify2'] = '消防设施';
+        break;
+      case '4-4':
+        submitData['classify2'] = '应急预案';
+        break;
+      case '4-5':
+        submitData['classify2'] = '其它';
+        break;
+    }
+  }
+
   // String regExp = "^(([1-5])|(([1-4])\\.[0-9][0-9]?)|(5\\.0{1,2}))$"
   _getClassify2Choice(String classify1) {
     switch (classify1) {
@@ -101,7 +193,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
             return '1-5';
             break;
           default:
-        return '';
+            return '';
         }
         break;
       case '维护保养':
@@ -116,7 +208,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
             return '2-3';
             break;
           default:
-        return '';
+            return '';
         }
         break;
       case '操作行为':
@@ -134,7 +226,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
             return '3-4';
             break;
           default:
-        return '';
+            return '';
         }
         break;
       case '应急措施':
@@ -155,7 +247,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
             return '4-5';
             break;
           default:
-        return '';
+            return '';
         }
         break;
       default:
@@ -167,7 +259,7 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
   Widget build(BuildContext context) {
     return MyAppbar(
         title: Text(
-          "新增管控措施",
+          widget.type == '修改' ? '修改管控措施' : "新增管控措施",
           style: TextStyle(fontSize: size.width * 32),
         ),
         child: GestureDetector(
@@ -444,7 +536,8 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                   ),
                   TextField(
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),//数字包括小数
+                      FilteringTextInputFormatter.allow(
+                          RegExp("[0-9.]")), //数字包括小数
                       LengthLimitingTextInputFormatter(4)
                     ],
                     keyboardType: TextInputType.number,
@@ -473,9 +566,11 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                         hintStyle: TextStyle(
                             fontSize: size.width * 28,
                             color: Color(0xff7F8A9C)),
-                        hintText: submitData['consequenceReduction'] == ''
-                            ? '请输入后果降低值'
-                            : submitData['consequenceReduction']),
+                        hintText:
+                            submitData['consequenceReduction'].toString() == ''
+                                ? '请输入后果降低值'
+                                : submitData['consequenceReduction']
+                                    .toString()),
                     maxLines: 1,
                     minLines: 1,
                   ),
@@ -494,7 +589,8 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                   ),
                   TextField(
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp("[0-9.]")),//数字包括小数
+                      FilteringTextInputFormatter.allow(
+                          RegExp("[0-9.]")), //数字包括小数
                       LengthLimitingTextInputFormatter(4),
                     ],
                     keyboardType: TextInputType.number,
@@ -519,9 +615,11 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                         hintStyle: TextStyle(
                             fontSize: size.width * 28,
                             color: Color(0xff7F8A9C)),
-                        hintText: submitData['probabilityReduction'] == ''
-                            ? '请输入可能性降低值'
-                            : submitData['probabilityReduction']),
+                        hintText:
+                            submitData['probabilityReduction'].toString() == ''
+                                ? '请输入可能性降低值'
+                                : submitData['probabilityReduction']
+                                    .toString()),
                     maxLines: 1,
                     minLines: 1,
                   ),
@@ -550,18 +648,32 @@ class _AddControlMeasureState extends State<AddControlMeasure> {
                   } else {
                     submitData['riskEventId'] = widget.riskEventId;
                     submitData['dataSrc'] = '2';
-                    submitData['classify2'] = _getClassify2(submitData['classify1'], submitData['classify2']);
-                    submitData['classify1'] = _getClassify1(submitData['classify1']);
+                    submitData['classify2'] = _getClassify2(
+                        submitData['classify1'], submitData['classify2']);
+                    submitData['classify1'] =
+                        _getClassify1(submitData['classify1']);
                     print(submitData);
-                    myDio
-                        .request(
-                            type: 'post',
-                            url: Interface.postRiskTemplateFourWarehouse,
-                            data: submitData)
-                        .then((value) {
-                      successToast('新增风险管控措施成功');
-                      Navigator.pop(context);
-                    });
+                    if (widget.type == '修改') {
+                      myDio
+                          .request(
+                              type: 'put',
+                              url: Interface.updateRiskTemplateFourWarehouse,
+                              data: submitData)
+                          .then((value) {
+                        successToast('修改风险管控措施成功');
+                        Navigator.pop(context);
+                      });
+                    } else {
+                      myDio
+                          .request(
+                              type: 'post',
+                              url: Interface.postRiskTemplateFourWarehouse,
+                              data: submitData)
+                          .then((value) {
+                        successToast('新增风险管控措施成功');
+                        Navigator.pop(context);
+                      });
+                    }
                   }
                 },
                 child: Container(

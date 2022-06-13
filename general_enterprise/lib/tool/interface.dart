@@ -183,12 +183,21 @@ class Interface {
   // 新增风险事件
   static String postRiskTemplateThreeWarehouseAll =
       baseUrl + '/riskTemplateThree/addRiskTemplateThreeWarehouse';
+  // 修改风险事件(风险辨识任务-风险事件节点使用)
+  static String updateRiskTemplateThreeWarehouse =
+      baseUrl + '/riskTemplateThree/updateRiskTemplateThreeWarehouse';
   // 风险管控措施列表
   static String getRiskTemplateFourWarehouseAll =
       baseUrl + '/riskTemplateFour/riskTemplateFourWarehouseAll';
+  // (风险辨识任务-风险措施节点使用)修改风险管控措施
+  static String updateRiskTemplateFourWarehouse =
+      baseUrl + '/riskTemplateFour/updateRiskTemplateFourWarehouse';
   // 新增风险管控措施
   static String postRiskTemplateFourWarehouse =
       baseUrl + '/riskTemplateFour/addRiskTemplateFourWarehouse';
+  // (风险辨识任务-风险任务节点使用)修改风险管控任务
+  static String updateRiskTemplateFiveWarehouse =
+      baseUrl + '/riskTemplateFive/updateRiskTemplateFiveWarehouse';
   // 风险管控任务列表
   static String getRiskTemplateFiveWarehouseAll =
       baseUrl + '/riskTemplateFive/RiskTemplateFiveWarehouseAll';

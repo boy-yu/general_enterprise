@@ -7,8 +7,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddHiddenTask extends StatefulWidget {
-  AddHiddenTask({this.riskMeasureId});
+  AddHiddenTask({this.riskMeasureId, this.eventMap, this.type});
   final String riskMeasureId;
+  final Map eventMap;
+  final String type;
   @override
   State<AddHiddenTask> createState() => _AddHiddenTaskState();
 }
@@ -25,13 +27,31 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
     'checkCycleUnit': '小时',
     'startRefreshTime': '',
     'endRefreshTime': '',
-    'refreshRule': '' // 1为工作日2为非工作日3为每天
+    'refreshRule': '', // 1为工作日2为非工作日3为每天
+    'id': ''
   };
 
   @override
   void initState() {
     super.initState();
     submitData['riskMeasureId'] = widget.riskMeasureId;
+    if (widget.type == '修改') {
+      print(widget.eventMap);
+      submitData['checkCycle'] = widget.eventMap['checkCycle'];
+      submitData['checkCycleUnit'] = widget.eventMap['checkCycleUnit'];
+      // submitData['checkMeans'] = widget.eventMap['checkMeans'];
+      if (widget.eventMap['checkMeans'] == '1') {
+        submitData['checkMeans'] = '拍照';
+      } else if (widget.eventMap['checkMeans'] == '0') {
+        submitData['checkMeans'] = '现场确认';
+      }
+      submitData['endRefreshTime'] = widget.eventMap['endRefreshTime'];
+      submitData['id'] = widget.eventMap['id'];
+      submitData['refreshRule'] = widget.eventMap['refreshRule'];
+      submitData['startRefreshTime'] = widget.eventMap['startRefreshTime'];
+      submitData['troubleshootContent'] =
+          widget.eventMap['troubleshootContent'];
+    }
   }
 
   List controlMeansChoice = ["拍照", "现场确认"];
@@ -626,21 +646,33 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                     } else {
                       // 提交数据
                       submitData['checkCycle'] =
-                          int.parse(submitData['checkCycle']);
+                          int.parse(submitData['checkCycle'].toString());
                       if (submitData['checkMeans'] == '拍照') {
                         submitData['checkMeans'] = '1';
                       } else if (submitData['checkMeans'] == '现场确认') {
                         submitData['checkMeans'] = '0';
                       }
-                      myDio
-                          .request(
-                              type: 'post',
-                              url: Interface.postAddRiskTemplateFiveWarehouse,
-                              data: submitData)
-                          .then((value) {
-                        Fluttertoast.showToast(msg: '新增隐患排查内容成功');
-                        Navigator.of(context).pop();
-                      });
+                      if (widget.type == '修改') {
+                        myDio
+                            .request(
+                                type: 'put',
+                                url: Interface.updateRiskTemplateFiveWarehouse,
+                                data: submitData)
+                            .then((value) {
+                          Fluttertoast.showToast(msg: '新增隐患排查内容成功');
+                          Navigator.of(context).pop();
+                        });
+                      } else {
+                        myDio
+                            .request(
+                                type: 'post',
+                                url: Interface.postAddRiskTemplateFiveWarehouse,
+                                data: submitData)
+                            .then((value) {
+                          Fluttertoast.showToast(msg: '新增隐患排查内容成功');
+                          Navigator.of(context).pop();
+                        });
+                      }
                     }
                   }
                 },

@@ -273,7 +273,8 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text:  _getClassify1(list[index]['classify1']),
+                                        text: _getClassify1(
+                                            list[index]['classify1']),
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -292,7 +293,8 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                                         style: TextStyle(
                                             color: Color(0xff333333))),
                                     TextSpan(
-                                        text: _getClassify2(list[index]['classify2']),
+                                        text: _getClassify2(
+                                            list[index]['classify2']),
                                         style: TextStyle(
                                             color: Color(0xff7F8A9C))),
                                   ]),
@@ -321,23 +323,53 @@ class _RiskIdentifyTaskMeasureState extends State<RiskIdentifyTaskMeasure> {
                             SizedBox(
                               height: size.width * 16,
                             ),
-                            RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: size.width * 24,
-                                      fontWeight: FontWeight.w400),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                        text: '隐患排查内容：',
-                                        style: TextStyle(
-                                            color: Color(0xff333333))),
-                                    TextSpan(
-                                        text: list[index]
-                                            ['troubleshootContent'],
-                                        style: TextStyle(
-                                            color: Color(0xff7F8A9C))),
-                                  ]),
-                            ),
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '隐患排查内容：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        TextSpan(
+                                            text: list[index]
+                                                ['troubleshootContent'],
+                                            style: TextStyle(
+                                                color: Color(0xff7F8A9C))),
+                                      ]),
+                                ),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        '/riskIdentifyTask/addControlMeasure',
+                                        arguments: {
+                                          'eventMap': list[index],
+                                          'type': '修改'
+                                        }).then((value) => {_throwFunc.run()});
+                                  },
+                                  child: Container(
+                                    width: size.width * 40,
+                                    height: size.width * 40,
+                                    padding: EdgeInsets.all(size.width * 8),
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Color(0xff3074FF).withOpacity(0.15),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(50))),
+                                    child: Image.asset(
+                                      'assets/images/doubleRiskProjeck/icon_risk_put.png',
+                                      width: size.width * 24,
+                                      height: size.width * 24,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
                           ],
                         ))
                   ],

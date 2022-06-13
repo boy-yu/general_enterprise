@@ -201,22 +201,52 @@ class _RiskIdentifyTaskEventState extends State<RiskIdentifyTaskEvent> {
                             SizedBox(
                               height: size.width * 16,
                             ),
-                            RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: size.width * 24,
-                                      fontWeight: FontWeight.w400),
-                                  children: <InlineSpan>[
-                                    TextSpan(
-                                        text: '初始风险等级：',
-                                        style: TextStyle(
-                                            color: Color(0xff333333))),
-                                    _getTextSpan(
-                                        list[index]['initialRiskLevel'])
-                                  ]),
-                            ),
-                            SizedBox(
-                              height: size.width * 16,
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: size.width * 24,
+                                          fontWeight: FontWeight.w400),
+                                      children: <InlineSpan>[
+                                        TextSpan(
+                                            text: '初始风险等级：',
+                                            style: TextStyle(
+                                                color: Color(0xff333333))),
+                                        _getTextSpan(
+                                            list[index]['initialRiskLevel'])
+                                      ]),
+                                ),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    print("object");
+                                    Navigator.pushNamed(context,
+                                        '/riskIdentifyTask/addRiskEvent',
+                                        arguments: {
+                                          'riskUnitId': widget
+                                              .leftBarList[leftBarIndex]['id'],
+                                          'eventMap': list[index],
+                                          'type': '修改'
+                                        }).then((value) => {_throwFunc.run()});
+                                  },
+                                  child: Container(
+                                    width: size.width * 40,
+                                    height: size.width * 40,
+                                    padding: EdgeInsets.all(size.width * 8),
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Color(0xff3074FF).withOpacity(0.15),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(50))),
+                                    child: Image.asset(
+                                      'assets/images/doubleRiskProjeck/icon_risk_put.png',
+                                      width: size.width * 24,
+                                      height: size.width * 24,
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                             // RichText(
                             //   text: TextSpan(

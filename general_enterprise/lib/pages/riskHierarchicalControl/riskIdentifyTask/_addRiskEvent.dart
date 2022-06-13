@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddRiskEvent extends StatefulWidget {
-  AddRiskEvent({this.riskUnitId});
+  AddRiskEvent({this.riskUnitId, this.eventMap, this.type});
   final String riskUnitId;
+  final Map eventMap;
+  final String type;
   @override
   State<AddRiskEvent> createState() => _AddRiskEventState();
 }
@@ -14,6 +16,22 @@ class AddRiskEvent extends StatefulWidget {
 class _AddRiskEventState extends State<AddRiskEvent> {
   TextEditingController _controllerEvent = TextEditingController();
   TextEditingController _controllerDescribe = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.type == '修改') {
+      submitData['id'] = widget.eventMap['id'];
+      submitData['riskEventName'] = widget.eventMap['riskEventName'];
+      submitData['riskDescription'] = widget.eventMap['riskDescription'];
+      submitData['initialRiskConsequences'] =
+          widget.eventMap['initialRiskConsequences'];
+      submitData['initialRiskPossibility'] =
+          widget.eventMap['initialRiskPossibility'];
+      submitData['initialRiskDegree'] = widget.eventMap['initialRiskDegree'];
+      submitData['initialRiskDegree'] = widget.eventMap['initialRiskDegree'];
+    }
+  }
 
   Map submitData = {
     'currentRiskLevel': '',
@@ -27,6 +45,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
     'riskEventName': '',
     'riskLevel': '',
     'riskPossibility': 0,
+    'id': ''
   };
 
   List levelChoice = [1, 2, 3, 4, 5];
@@ -75,7 +94,7 @@ class _AddRiskEventState extends State<AddRiskEvent> {
   Widget build(BuildContext context) {
     return MyAppbar(
         title: Text(
-          "新增风险事件",
+          widget.type == '修改' ? '修改风险事件' : "新增风险事件",
           style: TextStyle(fontSize: size.width * 32),
         ),
         child: GestureDetector(
@@ -932,15 +951,28 @@ class _AddRiskEventState extends State<AddRiskEvent> {
                   // }
                   else {
                     submitData['riskUnitId'] = widget.riskUnitId;
-                    myDio
-                        .request(
-                            type: 'post',
-                            url: Interface.postRiskTemplateThreeWarehouseAll,
-                            data: submitData)
-                        .then((value) {
-                      successToast('新增风险事件成功');
-                      Navigator.pop(context);
-                    });
+                    if (widget.type == '修改') {
+                      // updateRiskTemplateThreeWarehouse
+                      myDio
+                          .request(
+                              type: 'put',
+                              url: Interface.updateRiskTemplateThreeWarehouse,
+                              data: submitData)
+                          .then((value) {
+                        successToast('修改风险事件成功');
+                        Navigator.pop(context);
+                      });
+                    } else {
+                      myDio
+                          .request(
+                              type: 'post',
+                              url: Interface.postRiskTemplateThreeWarehouseAll,
+                              data: submitData)
+                          .then((value) {
+                        successToast('新增风险事件成功');
+                        Navigator.pop(context);
+                      });
+                    }
                   }
                 },
                 child: Container(
