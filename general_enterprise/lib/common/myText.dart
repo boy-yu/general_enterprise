@@ -107,7 +107,7 @@ class _MyTextState extends State<MyText> {
           children: values.map((ele) {
             return Padding(
               padding: EdgeInsets.all(10),
-              child: ele.indexOf('http') == '' || ele.indexOf('http') == null
+              child: ele == '' || ele == null
                   ? Image.network(
                       ele.toString().indexOf('http:') > -1
                           ? Interface.fileUrl + ele

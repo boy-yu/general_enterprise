@@ -178,8 +178,8 @@ class _MyImageCarmaState extends State<MyImageCarma> {
                       ),
                     );
                   },
-                  child: images[i].toString().indexOf('http') == '' ||
-                          images[i].toString().indexOf('http') == null
+                  child: images[i].toString() == '' ||
+                          images[i].toString() == null
                       ? Container(
                           child: Image.network(
                             images[i].toString().indexOf('http:') > -1
