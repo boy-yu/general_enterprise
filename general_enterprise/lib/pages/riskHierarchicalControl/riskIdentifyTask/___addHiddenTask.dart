@@ -36,7 +36,6 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
     super.initState();
     submitData['riskMeasureId'] = widget.riskMeasureId;
     if (widget.type == '修改') {
-      print(widget.eventMap);
       submitData['checkCycle'] = widget.eventMap['checkCycle'];
       submitData['checkCycleUnit'] = widget.eventMap['checkCycleUnit'];
       // submitData['checkMeans'] = widget.eventMap['checkMeans'];
@@ -45,12 +44,39 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
       } else if (widget.eventMap['checkMeans'] == '0') {
         submitData['checkMeans'] = '现场确认';
       }
+      String end = DateTime.now().year.toString() +
+          '-' +
+          _getTime(DateTime.now().month.toString()) +
+          '-' +
+          _getTime(DateTime.now().day.toString()) +
+          ' ' +
+          widget.eventMap['endRefreshTime'].toString() +
+          ':00.000';
+      endRefreshTime = DateTime.parse(end);
       submitData['endRefreshTime'] = widget.eventMap['endRefreshTime'];
       submitData['id'] = widget.eventMap['id'];
       submitData['refreshRule'] = widget.eventMap['refreshRule'];
+      // DateFormat
+      String start = DateTime.now().year.toString() +
+          '-' +
+          _getTime(DateTime.now().month.toString()) +
+          '-' +
+          _getTime(DateTime.now().day.toString()) +
+          ' ' +
+          widget.eventMap['startRefreshTime'].toString() +
+          ':00.000';
+      startRefreshTime = DateTime.parse(start);
       submitData['startRefreshTime'] = widget.eventMap['startRefreshTime'];
       submitData['troubleshootContent'] =
           widget.eventMap['troubleshootContent'];
+    }
+  }
+
+  String _getTime(String time) {
+    if (int.parse(time) < 10) {
+      return "0" + time;
+    } else {
+      return time;
     }
   }
 
@@ -92,10 +118,11 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                           showTitleActions: true,
                           // 确定事件
                           onConfirm: (date) {
-                        print(date);
                         startRefreshTime = date;
                         submitData['startRefreshTime'] =
                             date.toString().substring(11, 16);
+                        endRefreshTime = null;
+                        submitData['endRefreshTime'] = '';
                         setState(() {});
                       },
                           // 当前时间
@@ -618,7 +645,8 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                       } else if (submitData['startRefreshTime'] ==
                           submitData['endRefreshTime']) {
                         Fluttertoast.showToast(msg: "执行时段请小于24小时");
-                      } else if (int.parse(submitData['checkCycle']) >
+                      } else if (int.parse(
+                              submitData['checkCycle'].toString()) >
                           _getHour()) {
                         Fluttertoast.showToast(msg: "周期不能大于时间段");
                       } else if (submitData['refreshRule'] == '') {
@@ -627,21 +655,35 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                         // 提交数据
                         // Navigator.of(context).pop();
                         submitData['checkCycle'] =
-                            int.parse(submitData['checkCycle']);
+                            int.parse(submitData['checkCycle'].toString());
                         if (submitData['checkMeans'] == '拍照') {
                           submitData['checkMeans'] = '1';
                         } else if (submitData['checkMeans'] == '现场确认') {
                           submitData['checkMeans'] = '0';
                         }
-                        myDio
-                            .request(
-                                type: 'post',
-                                url: Interface.postAddRiskTemplateFiveWarehouse,
-                                data: submitData)
-                            .then((value) {
-                          Fluttertoast.showToast(msg: '新增隐患排查内容成功');
-                          Navigator.of(context).pop();
-                        });
+                        if (widget.type == '修改') {
+                          myDio
+                              .request(
+                                  type: 'put',
+                                  url:
+                                      Interface.updateRiskTemplateFiveWarehouse,
+                                  data: submitData)
+                              .then((value) {
+                            Fluttertoast.showToast(msg: '修改隐患排查内容成功');
+                            Navigator.of(context).pop();
+                          });
+                        } else {
+                          myDio
+                              .request(
+                                  type: 'post',
+                                  url: Interface
+                                      .postAddRiskTemplateFiveWarehouse,
+                                  data: submitData)
+                              .then((value) {
+                            Fluttertoast.showToast(msg: '新增隐患排查内容成功');
+                            Navigator.of(context).pop();
+                          });
+                        }
                       }
                     } else {
                       // 提交数据
@@ -659,7 +701,7 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
                                 url: Interface.updateRiskTemplateFiveWarehouse,
                                 data: submitData)
                             .then((value) {
-                          Fluttertoast.showToast(msg: '新增隐患排查内容成功');
+                          Fluttertoast.showToast(msg: '修改隐患排查内容成功');
                           Navigator.of(context).pop();
                         });
                       } else {
