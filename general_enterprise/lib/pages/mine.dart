@@ -247,13 +247,8 @@ class _MineState extends State<Mine> with TickerProviderStateMixin {
                             setState(() {
                               show = false;
                             });
-<<<<<<< HEAD
                             Navigator.pushNamed(context, '/login',
                                 arguments: {"isYindao": false}).then((value) {
-=======
-                            Navigator.pushNamed(context, '/login')
-                                .then((value) {
->>>>>>> 0fe33a7d2c86254b1741117fcc5f7d9dc3be4bcf
                               setState(() {
                                 show = true;
                               });
@@ -423,8 +418,8 @@ class _CancelSignState extends State<CancelSign> {
               placeholder: AssetImage('assets/images/image_recent_control.jpg'),
               image: NetworkImage(
                 widget.url.toString().indexOf('http:') > -1
-                    ? Interface.fileUrl + widget.url
-                    : widget.url,
+                    ? widget.url
+                    : Interface.fileUrl + widget.url,
               ),
               height: size.width * 100,
             ));

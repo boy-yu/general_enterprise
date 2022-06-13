@@ -98,7 +98,6 @@ class _RefreState extends State<Refre> with TickerProviderStateMixin {
         }
       }
     }
-
     return false;
   }
 
