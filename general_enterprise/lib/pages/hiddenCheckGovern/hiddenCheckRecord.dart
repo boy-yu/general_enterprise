@@ -129,6 +129,7 @@ class _HiddenCheckRecordState extends State<HiddenCheckRecord> {
       if (dropTempData[index]['value'] == ele['name']) {
         id = ele['id'];
         dropTempData[index]['id'] = ele['id'];
+        print(dropTempData);
       }
     });
     if (index + 1 < dropList.length && dropTempData.length <= index + 1) {

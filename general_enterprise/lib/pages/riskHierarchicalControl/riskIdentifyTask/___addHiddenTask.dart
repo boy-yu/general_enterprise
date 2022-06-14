@@ -44,29 +44,34 @@ class _AddHiddenTaskState extends State<AddHiddenTask> {
       } else if (widget.eventMap['checkMeans'] == '0') {
         submitData['checkMeans'] = '现场确认';
       }
-      String end = DateTime.now().year.toString() +
-          '-' +
-          _getTime(DateTime.now().month.toString()) +
-          '-' +
-          _getTime(DateTime.now().day.toString()) +
-          ' ' +
-          widget.eventMap['endRefreshTime'].toString() +
-          ':00.000';
-      endRefreshTime = DateTime.parse(end);
-      submitData['endRefreshTime'] = widget.eventMap['endRefreshTime'];
+      if (widget.eventMap['endRefreshTime'] != '' ||
+          widget.eventMap['startRefreshTime'] != '') {
+        String end = DateTime.now().year.toString() +
+            '-' +
+            _getTime(DateTime.now().month.toString()) +
+            '-' +
+            _getTime(DateTime.now().day.toString()) +
+            ' ' +
+            widget.eventMap['endRefreshTime'].toString() +
+            ':00.000';
+        endRefreshTime = DateTime.parse(end);
+        submitData['endRefreshTime'] = widget.eventMap['endRefreshTime'];
+        // DateFormat
+        String start = DateTime.now().year.toString() +
+            '-' +
+            _getTime(DateTime.now().month.toString()) +
+            '-' +
+            _getTime(DateTime.now().day.toString()) +
+            ' ' +
+            widget.eventMap['startRefreshTime'].toString() +
+            ':00.000';
+        startRefreshTime = DateTime.parse(start);
+        submitData['startRefreshTime'] = widget.eventMap['startRefreshTime'];
+      }
+
       submitData['id'] = widget.eventMap['id'];
       submitData['refreshRule'] = widget.eventMap['refreshRule'];
-      // DateFormat
-      String start = DateTime.now().year.toString() +
-          '-' +
-          _getTime(DateTime.now().month.toString()) +
-          '-' +
-          _getTime(DateTime.now().day.toString()) +
-          ' ' +
-          widget.eventMap['startRefreshTime'].toString() +
-          ':00.000';
-      startRefreshTime = DateTime.parse(start);
-      submitData['startRefreshTime'] = widget.eventMap['startRefreshTime'];
+
       submitData['troubleshootContent'] =
           widget.eventMap['troubleshootContent'];
     }
